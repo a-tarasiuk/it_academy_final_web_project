@@ -1,0 +1,10 @@
+ct/.idea/
+ct/logs/
+ct/out/
+ct/target/
+ct/src/main/webapp/static
+*.uml
+*.xml
+*.iml
+*.css
+*.js
