@@ -7,7 +7,7 @@ import by.tarasiuk.ct.entity.Entity;
 import by.tarasiuk.ct.exception.DaoException;
 import by.tarasiuk.ct.model.dao.AccountDaoAction;
 import by.tarasiuk.ct.model.dao.BaseDao;
-import by.tarasiuk.ct.manager.DatabaseTable;
+import by.tarasiuk.ct.manager.DatabaseTableName;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -58,25 +58,25 @@ public class AccountDao extends BaseDao<Account> implements AccountDaoAction {
         try {
             statement = connection.prepareCall(SQL_PROCEDURE_GET_ACCOUNT_BY_LOGIN);
             statement.setString(ParameterIndex.LOGIN, login);
-            statement.registerOutParameter(DatabaseTable.ACCOUNT_LOGIN.getColumnName(), Types.VARCHAR);
-            statement.registerOutParameter(DatabaseTable.ACCOUNT_EMAIL.getColumnName(), Types.DATE);
-            statement.registerOutParameter(DatabaseTable.ACCOUNT_REGISTRATION_DATE.getColumnName(), Types.VARCHAR);
-            statement.registerOutParameter(DatabaseTable.ACCOUNT_PHONE_NUMBER.getColumnName(), Types.VARCHAR);
-            statement.registerOutParameter(DatabaseTable.ACCOUNT_ADDRESS.getColumnName(), Types.SMALLINT);
-            statement.registerOutParameter(DatabaseTable.ACCOUNT_ROLE_ID.getColumnName(), Types.SMALLINT);
-            statement.registerOutParameter(DatabaseTable.ACCOUNT_STATUS_ID.getColumnName(), Types.VARCHAR);
+            statement.registerOutParameter(DatabaseTableName.ACCOUNT_LOGIN.getColumnName(), Types.VARCHAR);
+            statement.registerOutParameter(DatabaseTableName.ACCOUNT_EMAIL.getColumnName(), Types.DATE);
+            statement.registerOutParameter(DatabaseTableName.ACCOUNT_REGISTRATION_DATE.getColumnName(), Types.VARCHAR);
+            statement.registerOutParameter(DatabaseTableName.ACCOUNT_PHONE_NUMBER.getColumnName(), Types.VARCHAR);
+            statement.registerOutParameter(DatabaseTableName.ACCOUNT_ADDRESS.getColumnName(), Types.SMALLINT);
+            statement.registerOutParameter(DatabaseTableName.ACCOUNT_ROLE_ID.getColumnName(), Types.SMALLINT);
+            statement.registerOutParameter(DatabaseTableName.ACCOUNT_STATUS_ID.getColumnName(), Types.VARCHAR);
 
             ResultSet result = statement.executeQuery();
             if (result.next()) {
-                String loginFromDb = result.getString(DatabaseTable.ACCOUNT_LOGIN.getColumnName());
-                String email = result.getString(DatabaseTable.ACCOUNT_PASSWORD.getColumnName());
-                String registrationDateString = result.getString(DatabaseTable.ACCOUNT_PASSWORD.getColumnName());
+                String loginFromDb = result.getString(DatabaseTableName.ACCOUNT_LOGIN.getColumnName());
+                String email = result.getString(DatabaseTableName.ACCOUNT_PASSWORD.getColumnName());
+                String registrationDateString = result.getString(DatabaseTableName.ACCOUNT_PASSWORD.getColumnName());
                 LocalDate registrationDate = LocalDate.parse(registrationDateString);
-                String phoneNumber = result.getString(DatabaseTable.ACCOUNT_PASSWORD.getColumnName());
-                String address = result.getString(DatabaseTable.ACCOUNT_PASSWORD.getColumnName());
+                String phoneNumber = result.getString(DatabaseTableName.ACCOUNT_PASSWORD.getColumnName());
+                String address = result.getString(DatabaseTableName.ACCOUNT_PASSWORD.getColumnName());
 
                 // правильно ли тут реализовано получения AccountRole
-                int accountRoleId = Integer.parseInt(result.getString(DatabaseTable.ACCOUNT_PASSWORD.getColumnName()));
+                int accountRoleId = Integer.parseInt(result.getString(DatabaseTableName.ACCOUNT_PASSWORD.getColumnName()));
                 Optional<AccountRole> optionalAccountRole = accountRoleDao.getEntityById(accountRoleId);
                 AccountRole accountRole = null;
                 if(optionalAccountRole.isPresent()) {
@@ -86,7 +86,7 @@ public class AccountDao extends BaseDao<Account> implements AccountDaoAction {
                     return Optional.empty();
                 }
 
-                int accountStatusId = Integer.parseInt(result.getString(DatabaseTable.ACCOUNT_PASSWORD.getColumnName()));
+                int accountStatusId = Integer.parseInt(result.getString(DatabaseTableName.ACCOUNT_PASSWORD.getColumnName()));
                 Optional<AccountStatus> optionalAccountStatus = accountStatusDao.getEntityById(accountStatusId);
                 AccountStatus accountStatus = null;
                 if(optionalAccountStatus.isPresent()) {

@@ -6,7 +6,7 @@ import by.tarasiuk.ct.entity.Account;
 import by.tarasiuk.ct.entity.AccountStatus;
 import by.tarasiuk.ct.exception.ServiceException;
 import by.tarasiuk.ct.manager.PagePath;
-import by.tarasiuk.ct.manager.AttributeName;
+import by.tarasiuk.ct.manager.RequestAttribute;
 import by.tarasiuk.ct.model.service.impl.AccountService;
 import by.tarasiuk.ct.util.AccountValidator;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,8 +26,8 @@ public class SignInCommand implements Command {
         String goToPage = null;
         HttpSession session = request.getSession();
 
-        String login = request.getParameter(AttributeName.USER_LOGIN);
-        String password = request.getParameter(AttributeName.USER_PASSWORD);
+        String login = request.getParameter(RequestAttribute.USER_LOGIN);
+        String password = request.getParameter(RequestAttribute.USER_PASSWORD);
 
         if(!accountValidator.isValidSingInData(login, password)) {
             LOGGER.error("Invalid login '{}' or password '{}'.", login, password);
@@ -52,7 +52,7 @@ public class SignInCommand implements Command {
                 }
 
                 LOGGER.info("Account with login '{}' have has status '{}'.", login, accountStatus);
-                request.setAttribute(AttributeName.USER_LOGIN, login);
+                request.setAttribute(RequestAttribute.USER_LOGIN, login);
             } else {
                 request.setAttribute("incorrectLoginOrPasswordMessage", "Fucking!");
                 goToPage = PagePath.SIGN_IN;

@@ -2,7 +2,7 @@ package by.tarasiuk.ct.command.provider;
 
 import by.tarasiuk.ct.command.Command;
 import by.tarasiuk.ct.command.CommandType;
-import by.tarasiuk.ct.manager.AttributeName;
+import by.tarasiuk.ct.manager.RequestAttribute;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,10 +17,10 @@ public class CommandProvider {
     }
 
     public static Optional<Command> defineCommand(HttpServletRequest request) {
-        String commandValue = request.getParameter(AttributeName.COMMAND);
+        String commandValue = request.getParameter(RequestAttribute.COMMAND);
 
         if(commandValue == null || commandValue.isEmpty()) {
-            LOGGER.info("Incorrect command '{}'.", commandValue);
+            LOGGER.info("Invalid command: {}.", commandValue);
             return Optional.empty();
         }
 
@@ -29,7 +29,12 @@ public class CommandProvider {
                 .map(CommandType::getCommand)
                 .findFirst();
 
-        LOGGER.info("Found command: {}.", commandValue);
+        if(command.isPresent()) {
+            LOGGER.info("Found command: {}.", commandValue);
+        } else {
+            LOGGER.info("Command '{}' was not found.", commandValue);
+        }
+
         return command;
     }
 }

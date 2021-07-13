@@ -1,6 +1,6 @@
 package by.tarasiuk.ct.manager;
 
-public enum DatabaseTable {
+public enum DatabaseTableName {
     ACCOUNT_LOGIN("login"),
     ACCOUNT_PASSWORD("password"),
     ACCOUNT_EMAIL("email"),
@@ -15,7 +15,7 @@ public enum DatabaseTable {
 
     private final String columnName;
 
-    DatabaseTable(String columnName) {
+    DatabaseTableName(String columnName) {
         this.columnName = columnName;
     }
 

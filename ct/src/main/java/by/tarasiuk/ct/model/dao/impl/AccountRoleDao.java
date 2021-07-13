@@ -4,7 +4,7 @@ import by.tarasiuk.ct.entity.AccountRole;
 import by.tarasiuk.ct.entity.Entity;
 import by.tarasiuk.ct.exception.DaoException;
 import by.tarasiuk.ct.model.dao.BaseDao;
-import by.tarasiuk.ct.manager.DatabaseTable;
+import by.tarasiuk.ct.manager.DatabaseTableName;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -33,11 +33,11 @@ public class AccountRoleDao extends BaseDao<AccountRole> {
         try {
             statement = connection.prepareCall(SQL_PROCEDURE_GET_ACCOUNT_ROLE_NAME_BY_ID);
             statement.setString(ParameterIndex.ID, String.valueOf(id));
-            statement.registerOutParameter(DatabaseTable.ACCOUNT_ROLE_NAME.getColumnName(), Types.VARCHAR);
+            statement.registerOutParameter(DatabaseTableName.ACCOUNT_ROLE_NAME.getColumnName(), Types.VARCHAR);
 
             ResultSet result = statement.executeQuery();
             if (result.next()) {
-                String accountRoleName = result.getString(DatabaseTable.ACCOUNT_ROLE_NAME.getColumnName());
+                String accountRoleName = result.getString(DatabaseTableName.ACCOUNT_ROLE_NAME.getColumnName());
                 AccountRole accountRole = AccountRole.valueOf(accountRoleName);
 
                 return Optional.of(accountRole);

@@ -1,6 +1,6 @@
 package by.tarasiuk.ct.util;
 
-import by.tarasiuk.ct.manager.AttributeName;
+import by.tarasiuk.ct.manager.RequestAttribute;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -41,13 +41,13 @@ public class AccountValidator {
             return false;
         }
 
-        String login = accountData.get(AttributeName.USER_LOGIN);
-        String email = accountData.get(AttributeName.USER_EMAIL);
-        String registrationDate = accountData.get(AttributeName.USER_REGISTRATION_DATE);
-        String phoneNumber = accountData.get(AttributeName.USER_PHONE_NUMBER);
-        String address = accountData.get(AttributeName.USER_ADDRESS);
-        String roleName = accountData.get(AttributeName.USER_ROLE_ID);
-        String statusName = accountData.get(AttributeName.USER_STATUS_ID);
+        String login = accountData.get(RequestAttribute.USER_LOGIN);
+        String email = accountData.get(RequestAttribute.USER_EMAIL);
+        String registrationDate = accountData.get(RequestAttribute.USER_REGISTRATION_DATE);
+        String phoneNumber = accountData.get(RequestAttribute.USER_PHONE_NUMBER);
+        String address = accountData.get(RequestAttribute.USER_ADDRESS);
+        String roleName = accountData.get(RequestAttribute.USER_ROLE_ID);
+        String statusName = accountData.get(RequestAttribute.USER_STATUS_ID);
 
         return isValidLogin(login) && isValidPassword(password) && password.equals(confirmPassword)
                 && isValidEmail(email) && isValidRegistrationDate(registrationDate)

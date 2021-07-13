@@ -20,7 +20,7 @@ import java.util.Optional;
 /**
  * Controller - the main application servlet that processing all requests to the server and forms responses.
  */
-@WebServlet("/controller")
+@WebServlet(urlPatterns = {"/controller"})
 public class Controller extends HttpServlet {
     private static final Logger LOGGER = LogManager.getLogger();
     /**
@@ -73,6 +73,7 @@ public class Controller extends HttpServlet {
             RequestDispatcher dispatcher = request.getRequestDispatcher(pagePath);
             dispatcher.forward(request, response);
         } else {
+            LOGGER.info("Command was not found, forward to: {}.", PagePath.MAIN);
             String contextPath = request.getContextPath();
             response.sendRedirect(contextPath + PagePath.MAIN);
         }

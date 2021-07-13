@@ -5,7 +5,7 @@ import by.tarasiuk.ct.entity.*;
 import by.tarasiuk.ct.exception.CryptException;
 import by.tarasiuk.ct.exception.DaoException;
 import by.tarasiuk.ct.exception.ServiceException;
-import by.tarasiuk.ct.manager.AttributeName;
+import by.tarasiuk.ct.manager.RequestAttribute;
 import by.tarasiuk.ct.model.dao.impl.AccountDao;
 import by.tarasiuk.ct.model.dao.provider.DaoProvider;
 import by.tarasiuk.ct.model.service.AccountAction;
@@ -46,25 +46,25 @@ public class AccountService implements AccountAction {
             LOGGER.warn("Failed to encrypt password: {}.", passwordWithoutEncrypt);
             throw new ServiceException("Failed to encrypt password: " + passwordWithoutEncrypt, e);
         } catch (DaoException e) {
-            LOGGER.warn("Failed to create account with login \"{}\" into database.", accountData.get(AttributeName.USER_LOGIN));
-            throw new ServiceException("Failed to create account with login \"" + accountData.get(AttributeName.USER_LOGIN)  + "\" into database.", e);
+            LOGGER.warn("Failed to create account with login \"{}\" into database.", accountData.get(RequestAttribute.USER_LOGIN));
+            throw new ServiceException("Failed to create account with login \"" + accountData.get(RequestAttribute.USER_LOGIN)  + "\" into database.", e);
         }
     }
 
     private Account getAccountFromMap(Map<String, String> accountData) {
-        String login = accountData.get(AttributeName.USER_LOGIN);
-        String email = accountData.get(AttributeName.USER_EMAIL);
+        String login = accountData.get(RequestAttribute.USER_LOGIN);
+        String email = accountData.get(RequestAttribute.USER_EMAIL);
 
-        String registrationDateString = accountData.get(AttributeName.USER_REGISTRATION_DATE);
+        String registrationDateString = accountData.get(RequestAttribute.USER_REGISTRATION_DATE);
         LocalDate registrationDate = LocalDate.parse(registrationDateString);
 
-        String phoneNumber = accountData.get(AttributeName.USER_PHONE_NUMBER);
-        String address = accountData.get(AttributeName.USER_ADDRESS);
+        String phoneNumber = accountData.get(RequestAttribute.USER_PHONE_NUMBER);
+        String address = accountData.get(RequestAttribute.USER_ADDRESS);
 
-        String roleName = accountData.get(AttributeName.USER_ROLE_ID);
+        String roleName = accountData.get(RequestAttribute.USER_ROLE_ID);
         AccountRole role = AccountRole.valueOf(roleName.toUpperCase());
 
-        String statusName = accountData.get(AttributeName.USER_STATUS_ID);
+        String statusName = accountData.get(RequestAttribute.USER_STATUS_ID);
         AccountStatus status = AccountStatus.valueOf(statusName.toUpperCase());
 
         Account account = new Account();

@@ -3,6 +3,7 @@ package by.tarasiuk.ct.entity;
 import java.time.LocalDate;
 
 public class Account implements Entity {
+    private static final long serialVersionUID = 44109233988771624L;
     private String login;
     private String email;
     private LocalDate registrationDate;

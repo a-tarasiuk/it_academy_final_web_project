@@ -4,7 +4,7 @@ import by.tarasiuk.ct.entity.AccountStatus;
 import by.tarasiuk.ct.entity.Entity;
 import by.tarasiuk.ct.exception.DaoException;
 import by.tarasiuk.ct.model.dao.BaseDao;
-import by.tarasiuk.ct.manager.DatabaseTable;
+import by.tarasiuk.ct.manager.DatabaseTableName;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -43,11 +43,11 @@ public class AccountStatusDao extends BaseDao<AccountStatus> {
         try {
             statement = connection.prepareCall(SQL_PROCEDURE_GET_ACCOUNT_STATUS_NAME_BY_ID);
             statement.setString(ParameterIndex.ID, String.valueOf(id));
-            statement.registerOutParameter(DatabaseTable.ACCOUNT_STATUS_NAME.getColumnName(), Types.VARCHAR);
+            statement.registerOutParameter(DatabaseTableName.ACCOUNT_STATUS_NAME.getColumnName(), Types.VARCHAR);
 
             ResultSet result = statement.executeQuery();
             if (result.next()) {
-                String accountStatusName = result.getString(DatabaseTable.ACCOUNT_STATUS_NAME.getColumnName());
+                String accountStatusName = result.getString(DatabaseTableName.ACCOUNT_STATUS_NAME.getColumnName());
                 AccountStatus accountStatus = AccountStatus.valueOf(accountStatusName);
 
                 return Optional.of(accountStatus);

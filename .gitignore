@@ -1,4 +1,6 @@
+.gitignore
 ct/.idea/
+ct/database/.idea
 ct/logs/
 ct/out/
 ct/target/
