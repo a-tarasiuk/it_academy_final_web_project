@@ -5,7 +5,7 @@ import by.tarasiuk.ct.exception.DaoException;
 
 import java.util.Optional;
 
-public interface AccountDaoAction {
-    Optional<Account> getAccountByLogin(String requiredLogin) throws DaoException;
+public interface AccountDao {
+    Optional<Account> findAccountByLogin(String requiredLogin) throws DaoException;
     boolean createAccount(Account account, String password) throws DaoException;
 }

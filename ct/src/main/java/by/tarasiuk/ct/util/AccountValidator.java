@@ -10,7 +10,6 @@ import java.util.regex.Pattern;
 
 public class AccountValidator {
     private static final Logger LOGGER = LogManager.getLogger();
-    private static final AccountValidator instance = new AccountValidator();
     private static final String REGEX_VALID_LOGIN = "";
     private static final String REGEX_VALID_PASSWORD = "";
     private static final String REGEX_VALID_EMAIL = "";
@@ -24,11 +23,7 @@ public class AccountValidator {
     private AccountValidator() {
     }
 
-    public static AccountValidator getInstance() {
-        return instance;
-    }
-
-    public boolean isValidSingInData(String login, String password) {
+    public static boolean isValidSingInData(String login, String password) {
         if(login == null || password == null || login.isEmpty() || password.isEmpty() || !login.equals(password)) {
             return false;
         }
@@ -36,7 +31,7 @@ public class AccountValidator {
         return isValidLogin(login) && isValidPassword(password);
     }
 
-    public boolean isValidSingUpData(Map<String, String> accountData, String password, String confirmPassword) {
+    public static boolean isValidSingUpData(Map<String, String> accountData, String password, String confirmPassword) {
         if(accountData.isEmpty() || accountData.size() != COUNT_SING_UP_DATA) {
             return false;
         }

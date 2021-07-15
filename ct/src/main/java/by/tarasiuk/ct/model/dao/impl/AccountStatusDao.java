@@ -36,7 +36,7 @@ public class AccountStatusDao extends BaseDao<AccountStatus> {
     }
 
     @Override
-    public Optional<AccountStatus> getEntityById(int id) throws DaoException {
+    public Optional<AccountStatus> findEntityById(int id) throws DaoException {
         Connection connection = connectionPool.getConnection();
         CallableStatement statement = null;
 

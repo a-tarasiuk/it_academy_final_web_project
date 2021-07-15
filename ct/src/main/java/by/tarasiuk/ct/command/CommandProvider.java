@@ -1,4 +1,4 @@
-package by.tarasiuk.ct.command.provider;
+package by.tarasiuk.ct.command;
 
 import by.tarasiuk.ct.command.Command;
 import by.tarasiuk.ct.command.CommandType;
@@ -29,12 +29,7 @@ public class CommandProvider {
                 .map(CommandType::getCommand)
                 .findFirst();
 
-        if(command.isPresent()) {
-            LOGGER.info("Found command: {}.", commandValue);
-        } else {
-            LOGGER.info("Command '{}' was not found.", commandValue);
-        }
-
+        LOGGER.info(command.isPresent() ? "Command '{}' was found." : "Command '{}' was not found.", commandValue);
         return command;
     }
 }

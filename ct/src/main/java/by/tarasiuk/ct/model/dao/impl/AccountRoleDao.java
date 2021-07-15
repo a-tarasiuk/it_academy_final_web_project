@@ -26,7 +26,7 @@ public class AccountRoleDao extends BaseDao<AccountRole> {
     }
 
     @Override
-    public Optional<AccountRole> getEntityById(int id) throws DaoException {
+    public Optional<AccountRole> findEntityById(int id) throws DaoException {
         Connection connection = connectionPool.getConnection();
         CallableStatement statement = null;
 

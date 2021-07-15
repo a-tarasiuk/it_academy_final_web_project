@@ -1,13 +1,10 @@
 package by.tarasiuk.ct.model.dao.impl;
 
 import by.tarasiuk.ct.entity.Account;
-import by.tarasiuk.ct.entity.AccountRole;
-import by.tarasiuk.ct.entity.AccountStatus;
 import by.tarasiuk.ct.entity.Entity;
 import by.tarasiuk.ct.exception.DaoException;
-import by.tarasiuk.ct.model.dao.AccountDaoAction;
 import by.tarasiuk.ct.model.dao.BaseDao;
-import by.tarasiuk.ct.manager.DatabaseTableName;
+import by.tarasiuk.ct.manager.Account.ColumnName;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -17,25 +14,22 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
-public class AccountDao extends BaseDao<Account> implements AccountDaoAction {
+public class AccountDaoImpl extends BaseDao<Account> implements by.tarasiuk.ct.model.dao.AccountDao {
     private static final Logger LOGGER = LogManager.getLogger();
-    private static final AccountDao instance = new AccountDao();
-
-    private static final AccountRoleDao accountRoleDao = daoProvider.getAccountRoleDao();
-    private static final AccountStatusDao accountStatusDao = daoProvider.getAccountStatusDao();
+    private static final AccountDaoImpl instance = new AccountDaoImpl();
     
     private final String SQL_PROCEDURE_CREATE_ACCOUNT = "{call create_account (?, ?, ?, ?, ?, ?, ?, ?)}";   // todo: посмотреть, может тут нужна не процедура, а функция
     private final String SQL_PROCEDURE_GET_ACCOUNT_BY_LOGIN = "{call get_account_by_login (?)}";
 
-    private AccountDao() {
+    private AccountDaoImpl() {
     }
 
-    public static AccountDao getInstance() {
+    public static AccountDaoImpl getInstance() {
         return instance;
     }
 
     @Override
-    public Optional<Account> getEntityById(int id) throws DaoException {
+    public Optional<Account> findEntityById(int id) throws DaoException {
         return Optional.empty(); // todo
     }
 
@@ -50,7 +44,7 @@ public class AccountDao extends BaseDao<Account> implements AccountDaoAction {
     }
 
     @Override
-    public Optional<Account> getAccountByLogin(String login) throws DaoException {
+    public Optional<Account> findAccountByLogin(String login) throws DaoException {
         Connection connection = connectionPool.getConnection();
         CallableStatement statement = null;
         Account account = null;
@@ -58,26 +52,26 @@ public class AccountDao extends BaseDao<Account> implements AccountDaoAction {
         try {
             statement = connection.prepareCall(SQL_PROCEDURE_GET_ACCOUNT_BY_LOGIN);
             statement.setString(ParameterIndex.LOGIN, login);
-            statement.registerOutParameter(DatabaseTableName.ACCOUNT_LOGIN.getColumnName(), Types.VARCHAR);
-            statement.registerOutParameter(DatabaseTableName.ACCOUNT_EMAIL.getColumnName(), Types.DATE);
-            statement.registerOutParameter(DatabaseTableName.ACCOUNT_REGISTRATION_DATE.getColumnName(), Types.VARCHAR);
-            statement.registerOutParameter(DatabaseTableName.ACCOUNT_PHONE_NUMBER.getColumnName(), Types.VARCHAR);
-            statement.registerOutParameter(DatabaseTableName.ACCOUNT_ADDRESS.getColumnName(), Types.SMALLINT);
-            statement.registerOutParameter(DatabaseTableName.ACCOUNT_ROLE_ID.getColumnName(), Types.SMALLINT);
-            statement.registerOutParameter(DatabaseTableName.ACCOUNT_STATUS_ID.getColumnName(), Types.VARCHAR);
+            statement.registerOutParameter(Account.ColumnName.accountLogin, Types.VARCHAR);
+            statement.registerOutParameter(Account.ColumnName.accountEmail, Types.DATE);
+            statement.registerOutParameter(Account.ColumnName.accountRegistrationDate, Types.VARCHAR);
+            statement.registerOutParameter(Account.ColumnName.accountPhoneNumber, Types.VARCHAR);
+            statement.registerOutParameter(Account.ColumnName.accountAddress, Types.SMALLINT);
+            statement.registerOutParameter(Account.ColumnName.accountRoleId, Types.SMALLINT);
+            statement.registerOutParameter(Account.ColumnName.accountStatusId, Types.VARCHAR);
 
             ResultSet result = statement.executeQuery();
             if (result.next()) {
-                String loginFromDb = result.getString(DatabaseTableName.ACCOUNT_LOGIN.getColumnName());
-                String email = result.getString(DatabaseTableName.ACCOUNT_PASSWORD.getColumnName());
-                String registrationDateString = result.getString(DatabaseTableName.ACCOUNT_PASSWORD.getColumnName());
+                String loginFromDb = result.getString(Account.ColumnName.accountLogin);
+                String email = result.getString(Account.ColumnName.accountPassword);
+                String registrationDateString = result.getString(Account.ColumnName.accountRegistrationDate);
                 LocalDate registrationDate = LocalDate.parse(registrationDateString);
-                String phoneNumber = result.getString(DatabaseTableName.ACCOUNT_PASSWORD.getColumnName());
-                String address = result.getString(DatabaseTableName.ACCOUNT_PASSWORD.getColumnName());
+                String phoneNumber = result.getString(Account.ColumnName.accountPhoneNumber);
+                String address = result.getString(Account.ColumnName.accountPassword);
 
                 // правильно ли тут реализовано получения AccountRole
-                int accountRoleId = Integer.parseInt(result.getString(DatabaseTableName.ACCOUNT_PASSWORD.getColumnName()));
-                Optional<AccountRole> optionalAccountRole = accountRoleDao.getEntityById(accountRoleId);
+                int accountRoleId = Integer.parseInt(result.getString(Account.ColumnName.ACCOUNT_PASSWORD));
+                Optional<Account.AccountRole> optionalAccountRole = accountRoleDao.getEntityById(accountRoleId);
                 AccountRole accountRole = null;
                 if(optionalAccountRole.isPresent()) {
                     accountRole = optionalAccountRole.get();
@@ -86,7 +80,7 @@ public class AccountDao extends BaseDao<Account> implements AccountDaoAction {
                     return Optional.empty();
                 }
 
-                int accountStatusId = Integer.parseInt(result.getString(DatabaseTableName.ACCOUNT_PASSWORD.getColumnName()));
+                int accountStatusId = Integer.parseInt(result.getString(Account.ColumnName.ACCOUNT_PASSWORD));
                 Optional<AccountStatus> optionalAccountStatus = accountStatusDao.getEntityById(accountStatusId);
                 AccountStatus accountStatus = null;
                 if(optionalAccountStatus.isPresent()) {
@@ -143,8 +137,8 @@ public class AccountDao extends BaseDao<Account> implements AccountDaoAction {
             statement.setString(ParameterIndex.REGISTRATION_DATE, registrationDate);
             statement.setString(ParameterIndex.PHONE_NUMBER, account.getPhoneNumber());
             statement.setString(ParameterIndex.ADDRESS, account.getAddress());
-            statement.setString(ParameterIndex.ACCOUNT_ROLE_NAME, account.getAccountRole().toString());
-            statement.setString(ParameterIndex.ACCOUNT_STATUS_NAME, account.getAccountStatus().toString());
+            statement.setString(ParameterIndex.ACCOUNT_ROLE_NAME, account.getAccountRole());
+            statement.setString(ParameterIndex.ACCOUNT_STATUS_NAME, account.getAccountStatus());
         } catch (SQLException e) {
             LOGGER.error("Failed to create CallableStatement object.");
             throw new DaoException("Failed to create CallableStatement object.");

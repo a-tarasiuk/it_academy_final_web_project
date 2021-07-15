@@ -3,7 +3,6 @@ package by.tarasiuk.ct.model.dao;
 import by.tarasiuk.ct.entity.Entity;
 import by.tarasiuk.ct.exception.DaoException;
 import by.tarasiuk.ct.model.connection.ConnectionPool;
-import by.tarasiuk.ct.model.dao.provider.DaoProvider;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -20,9 +19,9 @@ public abstract class BaseDao <E extends Entity> {
 
     public abstract List<Entity> findAll() throws DaoException;
     public abstract E update(E entity) throws DaoException;
-    public abstract Optional<E> getEntityById(int id) throws DaoException;
+    public abstract Optional<E> findEntityById(int id) throws DaoException;
 
-    public void closeConnection(Connection connection) throws DaoException {
+    public void closeConnection(Connection connection) {
         if(connection != null) {
             try {
                 if(!connection.getAutoCommit()) {
@@ -31,18 +30,17 @@ public abstract class BaseDao <E extends Entity> {
 
                 connection.close();
             } catch (SQLException e) {
-                // todo
+                LOGGER.error("Can't close connection '{}'.", connection, e);
             }
         }
     }
 
-    public void closeStatement(Statement statement) throws DaoException {
+    public void closeStatement(Statement statement) {
         if(statement != null) {
             try {
                 statement.close();
             } catch (SQLException e) {
-                LOGGER.error("Database access error occurs when trying to close Statement object.", e);
-                throw new DaoException("Database access error occurs when trying to close Statement object." + e);
+                LOGGER.error("Can't close statement '{}'.", statement, e);
             }
         }
     }

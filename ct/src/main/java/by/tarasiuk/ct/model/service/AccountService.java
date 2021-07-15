@@ -6,7 +6,7 @@ import by.tarasiuk.ct.exception.ServiceException;
 import java.util.Map;
 import java.util.Optional;
 
-public interface AccountAction {
+public interface AccountService {
     Optional<Account> signIn(String login, String password) throws ServiceException;
     boolean signUp(Map<String, String> accountData, String password, String confirmPassword) throws ServiceException;
 }

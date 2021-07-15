@@ -1,12 +1,12 @@
-package by.tarasiuk.ct.model.dao.provider;
+package by.tarasiuk.ct.model.dao;
 
-import by.tarasiuk.ct.model.dao.impl.AccountDao;
+import by.tarasiuk.ct.model.dao.impl.AccountDaoImpl;
 import by.tarasiuk.ct.model.dao.impl.AccountRoleDao;
 import by.tarasiuk.ct.model.dao.impl.AccountStatusDao;
 
 public class DaoProvider {
     private static final DaoProvider instance = new DaoProvider();
-    private static final AccountDao accountDao = AccountDao.getInstance();
+    private static final AccountDaoImpl ACCOUNT_DAO_IMPL = AccountDaoImpl.getInstance();
     private static final AccountRoleDao accountRoleDao = AccountRoleDao.getInstance();
     private static final AccountStatusDao accountStatusDao = AccountStatusDao.getInstance();
 
@@ -17,8 +17,8 @@ public class DaoProvider {
         return instance;
     }
 
-    public AccountDao getAccountDao() {
-        return accountDao;
+    public AccountDaoImpl getAccountDao() {
+        return ACCOUNT_DAO_IMPL;
     }
 
     public AccountRoleDao getAccountRoleDao() {

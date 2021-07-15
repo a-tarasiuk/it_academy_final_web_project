@@ -1,4 +1,4 @@
-package by.tarasiuk.ct.command.filter;
+package by.tarasiuk.ct.controller.filter;
 
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;

@@ -3,7 +3,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page isELIgnored="false"%>
 
-<fmt:setBundle basename="locale" />
+<fmt:setLocale value="${sessionScope.locale_page}"/>
+<fmt:setBundle basename="locale"/>
 
 <html lang="en">
 <head>
@@ -14,35 +15,37 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/font-awesome.min.css">
 
     <script src="${pageContext.request.contextPath}/js/validation.js"></script>
-    <title>Sign up</title>
+    <title><fmt:message key="form.signUp.title"/></title>
 </head>
 <body>
 <div id="container">
     <div id="main">
-        <div id="window-title" class="row"><fmt:message key="message.form.signup"/></div>
+        <div id="window-title" class="row"><fmt:message key="form.signUp.message"/></div>
 
         <form action="controller" method="post" novalidate>
             <div class="row">
-                <label class="description">* All fields are!</label>
+                <label class="description">
+                    <fmt:message key="form.signUp.warning"/>
+                </label>
             </div>
 
             <div class="row">
                 <div class="block">
                     <div class="data">
                         <span class="icon icon-user"></span>
-                        <input type="text" name="first_name" placeholder="First name">
+                        <input type="text" name="first_name" placeholder="<fmt:message key="placeholder.userFirstName"/>">
                     </div>
 
-                    <label class="description">First name may contain only letters. <br>Min. lengths - 3 characters. <br>Max. lengths - 50 characters.</label>
+                    <label class="description"><fmt:message key="description.valid.userFirstName"/></label>
                 </div>
 
                 <div class="block">
                     <div class="data">
                         <span class="icon icon-user"></span>
-                        <input type="text" name="last_name" placeholder="Last name">
+                        <input type="text" name="last_name" placeholder="<fmt:message key="placeholder.userLastName"/>">
                     </div>
 
-                    <label class="description">Last name may contain only letters. <br>Min. lengths - 3 characters. <br>Max. lengths - 50 characters.</label>
+                    <label class="description"><fmt:message key="description.valid.userLastName"/></label>
                 </div>
             </div>
 
@@ -50,19 +53,19 @@
                 <div class="block">
                     <div class="data">
                         <span class="icon icon-user-circle-o"></span>
-                        <input type="text" name="user_login" placeholder="Login">
+                        <input type="text" name="user_login" placeholder="<fmt:message key="placeholder.userLogin"/>">
                     </div>
 
-                    <label class="description">Login may contain only letters and numbers. <br>Min. lengths - 3 characters. <br>Max. lengths - 50 characters.</label>
+                    <label class="description"><fmt:message key="description.valid.userLogin"/></label>
                 </div>
 
                 <div class="block">
                     <div class="data">
                         <span class="icon icon-email"></span>
-                        <input type="email" name="user_email" placeholder="Email@host.com">
+                        <input type="email" name="user_email" placeholder="<fmt:message key="placeholder.userEmail"/>">
                     </div>
 
-                    <label class="description">Specify the real address, it's necessary to activate your account.</label>
+                    <label class="description"><fmt:message key="description.valid.userEmail"/></label>
                 </div>
             </div>
 
@@ -70,10 +73,10 @@
                 <div class="block">
                     <div class="data">
                         <span class="icon icon-building"></span>
-                        <input type="text" name="company_name" placeholder="Company name">
+                        <input type="text" name="company_name" placeholder="<fmt:message key="placeholder.companyName"/>">
                     </div>
 
-                    <label class="description">Company name may contain only letters and symbols of tire &#171;-&#187;. <br>Min. lengths - 3 characters. <br>Max. lengths - 150 characters.</label>
+                    <label class="description"><fmt:message key="description.valid.companyName"/></label>
                 </div>
 
                 <div class="block">
@@ -81,7 +84,7 @@
                         <span class="icon icon-globe"></span>
 
                         <select name="country_name">
-                            <option selected disabled>Select country</option>
+                            <option selected disabled><fmt:message key="placeholder.selectCompanyCountry"/></option>
                             <option>RUS</option>
                             <option>BLR</option>
                             <option>POL</option>
@@ -91,7 +94,7 @@
                         </select>
                     </div>
 
-                    <label class="description">Country of registration company.</label>
+                    <label class="description"><fmt:message key="description.valid.companyCountry"/></label>
                 </div>
             </div>
 
@@ -99,19 +102,19 @@
                 <div class="block">
                     <div class="data">
                         <span class="icon icon-map-marker"></span>
-                        <input type="text" name="company_address" placeholder="Company address">
+                        <input type="text" name="company_address" placeholder="<fmt:message key="placeholder.companyAddress"/>">
                     </div>
 
-                    <label class="description">Specify the real address company.<br>Min. lengths - 3 characters. <br>Max. lengths - 200 characters.</label>
+                    <label class="description"><fmt:message key="description.valid.companyAddress"/></label>
                 </div>
 
                 <div class="block">
                     <div class="data">
                         <span class="icon icon-phone"></span>
-                        <input type="text" name="company_phone" placeholder="+375 (29) 205-47-01">
+                        <input type="text" name="company_phone" placeholder="<fmt:message key="placeholder.companyPhoneNumber"/>">
                     </div>
 
-                    <label class="description">Specify the real phone number for communication so that other freight forwarders can contact you.</label>
+                    <label class="description"><fmt:message key="description.valid.companyPhone"/></label>
                 </div>
             </div>
 
@@ -119,25 +122,25 @@
                 <div class="block">
                     <div class="data">
                         <span class="icon icon-lock"></span>
-                        <input type="password" name="user_password" placeholder="Password">
+                        <input type="password" name="user_password" placeholder="<fmt:message key="placeholder.userPassword"/>">
                     </div>
 
-                    <label class="description">Your password may be from 8 to 30 characters long.</label>
+                    <label class="description"><fmt:message key="description.valid.userPassword"/></label>
                 </div>
 
                 <div class="block">
                     <div class="data">
                         <span class="icon icon-lock"></span>
-                        <input type="password" name="user_confirm_password" placeholder="Confirm password">
+                        <input type="password" name="user_confirm_password" placeholder="<fmt:message key="placeholder.userConfirmPassword"/>">
                     </div>
 
-                    <label class="description">Confirm your password.</label>
+                    <label class="description"><fmt:message key="description.valid.userConfirmPassword"/></label>
                 </div>
             </div>
 
             <div class="row">
-                <button class="button-back" name="command" value="go_to_main_page">Main page</button>
-                <button class="button-confirm" name="command">Confirm</button>
+                <button class="button-back" name="command" value="go_to_main_page"><fmt:message key="button.label.mainPage"/></button>
+                <button class="button-confirm" name="command"><fmt:message key="button.label.confirm"/></button>
             </div>
         </form>
     </div>

@@ -9,8 +9,8 @@ public class Account implements Entity {
     private LocalDate registrationDate;
     private String phoneNumber;
     private String address;
-    private AccountRole accountRole;
-    private AccountStatus accountStatus;
+    private RoleName roleName;
+    private StatusName statusName;
 
     public String getLogin() {
         return login;
@@ -52,20 +52,20 @@ public class Account implements Entity {
         this.address = address;
     }
 
-    public AccountRole getAccountRole() {
-        return accountRole;
+    public RoleName getAccountRole() {
+        return roleName;
     }
 
-    public void setAccountRole(AccountRole accountRole) {
-        this.accountRole = accountRole;
+    public void setAccountRole(RoleName accountRole) {
+        this.roleName = accountRole;
     }
 
-    public AccountStatus getAccountStatus() {
-        return accountStatus;
+    public StatusName getAccountStatus() {
+        return statusName;
     }
 
-    public void setAccountStatus(AccountStatus accountStatus) {
-        this.accountStatus = accountStatus;
+    public void setAccountStatus(StatusName accountStatus) {
+        this.statusName = accountStatus;
     }
 
     @Override
@@ -91,8 +91,8 @@ public class Account implements Entity {
         result = 31 * result + (registrationDate != null ? registrationDate.hashCode() : 0);
         result = 31 * result + (phoneNumber != null ? phoneNumber.hashCode() : 0);
         result = 31 * result + (address != null ? address.hashCode() : 0);
-        result = 31 * result + (accountRole != null ? accountRole.hashCode() : 0);
-        result = 31 * result + (accountStatus != null ? accountStatus.hashCode() : 0);
+        result = 31 * result + (roleName != null ? roleName.hashCode() : 0);
+        result = 31 * result + (statusName != null ? statusName.hashCode() : 0);
 
         return result;
     }
@@ -105,8 +105,33 @@ public class Account implements Entity {
                 .append("; registration date: ").append(this.registrationDate)
                 .append("; phone number: ").append(this.phoneNumber)
                 .append("; address: ").append(this.address)
-                .append("; account role: ").append(this.accountRole)
-                .append("; account status: ").append(this.accountStatus)
+                .append("; account role: ").append(this.roleName)
+                .append("; account status: ").append(this.statusName)
                 .append("}\n").toString();
+    }
+
+    // todo передалать вместо enum на public static class, т.к. использование ENUM'ов в этой ситуации - это использование не по назначению
+    public static class RoleName {
+        public static final String GUEST = "GUEST";
+        public static final String ADMINISTRATOR = "ADMINISTRATOR";
+        public static final String COMPANY_MANAGER = "COMPANY_MANAGER";
+        public static final String FORWARDER = "FORWARDER";
+    }
+
+    public static class StatusName {
+        public static final String ACTIVATED = "ACTIVATED";
+        public static final String NOT_ACTIVATED = "NOT_ACTIVATED";
+        public static final String BANNED = "BANNED";
+    }
+
+    public static class ColumnName {
+        public static final String LOGIN = "ACCOUNT_LOGIN";
+        public static final String PASSWORD = "ACCOUNT_PASSWORD";
+        public static final String EMAIL = "ACCOUNT_EMAIL";
+        public static final String REGISTRATION_DATE = "ACCOUNT_REGISTRATION_DATE";
+        public static final String PHONE_NUMBER = "ACCOUNT_PHONE_NUMBER";
+        public static final String ADDRESS = "ACCOUNT_ADDRESS";
+        public static final String ROLE_ID = "ACCOUNT_ROLE_ID";
+        public static final String STATUS_ID = "ACCOUNT_STATUS_ID";
     }
 }

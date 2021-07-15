@@ -15,6 +15,6 @@ public class SessionRequestContent {
     }
 
     public void restore(HttpServletRequest request) {
-        // добавление в запрос и сессию данных для передачи в jsp
+        // добавление в запрос и сессию атрибутов для передачи в jsp
     }
 }

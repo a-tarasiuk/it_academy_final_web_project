@@ -1,7 +1,7 @@
 package by.tarasiuk.ct.controller;
 
 import by.tarasiuk.ct.command.Command;
-import by.tarasiuk.ct.command.provider.CommandProvider;
+import by.tarasiuk.ct.command.CommandProvider;
 import by.tarasiuk.ct.manager.PagePath;
 import by.tarasiuk.ct.model.connection.ConnectionPool;
 import jakarta.servlet.RequestDispatcher;
@@ -14,7 +14,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
-import java.net.InetAddress;
 import java.util.Optional;
 
 /**
@@ -23,6 +22,8 @@ import java.util.Optional;
 @WebServlet(urlPatterns = {"/controller"})
 public class Controller extends HttpServlet {
     private static final Logger LOGGER = LogManager.getLogger();
+    private static final long serialVersionUID = -5845944618545604913L;
+
     /**
      * Default GET method.
      *
@@ -49,16 +50,6 @@ public class Controller extends HttpServlet {
         processRequest(request, response);
     }
 
-    /**
-     * Process receiving request and delegates definition of the command to the {@link CommandProvider}
-     * if {@link by.tarasiuk.ct.command.CommandType} contains command -> forward User to result page
-     * otherwise redirect User to the 404 page.
-     *
-     * @param request HttpServletRequest.
-     * @param response HttpServletResponse.
-     * @throws ServletException general exception of a servlet can throw when it encounters difficulty.
-     * @throws IOException Signals that an I/O exception of some sort has occurred.
-     */
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Definition of a command from JSP
         Optional<Command> optionalCommand = CommandProvider.defineCommand(request);
