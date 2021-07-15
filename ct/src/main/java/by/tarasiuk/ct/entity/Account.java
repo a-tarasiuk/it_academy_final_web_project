@@ -110,20 +110,20 @@ public class Account implements Entity {
                 .append("}\n").toString();
     }
 
+    public enum Role {
+        GUEST,
+        ADMINISTRATOR,
+        COMPANY_MANAGER,
+        FORWARDER
+    }
+
+    public enum Status {
+        ACTIVATED,
+        NOT_ACTIVATED,
+        BANNED
+    }
+
     // todo передалать вместо enum на public static class, т.к. использование ENUM'ов в этой ситуации - это использование не по назначению
-    public static class RoleName {
-        public static final String GUEST = "GUEST";
-        public static final String ADMINISTRATOR = "ADMINISTRATOR";
-        public static final String COMPANY_MANAGER = "COMPANY_MANAGER";
-        public static final String FORWARDER = "FORWARDER";
-    }
-
-    public static class StatusName {
-        public static final String ACTIVATED = "ACTIVATED";
-        public static final String NOT_ACTIVATED = "NOT_ACTIVATED";
-        public static final String BANNED = "BANNED";
-    }
-
     public static class ColumnName {
         public static final String LOGIN = "ACCOUNT_LOGIN";
         public static final String PASSWORD = "ACCOUNT_PASSWORD";
