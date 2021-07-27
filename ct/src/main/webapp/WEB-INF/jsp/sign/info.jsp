@@ -9,24 +9,24 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/font.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/icon.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/font-awesome.min.css">
-    <title><fmt:message key="html.head.title.ct"/></title>
+    <title><fmt:message key="html.head.title.confirmEmail"/></title>
 </head>
 <body>
     <div id="container">
-        <jsp:include page="common/header.jsp"/>
+        <jsp:include page="../common/header.jsp"/>
 
         <div id="middle">
             <div id="info">
-                <span class="icon icon-exclamation-circle x2 icon-green"></span>
-                <span>Welcome to the <b>Cargo Trading!</b></span>
+                <span class="icon icon-info-circle x2 icon-green"></span>
+                <span>${message}</span>
             </div>
         </div>
 
-        <jsp:include page="common/footer.jsp"/>
+        <jsp:include page="../common/footer.jsp"/>
     </div>
 </body>
 </html>

@@ -1,15 +1,14 @@
 package by.tarasiuk.ct.command.impl;
 
 import by.tarasiuk.ct.command.Command;
-import jakarta.servlet.http.HttpServletRequest;
+import by.tarasiuk.ct.controller.RequestContent;
+import by.tarasiuk.ct.manager.PagePath;
 
 public class LogoutCommand implements Command {
     @Override
-    public String execute(HttpServletRequest request) {
-        String page = null;
+    public String execute(RequestContent requestContent) {
         // уничтожение сессии
-        request.getSession().invalidate();
-
-        return page;
+        requestContent.invalidateSession();
+        return PagePath.MAIN;
     }
 }

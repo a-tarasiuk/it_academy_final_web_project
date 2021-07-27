@@ -1,6 +1,5 @@
 package by.tarasiuk.ct.controller.filter;
 
-import by.tarasiuk.ct.manager.RequestAttribute;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
@@ -10,7 +9,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
-import java.util.Locale;
+
+import static by.tarasiuk.ct.manager.RequestAttribute.LOCALE_EN;
+import static by.tarasiuk.ct.manager.RequestAttribute.LOCALE_PAGE;
 
 @WebFilter(filterName = "LocaleFilter", urlPatterns = {"/*"})
 public class LocaleFilter implements Filter {
@@ -19,30 +20,14 @@ public class LocaleFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
-        Locale operationSystemLocale = Locale.getDefault();
-        String operationSystemLanguage = operationSystemLocale.getLanguage();
-        LOGGER.info("Locale on user operation system is: {}.", operationSystemLocale);
 
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
+        HttpSession session = request.getSession();
 
-        HttpSession session = request.getSession(true);
-        String expressionLocalePage = (String) session.getAttribute(RequestAttribute.LOCALE_PAGE);
-
-        if(expressionLocalePage == null) {
-            String language;
-
-            switch (operationSystemLanguage.toLowerCase()) {
-                case RequestAttribute.USER_LOGIN:
-                    language = RequestAttribute.LOCALE_RU;
-                    break;
-                default:
-                    language = RequestAttribute.LOCALE_EN;
-                    break;
-            }
-
-            session.setAttribute(RequestAttribute.LOCALE_PAGE, language);
-            LOGGER.info("Default locale page set to '{}'.", language);
+        if (session.getAttribute(LOCALE_PAGE) == null) {
+            session.setAttribute(LOCALE_PAGE, LOCALE_EN);
+            LOGGER.info("Default locale page set to '{}'.", LOCALE_EN);
         }
 
         filterChain.doFilter(request, response);

@@ -1,16 +1,43 @@
 package by.tarasiuk.ct.entity;
 
+
 import java.time.LocalDate;
 
 public class Account implements Entity {
     private static final long serialVersionUID = 44109233988771624L;
+
+    private long id;
+    private String firstName;
+    private String lastName;
     private String login;
     private String email;
     private LocalDate registrationDate;
-    private String phoneNumber;
-    private String address;
-    private RoleName roleName;
-    private StatusName statusName;
+    private Role role;
+    private Status status;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
     public String getLogin() {
         return login;
@@ -36,36 +63,20 @@ public class Account implements Entity {
         this.registrationDate = registrationDate;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public Role getRole() {
+        return role;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
-    public String getAddress() {
-        return address;
+    public Status getStatus() {
+        return status;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public RoleName getAccountRole() {
-        return roleName;
-    }
-
-    public void setAccountRole(RoleName accountRole) {
-        this.roleName = accountRole;
-    }
-
-    public StatusName getAccountStatus() {
-        return statusName;
-    }
-
-    public void setAccountStatus(StatusName accountStatus) {
-        this.statusName = accountStatus;
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     @Override
@@ -83,55 +94,40 @@ public class Account implements Entity {
         return login != null && login.equals(account.login);
     }
 
-    @Override
-    public int hashCode() {
-        int result = login.hashCode();
-
-        result = 31 * result + (email != null ? email.hashCode() : 0 );
-        result = 31 * result + (registrationDate != null ? registrationDate.hashCode() : 0);
-        result = 31 * result + (phoneNumber != null ? phoneNumber.hashCode() : 0);
-        result = 31 * result + (address != null ? address.hashCode() : 0);
-        result = 31 * result + (roleName != null ? roleName.hashCode() : 0);
-        result = 31 * result + (statusName != null ? statusName.hashCode() : 0);
-
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        return new StringBuilder("Account{")
-                .append("login: ").append(this.login)
-                .append("; email: ").append(this.email)
-                .append("; registration date: ").append(this.registrationDate)
-                .append("; phone number: ").append(this.phoneNumber)
-                .append("; address: ").append(this.address)
-                .append("; account role: ").append(this.roleName)
-                .append("; account status: ").append(this.statusName)
-                .append("}\n").toString();
-    }
-
     public enum Role {
-        GUEST,
         ADMINISTRATOR,
-        COMPANY_MANAGER,
-        FORWARDER
+        MODERATOR,
+        MANAGER,
+        FORWARDER;
+
+        @Override
+        public String toString() {
+            return name().toUpperCase();
+        }
     }
 
     public enum Status {
         ACTIVATED,
         NOT_ACTIVATED,
-        BANNED
+        BANNED;
+
+        @Override
+        public String toString() {
+            return name().toUpperCase();
+        }
     }
 
-    // todo передалать вместо enum на public static class, т.к. использование ENUM'ов в этой ситуации - это использование не по назначению
-    public static class ColumnName {
-        public static final String LOGIN = "ACCOUNT_LOGIN";
-        public static final String PASSWORD = "ACCOUNT_PASSWORD";
-        public static final String EMAIL = "ACCOUNT_EMAIL";
-        public static final String REGISTRATION_DATE = "ACCOUNT_REGISTRATION_DATE";
-        public static final String PHONE_NUMBER = "ACCOUNT_PHONE_NUMBER";
-        public static final String ADDRESS = "ACCOUNT_ADDRESS";
-        public static final String ROLE_ID = "ACCOUNT_ROLE_ID";
-        public static final String STATUS_ID = "ACCOUNT_STATUS_ID";
+    @Override
+    public String toString() {
+        return new StringBuilder("Account{")
+                .append("id='").append(this.id).append('\'')
+                .append(",first name='").append(this.firstName).append('\'')
+                .append(",last name='").append(this.lastName).append('\'')
+                .append(",login='").append(this.login).append('\'')
+                .append(",email='").append(this.email).append('\'')
+                .append(",registration date='").append(this.registrationDate).append('\'')
+                .append(",account role='").append(this.role).append('\'')
+                .append(",account status='").append(this.status).append('\'')
+                .append("}").toString();
     }
 }

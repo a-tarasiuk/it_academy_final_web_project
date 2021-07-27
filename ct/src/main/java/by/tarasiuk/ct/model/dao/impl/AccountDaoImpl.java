@@ -3,23 +3,26 @@ package by.tarasiuk.ct.model.dao.impl;
 import by.tarasiuk.ct.entity.Account;
 import by.tarasiuk.ct.entity.Entity;
 import by.tarasiuk.ct.exception.DaoException;
+import by.tarasiuk.ct.manager.RequestAttribute;
+import by.tarasiuk.ct.model.dao.AccountDao;
 import by.tarasiuk.ct.model.dao.BaseDao;
-import by.tarasiuk.ct.manager.Account.ColumnName;
+import by.tarasiuk.ct.util.AccountBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
-public class AccountDaoImpl extends BaseDao<Account> implements by.tarasiuk.ct.model.dao.AccountDao {
+public class AccountDaoImpl extends BaseDao<Account> implements AccountDao {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final AccountDaoImpl instance = new AccountDaoImpl();
     
-    private final String SQL_PROCEDURE_CREATE_ACCOUNT = "{call create_account (?, ?, ?, ?, ?, ?, ?, ?)}";   // todo: посмотреть, может тут нужна не процедура, а функция
-    private final String SQL_PROCEDURE_GET_ACCOUNT_BY_LOGIN = "{call get_account_by_login (?)}";
+    private final String SQL_PROCEDURE_CREATE_ACCOUNT = "{CALL create_account (?, ?, ?, ?, ?, ?, ?, ?)}";
+    private final String SQL_PROCEDURE_FIND_ACCOUNT_BY_LOGIN = "{CALL find_account_by_login (?)}";
+    private final String SQL_PROCEDURE_FIND_PASSWORD_BY_LOGIN = "{CALL find_password_by_login (?)}";
+    private final String SQL_PROCEDURE_FIND_ACCOUNT_BY_EMAIL = "{CALL find_account_by_email (?)}";
 
     private AccountDaoImpl() {
     }
@@ -46,68 +49,78 @@ public class AccountDaoImpl extends BaseDao<Account> implements by.tarasiuk.ct.m
     @Override
     public Optional<Account> findAccountByLogin(String login) throws DaoException {
         Connection connection = connectionPool.getConnection();
-        CallableStatement statement = null;
-        Account account = null;
+        Optional<Account> findAccount;
 
-        try {
-            statement = connection.prepareCall(SQL_PROCEDURE_GET_ACCOUNT_BY_LOGIN);
-            statement.setString(ParameterIndex.LOGIN, login);
-            statement.registerOutParameter(Account.ColumnName.accountLogin, Types.VARCHAR);
-            statement.registerOutParameter(Account.ColumnName.accountEmail, Types.DATE);
-            statement.registerOutParameter(Account.ColumnName.accountRegistrationDate, Types.VARCHAR);
-            statement.registerOutParameter(Account.ColumnName.accountPhoneNumber, Types.VARCHAR);
-            statement.registerOutParameter(Account.ColumnName.accountAddress, Types.SMALLINT);
-            statement.registerOutParameter(Account.ColumnName.accountRoleId, Types.SMALLINT);
-            statement.registerOutParameter(Account.ColumnName.accountStatusId, Types.VARCHAR);
+        try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_ACCOUNT_BY_LOGIN)) {
+            statement.setString(IndexFind.LOGIN, login);
 
-            ResultSet result = statement.executeQuery();
-            if (result.next()) {
-                String loginFromDb = result.getString(Account.ColumnName.accountLogin);
-                String email = result.getString(Account.ColumnName.accountPassword);
-                String registrationDateString = result.getString(Account.ColumnName.accountRegistrationDate);
-                LocalDate registrationDate = LocalDate.parse(registrationDateString);
-                String phoneNumber = result.getString(Account.ColumnName.accountPhoneNumber);
-                String address = result.getString(Account.ColumnName.accountPassword);
-
-                // правильно ли тут реализовано получения AccountRole
-                int accountRoleId = Integer.parseInt(result.getString(Account.ColumnName.ACCOUNT_PASSWORD));
-                Optional<Account.AccountRole> optionalAccountRole = accountRoleDao.getEntityById(accountRoleId);
-                AccountRole accountRole = null;
-                if(optionalAccountRole.isPresent()) {
-                    accountRole = optionalAccountRole.get();
+            try (ResultSet result = statement.executeQuery()) {
+                if (result.next()) {
+                    Account account = AccountBuilder.buildAccount(result);
+                    findAccount = Optional.of(account);
                 } else {
-                    // todo может ли быть такая ситуация?
-                    return Optional.empty();
+                    findAccount = Optional.empty();
                 }
-
-                int accountStatusId = Integer.parseInt(result.getString(Account.ColumnName.ACCOUNT_PASSWORD));
-                Optional<AccountStatus> optionalAccountStatus = accountStatusDao.getEntityById(accountStatusId);
-                AccountStatus accountStatus = null;
-                if(optionalAccountStatus.isPresent()) {
-                    accountStatus = optionalAccountStatus.get();
-                } else {
-                    // todo может ли быть такая ситуация?
-                    return Optional.empty();
-                }
-
-                account = new Account();
-                account.setLogin(loginFromDb);
-                account.setEmail(email);
-                account.setRegistrationDate(registrationDate);
-                account.setPhoneNumber(phoneNumber);
-                account.setAddress(address);
-                account.setAccountRole(accountRole);
-                account.setAccountStatus(accountStatus);
             }
         } catch (SQLException e) {
-            LOGGER.error("Database access error occurs or this method is called on a closed connection: {}.", connection, e);
-            throw new DaoException("Database access error occurs or this method is called on a closed connection: " + connection, e);
+            LOGGER.error("Error when performing account search by login '{}'.", login, e);
+            throw new DaoException("Error when performing account search by login '" + login + "'.", e);
         } finally {
-            closeStatement(statement);
             closeConnection(connection);
         }
 
-        return Optional.of(account);
+        return findAccount;
+    }
+
+    @Override
+    public Optional<String> findPasswordByLogin(String login) throws DaoException {
+        Connection connection = connectionPool.getConnection();
+        Optional<String> optionalPassword;
+
+        try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_PASSWORD_BY_LOGIN)) {
+            statement.setString(IndexFind.LOGIN, login);
+
+            try (ResultSet result = statement.executeQuery()) {
+                if (result.next()) {
+                    String password = result.getString(RequestAttribute.ACCOUNT_PASSWORD_ENCODED);
+                    optionalPassword = Optional.of(password);
+                } else {
+                    optionalPassword = Optional.empty();
+                }
+            }
+
+            return optionalPassword;
+        } catch (SQLException e) {
+            LOGGER.error("Error when performing account search password by login '{}'.", login, e);
+            throw new DaoException("Error when performing account search password by login '" + login + "'.", e);
+        } finally {
+            closeConnection(connection);
+        }
+    }
+
+    @Override
+    public Optional<Account> findAccountByEmail(String email) throws DaoException {
+        Connection connection = connectionPool.getConnection();
+        Optional<Account> findAccount;
+
+        try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_ACCOUNT_BY_EMAIL)) {
+            statement.setString(IndexFind.EMAIL, email);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    Account account = AccountBuilder.buildAccount(resultSet);
+                    findAccount = Optional.of(account);
+                } else {
+                    findAccount = Optional.empty();
+                }
+            }
+
+            return findAccount;
+        } catch (SQLException e) {
+            LOGGER.error("Error when performing account search by email '{}'.", email, e);
+            throw new DaoException("Error when performing account search by email '" + email + "'.", e);
+        } finally {
+            closeConnection(connection);
+        }
     }
 
     /**
@@ -120,52 +133,52 @@ public class AccountDaoImpl extends BaseDao<Account> implements by.tarasiuk.ct.m
      * @see <a href="https://docs.oracle.com/javase/8/docs/api/java/sql/Statement.html#close--">About release statement.</a>
      */
     @Override
-    public boolean createAccount(Account account, String encryptPassword) throws DaoException {
+    public boolean createAccount(Account account, String encodingPassword) throws DaoException {
         Connection connection = connectionPool.getConnection();
-        CallableStatement statement;
-        boolean operationResult;
 
-        try {
-            statement = connection.prepareCall(SQL_PROCEDURE_CREATE_ACCOUNT);
+        String firstName = account.getFirstName();
+        String lastName = account.getLastName();
+        String login = account.getLogin();
+        String email = account.getEmail();
+        LocalDate registrationDate = account.getRegistrationDate();
+        String role = account.getRole().toString();
+        String status = account.getStatus().toString();
 
-            statement.setString(ParameterIndex.LOGIN, account.getLogin());
-            statement.setString(ParameterIndex.PASSWORD, encryptPassword);
-            statement.setString(ParameterIndex.EMAIL, account.getEmail());
-            DateTimeFormatter dateFormatter = DateTimeFormatter.ISO_DATE;
-            LocalDate localDate = account.getRegistrationDate();
-            String registrationDate = localDate.format(dateFormatter);
-            statement.setString(ParameterIndex.REGISTRATION_DATE, registrationDate);
-            statement.setString(ParameterIndex.PHONE_NUMBER, account.getPhoneNumber());
-            statement.setString(ParameterIndex.ADDRESS, account.getAddress());
-            statement.setString(ParameterIndex.ACCOUNT_ROLE_NAME, account.getAccountRole());
-            statement.setString(ParameterIndex.ACCOUNT_STATUS_NAME, account.getAccountStatus());
+        try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_CREATE_ACCOUNT)) {
+            statement.setString(IndexCreate.FIRST_NAME, firstName);
+            statement.setString(IndexCreate.LAST_NAME, lastName);
+            statement.setString(IndexCreate.LOGIN, login);
+            statement.setString(IndexCreate.EMAIL, email);
+            statement.setString(IndexCreate.REGISTRATION_DATE, registrationDate.toString());
+            statement.setString(IndexCreate.PASSWORD_CODED, encodingPassword);
+            statement.setString(IndexCreate.ROLE, role);
+            statement.setString(IndexCreate.STATUS, status);
+
+            statement.executeUpdate();
+
+            LOGGER.info("Account was successfully created in the database: {}.", account);
+            return true;
         } catch (SQLException e) {
-            LOGGER.error("Failed to create CallableStatement object.");
-            throw new DaoException("Failed to create CallableStatement object.");
-        }
-
-        try {
-            operationResult = statement.execute();
-        } catch (SQLException e) {
-            LOGGER.error("Failed to execute SQL statement: {}.", SQL_PROCEDURE_CREATE_ACCOUNT);
-            throw new DaoException("Failed to execute SQL statement: " + SQL_PROCEDURE_CREATE_ACCOUNT, e);
+            LOGGER.error("Failed to create account '{}' in the database.", account);
+            throw new DaoException("Failed to create account '" + account + "' in the database.", e);
         } finally {
-            closeStatement(statement);
             closeConnection(connection);
         }
-
-        LOGGER.info("Account was successfully created into database: {}.", account);
-        return operationResult;
     }
 
-    private static class ParameterIndex {
+    private static final class IndexFind {
         private static final int LOGIN = 1;
-        private static final int PASSWORD = 2;
-        private static final int EMAIL = 3;
-        private static final int REGISTRATION_DATE = 4;
-        private static final int PHONE_NUMBER = 5;
-        private static final int ADDRESS = 6;
-        private static final int ACCOUNT_ROLE_NAME = 7;
-        private static final int ACCOUNT_STATUS_NAME = 8;
+        private static final int EMAIL = 1;
+    }
+
+    private static final class IndexCreate {
+        private static final int FIRST_NAME = 1;
+        private static final int LAST_NAME = 2;
+        private static final int LOGIN = 3;
+        private static final int EMAIL = 4;
+        private static final int REGISTRATION_DATE = 5;
+        private static final int PASSWORD_CODED = 6;
+        private static final int ROLE = 7;
+        private static final int STATUS = 8;
     }
 }

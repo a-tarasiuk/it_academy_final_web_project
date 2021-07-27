@@ -1,5 +1,12 @@
-<div id="footer-block">
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<fmt:setLocale value="${sessionScope.locale_page}" scope="session"/>
+<fmt:setBundle basename="locale"/>
+
+<div id="footer">
     <div id="footer-menu">
-        <span>Powered by Alexander Tarasiuk &#169; 2021</span>
+        <fmt:message key="footer.poweredBy"/>
     </div>
 </div>

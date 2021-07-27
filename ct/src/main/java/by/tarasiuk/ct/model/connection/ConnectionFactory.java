@@ -22,7 +22,7 @@ public class ConnectionFactory {
     static {
         try {
             connectionProperties = PropertiesLoader.getProperties(PROPERTIES_FILE);
-            DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());   // todo (см. properties файл database.propertioes
+            DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
         } catch (IOException e) {
             LOGGER.fatal("Properties cannot be loaded", e);
             throw new RuntimeException("Properties cannot be loaded", e);

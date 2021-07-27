@@ -1,7 +1,5 @@
 package by.tarasiuk.ct.command;
 
-import by.tarasiuk.ct.command.Command;
-import by.tarasiuk.ct.command.CommandType;
 import by.tarasiuk.ct.manager.RequestAttribute;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
@@ -29,7 +27,7 @@ public class CommandProvider {
                 .map(CommandType::getCommand)
                 .findFirst();
 
-        LOGGER.info(command.isPresent() ? "Command '{}' was found." : "Command '{}' was not found.", commandValue);
+        LOGGER.info(command.isPresent() ? "Found command '{}'." : "Command '{}' was not found.", commandValue);
         return command;
     }
 }

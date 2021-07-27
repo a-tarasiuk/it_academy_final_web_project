@@ -58,13 +58,15 @@ public class Controller extends HttpServlet {
         if(optionalCommand.isPresent()) {
             Command command = optionalCommand.get();
 
-            SessionRequestContent requestContent = new SessionRequestContent(); // todo https://youtu.be/JghZuDGUS2o?list=PLdUJrE1a-P0y0P0LGiXcVMZziDBJ0DfN_&t=4153
+            RequestContent requestContent = new RequestContent();
+            requestContent.buildContent(request);
+            pagePath = command.execute(requestContent);
+            requestContent.restore(request);
 
-            pagePath = command.execute(request);
             RequestDispatcher dispatcher = request.getRequestDispatcher(pagePath);
             dispatcher.forward(request, response);
         } else {
-            LOGGER.info("Command was not found, forward to: {}.", PagePath.MAIN);
+            LOGGER.info("Forward to: {}.", PagePath.MAIN);
             String contextPath = request.getContextPath();
             response.sendRedirect(contextPath + PagePath.MAIN);
         }

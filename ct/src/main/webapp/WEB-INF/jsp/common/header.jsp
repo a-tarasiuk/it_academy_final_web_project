@@ -2,8 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<fmt:setLocale value="${sessionScope.locale_page}"/>
 <fmt:setBundle basename="locale" scope="session"/>
+<fmt:setLocale value="${sessionScope.locale_page}"/>
 
 <div id="header">
     <form id="inside-header" action="controller" method="post">

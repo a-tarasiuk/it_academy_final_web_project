@@ -1,14 +1,14 @@
 package by.tarasiuk.ct.command;
 
 
-import jakarta.servlet.http.HttpServletRequest;
+import by.tarasiuk.ct.controller.RequestContent;
 
 /**
  * String - address page for which you need to go
  */
 
 public interface Command {
-    String execute(HttpServletRequest request);
+    String execute(RequestContent content);
 
     default void refresh() {
         // метод для возвращения на ту же самую страницу, это защита от F5
