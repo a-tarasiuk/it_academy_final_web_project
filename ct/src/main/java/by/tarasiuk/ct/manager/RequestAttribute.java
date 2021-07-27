@@ -17,6 +17,11 @@ public class RequestAttribute {
     public static final String LOCALE_RU = "ru";
 
     /**
+     * Administrator attributes
+     */
+    public static final String ACTIVATE_ADMIN_PANEL = "activate_administrator_panel";
+
+    /**
      * Account attributes from JSP page.
      */
     public static final String ACCOUNT = "account";
