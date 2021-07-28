@@ -1,6 +1,6 @@
 package by.tarasiuk.ct.util;
 
-import by.tarasiuk.ct.manager.RequestAttribute;
+import by.tarasiuk.ct.manager.AttributeName;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -38,15 +38,15 @@ public class AccountValidator {
             LOGGER.info("Incorrect sign up data!");
             result = false;
         } else {
-            String firstName = signUp.get(RequestAttribute.ACCOUNT_FIRST_NAME);
-            String lastName = signUp.get(RequestAttribute.ACCOUNT_LAST_NAME);
-            String login = signUp.get(RequestAttribute.ACCOUNT_LOGIN);
-            String email = signUp.get(RequestAttribute.ACCOUNT_EMAIL);
-            String companyName = signUp.get(RequestAttribute.COMPANY_NAME);
-            String companyAddress = signUp.get(RequestAttribute.COMPANY_ADDRESS);
-            String companyPhoneNumber = signUp.get(RequestAttribute.COMPANY_PHONE_NUMBER);
-            String password = signUp.get(RequestAttribute.ACCOUNT_PASSWORD);
-            String confirmPassword = signUp.get(RequestAttribute.ACCOUNT_CONFIRM_PASSWORD);
+            String firstName = signUp.get(AttributeName.ACCOUNT_FIRST_NAME);
+            String lastName = signUp.get(AttributeName.ACCOUNT_LAST_NAME);
+            String login = signUp.get(AttributeName.ACCOUNT_LOGIN);
+            String email = signUp.get(AttributeName.ACCOUNT_EMAIL);
+            String companyName = signUp.get(AttributeName.COMPANY_NAME);
+            String companyAddress = signUp.get(AttributeName.COMPANY_ADDRESS);
+            String companyPhoneNumber = signUp.get(AttributeName.COMPANY_PHONE_NUMBER);
+            String password = signUp.get(AttributeName.ACCOUNT_PASSWORD);
+            String confirmPassword = signUp.get(AttributeName.ACCOUNT_CONFIRM_PASSWORD);
 
             result = isValidFirstName(firstName) && isValidLastName(lastName)
                     && isValidLogin(login) && isValidEmail(email)

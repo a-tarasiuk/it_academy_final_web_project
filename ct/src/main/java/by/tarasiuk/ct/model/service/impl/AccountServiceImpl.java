@@ -1,6 +1,5 @@
 package by.tarasiuk.ct.model.service.impl;
 
-import by.tarasiuk.ct.command.CommandType;
 import by.tarasiuk.ct.entity.Account;
 import by.tarasiuk.ct.exception.DaoException;
 import by.tarasiuk.ct.exception.ServiceException;
@@ -11,28 +10,25 @@ import by.tarasiuk.ct.util.AccountBuilder;
 import by.tarasiuk.ct.util.AccountValidator;
 import by.tarasiuk.ct.util.BouncyCastle;
 import by.tarasiuk.ct.util.EmailSender;
-import by.tarasiuk.ct.util.MessageManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.Map;
 import java.util.Optional;
 
-import static by.tarasiuk.ct.manager.RequestAttribute.ACCOUNT_PASSWORD;
+import static by.tarasiuk.ct.manager.AttributeName.ACCOUNT_PASSWORD;
 
 public class AccountServiceImpl implements AccountService {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final AccountDaoImpl accountDao = DaoProvider.getInstance().getAccountDao();
-    private static final String EMAIL_SUBJECT = "email.signUp.completionRegistration.subject";
-    private static final String TEXT_CONFIRM_EMAIL = "email.signUp.completionRegistration.text";
 
     @Override
-    public boolean validateSignInData(String login, String password) {
+    public boolean validateSignInData(String login, String password) throws ServiceException {
         return AccountValidator.isValidSingInData(login, password);
     }
 
     @Override
-    public boolean validateSignUpData(Map<String, String> signUpData) {
+    public boolean validateSignUpData(Map<String, String> signUpData) throws ServiceException {
         return AccountValidator.isValidSingUpData(signUpData);
     }
 
@@ -60,8 +56,8 @@ public class AccountServiceImpl implements AccountService {
                 LOGGER.info("Account with login '{}' not found in the database.", login);
             }
         } catch (DaoException e) {
-            LOGGER.error("Failed to process the command '{}' with login '{}'.", CommandType.SIGN_IN, login);
-            throw new ServiceException("Failed to process the command '" + CommandType.SIGN_IN +"' with login '" + login + "'.", e);
+            LOGGER.error("Sign in error for login '{}'.", login);
+            throw new ServiceException("Sign in error for login '" + login + "'.", e);
         }
 
         return optionalAccount;
@@ -76,50 +72,47 @@ public class AccountServiceImpl implements AccountService {
         try {
             return accountDao.createAccount(account, encodingPassword);
         } catch (DaoException e) {
-            LOGGER.error("Sign up error for account with login: '{}'.", account.getLogin());
-            throw new ServiceException("Sign up error for account with login: " + account.getLogin(), e);
+            LOGGER.error("Account creation error '{}'.", signUpData);
+            throw new ServiceException("Account creation error: " + signUpData, e);
         }
     }
 
     @Override
-    public boolean isExistLogin(String login) throws ServiceException {
-        boolean result;
+    public void sendActivationEmail(String locale, String firstName, String emailTo, String token) {
+        EmailSender.sendActivationEmail(locale, firstName, emailTo, token);
+    }
+
+    @Override
+    public Optional<Account> findAccountByEmail(String email) throws ServiceException {
+        Optional<Account> optionalAccount;
 
         try {
-            Optional<Account> accountByLogin = accountDao.findAccountByLogin(login);
-            result = accountByLogin.isPresent();
-            LOGGER.info(result ? "{} '{}' is exist in the database." : "{} '{}' not found in the database.", "Account with login", login);
+            optionalAccount = accountDao.findAccountByEmail(email);
+            LOGGER.info(optionalAccount.isPresent()
+                    ? "Successfully was find account by email '{}'."
+                    : "Account with email '{}' not found in the database.", email);
         } catch (DaoException e) {
-            LOGGER.error("Failed to perform account search operation by login: '{}'.", login);
-            throw new ServiceException("Failed to perform account search operation by login: " + login, e);
+            LOGGER.error("Error when searching for an account by mail '{}'.", email);
+            throw new ServiceException("Error when searching for an account by mail '" + email + "'.", e);
         }
 
-        return result;
+        return optionalAccount;
     }
 
     @Override
-    public boolean isExistEmail(String email) throws ServiceException {
-        boolean result;
+    public Optional<Account> findAccountByLogin(String login) throws ServiceException {
+        Optional<Account> optionalAccount;
 
         try {
-            Optional<Account> accountByEmail = accountDao.findAccountByEmail(email);
-            result = accountByEmail.isPresent();
-            LOGGER.info(result ? "{} '{}' is exist in the database." : "{} '{}' not found in the database.", "Account with email", email);
+            optionalAccount = accountDao.findAccountByLogin(login);
+            LOGGER.info(optionalAccount.isPresent()
+                    ? "Successfully was find account by login '{}'."
+                    : "Account with login '{}' not found in the database.", login);
         } catch (DaoException e) {
-            LOGGER.error("Failed to perform account search operation by email: '{}'.", email);
-            throw new ServiceException("Failed to perform account search operation by email: " + email, e);
+            LOGGER.error("Error when searching for an account by login '{}'.", login);
+            throw new ServiceException("Error when searching for an account by login '" + login + "'.", e);
         }
 
-        return result;
-    }
-
-    @Override
-    public void sendActivationEmail(String locale, String firstName, String emailTo) {
-        MessageManager messageManager = MessageManager.getInstance();
-        String emailSubject = messageManager.getMassage(EMAIL_SUBJECT, locale);
-        String formatMessage = messageManager.getMassage(TEXT_CONFIRM_EMAIL, locale);
-        String emailMessage = String.format(formatMessage, firstName, "command=?activate");
-
-        EmailSender.send(emailTo, emailSubject, emailMessage);
+        return optionalAccount;
     }
 }

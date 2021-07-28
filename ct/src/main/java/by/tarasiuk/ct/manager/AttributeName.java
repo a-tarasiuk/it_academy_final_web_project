@@ -1,7 +1,7 @@
 package by.tarasiuk.ct.manager;
 
-public class RequestAttribute {
-    private RequestAttribute() {
+public class AttributeName {
+    private AttributeName() {
     }
 
     /**
@@ -13,13 +13,13 @@ public class RequestAttribute {
      * Locale attributes from JSP page.
      */
     public static final String LOCALE_PAGE = "locale_page";
-    public static final String LOCALE_EN = "en";
-    public static final String LOCALE_RU = "ru";
+    public static final String LOCALE_EN_US = "en_US";
+    public static final String LOCALE_RU_RU = "ru_RU";
 
     /**
      * Administrator attributes
      */
-    public static final String ACTIVATE_ADMIN_PANEL = "activate_administrator_panel";
+    public static final String SHOW_ADMIN_PANEL = "show_administrator_panel";
 
     /**
      * Account attributes from JSP page.
@@ -44,6 +44,11 @@ public class RequestAttribute {
     public static final String COMPANY_NAME = "company_name";
     public static final String COMPANY_ADDRESS = "company_address";
     public static final String COMPANY_PHONE_NUMBER = "company_phone_number";
+
+    /**
+     * Token attributes.
+     */
+    public static final String TOKEN_NUMBER = "token_number";
 
     /**
      * Message attributes from JSP page.

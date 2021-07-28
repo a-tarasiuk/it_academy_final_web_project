@@ -7,17 +7,11 @@ import java.util.Map;
 import java.util.Optional;
 
 public interface AccountService {
-    boolean validateSignInData(String login, String password);
-
-    boolean validateSignUpData(Map<String, String> signUpData);
-
-    Optional<Account> signIn(String login, String password) throws ServiceException;
-
+    void sendActivationEmail(String locale, String firstName, String emailTo, String token) throws ServiceException;
+    boolean validateSignInData(String login, String password) throws ServiceException;
+    boolean validateSignUpData(Map<String, String> signUpData) throws ServiceException;
     boolean createNewAccount(Map<String, String> signUpData) throws ServiceException;
-
-    boolean isExistLogin(String login) throws ServiceException;
-
-    boolean isExistEmail(String email) throws ServiceException;
-
-    void sendActivationEmail(String locale, String firstName, String emailTo);
+    Optional<Account> signIn(String login, String password) throws ServiceException;
+    Optional<Account> findAccountByEmail(String email) throws ServiceException;
+    Optional<Account> findAccountByLogin(String login) throws ServiceException;
 }

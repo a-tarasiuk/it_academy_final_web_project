@@ -8,7 +8,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.HashMap;
 
-import static by.tarasiuk.ct.manager.RequestAttribute.*;
+import static by.tarasiuk.ct.manager.AttributeName.*;
 
 public class ChangeLanguagePageCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -19,10 +19,10 @@ public class ChangeLanguagePageCommand implements Command {
 
         String locale = (String) session.get(LOCALE_PAGE);
 
-        if (LOCALE_RU.equalsIgnoreCase(locale)) {
-            requestContent.putSessionAttribute(LOCALE_PAGE, LOCALE_EN);
+        if (LOCALE_RU_RU.equalsIgnoreCase(locale)) {
+            requestContent.putSessionAttribute(LOCALE_PAGE, LOCALE_EN_US);
         } else {
-            requestContent.putSessionAttribute(LOCALE_PAGE, LOCALE_RU);
+            requestContent.putSessionAttribute(LOCALE_PAGE, LOCALE_RU_RU);
         }
 
         LOGGER.info("Locale page change to '{}'.", locale);

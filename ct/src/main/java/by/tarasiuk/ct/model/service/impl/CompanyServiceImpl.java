@@ -18,7 +18,8 @@ public class CompanyServiceImpl implements CompanyService {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final CompanyDaoImpl companyDao = DaoProvider.getInstance().getCompanyDao();
 
-    public boolean validateCompany(Map<String, String> companyData) {
+    @Override
+    public boolean validateCompany(Map<String, String> companyData) throws ServiceException {
         return CompanyValidator.isValidCompany(companyData);
     }
 
@@ -35,18 +36,19 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public boolean isExistCompany(String name) throws ServiceException {
-        boolean result;
+    public Optional<Company> findCompanyByName(String name) throws ServiceException {
+        Optional<Company> optionalCompany;
 
         try {
-            Optional<Company> company = companyDao.findCompanyByName(name);
-            result = company.isPresent();
-            LOGGER.info(result ? "{} '{}' is exist in the database." : "{} '{}' not found in the database.", "Company with name", name);
+            optionalCompany = companyDao.findCompanyByName(name);
+            LOGGER.info(optionalCompany.isPresent()
+                    ? "Successfully was find company by name '{}'."
+                    : "Company with name '{}' not found in the database.", name);
         } catch (DaoException e) {
-            LOGGER.error("Failed to perform company search operation by name: '{}'.", name);
-            throw new ServiceException("Failed to perform company search operation by name: " + name, e);
+            LOGGER.error("Error when searching for an company by name '{}'.", name);
+            throw new ServiceException("Error when searching for an company by name '" + name + "'.", e);
         }
 
-        return result;
+        return optionalCompany;
     }
 }

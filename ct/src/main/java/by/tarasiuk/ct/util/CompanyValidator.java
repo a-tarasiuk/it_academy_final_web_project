@@ -1,6 +1,6 @@
 package by.tarasiuk.ct.util;
 
-import by.tarasiuk.ct.manager.RequestAttribute;
+import by.tarasiuk.ct.manager.AttributeName;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -25,9 +25,9 @@ public class CompanyValidator {
             LOGGER.info("Incorrect company data!");
             result = false;
         } else {
-            String name = companyData.get(RequestAttribute.COMPANY_NAME);
-            String address = companyData.get(RequestAttribute.COMPANY_ADDRESS);
-            String phoneNumber = companyData.get(RequestAttribute.COMPANY_PHONE_NUMBER);
+            String name = companyData.get(AttributeName.COMPANY_NAME);
+            String address = companyData.get(AttributeName.COMPANY_ADDRESS);
+            String phoneNumber = companyData.get(AttributeName.COMPANY_PHONE_NUMBER);
 
             result = isValidName(name) && isValidAddress(address) && isValidPhoneNumber(phoneNumber);
         }

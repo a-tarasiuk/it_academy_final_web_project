@@ -3,7 +3,7 @@ package by.tarasiuk.ct.model.dao.impl;
 import by.tarasiuk.ct.entity.Account;
 import by.tarasiuk.ct.entity.Entity;
 import by.tarasiuk.ct.exception.DaoException;
-import by.tarasiuk.ct.manager.RequestAttribute;
+import by.tarasiuk.ct.manager.AttributeName;
 import by.tarasiuk.ct.model.dao.AccountDao;
 import by.tarasiuk.ct.model.dao.BaseDao;
 import by.tarasiuk.ct.util.AccountBuilder;
@@ -82,7 +82,7 @@ public class AccountDaoImpl extends BaseDao<Account> implements AccountDao {
 
             try (ResultSet result = statement.executeQuery()) {
                 if (result.next()) {
-                    String password = result.getString(RequestAttribute.ACCOUNT_PASSWORD_ENCODED);
+                    String password = result.getString(AttributeName.ACCOUNT_PASSWORD_ENCODED);
                     optionalPassword = Optional.of(password);
                 } else {
                     optionalPassword = Optional.empty();
@@ -105,6 +105,7 @@ public class AccountDaoImpl extends BaseDao<Account> implements AccountDao {
 
         try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_ACCOUNT_BY_EMAIL)) {
             statement.setString(IndexFind.EMAIL, email);
+
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
                     Account account = AccountBuilder.buildAccount(resultSet);

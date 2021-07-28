@@ -1,6 +1,6 @@
 package by.tarasiuk.ct.command;
 
-import by.tarasiuk.ct.manager.RequestAttribute;
+import by.tarasiuk.ct.manager.AttributeName;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,7 +15,7 @@ public class CommandProvider {
     }
 
     public static Optional<Command> defineCommand(HttpServletRequest request) {
-        String commandValue = request.getParameter(RequestAttribute.COMMAND);
+        String commandValue = request.getParameter(AttributeName.COMMAND);
 
         if(commandValue == null || commandValue.isEmpty()) {
             LOGGER.info("Invalid command: {}.", commandValue);

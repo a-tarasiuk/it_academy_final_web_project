@@ -12,7 +12,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.HashMap;
 import java.util.Optional;
 
-import static by.tarasiuk.ct.manager.RequestAttribute.*;
+import static by.tarasiuk.ct.manager.AttributeName.*;
 
 public class SignInCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -25,14 +25,14 @@ public class SignInCommand implements Command {
         String login = request.get(ACCOUNT_LOGIN);
         String password = request.get(ACCOUNT_PASSWORD);
 
-        if(!accountService.validateSignInData(login, password)) {
-            content.putRequestAttribute(ACCOUNT_LOGIN, login);
-            content.putRequestAttribute(MESSAGE_INCORRECT_SIGN_IN_DATA, true);
-            goToPage = PagePath.SIGN_IN;
+        try {
+            if(!accountService.validateSignInData(login, password)) {
+                content.putRequestAttribute(ACCOUNT_LOGIN, login);
+                content.putRequestAttribute(MESSAGE_INCORRECT_SIGN_IN_DATA, true);
+                goToPage = PagePath.SIGN_IN;
 
-            LOGGER.info("Invalid sign in data for login '{}'.", login);
-        } else {
-            try {
+                LOGGER.info("Invalid sign in data for login '{}'.", login);
+            } else {
                 Optional<Account> optionalAccount = accountService.signIn(login, password);
 
                 if(optionalAccount.isPresent()) {
@@ -58,10 +58,10 @@ public class SignInCommand implements Command {
                     content.putRequestAttribute(MESSAGE_INCORRECT_SIGN_IN_DATA, true);
                     goToPage = PagePath.SIGN_IN;
                 }
-            } catch (ServiceException e) {
-                LOGGER.error("Failed to process the command '{}'.", CommandType.SIGN_IN);
-                goToPage = PagePath.SIGN_IN;
             }
+        } catch (ServiceException e) {
+            LOGGER.error("Failed to process the command '{}'.", CommandType.SIGN_IN);
+            goToPage = PagePath.SIGN_IN;
         }
 
         return goToPage;

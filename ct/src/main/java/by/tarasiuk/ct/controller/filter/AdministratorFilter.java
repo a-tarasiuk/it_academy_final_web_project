@@ -1,13 +1,20 @@
 package by.tarasiuk.ct.controller.filter;
 
 import by.tarasiuk.ct.entity.Account;
-import by.tarasiuk.ct.manager.RequestAttribute;
-import jakarta.servlet.*;
+import jakarta.servlet.Filter;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+
+import static by.tarasiuk.ct.entity.Account.*;
+import static by.tarasiuk.ct.manager.AttributeName.ACCOUNT;
+import static by.tarasiuk.ct.manager.AttributeName.SHOW_ADMIN_PANEL;
 
 public class AdministratorFilter implements Filter {
     @Override
@@ -16,9 +23,9 @@ public class AdministratorFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession();
 
-        Account account =(Account) session.getAttribute(RequestAttribute.ACCOUNT);
-        if(account != null && account.getRole().equals(Account.Role.ADMINISTRATOR)) {
-            session.setAttribute(RequestAttribute.ACTIVATE_ADMIN_PANEL, true);
+        Account account = (Account) session.getAttribute(ACCOUNT);
+        if(account != null && account.getRole().equals(Role.ADMINISTRATOR)) {
+            session.setAttribute(SHOW_ADMIN_PANEL, true);
         }
 
         filterChain.doFilter(request, response);

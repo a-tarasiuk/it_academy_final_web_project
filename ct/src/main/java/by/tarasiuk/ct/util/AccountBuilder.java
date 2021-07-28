@@ -9,14 +9,14 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Map;
 
-import static by.tarasiuk.ct.manager.RequestAttribute.ACCOUNT_EMAIL;
-import static by.tarasiuk.ct.manager.RequestAttribute.ACCOUNT_FIRST_NAME;
-import static by.tarasiuk.ct.manager.RequestAttribute.ACCOUNT_ID;
-import static by.tarasiuk.ct.manager.RequestAttribute.ACCOUNT_LAST_NAME;
-import static by.tarasiuk.ct.manager.RequestAttribute.ACCOUNT_LOGIN;
-import static by.tarasiuk.ct.manager.RequestAttribute.ACCOUNT_REGISTRATION_DATE;
-import static by.tarasiuk.ct.manager.RequestAttribute.ACCOUNT_ROLE;
-import static by.tarasiuk.ct.manager.RequestAttribute.ACCOUNT_STATUS;
+import static by.tarasiuk.ct.manager.AttributeName.ACCOUNT_EMAIL;
+import static by.tarasiuk.ct.manager.AttributeName.ACCOUNT_FIRST_NAME;
+import static by.tarasiuk.ct.manager.AttributeName.ACCOUNT_ID;
+import static by.tarasiuk.ct.manager.AttributeName.ACCOUNT_LAST_NAME;
+import static by.tarasiuk.ct.manager.AttributeName.ACCOUNT_LOGIN;
+import static by.tarasiuk.ct.manager.AttributeName.ACCOUNT_REGISTRATION_DATE;
+import static by.tarasiuk.ct.manager.AttributeName.ACCOUNT_ROLE;
+import static by.tarasiuk.ct.manager.AttributeName.ACCOUNT_STATUS;
 
 public class AccountBuilder {
     private static final Logger LOGGER = LogManager.getLogger();

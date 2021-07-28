@@ -1,12 +1,6 @@
 package by.tarasiuk.ct.command;
 
-import by.tarasiuk.ct.command.impl.ChangeLanguagePageCommand;
-import by.tarasiuk.ct.command.impl.GoToMainPageCommand;
-import by.tarasiuk.ct.command.impl.GoToSignInPageCommand;
-import by.tarasiuk.ct.command.impl.GoToSignUpPageCommand;
-import by.tarasiuk.ct.command.impl.SignInCommand;
-import by.tarasiuk.ct.command.impl.SignUpCommand;
-import by.tarasiuk.ct.command.impl.LogoutCommand;
+import by.tarasiuk.ct.command.impl.*;
 
 /**
  * All available commands of the application
@@ -19,6 +13,7 @@ public enum CommandType {
     GO_TO_SIGN_IN_PAGE(new GoToSignInPageCommand()),
     GO_TO_SIGN_UP_PAGE(new GoToSignUpPageCommand()),
     SIGN_IN(new SignInCommand()),
+    ACTIVATE_ACCOUNT(new ActivateAccountCommand()),
     SIGN_UP(new SignUpCommand()),
     LOGOUT(new LogoutCommand());
 

@@ -1,21 +1,24 @@
 package by.tarasiuk.ct.controller;
 
 import by.tarasiuk.ct.entity.Entity;
-import by.tarasiuk.ct.manager.RequestAttribute;
+import by.tarasiuk.ct.manager.AttributeName;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Optional;
 
 public class RequestContent {
+    private Locale locale;
     private boolean isValidSession;
     private HashMap<String, String> requestParameters;
     private HashMap<String, Object> requestAttributes;
     private HashMap<String, Object> sessionAttributes;
 
     public void buildContent(HttpServletRequest request) {
+        locale = request.getLocale();
         requestParameters = buildRequestParameters(request);
         requestAttributes = buildRequestAttributes(request);
         sessionAttributes = buildSessionAttributes(request);
@@ -60,8 +63,12 @@ public class RequestContent {
         isValidSession = false;
     }
 
+    public Locale getLocale() {
+        return locale;
+    }
+
     private HashMap<String, String> buildRequestParameters(HttpServletRequest request) {
-        request.removeAttribute(RequestAttribute.COMMAND);
+        request.removeAttribute(AttributeName.COMMAND);
 
         requestParameters = new HashMap<>();
         Enumeration<String> parameterNames = request.getParameterNames();

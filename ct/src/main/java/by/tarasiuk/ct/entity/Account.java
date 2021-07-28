@@ -99,22 +99,12 @@ public class Account implements Entity {
         MODERATOR,
         MANAGER,
         FORWARDER;
-
-        @Override
-        public String toString() {
-            return name().toUpperCase();
-        }
     }
 
     public enum Status {
         ACTIVATED,
         NOT_ACTIVATED,
         BANNED;
-
-        @Override
-        public String toString() {
-            return name().toUpperCase();
-        }
     }
 
     @Override

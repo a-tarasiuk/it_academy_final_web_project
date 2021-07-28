@@ -5,13 +5,15 @@ import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.jsp.jstl.core.Config;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
+import java.util.Locale;
 
-import static by.tarasiuk.ct.manager.RequestAttribute.LOCALE_EN;
-import static by.tarasiuk.ct.manager.RequestAttribute.LOCALE_PAGE;
+import static by.tarasiuk.ct.manager.AttributeName.LOCALE_EN_US;
+import static by.tarasiuk.ct.manager.AttributeName.LOCALE_PAGE;
 
 @WebFilter(filterName = "LocaleFilter", urlPatterns = {"/*"})
 public class LocaleFilter implements Filter {
@@ -25,9 +27,11 @@ public class LocaleFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession();
 
-        if (session.getAttribute(LOCALE_PAGE) == null) {
-            session.setAttribute(LOCALE_PAGE, LOCALE_EN);
-            LOGGER.info("Default locale page set to '{}'.", LOCALE_EN);
+        if(session.isNew()) {
+            Locale locale = new Locale(LOCALE_EN_US);
+            Config.set(session, Config.FMT_LOCALE, locale);
+            session.setAttribute(LOCALE_PAGE, LOCALE_EN_US);
+            LOGGER.info("Default locale page set to '{}'.", LOCALE_EN_US);
         }
 
         filterChain.doFilter(request, response);

@@ -16,7 +16,7 @@
         </div>
 
         <div id="right-menu">
-            <button class="menu-button button-colour-standard" name="command" value="change_locale_page"><span class="icon icon-globe">&nbsp;</span><fmt:message key="header.button.label.locale"/></button>
+            <button class="menu-button button-colour-standard" name="command" value="change_locale_page"><span class="icon icon-globe">&nbsp;</span><fmt:message key="header.label.locale"/></button>
             <button class="menu-button button-colour-standard" name="command" value="go_to_sign_in_page"><span class="icon icon-sign-in">&nbsp;</span><fmt:message key="header.button.label.signIn"/></button>
             <button class="menu-button button-colour-red" name="command" value="go_to_sign_up_page"><span class="icon icon-white icon-sign-up"></span>&nbsp;<fmt:message key="header.button.label.signUp"/></button>
         </div>

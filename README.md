@@ -23,4 +23,7 @@ The project represents cargo trading.
 - Open;
 - Closed.
 
+### Account confirmation upon registration
+To confirm the mail specified during registration, a token is generated using `Java Uuid Generator (JUG)`. JUG is a set of Java classes for working with UUIDs: generating UUIDs using any of standard methods, outputting efficiently, sorting and so on. It generates UUIDs according to the UUID specification (RFC-4122) (also see Wikipedia UUID page for more explanation).
+
 ### ERR diagram
