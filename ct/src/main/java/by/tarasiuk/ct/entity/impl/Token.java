@@ -1,4 +1,4 @@
-package by.tarasiuk.ct.entity;
+package by.tarasiuk.ct.entity.impl;
 
 public class Token {
     private long id;

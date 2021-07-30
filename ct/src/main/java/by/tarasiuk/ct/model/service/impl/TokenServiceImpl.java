@@ -1,6 +1,7 @@
 package by.tarasiuk.ct.model.service.impl;
 
-import by.tarasiuk.ct.entity.Token;
+import by.tarasiuk.ct.entity.impl.Account;
+import by.tarasiuk.ct.entity.impl.Token;
 import by.tarasiuk.ct.exception.DaoException;
 import by.tarasiuk.ct.exception.ServiceException;
 import by.tarasiuk.ct.model.dao.DaoProvider;
@@ -32,36 +33,41 @@ public class TokenServiceImpl implements TokenService {
             throw new ServiceException("Error while generating token for account with id '" + accountId +"'.", e);
         }
     }
-
     @Override
-    public Optional<Token> findTokenByAccountId(long accountId) throws ServiceException {
+    public Optional<Token> findTokenByAccount(Account account) throws ServiceException {
         Optional<Token> optionalToken;
+        long accountId = account.getId();
 
         try {
             optionalToken = tokenDao.findTokenByAccountId(accountId);
             LOGGER.info(optionalToken.isPresent()
-                    ? "Successfully was find token by account id '{}'."
-                    : "Token with account id '{}' not found in the database.", accountId);
+                    ? "Successfully was find token for account '{}'."
+                    : "Token with account id '{}' not found in the database.", account);
         } catch (DaoException e) {
-            LOGGER.error("Error when searching for an token by account id '{}'.", accountId);
-            throw new ServiceException("Error when searching for an token by account id '" + accountId + "'.", e);
+            LOGGER.error("Error when searching an token for account '{}'.", account);
+            throw new ServiceException("Error when searching an token for account '" + account + "'.", e);
         }
 
         return optionalToken;
     }
 
-    @Override
-    public void confirmTokenById(long tokenId) throws ServiceException {
+    public void changeTokenStatus(Token token, Token.Status status) throws ServiceException {
+        token.setStatus(status);
+        updateToken(token);
+    }
+
+    public boolean updateToken(Token token) throws ServiceException {
         boolean result;
-        Token.Status status = Token.Status.CONFIRMED;
         try {
-            result = tokenDao.updateStatusById(tokenId, status);
+            result = tokenDao.updateToken(token);
             LOGGER.info(result
-                    ? "Successfully confirm token by token id '{}'."
-                    : "Token with id '{}' not found in the database.", tokenId);
+                    ? "Successfully update token '{}'."
+                    : "Token '{}' not found in the database.", token);
         } catch (DaoException e) {
-            LOGGER.error("Error when confirm token status by token id '{}'.", tokenId);
-            throw new ServiceException("Error when confirm token status by token id '" + tokenId + "'.", e);
+            LOGGER.error("Error when update token '{}'.", token);
+            throw new ServiceException("Error when update token '" + token + "'.", e);
         }
+
+        return result;
     }
 }

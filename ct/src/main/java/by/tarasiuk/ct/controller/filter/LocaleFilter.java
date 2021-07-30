@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.util.Locale;
 
 import static by.tarasiuk.ct.manager.AttributeName.LOCALE_EN_US;
-import static by.tarasiuk.ct.manager.AttributeName.LOCALE_PAGE;
 
 @WebFilter(filterName = "LocaleFilter", urlPatterns = {"/*"})
 public class LocaleFilter implements Filter {
@@ -30,7 +29,6 @@ public class LocaleFilter implements Filter {
         if(session.isNew()) {
             Locale locale = new Locale(LOCALE_EN_US);
             Config.set(session, Config.FMT_LOCALE, locale);
-            session.setAttribute(LOCALE_PAGE, LOCALE_EN_US);
             LOGGER.info("Default locale page set to '{}'.", LOCALE_EN_US);
         }
 

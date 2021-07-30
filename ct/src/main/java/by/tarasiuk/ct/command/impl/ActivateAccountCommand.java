@@ -2,8 +2,8 @@ package by.tarasiuk.ct.command.impl;
 
 import by.tarasiuk.ct.command.Command;
 import by.tarasiuk.ct.controller.RequestContent;
-import by.tarasiuk.ct.entity.Account;
-import by.tarasiuk.ct.entity.Token;
+import by.tarasiuk.ct.entity.impl.Account;
+import by.tarasiuk.ct.entity.impl.Token;
 import by.tarasiuk.ct.exception.ServiceException;
 import by.tarasiuk.ct.manager.PagePath;
 import by.tarasiuk.ct.model.service.impl.AccountServiceImpl;
@@ -12,6 +12,7 @@ import by.tarasiuk.ct.util.MessageManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 
@@ -24,78 +25,72 @@ public class ActivateAccountCommand implements Command {
     private static final String MESSAGE_INCORRECT_TOKEN = "message.incorrect.token";
     private static final String MESSAGE_ALREADY_ACTIVATED = "message.account.alreadyActivated";
     private static final String MESSAGE_SUCCESSFULLY_ACTIVATED = "message.activated.successfullyActivated";
+    private static final String MESSAGE_QUERY_ERROR = "message.query.error";
 
     @Override
     public String execute(RequestContent content) {
-        String page;
-
         Map<String, String> requestParameters = content.getRequestParameters();
-        Map<String, Object> sessionAttributes = content.getSessionAttributes();
 
-        String locale = (String) sessionAttributes.get(LOCALE_PAGE);
+        String message;
+        String formatMessage;
+        Locale locale = content.getLocale();
         String email = requestParameters.get(ACCOUNT_EMAIL);
-        String tokenNumber = requestParameters.get(TOKEN_NUMBER);
-
-        LOGGER.info("CURRENT LOCALE PAGE: {}.", content.getLocale());
+        String requestTokenNumber = requestParameters.get(TOKEN_NUMBER);
 
         AccountServiceImpl accountService = new AccountServiceImpl();
         try {
             Optional<Account> optionalAccount = accountService.findAccountByEmail(email);
 
             if(!optionalAccount.isPresent()) {
-                String formatMessage = MessageManager.getInstance().findMassage(MESSAGE_NOT_EXIST_ACCOUNT, locale);
-                String message = String.format(formatMessage, email);
-                content.putRequestAttribute(MESSAGE, message);
-                page = PagePath.INFO;
+                formatMessage = MessageManager.getInstance().findMassage(MESSAGE_NOT_EXIST_ACCOUNT, locale);
             } else {
-                String message;
                 Account account = optionalAccount.get();
-                long accountId = account.getId();
                 TokenServiceImpl tokenService = new TokenServiceImpl();
-                Optional<Token> optionalToken = tokenService.findTokenByAccountId(accountId);
+                Optional<Token> optionalToken = tokenService.findTokenByAccount(account);
 
                 if(!optionalToken.isPresent()) {
-                    message = String.format(MESSAGE_NOT_EXIST_TOKEN, email);
-                    content.putRequestAttribute(MESSAGE, message);
+                    formatMessage = MessageManager.getInstance().findMassage(MESSAGE_NOT_EXIST_TOKEN, locale);
                 } else {
                     Token token = optionalToken.get();
                     String foundTokenNumber = token.getNumber();
+                    LOGGER.info("Token number from request '{}', from database '{}', is equals: {}.",
+                            requestTokenNumber, foundTokenNumber, requestTokenNumber.equals(foundTokenNumber));
 
-                    if(!foundTokenNumber.equals(tokenNumber)) {
-                        message = String.format(MESSAGE_INCORRECT_TOKEN, email);
-                        content.putRequestAttribute(MESSAGE, message);
+                    if(!foundTokenNumber.equals(requestTokenNumber)) {
+                        formatMessage = MessageManager.getInstance().findMassage(MESSAGE_INCORRECT_TOKEN, locale);
+                        LOGGER.info("The token number from request '{}' doesn't match the token number in the database '{}'.",
+                                requestTokenNumber, foundTokenNumber);
                     } else {
-                        Token.Status status = token.getStatus();
+                        Token.Status tokenStatus = token.getStatus();
 
-                        switch (status) {
+                        switch (tokenStatus) {
                             case CONFIRMED:
-                                message = String.format(MESSAGE_ALREADY_ACTIVATED, email);
-                                content.putRequestAttribute(MESSAGE, message);
+                                formatMessage = MessageManager.getInstance().findMassage(MESSAGE_ALREADY_ACTIVATED, locale);
                                 break;
                             case UNCONFIRMED:
-                                message = String.format(MESSAGE_SUCCESSFULLY_ACTIVATED, email);
-                                long tokenId = token.getId();
-                                tokenService.confirmTokenById(tokenId);
+                                Token.Status status = Token.Status.CONFIRMED;
+                                tokenService.changeTokenStatus(token, status);
+
+                                Account.Status accountStatus = Account.Status.ACTIVATED;
+                                accountService.changeAccountStatus(account, accountStatus);
+
                                 content.putSessionAttribute(ACCOUNT, account);
-                                page = PagePath.ACCOUNT;
+                                formatMessage = MessageManager.getInstance().findMassage(MESSAGE_SUCCESSFULLY_ACTIVATED, locale);
                                 break;
                             default:
-                                message = String.format(MESSAGE_SUCCESSFULLY_ACTIVATED, email);
-                                content.putRequestAttribute(MESSAGE, message);
-                                //throw new EnumConstantNotPresentException(status.getClass(), status.name());
-                                break;
+                                throw new EnumConstantNotPresentException(tokenStatus.getClass(), tokenStatus.toString()); //fixme Need an exception?
                         }
                     }
                 }
-                page = PagePath.INFO;
-                content.putRequestAttribute(MESSAGE, message);
             }
         } catch (ServiceException e) {
+            formatMessage = MessageManager.getInstance().findMassage(MESSAGE_QUERY_ERROR, locale);
             LOGGER.warn("Error when activating email '{}'.", email);
-            content.putRequestAttribute(MESSAGE_QUERY_ERROR, true);
-            page = PagePath.SIGN_UP;
         }
 
-        return page;
+        message = String.format(formatMessage, email);
+        content.putRequestAttribute(MESSAGE, message);
+
+        return PagePath.INFO;
     }
 }

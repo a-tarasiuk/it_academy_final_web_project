@@ -1,6 +1,6 @@
 package by.tarasiuk.ct.model.service;
 
-import by.tarasiuk.ct.entity.Company;
+import by.tarasiuk.ct.entity.impl.Company;
 import by.tarasiuk.ct.exception.ServiceException;
 
 import java.util.Map;

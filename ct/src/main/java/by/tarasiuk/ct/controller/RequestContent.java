@@ -12,7 +12,7 @@ import java.util.Optional;
 
 public class RequestContent {
     private Locale locale;
-    private boolean isValidSession;
+    private boolean isValidSession = true;
     private HashMap<String, String> requestParameters;
     private HashMap<String, Object> requestAttributes;
     private HashMap<String, Object> sessionAttributes;
@@ -25,13 +25,13 @@ public class RequestContent {
     }
 
     public void restore(HttpServletRequest request) {
-        // добавление в запрос и сессию атрибутов для передачи в jsp
         requestAttributes.forEach(request::setAttribute);
 
         if(!isValidSession) {
             request.getSession().invalidate();
         } else {
-            sessionAttributes.forEach(request::setAttribute);
+            HttpSession session = request.getSession(true);
+            sessionAttributes.forEach(session::setAttribute);
         }
     }
 
@@ -51,12 +51,12 @@ public class RequestContent {
         requestAttributes.put(key, obj);
     }
 
-    public void putRequestAttributes(HashMap<String, String> attributes) {
-        requestAttributes.putAll(attributes);
-    }
-
     public void putSessionAttribute(String key, Object obj) {
         sessionAttributes.put(key, obj);
+    }
+
+    public void putRequestAttributes(HashMap<String, String> attributes) {
+        requestAttributes.putAll(attributes);
     }
 
     public void invalidateSession() {
@@ -105,7 +105,6 @@ public class RequestContent {
         while (attributeNames.hasMoreElements()) {
             String name = attributeNames.nextElement();
             Object element = session.getAttribute(name);
-
             sessionAttributes.put(name, element);
         }
 

@@ -8,7 +8,7 @@ import by.tarasiuk.ct.command.impl.*;
  *
  */
 public enum CommandType {
-    CHANGE_LOCALE_PAGE(new ChangeLanguagePageCommand()),
+    CHANGE_LOCALE_PAGE(new ChangeLocalePageCommand()),
     GO_TO_MAIN_PAGE(new GoToMainPageCommand()),
     GO_TO_SIGN_IN_PAGE(new GoToSignInPageCommand()),
     GO_TO_SIGN_UP_PAGE(new GoToSignUpPageCommand()),

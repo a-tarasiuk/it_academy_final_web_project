@@ -63,6 +63,14 @@
                     <c:if test="${incorrect_sign_in_data == true}">
                         <fmt:message key="message.incorrect.signInData"/>
                     </c:if>
+
+                    <c:if test="${account_banned == true}">
+                        <fmt:message key="message.account.banned"/>
+                    </c:if>
+
+                    <c:if test="${account_not_activated == true}">
+                        <fmt:message key="message.account.notActivated"/>
+                    </c:if>
                 </div>
 
                 <div class="row">

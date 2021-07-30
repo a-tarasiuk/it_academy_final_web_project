@@ -1,8 +1,8 @@
 package by.tarasiuk.ct.model.dao.impl;
 
-import by.tarasiuk.ct.entity.Account;
+import by.tarasiuk.ct.entity.impl.Account;
 import by.tarasiuk.ct.entity.Entity;
-import by.tarasiuk.ct.entity.Token;
+import by.tarasiuk.ct.entity.impl.Token;
 import by.tarasiuk.ct.exception.DaoException;
 import by.tarasiuk.ct.model.dao.BaseDao;
 import by.tarasiuk.ct.model.dao.TokenDao;
@@ -23,29 +23,14 @@ public class TokenDaoImpl extends BaseDao<Account> implements TokenDao {
     private static final TokenDaoImpl instance = new TokenDaoImpl();
 
     private final String SQL_PROCEDURE_CREATE_TOKEN = "{CALL create_token (?, ?, ?)}";
-    private final String SQL_PROCEDURE_FIND_TOKEN_BY_ACCOUNT_ID = "{CALL find_token_by_account_id (?)}";
-    private final String SQL_PROCEDURE_UPDATE_TOKEN_STATUS_BY_ID = "{CALL update_token_status_by_id (?)}";
+    private final String SQL_PROCEDURE_UPDATE_TOKEN = "{CALL update_token (?, ?, ?, ?)}";
+    private final String SQL_PROCEDURE_FIND_TOKEN_BY_ACCOUNT_ID = "{CALL find_token_by_account_id (?)}";    //fixme (может сделать метод, который принимает аккаунт, извлекает ИД аккаунта и передает в другой метод
 
     private TokenDaoImpl() {
     }
 
     public static TokenDaoImpl getInstance() {
         return instance;
-    }
-
-    @Override
-    public Optional<Account> findEntityById(int id) throws DaoException {
-        return Optional.empty(); // todo
-    }
-
-    @Override
-    public List<Entity> findAll() throws DaoException {
-        return null;
-    }
-
-    @Override
-    public Account update(Account account) {
-        return null;
     }
 
     @Override
@@ -88,6 +73,7 @@ public class TokenDaoImpl extends BaseDao<Account> implements TokenDao {
 
                     Token token = new Token();
                     token.setId(tokenId);
+                    token.setAccountId(accountId);
                     token.setNumber(number);
                     token.setStatus(Token.Status.valueOf(status));
 
@@ -107,23 +93,49 @@ public class TokenDaoImpl extends BaseDao<Account> implements TokenDao {
     }
 
     @Override
-    public boolean updateStatusById(long tokenId, Token.Status status) throws DaoException {
+    public boolean updateToken(Token token) throws DaoException {
         Connection connection = connectionPool.getConnection();
 
-        try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_UPDATE_TOKEN_STATUS_BY_ID)) {
+        long tokenId = token.getId();
+        long accountId = token.getAccountId();
+        String tokenNumber = token.getNumber();
+        String tokenStatus = token.getStatus().name();
+
+        try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_UPDATE_TOKEN)) {
             statement.setLong(IndexUpdate.TOKEN_ID, tokenId);
+            statement.setLong(IndexUpdate.ACCOUNT_ID, accountId);
+            statement.setString(IndexUpdate.TOKEN_NUMBER, tokenNumber);
+            statement.setString(IndexUpdate.TOKEN_STATUS, tokenStatus);
 
             return statement.execute();
         } catch (SQLException e) {
-            LOGGER.error("Failed to update token to status '{}' by token id '{}' in the database.", status, tokenId);
-            throw new DaoException("Failed to update token to status '" + status + "' by token id '" + tokenId + "' in the database.", e);
+            LOGGER.error("Failed to update token '{}' in the database.", token);
+            throw new DaoException("Failed to update token '" + token + "' in the database.", e);
         } finally {
             closeConnection(connection);
         }
     }
 
+    @Override
+    public List<Entity> findAll() throws DaoException {
+        return null;
+    }
+
+    @Override
+    public Account update(Account entity) throws DaoException {
+        return null;
+    }
+
+    @Override
+    public Optional<Account> findEntityById(int id) throws DaoException {
+        return Optional.empty();
+    }
+
     private static final class IndexUpdate {
         private static final int TOKEN_ID = 1;
+        private static final int ACCOUNT_ID = 2;
+        private static final int TOKEN_NUMBER = 3;
+        private static final int TOKEN_STATUS = 4;
     }
 
     private static final class IndexCreate {

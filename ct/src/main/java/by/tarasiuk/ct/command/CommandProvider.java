@@ -15,19 +15,19 @@ public class CommandProvider {
     }
 
     public static Optional<Command> defineCommand(HttpServletRequest request) {
-        String commandValue = request.getParameter(AttributeName.COMMAND);
+        String command = request.getParameter(AttributeName.COMMAND);
 
-        if(commandValue == null || commandValue.isEmpty()) {
-            LOGGER.info("Invalid command: {}.", commandValue);
+        if(command == null || command.isEmpty()) {
+            LOGGER.info("Invalid command: {}.", command);
             return Optional.empty();
         }
 
-        Optional<Command> command = Arrays.stream(CommandType.values())
-                .filter(type -> type.name().equalsIgnoreCase(commandValue))
+        Optional<Command> optionalCommand = Arrays.stream(CommandType.values())
+                .filter(type -> type.name().equalsIgnoreCase(command))
                 .map(CommandType::getCommand)
                 .findFirst();
 
-        LOGGER.info(command.isPresent() ? "Found command '{}'." : "Command '{}' was not found.", commandValue);
-        return command;
+        LOGGER.info(optionalCommand.isPresent() ? "Found command '{}'." : "Command '{}' was not found.", command);
+        return optionalCommand;
     }
 }

@@ -1,5 +1,7 @@
-package by.tarasiuk.ct.entity;
+package by.tarasiuk.ct.entity.impl;
 
+
+import by.tarasiuk.ct.entity.Entity;
 
 import java.time.LocalDate;
 
@@ -111,13 +113,13 @@ public class Account implements Entity {
     public String toString() {
         return new StringBuilder("Account{")
                 .append("id='").append(this.id).append('\'')
-                .append(",first name='").append(this.firstName).append('\'')
-                .append(",last name='").append(this.lastName).append('\'')
-                .append(",login='").append(this.login).append('\'')
-                .append(",email='").append(this.email).append('\'')
-                .append(",registration date='").append(this.registrationDate).append('\'')
-                .append(",account role='").append(this.role).append('\'')
-                .append(",account status='").append(this.status).append('\'')
+                .append(", first name='").append(this.firstName).append('\'')
+                .append(", last name='").append(this.lastName).append('\'')
+                .append(", login='").append(this.login).append('\'')
+                .append(", email='").append(this.email).append('\'')
+                .append(", registration date='").append(this.registrationDate).append('\'')
+                .append(", role='").append(this.role).append('\'')
+                .append(", status='").append(this.status).append('\'')
                 .append("}").toString();
     }
 }

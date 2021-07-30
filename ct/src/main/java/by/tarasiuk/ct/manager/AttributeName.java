@@ -12,7 +12,7 @@ public class AttributeName {
     /**
      * Locale attributes from JSP page.
      */
-    public static final String LOCALE_PAGE = "locale_page";
+    public static final String LOCALE = "locale";
     public static final String LOCALE_EN_US = "en_US";
     public static final String LOCALE_RU_RU = "ru_RU";
 
@@ -53,12 +53,14 @@ public class AttributeName {
     /**
      * Message attributes from JSP page.
      */
-    public static final String MESSAGE_QUERY_ERROR = "message_query_error";
-    public static final String MESSAGE_ERROR_LOGIN_ALREADY_EXIST = "error_login_already_exist";
-    public static final String MESSAGE_ERROR_EMAIL_ALREADY_EXIST = "error_email_already_exist";
-    public static final String MESSAGE_ERROR_COMPANY_ALREADY_EXIST = "error_company_already_exist";
-    public static final String MESSAGE_INCORRECT_SIGN_IN_DATA = "incorrect_sign_in_data";
-    public static final String MESSAGE_INCORRECT_SIGN_UP_DATA = "incorrect_sign_up_data";
+    public static final String SHOW_MESSAGE_QUERY_ERROR = "message_query_error";
+    public static final String SHOW_MESSAGE_ERROR_LOGIN_ALREADY_EXIST = "error_login_already_exist";
+    public static final String SHOW_MESSAGE_ERROR_EMAIL_ALREADY_EXIST = "error_email_already_exist";
+    public static final String SHOW_MESSAGE_ERROR_COMPANY_ALREADY_EXIST = "error_company_already_exist";
+    public static final String SHOW_MESSAGE_INCORRECT_SIGN_IN_DATA = "incorrect_sign_in_data";
+    public static final String SHOW_MESSAGE_INCORRECT_SIGN_UP_DATA = "incorrect_sign_up_data";
+    public static final String SHOW_MESSAGE_BANNED_ACCOUNT = "account_banned";
+    public static final String SHOW_MESSAGE_NOT_ACTIVATED_ACCOUNT = "account_not_activated";
 
     /**
      * Messages

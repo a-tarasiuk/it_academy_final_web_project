@@ -1,6 +1,6 @@
 package by.tarasiuk.ct.controller.filter;
 
-import by.tarasiuk.ct.entity.Account;
+import by.tarasiuk.ct.entity.impl.Account;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
-import static by.tarasiuk.ct.entity.Account.*;
+import static by.tarasiuk.ct.entity.impl.Account.*;
 import static by.tarasiuk.ct.manager.AttributeName.ACCOUNT;
 import static by.tarasiuk.ct.manager.AttributeName.SHOW_ADMIN_PANEL;
 

@@ -1,4 +1,6 @@
-package by.tarasiuk.ct.entity;
+package by.tarasiuk.ct.entity.impl;
+
+import by.tarasiuk.ct.entity.Entity;
 
 public class Company implements Entity {
     private static final long serialVersionUID = -8258103486004279207L;

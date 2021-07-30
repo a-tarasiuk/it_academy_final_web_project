@@ -1,6 +1,6 @@
 package by.tarasiuk.ct.model.dao.impl;
 
-import by.tarasiuk.ct.entity.Account;
+import by.tarasiuk.ct.entity.impl.Account;
 import by.tarasiuk.ct.entity.Entity;
 import by.tarasiuk.ct.exception.DaoException;
 import by.tarasiuk.ct.manager.AttributeName;
@@ -23,6 +23,7 @@ public class AccountDaoImpl extends BaseDao<Account> implements AccountDao {
     private final String SQL_PROCEDURE_FIND_ACCOUNT_BY_LOGIN = "{CALL find_account_by_login (?)}";
     private final String SQL_PROCEDURE_FIND_PASSWORD_BY_LOGIN = "{CALL find_password_by_login (?)}";
     private final String SQL_PROCEDURE_FIND_ACCOUNT_BY_EMAIL = "{CALL find_account_by_email (?)}";
+    private final String SQL_PROCEDURE_UPDATE_ACCOUNT = "{CALL update_account (?, ?, ?, ?, ?, ?, ?, ?)}";
 
     private AccountDaoImpl() {
     }
@@ -146,14 +147,14 @@ public class AccountDaoImpl extends BaseDao<Account> implements AccountDao {
         String status = account.getStatus().toString();
 
         try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_CREATE_ACCOUNT)) {
-            statement.setString(IndexCreate.FIRST_NAME, firstName);
-            statement.setString(IndexCreate.LAST_NAME, lastName);
-            statement.setString(IndexCreate.LOGIN, login);
-            statement.setString(IndexCreate.EMAIL, email);
-            statement.setString(IndexCreate.REGISTRATION_DATE, registrationDate.toString());
-            statement.setString(IndexCreate.PASSWORD_CODED, encodingPassword);
-            statement.setString(IndexCreate.ROLE, role);
-            statement.setString(IndexCreate.STATUS, status);
+            statement.setString(CreateIndex.FIRST_NAME, firstName);
+            statement.setString(CreateIndex.LAST_NAME, lastName);
+            statement.setString(CreateIndex.LOGIN, login);
+            statement.setString(CreateIndex.EMAIL, email);
+            statement.setString(CreateIndex.REGISTRATION_DATE, registrationDate.toString());
+            statement.setString(CreateIndex.PASSWORD_CODED, encodingPassword);
+            statement.setString(CreateIndex.ROLE, role);
+            statement.setString(CreateIndex.STATUS, status);
 
             statement.executeUpdate();
 
@@ -167,18 +168,63 @@ public class AccountDaoImpl extends BaseDao<Account> implements AccountDao {
         }
     }
 
+    public boolean updateAccount(Account account) throws DaoException {
+        Connection connection = connectionPool.getConnection();
+
+        long accountId = account.getId();
+        String firstName = account.getFirstName();
+        String lastName = account.getLastName();
+        String login = account.getLogin();
+        String email = account.getEmail();
+        LocalDate registrationDate = account.getRegistrationDate();
+        String role = account.getRole().toString();
+        String status = account.getStatus().toString();
+
+        try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_UPDATE_ACCOUNT)) {
+            statement.setLong(UpdateIndex.ACCOUNT_ID, accountId);
+            statement.setString(UpdateIndex.FIRST_NAME, firstName);
+            statement.setString(UpdateIndex.LAST_NAME, lastName);
+            statement.setString(UpdateIndex.LOGIN, login);
+            statement.setString(UpdateIndex.EMAIL, email);
+            statement.setString(UpdateIndex.REGISTRATION_DATE, registrationDate.toString());
+            statement.setString(UpdateIndex.ROLE, role);
+            statement.setString(UpdateIndex.STATUS, status);
+
+            statement.executeUpdate();
+
+            LOGGER.info("Account was successfully updated in the database: {}.", account);
+            return true;
+        } catch (SQLException e) {
+            LOGGER.error("Failed to update account '{}' in the database.", account);
+            throw new DaoException("Failed to update account '" + account + "' in the database.", e);
+        } finally {
+            closeConnection(connection);
+        }
+    }
+
     private static final class IndexFind {
         private static final int LOGIN = 1;
         private static final int EMAIL = 1;
     }
 
-    private static final class IndexCreate {
+    private static final class CreateIndex {
         private static final int FIRST_NAME = 1;
         private static final int LAST_NAME = 2;
         private static final int LOGIN = 3;
         private static final int EMAIL = 4;
         private static final int REGISTRATION_DATE = 5;
         private static final int PASSWORD_CODED = 6;
+        private static final int ROLE = 7;
+        private static final int STATUS = 8;
+    }
+
+    private static final class UpdateIndex {
+        private static final int ACCOUNT_ID = 1;
+        private static final int FIRST_NAME = 2;
+        private static final int LAST_NAME = 3;
+        private static final int LOGIN = 4;
+        private static final int EMAIL = 5;
+        private static final int REGISTRATION_DATE = 6;
         private static final int ROLE = 7;
         private static final int STATUS = 8;
     }

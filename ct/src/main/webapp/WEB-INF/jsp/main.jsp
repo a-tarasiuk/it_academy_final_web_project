@@ -2,8 +2,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<fmt:setLocale value="${sessionScope.locale_page}" scope="session"/>
+<%--@elvariable id="locale" type="java.lang.String"--%>
 <fmt:setBundle basename="locale"/>
+<fmt:setLocale value="${locale}" scope="session"/>
 
 <html>
 <head>

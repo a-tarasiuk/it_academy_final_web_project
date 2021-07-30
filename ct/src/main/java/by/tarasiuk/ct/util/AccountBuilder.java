@@ -1,6 +1,6 @@
 package by.tarasiuk.ct.util;
 
-import by.tarasiuk.ct.entity.Account;
+import by.tarasiuk.ct.entity.impl.Account;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

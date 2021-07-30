@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.Locale;
 import java.util.Properties;
 
 public class EmailSender {
@@ -20,7 +21,7 @@ public class EmailSender {
     private static final String TEXT_COMPLETION_REGISTRATION = "email.signUp.completionRegistration.text";
     private static final String LINK_START = "http://localhost:8081/controller?account_email=";
     private static final String LINK_COMMAND = "&command=activate_account";
-    private static final String LINK_TOKEN = "&token=";
+    private static final String LINK_TOKEN = "&token_number=";
     private static final String CONTENT = "text/html";
     private static final String user;
     private static final String password;
@@ -54,7 +55,7 @@ public class EmailSender {
     private EmailSender() {
     }
 
-    public static void sendActivationEmail(String locale, String firstName, String emailTo, String token) {
+    public static void sendActivationEmail(Locale locale, String firstName, String emailTo, String token) {
         String emailSubject = messageManager.findMassage(SUBJECT_COMPLETION_REGISTRATION, locale);
         String formatMessage = messageManager.findMassage(TEXT_COMPLETION_REGISTRATION, locale);
         StringBuilder link = new StringBuilder(LINK_START)

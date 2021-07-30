@@ -2,11 +2,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<fmt:setBundle basename="locale" scope="session"/>
-<fmt:setLocale value="${sessionScope.locale_page}"/>
+<%--@elvariable id="locale" type="java.lang.String"--%>
+<fmt:setBundle basename="locale"/>
+<fmt:setLocale value="${locale}" scope="session"/>
+<c:set var="path">${pageContext.request.contextPath}</c:set>
 
 <div id="header">
-    <form id="inside-header" action="controller" method="post">
+    <div id="inside-header">
         <span id="logo" class="icon-logo"></span>
 
         <div id="left-menu">
@@ -16,9 +18,23 @@
         </div>
 
         <div id="right-menu">
-            <button class="menu-button button-colour-standard" name="command" value="change_locale_page"><span class="icon icon-globe">&nbsp;</span><fmt:message key="header.label.locale"/></button>
-            <button class="menu-button button-colour-standard" name="command" value="go_to_sign_in_page"><span class="icon icon-sign-in">&nbsp;</span><fmt:message key="header.button.label.signIn"/></button>
-            <button class="menu-button button-colour-red" name="command" value="go_to_sign_up_page"><span class="icon icon-white icon-sign-up"></span>&nbsp;<fmt:message key="header.button.label.signUp"/></button>
+            <div class="dropdown-wrapper">
+                <button class="dropdown-button button-colour-standard">
+                    <span class="icon icon-globe">&nbsp;</span>
+                    <fmt:message key="header.label.locale"/>&nbsp;&nbsp;
+                    <span class="icon icon-caret-down"></span>
+                </button>
+                <div class="content-wrapper">
+                    <form class="dropdown-content" method="post" action="controller">
+                        <input type="hidden" name="command" value="change_locale_page">
+                        <button type="submit" name="locale" value="ru_RU"><fmt:message key="header.option.label.ruRU"/></button>
+                        <button type="submit" name="locale" value="en_US"><fmt:message key="header.option.label.enUS"/></button>
+                    </form>
+                </div>
+            </div>
+
+            <a class="menu-button button-colour-standard" href="${path}/controller?command=go_to_sign_in_page"><span class="icon icon-sign-in">&nbsp;</span><fmt:message key="header.button.label.signIn"/></a>
+            <a class="menu-button button-colour-red" href="${path}/controller?command=go_to_sign_up_page"><span class="icon icon-white icon-sign-up"></span>&nbsp;<fmt:message key="header.button.label.signUp"/></a>
         </div>
-    </form>
+    </div>
 </div>

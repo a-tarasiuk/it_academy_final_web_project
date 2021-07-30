@@ -8,6 +8,7 @@ public class ColumnLabel {
      * Columns of the Tokens database table.
      */
     public static final String TOKEN_ID = "token_id";
+    public static final String ACCOUNT_ID = "account_id";
     public static final String TOKEN_NUMBER = "token_number";
     public static final String TOKEN_STATUS = "token_status";
 }
