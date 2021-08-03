@@ -7,7 +7,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.HashMap;
-import java.util.Locale;
 
 import static by.tarasiuk.ct.manager.AttributeName.LOCALE;
 
@@ -15,13 +14,14 @@ public class ChangeLocalePageCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
 
     @Override
-    public String execute(RequestContent requestContent) {
-        HashMap<String, String> requestParameters = requestContent.getRequestParameters();
+    public String execute(RequestContent content) {
+        HashMap<String, String> requestParameters = content.getRequestParameters();
+        HashMap<String, Object> sessionAttributes = content.getSessionAttributes();
 
-        Locale oldLocale = requestContent.getLocale();
         String newLocale = requestParameters.get(LOCALE);
-        LOGGER.info("Locale from JSP request: '{}'.", newLocale);
-        requestContent.putSessionAttribute(LOCALE, newLocale);
+        String oldLocale = (String) sessionAttributes.get(LOCALE);
+
+        content.putSessionAttribute(LOCALE, newLocale);
 
         LOGGER.info("Locale page change from '{}' to '{}'.", oldLocale, newLocale);
         return PagePath.MAIN;   //todo как получить адрес страницы, из которой пришёл юзер? Чтобы перенаправить его пять туда же.

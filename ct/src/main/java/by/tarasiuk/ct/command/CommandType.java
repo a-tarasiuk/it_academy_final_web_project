@@ -9,13 +9,14 @@ import by.tarasiuk.ct.command.impl.*;
  */
 public enum CommandType {
     CHANGE_LOCALE_PAGE(new ChangeLocalePageCommand()),
+    ACTIVATE_ACCOUNT(new ActivateAccountCommand()),
+    SIGN_IN(new SignInCommand()),
+    SIGN_UP(new SignUpCommand()),
+    LOGOUT(new LogoutCommand()),
     GO_TO_MAIN_PAGE(new GoToMainPageCommand()),
     GO_TO_SIGN_IN_PAGE(new GoToSignInPageCommand()),
     GO_TO_SIGN_UP_PAGE(new GoToSignUpPageCommand()),
-    SIGN_IN(new SignInCommand()),
-    ACTIVATE_ACCOUNT(new ActivateAccountCommand()),
-    SIGN_UP(new SignUpCommand()),
-    LOGOUT(new LogoutCommand());
+    GO_TO_CREATE_OFFER_PAGE(new GoToCreateOfferPageCommand());
 
     /**
      * Command.

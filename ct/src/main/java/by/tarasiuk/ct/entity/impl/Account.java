@@ -98,7 +98,6 @@ public class Account implements Entity {
 
     public enum Role {
         ADMINISTRATOR,
-        MODERATOR,
         MANAGER,
         FORWARDER;
     }

@@ -1,3 +1,4 @@
+<%@ page import="jakarta.servlet.jsp.JspFactory" %>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -21,12 +22,16 @@
         <jsp:include page="common/header.jsp"/>
 
         <div id="middle">
-            <div id="info">
-                <span class="icon icon-exclamation-circle x2 icon-green"></span>
-                <span>Welcome to the <b>Cargo Trading!</b></span>
-            </div>
-        </div>
+            <c:choose>
+                <c:when test="${not empty sessionScope.account}">
+                    <jsp:include page="/WEB-INF/jsp/trading/trading.jsp"/>
+                </c:when>
 
+                <c:otherwise>
+                    <span>Hello, user</span>
+                </c:otherwise>
+            </c:choose>
+        </div>
         <jsp:include page="common/footer.jsp"/>
     </div>
 </body>

@@ -16,7 +16,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Optional;
 
 import static by.tarasiuk.ct.manager.AttributeName.*;
@@ -29,6 +28,7 @@ public class SignUpCommand implements Command {
     public String execute(RequestContent content) {
         String path;
         HashMap<String, String> signUpData = content.getRequestParameters();
+        HashMap<String, Object> sessionAttributes = content.getSessionAttributes();
         signUpData.remove(COMMAND);
 
         AccountServiceImpl accountService = new AccountServiceImpl();
@@ -55,9 +55,9 @@ public class SignUpCommand implements Command {
                 if (!optionalAccountByLogin.isPresent() && !optionalAccountByEmail.isPresent() && !optionalCompany.isPresent()) {
                     TokenService tokenService = new TokenServiceImpl();
 
-                    Locale locale = content.getLocale();
+                    String locale = (String) sessionAttributes.get(LOCALE);
                     String firstName = signUpData.get(ACCOUNT_FIRST_NAME);
-                    String formatMessage = MessageManager.getInstance().findMassage(CONFIRM_MESSAGE, locale);
+                    String formatMessage = MessageManager.findMassage(CONFIRM_MESSAGE, locale);
                     String pageMessage = String.format(formatMessage, firstName, email);
                     content.putRequestAttribute(MESSAGE, pageMessage);
 

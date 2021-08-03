@@ -10,17 +10,20 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/font.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/sign.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/icon.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/font-awesome.min.css">
 
-    <script src="${pageContext.request.contextPath}/js/validation.js"></script>
+    <script src="${pageContext.request.contextPath}/js/sign-up-validation.js"></script>
     <title><fmt:message key="form.signUp.title"/></title>
 </head>
 <body>
     <div id="container">
         <div id="main">
-            <div id="window-title" class="row"><fmt:message key="form.signUp.message"/></div>
+            <div id="window-title" class="row">
+                <fmt:message key="form.signUp.message"/>
+            </div>
 
             <form action="controller" method="post" novalidate>
                 <div class="row">

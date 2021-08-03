@@ -10,3 +10,5 @@ ct/src/main/webapp/static
 *.iml
 *.css
 *.js
+*.ico
+*.tld

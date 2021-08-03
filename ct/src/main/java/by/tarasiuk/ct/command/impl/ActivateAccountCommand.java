@@ -12,7 +12,7 @@ import by.tarasiuk.ct.util.MessageManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.Locale;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -30,10 +30,11 @@ public class ActivateAccountCommand implements Command {
     @Override
     public String execute(RequestContent content) {
         Map<String, String> requestParameters = content.getRequestParameters();
+        HashMap<String, Object> sessionAttributes = content.getSessionAttributes();
 
         String message;
         String formatMessage;
-        Locale locale = content.getLocale();
+        String locale = (String) sessionAttributes.get(LOCALE);
         String email = requestParameters.get(ACCOUNT_EMAIL);
         String requestTokenNumber = requestParameters.get(TOKEN_NUMBER);
 
@@ -42,14 +43,14 @@ public class ActivateAccountCommand implements Command {
             Optional<Account> optionalAccount = accountService.findAccountByEmail(email);
 
             if(!optionalAccount.isPresent()) {
-                formatMessage = MessageManager.getInstance().findMassage(MESSAGE_NOT_EXIST_ACCOUNT, locale);
+                formatMessage = MessageManager.findMassage(MESSAGE_NOT_EXIST_ACCOUNT, locale);
             } else {
                 Account account = optionalAccount.get();
                 TokenServiceImpl tokenService = new TokenServiceImpl();
                 Optional<Token> optionalToken = tokenService.findTokenByAccount(account);
 
                 if(!optionalToken.isPresent()) {
-                    formatMessage = MessageManager.getInstance().findMassage(MESSAGE_NOT_EXIST_TOKEN, locale);
+                    formatMessage = MessageManager.findMassage(MESSAGE_NOT_EXIST_TOKEN, locale);
                 } else {
                     Token token = optionalToken.get();
                     String foundTokenNumber = token.getNumber();
@@ -57,7 +58,7 @@ public class ActivateAccountCommand implements Command {
                             requestTokenNumber, foundTokenNumber, requestTokenNumber.equals(foundTokenNumber));
 
                     if(!foundTokenNumber.equals(requestTokenNumber)) {
-                        formatMessage = MessageManager.getInstance().findMassage(MESSAGE_INCORRECT_TOKEN, locale);
+                        formatMessage = MessageManager.findMassage(MESSAGE_INCORRECT_TOKEN, locale);
                         LOGGER.info("The token number from request '{}' doesn't match the token number in the database '{}'.",
                                 requestTokenNumber, foundTokenNumber);
                     } else {
@@ -65,7 +66,7 @@ public class ActivateAccountCommand implements Command {
 
                         switch (tokenStatus) {
                             case CONFIRMED:
-                                formatMessage = MessageManager.getInstance().findMassage(MESSAGE_ALREADY_ACTIVATED, locale);
+                                formatMessage = MessageManager.findMassage(MESSAGE_ALREADY_ACTIVATED, locale);
                                 break;
                             case UNCONFIRMED:
                                 Token.Status status = Token.Status.CONFIRMED;
@@ -75,7 +76,7 @@ public class ActivateAccountCommand implements Command {
                                 accountService.changeAccountStatus(account, accountStatus);
 
                                 content.putSessionAttribute(ACCOUNT, account);
-                                formatMessage = MessageManager.getInstance().findMassage(MESSAGE_SUCCESSFULLY_ACTIVATED, locale);
+                                formatMessage = MessageManager.findMassage(MESSAGE_SUCCESSFULLY_ACTIVATED, locale);
                                 break;
                             default:
                                 throw new EnumConstantNotPresentException(tokenStatus.getClass(), tokenStatus.toString()); //fixme Need an exception?
@@ -84,7 +85,7 @@ public class ActivateAccountCommand implements Command {
                 }
             }
         } catch (ServiceException e) {
-            formatMessage = MessageManager.getInstance().findMassage(MESSAGE_QUERY_ERROR, locale);
+            formatMessage = MessageManager.findMassage(MESSAGE_QUERY_ERROR, locale);
             LOGGER.warn("Error when activating email '{}'.", email);
         }
 

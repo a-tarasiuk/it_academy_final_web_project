@@ -1,6 +1,10 @@
 package by.tarasiuk.ct.controller.filter;
 
-import jakarta.servlet.*;
+import jakarta.servlet.Filter;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
 import jakarta.servlet.annotation.WebFilter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,10 +20,8 @@ public class EncodingFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
         String requestCharacterEncoding = servletRequest.getCharacterEncoding();
-        String responseCharacterEncoding = servletResponse.getCharacterEncoding();
 
-        if(!requestCharacterEncoding.equalsIgnoreCase(ENCODING_UTF_8) || !responseCharacterEncoding.equalsIgnoreCase(ENCODING_UTF_8)) {
-            servletRequest.setCharacterEncoding(ENCODING_UTF_8);
+        if(!requestCharacterEncoding.equalsIgnoreCase(ENCODING_UTF_8)) {
             servletResponse.setCharacterEncoding(ENCODING_UTF_8);
             LOGGER.info("Encoding was change for request '{}', for response '{}'.",
                     servletRequest.getCharacterEncoding(), servletResponse.getCharacterEncoding());

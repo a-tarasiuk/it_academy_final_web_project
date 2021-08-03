@@ -79,7 +79,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void sendActivationEmail(Locale locale, String firstName, String emailTo, String token) {
+    public void sendActivationEmail(String locale, String firstName, String emailTo, String token) {
         EmailSender.sendActivationEmail(locale, firstName, emailTo, token);
     }
 

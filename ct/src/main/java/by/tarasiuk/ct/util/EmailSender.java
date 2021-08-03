@@ -1,18 +1,18 @@
 package by.tarasiuk.ct.util;
 
 import jakarta.mail.*;
-import jakarta.mail.internet.*;
+import jakarta.mail.internet.AddressException;
+import jakarta.mail.internet.InternetAddress;
+import jakarta.mail.internet.MimeMessage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.Locale;
 import java.util.Properties;
 
 public class EmailSender {
     private static final Logger LOGGER = LogManager.getLogger();
-    private static final MessageManager messageManager = MessageManager.getInstance();
     private static final String PROPERTIES_EMAIL = "email.properties";
     private static final String USER_NAME = "mail.user.name";
     private static final String USER_PASSWORD = "mail.user.password";
@@ -55,9 +55,9 @@ public class EmailSender {
     private EmailSender() {
     }
 
-    public static void sendActivationEmail(Locale locale, String firstName, String emailTo, String token) {
-        String emailSubject = messageManager.findMassage(SUBJECT_COMPLETION_REGISTRATION, locale);
-        String formatMessage = messageManager.findMassage(TEXT_COMPLETION_REGISTRATION, locale);
+    public static void sendActivationEmail(String locale, String firstName, String emailTo, String token) {
+        String emailSubject = MessageManager.findMassage(SUBJECT_COMPLETION_REGISTRATION, locale);
+        String formatMessage = MessageManager.findMassage(TEXT_COMPLETION_REGISTRATION, locale);
         StringBuilder link = new StringBuilder(LINK_START)
                 .append(emailTo)
                 .append(LINK_COMMAND)

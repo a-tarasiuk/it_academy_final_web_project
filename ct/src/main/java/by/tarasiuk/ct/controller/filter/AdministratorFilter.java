@@ -6,6 +6,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
+import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -16,9 +17,11 @@ import static by.tarasiuk.ct.entity.impl.Account.*;
 import static by.tarasiuk.ct.manager.AttributeName.ACCOUNT;
 import static by.tarasiuk.ct.manager.AttributeName.SHOW_ADMIN_PANEL;
 
+@WebFilter
 public class AdministratorFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+        System.out.println("INSIDE - ADMINISTRATOR FILTER");    //fixme
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession();

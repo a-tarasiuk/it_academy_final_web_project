@@ -13,8 +13,8 @@ public class AttributeName {
      * Locale attributes from JSP page.
      */
     public static final String LOCALE = "locale";
-    public static final String LOCALE_EN_US = "en_US";
-    public static final String LOCALE_RU_RU = "ru_RU";
+    public static final String EN_US = "en_US";
+    public static final String RU_RU = "ru_RU";
 
     /**
      * Administrator attributes

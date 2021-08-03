@@ -66,7 +66,7 @@ public class Controller extends HttpServlet {
             RequestDispatcher dispatcher = request.getRequestDispatcher(pagePath);
             dispatcher.forward(request, response);
         } else {
-            LOGGER.info("Forward to: {}.", PagePath.MAIN);
+            LOGGER.info("Redirect to: {}.", PagePath.MAIN);
             String contextPath = request.getContextPath();
             response.sendRedirect(contextPath + PagePath.MAIN);
         }

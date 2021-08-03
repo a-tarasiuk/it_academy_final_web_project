@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="ct" uri="/WEB-INF/tld/custom.tld" %>
 
 <%--@elvariable id="locale" type="java.lang.String"--%>
 <fmt:setBundle basename="locale"/>
@@ -18,23 +19,36 @@
         </div>
 
         <div id="right-menu">
-            <div class="dropdown-wrapper">
-                <button class="dropdown-button button-colour-standard">
-                    <span class="icon icon-globe">&nbsp;</span>
-                    <fmt:message key="header.label.locale"/>&nbsp;&nbsp;
-                    <span class="icon icon-caret-down"></span>
-                </button>
-                <div class="content-wrapper">
-                    <form class="dropdown-content" method="post" action="controller">
-                        <input type="hidden" name="command" value="change_locale_page">
-                        <button type="submit" name="locale" value="ru_RU"><fmt:message key="header.option.label.ruRU"/></button>
-                        <button type="submit" name="locale" value="en_US"><fmt:message key="header.option.label.enUS"/></button>
-                    </form>
-                </div>
-            </div>
+            <ct:locale_button/>
 
-            <a class="menu-button button-colour-standard" href="${path}/controller?command=go_to_sign_in_page"><span class="icon icon-sign-in">&nbsp;</span><fmt:message key="header.button.label.signIn"/></a>
-            <a class="menu-button button-colour-red" href="${path}/controller?command=go_to_sign_up_page"><span class="icon icon-white icon-sign-up"></span>&nbsp;<fmt:message key="header.button.label.signUp"/></a>
+            <c:choose>
+                <c:when test="${empty account}">
+                    <ct:header_buttons/>
+                </c:when>
+
+                <c:otherwise>
+                    <div class="dropdown-wrapper">
+                        <button class="dropdown-button button-colour-standard">
+                            <span class="icon icon-user-circle-o">&nbsp;</span>
+                                ${account.firstName}&nbsp;&nbsp;
+                            <span class="icon icon-caret-down"></span>
+                        </button>
+                        <div class="content-wrapper">
+                            <form class="dropdown-content" method="get" action="controller">
+                               <button type="submit" name="command" value="en_US">
+                                    <span class="icon icon-cog">&nbsp;</span>
+                                    <fmt:message key="button.account.label.settings"/>
+                                </button>
+
+                                <button type="submit" name="command" value="logout">
+                                    <span class="icon icon-sign-out">&nbsp;</span>
+                                    <fmt:message key="button.account.label.logout"/>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </c:otherwise>
+            </c:choose>
         </div>
     </div>
 </div>

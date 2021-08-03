@@ -42,7 +42,7 @@ public class SignInCommand implements Command {
                     switch (status) {
                         case ACTIVATED:
                             content.putSessionAttribute(ACCOUNT, account);
-                            page = PagePath.ACCOUNT;
+                            page = PagePath.MAIN;
                             LOGGER.info("Sign in successfully for account with login '{}' (status '{}', role '{}').", login, status, account.getRole());
                             break;
                         case BANNED:
