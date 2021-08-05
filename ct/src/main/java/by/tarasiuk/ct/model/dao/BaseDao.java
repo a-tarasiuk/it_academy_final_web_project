@@ -14,11 +14,11 @@ import java.util.Optional;
 
 public abstract class BaseDao <E extends Entity> {
     private static final Logger LOGGER = LogManager.getLogger();
-    protected static final DaoProvider daoProvider = DaoProvider.getInstance();
     protected ConnectionPool connectionPool = ConnectionPool.getInstance();
 
+    public abstract boolean createEntity(E entity) throws DaoException;
     public abstract List<Entity> findAll() throws DaoException;
-    public abstract E update(E entity) throws DaoException;
+    public abstract E updateEntity(E entity) throws DaoException;
     public abstract Optional<E> findEntityById(int id) throws DaoException;
 
     public void closeConnection(Connection connection) {

@@ -1,0 +1,106 @@
+package by.tarasiuk.ct.model.dao.impl;
+
+import by.tarasiuk.ct.entity.Entity;
+import by.tarasiuk.ct.entity.impl.Offer;
+import by.tarasiuk.ct.entity.impl.Offer.Status;
+import by.tarasiuk.ct.exception.DaoException;
+import by.tarasiuk.ct.model.dao.BaseDao;
+import by.tarasiuk.ct.model.dao.OfferDao;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
+
+public class OfferDaoImpl extends BaseDao<Offer> implements OfferDao {
+    private static final Logger LOGGER = LogManager.getLogger();
+    private static final OfferDaoImpl instance = new OfferDaoImpl();
+
+    private final String SQL_PROCEDURE_CREATE_OFFER = "{CALL create_offer (?, ?, ?, ?, ?, ?, ?, ?, ?)}";
+    //private final String SQL_PROCEDURE_UPDATE_TOKEN = "{CALL update_offer (?, ?, ?, ?)}";
+
+    private static final class IndexCreate {
+        private static final int ACCOUNT_ID = 1;
+        private static final int PRODUCT_NAME = 2;
+        private static final int PRODUCT_WEIGHT = 3;
+        private static final int PRODUCT_VOLUME = 4;
+        private static final int ADDRESS_FROM = 5;
+        private static final int ADDRESS_TO = 6;
+        private static final int FREIGHT = 7;
+        private static final int CREATION_DATE = 8;
+        private static final int STATUS = 9;
+    }
+
+    /*
+    private static final class IndexUpdate {
+        private static final int TOKEN_ID = 1;
+        private static final int ACCOUNT_ID = 2;
+        private static final int TOKEN_NUMBER = 3;
+        private static final int TOKEN_STATUS = 4;
+    }
+     */
+
+    private OfferDaoImpl() {
+    }
+
+    public static OfferDaoImpl getInstance() {
+        return instance;
+    }
+
+    public boolean createEntity(Offer offer) throws DaoException {
+        Connection connection = connectionPool.getConnection();
+
+        long accountId = offer.getAccountId();
+        String productName = offer.getProductName();
+        float productWeight = offer.getProductFreight();
+        float productVolume = offer.getProductVolume();
+        String addressFrom = offer.getAddressFrom();
+        String addressTo = offer.getAddressTo();
+        float freight = offer.getFreight();
+        LocalDate creationDate = offer.getCreationDate();
+        Status status = offer.getStatus();
+
+        try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_CREATE_OFFER)) {
+            statement.setLong(IndexCreate.ACCOUNT_ID, accountId);
+            statement.setString(IndexCreate.PRODUCT_NAME, productName);
+            statement.setFloat(IndexCreate.PRODUCT_WEIGHT, productWeight);
+            statement.setFloat(IndexCreate.PRODUCT_VOLUME, productVolume);
+            statement.setString(IndexCreate.ADDRESS_FROM, addressFrom);
+            statement.setString(IndexCreate.ADDRESS_TO, addressTo);
+            statement.setFloat(IndexCreate.FREIGHT, freight);
+            statement.setDate(IndexCreate.CREATION_DATE, Date.valueOf(creationDate));
+            statement.setString(IndexCreate.STATUS, status.name());
+
+            statement.executeUpdate();
+
+            LOGGER.info("Offer was successfully created in the database: {}.", offer);
+            return true;    //fixme -> statement.executeUpdate(); (см. выше).
+        } catch (SQLException e) {
+            LOGGER.error("Failed to create offer in the database: {}.", offer, e);
+            throw new DaoException("Failed to create offer in the database: " + offer + ".", e);
+        } finally {
+            closeConnection(connection);
+        }
+    }
+
+
+    @Override
+    public List<Entity> findAll() throws DaoException {
+        return null;
+    }
+
+    @Override
+    public Offer updateEntity(Offer entity) throws DaoException {
+        return null;
+    }
+
+    @Override
+    public Optional<Offer> findEntityById(int id) throws DaoException {
+        return Optional.empty();
+    }
+}

@@ -1,6 +1,6 @@
 package by.tarasiuk.ct.controller.filter;
 
-import by.tarasiuk.ct.entity.impl.Account;
+import by.tarasiuk.ct.manager.PagePath;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -10,25 +10,21 @@ import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 
-import static by.tarasiuk.ct.entity.impl.Account.Role;
-import static by.tarasiuk.ct.manager.AttributeName.ACCOUNT;
-import static by.tarasiuk.ct.manager.AttributeName.SHOW_ADMIN_PANEL;
-
 @WebFilter
-public class AdministratorFilter implements Filter {
+public class SessionFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-        HttpSession session = request.getSession();
+        HttpSession session = request.getSession(false);
 
-        Account account = (Account) session.getAttribute(ACCOUNT);
-        if(account != null && account.getRole().equals(Role.ADMINISTRATOR)) {
-            session.setAttribute(SHOW_ADMIN_PANEL, true);
+        if(session == null) {
+            response.sendRedirect(request.getContextPath() + PagePath.INFO);    //fixme
+        } else {
+            filterChain.doFilter(request, response);
         }
-
-        filterChain.doFilter(request, response);
     }
 }

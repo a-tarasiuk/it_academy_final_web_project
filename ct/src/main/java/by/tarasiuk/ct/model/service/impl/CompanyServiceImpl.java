@@ -16,7 +16,15 @@ import java.util.Optional;
 
 public class CompanyServiceImpl implements CompanyService {
     private static final Logger LOGGER = LogManager.getLogger();
-    private static final CompanyDaoImpl companyDao = DaoProvider.getInstance().getCompanyDao();
+    private static final CompanyServiceImpl companyService = new CompanyServiceImpl();
+    private static final CompanyDaoImpl companyDao = DaoProvider.getCompanyDao();
+
+    private CompanyServiceImpl() {
+    }
+
+    public static CompanyServiceImpl getInstance() {
+        return companyService;
+    }
 
     @Override
     public boolean validateCompany(Map<String, String> companyData) throws ServiceException {
@@ -30,7 +38,7 @@ public class CompanyServiceImpl implements CompanyService {
         try {
             return companyDao.createCompany(company);
         } catch (DaoException e) {
-            LOGGER.error("Error while creating: '{}'.", company);
+            LOGGER.error("Error while creating: '{}'.", company, e);
             throw new ServiceException("Error while creating: '" + company + "'.", e);
         }
     }
@@ -45,7 +53,7 @@ public class CompanyServiceImpl implements CompanyService {
                     ? "Successfully was find company by name '{}'."
                     : "Company with name '{}' not found in the database.", name);
         } catch (DaoException e) {
-            LOGGER.error("Error when searching for an company by name '{}'.", name);
+            LOGGER.error("Error when searching for an company by name '{}'.", name, e);
             throw new ServiceException("Error when searching for an company by name '" + name + "'.", e);
         }
 

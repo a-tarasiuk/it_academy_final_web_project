@@ -38,12 +38,17 @@ public class AccountDaoImpl extends BaseDao<Account> implements AccountDao {
     }
 
     @Override
+    public boolean createEntity(Account entity) throws DaoException {
+        return false;
+    }
+
+    @Override
     public List<Entity> findAll() throws DaoException {
         return null;
     }
 
     @Override
-    public Account update(Account account) {
+    public Account updateEntity(Account account) {
         return null;
     }
 
@@ -161,7 +166,7 @@ public class AccountDaoImpl extends BaseDao<Account> implements AccountDao {
             LOGGER.info("Account was successfully created in the database: {}.", account);
             return true;
         } catch (SQLException e) {
-            LOGGER.error("Failed to create account '{}' in the database.", account);
+            LOGGER.error("Failed to create account '{}' in the database.", account, e);
             throw new DaoException("Failed to create account '" + account + "' in the database.", e);
         } finally {
             closeConnection(connection);
@@ -195,8 +200,8 @@ public class AccountDaoImpl extends BaseDao<Account> implements AccountDao {
             LOGGER.info("Account was successfully updated in the database: {}.", account);
             return true;
         } catch (SQLException e) {
-            LOGGER.error("Failed to update account '{}' in the database.", account);
-            throw new DaoException("Failed to update account '" + account + "' in the database.", e);
+            LOGGER.error("Failed to updateEntity account '{}' in the database.", account, e);
+            throw new DaoException("Failed to updateEntity account '" + account + "' in the database.", e);
         } finally {
             closeConnection(connection);
         }

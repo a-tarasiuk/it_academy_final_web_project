@@ -3,6 +3,8 @@ package by.tarasiuk.ct.controller;
 import by.tarasiuk.ct.manager.AttributeName;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -10,18 +12,24 @@ import java.util.Map;
 import java.util.Optional;
 
 public class RequestContent {
+    private static final Logger LOGGER = LogManager.getLogger();
     private boolean isValidSession = true;
     private HashMap<String, String> requestParameters;
     private HashMap<String, Object> requestAttributes;
     private HashMap<String, Object> sessionAttributes;
 
-    public void buildContent(HttpServletRequest request) {
+    public enum Scope {
+        SESSION,
+        REQUEST
+    }
+
+    protected void buildContent(HttpServletRequest request) {
         requestParameters = buildRequestParameters(request);
         requestAttributes = buildRequestAttributes(request);
         sessionAttributes = buildSessionAttributes(request);
     }
 
-    public void restore(HttpServletRequest request) {
+    protected void restore(HttpServletRequest request) {
         requestAttributes.forEach(request::setAttribute);
 
         if(!isValidSession) {
@@ -43,6 +51,9 @@ public class RequestContent {
             case SESSION:
                 sessionAttributes.put(key, value);
                 break;
+            default:
+                LOGGER.warn("Nonexistent constant '{}' in '{}'.", scope, scope.getDeclaringClass());
+                throw new EnumConstantNotPresentException(scope.getDeclaringClass(), scope.name());
         }
     }
 
@@ -55,21 +66,40 @@ public class RequestContent {
             case SESSION:
                 sessionAttributes.putAll(map);
                 break;
+            default:
+                LOGGER.warn("Nonexistent constant '{}' in '{}'.", scope, scope.getDeclaringClass());
+                throw new EnumConstantNotPresentException(scope.getClass(), scope.toString()); //fixme Need an exception?
         }
     }
 
     // find object by key
-    public Optional<Object> find(Scope scope, String key) {
+    public Object find(Scope scope, String key) {
         switch (scope) {
             case REQUEST:
-                return Optional.ofNullable(requestParameters.get(key));
+                return requestParameters.get(key);
             case SESSION:
-                return Optional.ofNullable(sessionAttributes.get(key));
+                return sessionAttributes.get(key);
             default:
-                return Optional.empty();
+                LOGGER.warn("Nonexistent constant '{}' in '{}'.", scope, scope.getDeclaringClass());
+                throw new EnumConstantNotPresentException(scope.getClass(), scope.toString()); //fixme Need an exception?
         }
     }
 
+    public HashMap<String, ?> find(Scope scope) {
+        switch (scope) {
+            case REQUEST:
+                return new HashMap<>(requestParameters);
+            case SESSION:
+                return new HashMap<>(sessionAttributes);
+            default:
+                LOGGER.warn("Nonexistent constant '{}' in '{}'.", scope, scope.getDeclaringClass());
+                throw new EnumConstantNotPresentException(scope.getClass(), scope.toString()); //fixme Need an exception?
+        }
+    }
+
+    public void invalidateSession() {
+        isValidSession = false;
+    }
 
     // Version 2
     public HashMap<String, String> getRequestParameters(){
@@ -94,10 +124,6 @@ public class RequestContent {
 
     public void putRequestAttributes(HashMap<String, String> attributes) {
         requestAttributes.putAll(attributes);
-    }
-
-    public void invalidateSession() {
-        isValidSession = false;
     }
 
     private HashMap<String, String> buildRequestParameters(HttpServletRequest request) {
@@ -142,10 +168,5 @@ public class RequestContent {
         }
 
         return sessionAttributes;
-    }
-
-    public enum Scope {
-        SESSION,
-        REQUEST
     }
 }

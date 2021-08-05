@@ -2,30 +2,31 @@ package by.tarasiuk.ct.model.dao;
 
 import by.tarasiuk.ct.model.dao.impl.AccountDaoImpl;
 import by.tarasiuk.ct.model.dao.impl.CompanyDaoImpl;
+import by.tarasiuk.ct.model.dao.impl.OfferDaoImpl;
 import by.tarasiuk.ct.model.dao.impl.TokenDaoImpl;
 
 public class DaoProvider {
-    private static final DaoProvider instance = new DaoProvider();
-    private static final AccountDaoImpl ACCOUNT_DAO_IMPL = AccountDaoImpl.getInstance();
-    private static final CompanyDaoImpl COMPANY_DAO_IMPL = CompanyDaoImpl.getInstance();
-    private static final TokenDaoImpl TOKEN_DAO_IMPL = TokenDaoImpl.getInstance();
+    private static final AccountDaoImpl accountDao = AccountDaoImpl.getInstance();
+    private static final CompanyDaoImpl companyDao = CompanyDaoImpl.getInstance();
+    private static final TokenDaoImpl tokenDao = TokenDaoImpl.getInstance();
+    private static final OfferDaoImpl offerDao = OfferDaoImpl.getInstance();
 
     private DaoProvider() {
     }
 
-    public static DaoProvider getInstance() {
-        return instance;
+    public static AccountDaoImpl getAccountDao() {
+        return accountDao;
     }
 
-    public AccountDaoImpl getAccountDao() {
-        return ACCOUNT_DAO_IMPL;
+    public static CompanyDaoImpl getCompanyDao() {
+        return companyDao;
     }
 
-    public CompanyDaoImpl getCompanyDao() {
-        return COMPANY_DAO_IMPL;
+    public static TokenDaoImpl getTokenDao() {
+        return tokenDao;
     }
 
-    public TokenDaoImpl getTokenDao() {
-        return TOKEN_DAO_IMPL;
+    public static OfferDaoImpl getOfferDao() {
+        return offerDao;
     }
 }

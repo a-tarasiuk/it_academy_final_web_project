@@ -15,7 +15,15 @@ import java.util.Optional;
 
 public class TokenServiceImpl implements TokenService {
     private static final Logger LOGGER = LogManager.getLogger();
-    private static final TokenDaoImpl tokenDao = DaoProvider.getInstance().getTokenDao();
+    private static final TokenServiceImpl instance = new TokenServiceImpl();
+    private static final TokenDaoImpl tokenDao = DaoProvider.getTokenDao();
+
+    private TokenServiceImpl() {
+    }
+
+    public static TokenServiceImpl getInstance() {
+        return instance;
+    }
 
     @Override
     public boolean createToken(long accountId) throws ServiceException {
@@ -29,10 +37,11 @@ public class TokenServiceImpl implements TokenService {
         try {
             return tokenDao.createToken(token);
         } catch (DaoException e) {
-            LOGGER.error("Error while generating token for account with id '{}'.", accountId);
+            LOGGER.error("Error while generating token for account with id '{}'.", accountId, e);
             throw new ServiceException("Error while generating token for account with id '" + accountId +"'.", e);
         }
     }
+
     @Override
     public Optional<Token> findTokenByAccount(Account account) throws ServiceException {
         Optional<Token> optionalToken;
@@ -44,7 +53,7 @@ public class TokenServiceImpl implements TokenService {
                     ? "Successfully was find token for account '{}'."
                     : "Token with account id '{}' not found in the database.", account);
         } catch (DaoException e) {
-            LOGGER.error("Error when searching an token for account '{}'.", account);
+            LOGGER.error("Error when searching an token for account '{}'.", account, e);
             throw new ServiceException("Error when searching an token for account '" + account + "'.", e);
         }
 
@@ -61,11 +70,11 @@ public class TokenServiceImpl implements TokenService {
         try {
             result = tokenDao.updateToken(token);
             LOGGER.info(result
-                    ? "Successfully update token '{}'."
+                    ? "Successfully updateEntity token '{}'."
                     : "Token '{}' not found in the database.", token);
         } catch (DaoException e) {
-            LOGGER.error("Error when update token '{}'.", token);
-            throw new ServiceException("Error when update token '" + token + "'.", e);
+            LOGGER.error("Error when updateEntity token '{}'.", token, e);
+            throw new ServiceException("Error when updateEntity token '" + token + "'.", e);
         }
 
         return result;

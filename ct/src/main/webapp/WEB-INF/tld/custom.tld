@@ -9,14 +9,20 @@
     <short-name>ct</short-name>
 
     <tag>
-        <name>header_buttons</name>
-        <tag-class>by.tarasiuk.ct.tag.HeaderButtonTag</tag-class>
+        <name>account_buttons</name>
+        <tag-class>by.tarasiuk.ct.tag.AccountButtonTag</tag-class>
         <body-content>empty</body-content>
     </tag>
 
     <tag>
         <name>locale_button</name>
         <tag-class>by.tarasiuk.ct.tag.LocaleButtonTag</tag-class>
+        <body-content>empty</body-content>
+    </tag>
+
+    <tag>
+        <name>error_page</name>
+        <tag-class>by.tarasiuk.ct.tag.ErrorPageTag</tag-class>
         <body-content>empty</body-content>
     </tag>
 </taglib>

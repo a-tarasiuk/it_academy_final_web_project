@@ -1,10 +1,17 @@
 package by.tarasiuk.ct.entity.impl;
 
-public class Token {
+import by.tarasiuk.ct.entity.Entity;
+
+public class Token implements Entity {
     private long id;
     private long accountId;
     private String number;
     private Status status;
+
+    public enum Status {
+        CONFIRMED,
+        UNCONFIRMED;
+    }
 
     public long getId() {
         return id;
@@ -40,16 +47,12 @@ public class Token {
 
     @Override
     public String toString() {
-        return "Token{" +
-                "id=" + id +
-                ", accountId=" + accountId +
-                ", number='" + number + '\'' +
-                ", status=" + status +
-                '}';
-    }
-
-    public enum Status {
-        CONFIRMED,
-        UNCONFIRMED;
+        final StringBuilder sb = new StringBuilder("Token{");
+        sb.append("id=").append(id);
+        sb.append(", accountId=").append(accountId);
+        sb.append(", number='").append(number).append('\'');
+        sb.append(", status=").append(status);
+        sb.append('}');
+        return sb.toString();
     }
 }

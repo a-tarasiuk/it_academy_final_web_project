@@ -17,6 +17,18 @@ public class Account implements Entity {
     private Role role;
     private Status status;
 
+    public enum Role {
+        ADMINISTRATOR,
+        MANAGER,
+        FORWARDER;
+    }
+
+    public enum Status {
+        ACTIVATED,
+        NOT_ACTIVATED,
+        BANNED;
+    }
+
     public long getId() {
         return id;
     }
@@ -96,29 +108,18 @@ public class Account implements Entity {
         return login != null && login.equals(account.login);
     }
 
-    public enum Role {
-        ADMINISTRATOR,
-        MANAGER,
-        FORWARDER;
-    }
-
-    public enum Status {
-        ACTIVATED,
-        NOT_ACTIVATED,
-        BANNED;
-    }
-
     @Override
     public String toString() {
-        return new StringBuilder("Account{")
-                .append("id='").append(this.id).append('\'')
-                .append(", first name='").append(this.firstName).append('\'')
-                .append(", last name='").append(this.lastName).append('\'')
-                .append(", login='").append(this.login).append('\'')
-                .append(", email='").append(this.email).append('\'')
-                .append(", registration date='").append(this.registrationDate).append('\'')
-                .append(", role='").append(this.role).append('\'')
-                .append(", status='").append(this.status).append('\'')
-                .append("}").toString();
+        final StringBuilder sb = new StringBuilder("Account{");
+        sb.append("id=").append(id);
+        sb.append(", firstName='").append(firstName).append('\'');
+        sb.append(", lastName='").append(lastName).append('\'');
+        sb.append(", login='").append(login).append('\'');
+        sb.append(", email='").append(email).append('\'');
+        sb.append(", registrationDate=").append(registrationDate);
+        sb.append(", role=").append(role);
+        sb.append(", status=").append(status);
+        sb.append('}');
+        return sb.toString();
     }
 }

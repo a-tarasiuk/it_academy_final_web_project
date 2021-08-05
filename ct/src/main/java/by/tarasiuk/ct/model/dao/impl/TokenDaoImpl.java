@@ -1,6 +1,5 @@
 package by.tarasiuk.ct.model.dao.impl;
 
-import by.tarasiuk.ct.entity.impl.Account;
 import by.tarasiuk.ct.entity.Entity;
 import by.tarasiuk.ct.entity.impl.Token;
 import by.tarasiuk.ct.exception.DaoException;
@@ -16,9 +15,11 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
-import static by.tarasiuk.ct.manager.ColumnLabel.*;
+import static by.tarasiuk.ct.manager.ColumnLabel.TOKEN_ID;
+import static by.tarasiuk.ct.manager.ColumnLabel.TOKEN_NUMBER;
+import static by.tarasiuk.ct.manager.ColumnLabel.TOKEN_STATUS;
 
-public class TokenDaoImpl extends BaseDao<Account> implements TokenDao {
+public class TokenDaoImpl extends BaseDao<Token> implements TokenDao {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final TokenDaoImpl instance = new TokenDaoImpl();
 
@@ -51,7 +52,7 @@ public class TokenDaoImpl extends BaseDao<Account> implements TokenDao {
             LOGGER.info("Token was successfully created in the database: {}.", token);
             return true;    //fixme -> statement.executeUpdate(); (см. выше).
         } catch (SQLException e) {
-            LOGGER.error("Failed to create token in the database: {}.", token);
+            LOGGER.error("Failed to create token in the database: {}.", token, e);
             throw new DaoException("Failed to create token in the database: " + token + ".", e);
         } finally {
             closeConnection(connection);
@@ -83,7 +84,7 @@ public class TokenDaoImpl extends BaseDao<Account> implements TokenDao {
                 }
             }
         } catch (SQLException e) {
-            LOGGER.error("Failed to find token by account id '{}' in the database.", accountId);
+            LOGGER.error("Failed to find token by account id '{}' in the database.", accountId, e);
             throw new DaoException("Failed to find token by account id '" + accountId + "' in the database.", e);
         } finally {
             closeConnection(connection);
@@ -109,11 +110,16 @@ public class TokenDaoImpl extends BaseDao<Account> implements TokenDao {
 
             return statement.execute();
         } catch (SQLException e) {
-            LOGGER.error("Failed to update token '{}' in the database.", token);
-            throw new DaoException("Failed to update token '" + token + "' in the database.", e);
+            LOGGER.error("Failed to updateEntity token '{}' in the database.", token, e);
+            throw new DaoException("Failed to updateEntity token '" + token + "' in the database.", e);
         } finally {
             closeConnection(connection);
         }
+    }
+
+    @Override
+    public boolean createEntity(Token entity) throws DaoException {
+        return false;
     }
 
     @Override
@@ -122,12 +128,12 @@ public class TokenDaoImpl extends BaseDao<Account> implements TokenDao {
     }
 
     @Override
-    public Account update(Account entity) throws DaoException {
+    public Token updateEntity(Token entity) throws DaoException {
         return null;
     }
 
     @Override
-    public Optional<Account> findEntityById(int id) throws DaoException {
+    public Optional<Token> findEntityById(int id) throws DaoException {
         return Optional.empty();
     }
 

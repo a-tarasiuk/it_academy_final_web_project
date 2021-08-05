@@ -4,13 +4,12 @@ import by.tarasiuk.ct.util.PropertiesLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public class ConnectionFactory {
+class ConnectionFactory {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final Properties connectionProperties;
 
@@ -20,12 +19,10 @@ public class ConnectionFactory {
     private static final String DB_PASSWORD = "database.password";
 
     static {
+        connectionProperties = PropertiesLoader.getProperties(PROPERTIES_FILE);
+
         try {
-            connectionProperties = PropertiesLoader.getProperties(PROPERTIES_FILE);
             DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
-        } catch (IOException e) {
-            LOGGER.fatal("Properties cannot be loaded", e);
-            throw new RuntimeException("Properties cannot be loaded", e);
         } catch (SQLException e) {
             LOGGER.fatal("Can't register driver: ", e);
             throw new RuntimeException("Can't register driver: ", e);

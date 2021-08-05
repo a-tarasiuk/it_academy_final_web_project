@@ -17,21 +17,13 @@ public class MessageManager {
     }
 
     public static String findMassage(String key, String locale) {
-        LanguageCountry language;
-
-        if(locale != null) {
-            language = LanguageCountry.valueOf(locale.toUpperCase());
-        } else {
-            language = LanguageCountry.EN_US;
-        }
-
         String message;
 
-        switch (language) {
-            case RU_RU:
+        switch (locale.toUpperCase()) {
+            case "RU_RU":
                 message = ruRu.getString(key);
                 break;
-            case EN_US:
+            case "EN_US":
                 message = enUs.getString(key);
                 break;
             default:
@@ -40,10 +32,5 @@ public class MessageManager {
         }
 
         return message;
-    }
-
-    private enum LanguageCountry {
-        RU_RU,
-        EN_US
     }
 }

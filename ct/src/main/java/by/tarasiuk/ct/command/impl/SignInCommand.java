@@ -6,17 +6,24 @@ import by.tarasiuk.ct.controller.RequestContent;
 import by.tarasiuk.ct.entity.impl.Account;
 import by.tarasiuk.ct.exception.ServiceException;
 import by.tarasiuk.ct.manager.PagePath;
+import by.tarasiuk.ct.model.service.ServiceProvider;
 import by.tarasiuk.ct.model.service.impl.AccountServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.util.HashMap;
 import java.util.Optional;
 
-import static by.tarasiuk.ct.manager.AttributeName.*;
+import static by.tarasiuk.ct.manager.AttributeName.ACCOUNT;
+import static by.tarasiuk.ct.manager.AttributeName.ACCOUNT_LOGIN;
+import static by.tarasiuk.ct.manager.AttributeName.ACCOUNT_PASSWORD;
+import static by.tarasiuk.ct.manager.AttributeName.SHOW_MESSAGE_BANNED_ACCOUNT;
+import static by.tarasiuk.ct.manager.AttributeName.SHOW_MESSAGE_INCORRECT_SIGN_IN_DATA;
+import static by.tarasiuk.ct.manager.AttributeName.SHOW_MESSAGE_NOT_ACTIVATED_ACCOUNT;
+import static by.tarasiuk.ct.manager.AttributeName.SHOW_MESSAGE_QUERY_ERROR;
 
 public class SignInCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
-    private final AccountServiceImpl accountService = new AccountServiceImpl();
+    private static final AccountServiceImpl accountService = ServiceProvider.getAccountService();
 
     @Override
     public String execute(RequestContent content) {
@@ -65,7 +72,7 @@ public class SignInCommand implements Command {
                 }
             }
         } catch (ServiceException e) {
-            LOGGER.error("Failed to process the command '{}'.", CommandType.SIGN_IN);
+            LOGGER.error("Failed to process the command '{}'.", CommandType.SIGN_IN, e);
             page = PagePath.SIGN_IN;
         }
 

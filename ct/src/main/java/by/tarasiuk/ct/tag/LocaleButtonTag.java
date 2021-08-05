@@ -16,7 +16,6 @@ public class LocaleButtonTag extends TagSupport {
     public int doStartTag() throws JspException {
         HttpSession session = pageContext.getSession();
         String locale = (String) session.getAttribute(AttributeName.LOCALE);
-        System.out.println("Locale: " + locale);    // <--- Вот тут NULL после session.invalidate   //fixme
 
         String currentLocale = MessageManager.findMassage("header.label.locale", locale);
         String ruRuLocale = MessageManager.findMassage("header.option.label.ruRU", locale);

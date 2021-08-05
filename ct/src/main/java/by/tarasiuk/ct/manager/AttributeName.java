@@ -51,6 +51,18 @@ public class AttributeName {
     public static final String TOKEN_NUMBER = "token_number";
 
     /**
+     * Offer attributes.
+     */
+    public static final String OFFER_PRODUCT_NAME = "offer_product_name";
+    public static final String OFFER_PRODUCT_WEIGHT = "offer_product_weight";
+    public static final String OFFER_PRODUCT_VOLUME = "offer_product_volume";
+    public static final String OFFER_ADDRESS_FROM = "offer_address_from";
+    public static final String OFFER_ADDRESS_TO = "offer_address_to";
+    public static final String OFFER_FREIGHT = "offer_freight";
+    public static final String OFFER_CREATION_DATE = "offer_creation_date";
+    public static final String OFFER_STATUS = "offer_status";
+
+    /**
      * Message attributes from JSP page.
      */
     public static final String SHOW_MESSAGE_QUERY_ERROR = "message_query_error";

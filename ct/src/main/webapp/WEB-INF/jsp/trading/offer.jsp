@@ -31,12 +31,18 @@
                     </div>
 
                     <div class="ow-line">
+                        <label class="description">
+                            <fmt:message key="form.signUp.warning"/>
+                        </label>
+                    </div>
+
+                    <div class="ow-line">
                         <div class="data">
                             <div class="icon-block">
                                 <span class="icon icon-cubes"></span>
                             </div>
                             <div class="input-block">
-                                <input type="text" id="product_name" name="product_name" value="${product_name}" placeholder="<fmt:message key="offer.nameProduct"/>" oninput="validateProductName()" autofocus required>
+                                <input type="text" id="product_name" name="offer_product_name" value="${product_name}" placeholder="<fmt:message key="offer.nameProduct"/>" oninput="validateProductName()" autofocus required>
                             </div>
                         </div>
 
@@ -46,36 +52,10 @@
                     <div class="ow-line">
                         <div class="data">
                             <div class="icon-block">
-                                <span class="icon icon-map-marker"></span>
-                            </div>
-                            <div class="input-block">
-                                <input type="text" id="address_from" name="address_from" value="${address_from}" placeholder="<fmt:message key="offer.addressFrom"/>" oninput="validateAddressFrom()" required>
-                            </div>
-                        </div>
-
-                        <label id="description_address_from" class="description"><fmt:message key="description.addressFrom"/></label>
-                    </div>
-
-                    <div class="ow-line">
-                        <div class="data">
-                            <div class="icon-block">
-                                <span class="icon icon-map-marker"></span>
-                            </div>
-                            <div class="input-block">
-                                <input type="text" id="address_to" name="address_to" value="${address_to}" placeholder="<fmt:message key="offer.addressTo"/>" oninput="validateAddressTo()" required>
-                            </div>
-                        </div>
-
-                        <label id="description_address_to" class="description"><fmt:message key="description.addressTo"/></label>
-                    </div>
-
-                    <div class="ow-line">
-                        <div class="data">
-                            <div class="icon-block">
                                 <span class="icon icon-weight"></span>
                             </div>
                             <div class="input-block">
-                                <input type="text" id="weight" name="weight" value="${weight}" placeholder="<fmt:message key="offer.weight"/>" oninput="validateWeight()" required>
+                                <input type="text" id="weight" name="offer_product_weight" value="${weight}" placeholder="<fmt:message key="offer.weight"/>" oninput="validateWeight()" required>
                             </div>
                         </div>
 
@@ -88,7 +68,7 @@
                                 <span class="icon icon-cube"></span>
                             </div>
                             <div class="input-block">
-                                <input type="text" id="volume" name="volume" value="${volume}" placeholder="<fmt:message key="offer.volume"/>" oninput="validateVolume()" required>
+                                <input type="text" id="volume" name="offer_product_volume" value="${volume}" placeholder="<fmt:message key="offer.volume"/>" oninput="validateVolume()" required>
                             </div>
                         </div>
 
@@ -98,10 +78,36 @@
                     <div class="ow-line">
                         <div class="data">
                             <div class="icon-block">
+                                <span class="icon icon-map-marker"></span>
+                            </div>
+                            <div class="input-block">
+                                <input type="text" id="address_from" name="offer_address_from" value="${address_from}" placeholder="<fmt:message key="offer.addressFrom"/>" oninput="validateAddressFrom()" required>
+                            </div>
+                        </div>
+
+                        <label id="description_address_from" class="description"><fmt:message key="description.addressFrom"/></label>
+                    </div>
+
+                    <div class="ow-line">
+                        <div class="data">
+                            <div class="icon-block">
+                                <span class="icon icon-map-marker"></span>
+                            </div>
+                            <div class="input-block">
+                                <input type="text" id="address_to" name="offer_address_to" value="${address_to}" placeholder="<fmt:message key="offer.addressTo"/>" oninput="validateAddressTo()" required>
+                            </div>
+                        </div>
+
+                        <label id="description_address_to" class="description"><fmt:message key="description.addressTo"/></label>
+                    </div>
+
+                    <div class="ow-line">
+                        <div class="data">
+                            <div class="icon-block">
                                 <span class="icon icon-usd"></span>
                             </div>
                             <div class="input-block">
-                                <input type="text" id="freight" name="volume" value="${freight}" placeholder="<fmt:message key="offer.freight"/>" oninput="validateFreight()" required>
+                                <input type="text" id="freight" name="offer_freight" value="${freight}" placeholder="<fmt:message key="offer.freight"/>" oninput="validateFreight()" required>
                             </div>
                         </div>
 

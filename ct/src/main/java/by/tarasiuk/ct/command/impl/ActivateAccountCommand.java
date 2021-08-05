@@ -6,6 +6,7 @@ import by.tarasiuk.ct.entity.impl.Account;
 import by.tarasiuk.ct.entity.impl.Token;
 import by.tarasiuk.ct.exception.ServiceException;
 import by.tarasiuk.ct.manager.PagePath;
+import by.tarasiuk.ct.model.service.ServiceProvider;
 import by.tarasiuk.ct.model.service.impl.AccountServiceImpl;
 import by.tarasiuk.ct.model.service.impl.TokenServiceImpl;
 import by.tarasiuk.ct.util.MessageManager;
@@ -16,7 +17,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import static by.tarasiuk.ct.manager.AttributeName.*;
+import static by.tarasiuk.ct.manager.AttributeName.ACCOUNT;
+import static by.tarasiuk.ct.manager.AttributeName.ACCOUNT_EMAIL;
+import static by.tarasiuk.ct.manager.AttributeName.LOCALE;
+import static by.tarasiuk.ct.manager.AttributeName.MESSAGE;
+import static by.tarasiuk.ct.manager.AttributeName.TOKEN_NUMBER;
 
 public class ActivateAccountCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -26,6 +31,8 @@ public class ActivateAccountCommand implements Command {
     private static final String MESSAGE_ALREADY_ACTIVATED = "message.account.alreadyActivated";
     private static final String MESSAGE_SUCCESSFULLY_ACTIVATED = "message.activated.successfullyActivated";
     private static final String MESSAGE_QUERY_ERROR = "message.query.error";
+    private static final AccountServiceImpl accountService = ServiceProvider.getAccountService();
+    private static final TokenServiceImpl tokenService = ServiceProvider.getTokenService();
 
     @Override
     public String execute(RequestContent content) {
@@ -38,7 +45,6 @@ public class ActivateAccountCommand implements Command {
         String email = requestParameters.get(ACCOUNT_EMAIL);
         String requestTokenNumber = requestParameters.get(TOKEN_NUMBER);
 
-        AccountServiceImpl accountService = new AccountServiceImpl();
         try {
             Optional<Account> optionalAccount = accountService.findAccountByEmail(email);
 
@@ -46,7 +52,7 @@ public class ActivateAccountCommand implements Command {
                 formatMessage = MessageManager.findMassage(MESSAGE_NOT_EXIST_ACCOUNT, locale);
             } else {
                 Account account = optionalAccount.get();
-                TokenServiceImpl tokenService = new TokenServiceImpl();
+
                 Optional<Token> optionalToken = tokenService.findTokenByAccount(account);
 
                 if(!optionalToken.isPresent()) {
@@ -79,6 +85,7 @@ public class ActivateAccountCommand implements Command {
                                 formatMessage = MessageManager.findMassage(MESSAGE_SUCCESSFULLY_ACTIVATED, locale);
                                 break;
                             default:
+                                LOGGER.warn("Nonexistent constant '{}' in '{}'.", tokenStatus, tokenStatus.getDeclaringClass());
                                 throw new EnumConstantNotPresentException(tokenStatus.getClass(), tokenStatus.toString()); //fixme Need an exception?
                         }
                     }

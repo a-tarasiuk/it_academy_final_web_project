@@ -7,7 +7,7 @@ import by.tarasiuk.ct.entity.impl.Company;
 import by.tarasiuk.ct.entity.impl.Token;
 import by.tarasiuk.ct.exception.ServiceException;
 import by.tarasiuk.ct.manager.PagePath;
-import by.tarasiuk.ct.model.service.TokenService;
+import by.tarasiuk.ct.model.service.ServiceProvider;
 import by.tarasiuk.ct.model.service.impl.AccountServiceImpl;
 import by.tarasiuk.ct.model.service.impl.CompanyServiceImpl;
 import by.tarasiuk.ct.model.service.impl.TokenServiceImpl;
@@ -23,6 +23,9 @@ import static by.tarasiuk.ct.manager.AttributeName.*;
 public class SignUpCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final String CONFIRM_MESSAGE = "form.signUp.confirmEmail";
+    private static final AccountServiceImpl accountService = ServiceProvider.getAccountService();
+    private static final CompanyServiceImpl companyService = ServiceProvider.getCompanyService();
+    private static final TokenServiceImpl tokenService = ServiceProvider.getTokenService();
 
     @Override
     public String execute(RequestContent content) {
@@ -30,9 +33,6 @@ public class SignUpCommand implements Command {
         HashMap<String, String> signUpData = content.getRequestParameters();
         HashMap<String, Object> sessionAttributes = content.getSessionAttributes();
         signUpData.remove(COMMAND);
-
-        AccountServiceImpl accountService = new AccountServiceImpl();
-        CompanyServiceImpl companyService = new CompanyServiceImpl();
 
         try {
             if(!accountService.validateSignUpData(signUpData) || !companyService.validateCompany(signUpData)) {
@@ -53,8 +53,6 @@ public class SignUpCommand implements Command {
                 Optional<Company> optionalCompany = companyService.findCompanyByName(companyName);
 
                 if (!optionalAccountByLogin.isPresent() && !optionalAccountByEmail.isPresent() && !optionalCompany.isPresent()) {
-                    TokenService tokenService = new TokenServiceImpl();
-
                     String locale = (String) sessionAttributes.get(LOCALE);
                     String firstName = signUpData.get(ACCOUNT_FIRST_NAME);
                     String formatMessage = MessageManager.findMassage(CONFIRM_MESSAGE, locale);

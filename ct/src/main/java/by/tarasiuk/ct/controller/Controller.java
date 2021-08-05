@@ -51,7 +51,6 @@ public class Controller extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Definition of a command from JSP
         Optional<Command> optionalCommand = CommandProvider.defineCommand(request);
         String pagePath;
 

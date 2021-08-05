@@ -72,11 +72,16 @@ public class CompanyDaoImpl extends BaseDao<Company> implements CompanyDao {
             LOGGER.info("Company was successfully created in the database: {}.", company);
             return true;
         } catch (SQLException e) {
-            LOGGER.error("Failed to create company in the database: {}.", company);
+            LOGGER.error("Failed to create company in the database: {}.", company, e);
             throw new DaoException("Failed to create company in the database: " + company + ".", e);
         } finally {
             closeConnection(connection);
         }
+    }
+
+    @Override
+    public boolean createEntity(Company entity) throws DaoException {
+        return false;
     }
 
     @Override
@@ -85,7 +90,7 @@ public class CompanyDaoImpl extends BaseDao<Company> implements CompanyDao {
     }
 
     @Override
-    public Company update(Company entity) throws DaoException {
+    public Company updateEntity(Company entity) throws DaoException {
         return null;
     }
 

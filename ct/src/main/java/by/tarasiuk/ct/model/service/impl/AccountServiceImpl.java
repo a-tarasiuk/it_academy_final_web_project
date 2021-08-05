@@ -13,7 +13,6 @@ import by.tarasiuk.ct.util.EmailSender;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 
@@ -21,16 +20,24 @@ import static by.tarasiuk.ct.manager.AttributeName.ACCOUNT_PASSWORD;
 
 public class AccountServiceImpl implements AccountService {
     private static final Logger LOGGER = LogManager.getLogger();
-    private static final AccountDaoImpl accountDao = DaoProvider.getInstance().getAccountDao();
+    private static final AccountServiceImpl instance = new AccountServiceImpl();
+    private static final AccountDaoImpl accountDao = DaoProvider.getAccountDao();
+
+    private AccountServiceImpl() {
+    }
+
+    public static AccountServiceImpl getInstance() {
+        return instance;
+    }
 
     @Override
     public boolean validateSignInData(String login, String password) throws ServiceException {
-        return AccountValidator.isValidSingInData(login, password);
+        return AccountValidator.isValidSignInData(login, password);
     }
 
     @Override
     public boolean validateSignUpData(Map<String, String> signUpData) throws ServiceException {
-        return AccountValidator.isValidSingUpData(signUpData);
+        return AccountValidator.isValidSignUpData(signUpData);
     }
 
     @Override
@@ -57,7 +64,7 @@ public class AccountServiceImpl implements AccountService {
                 LOGGER.info("Account with login '{}' not found in the database.", login);
             }
         } catch (DaoException e) {
-            LOGGER.error("Sign in error for login '{}'.", login);
+            LOGGER.error("Sign in error for login '{}'.", login, e);
             throw new ServiceException("Sign in error for login '" + login + "'.", e);
         }
 
@@ -73,7 +80,7 @@ public class AccountServiceImpl implements AccountService {
         try {
             return accountDao.createAccount(account, encodingPassword);
         } catch (DaoException e) {
-            LOGGER.error("Account creation error '{}'.", signUpData);
+            LOGGER.error("Account creation error '{}'.", signUpData, e);
             throw new ServiceException("Account creation error: " + signUpData, e);
         }
     }
@@ -93,7 +100,7 @@ public class AccountServiceImpl implements AccountService {
                     ? "Successfully was find account by email '{}'."
                     : "Account with email '{}' not found in the database.", email);
         } catch (DaoException e) {
-            LOGGER.error("Error when searching for an account by mail '{}'.", email);
+            LOGGER.error("Error when searching for an account by mail '{}'.", email, e);
             throw new ServiceException("Error when searching for an account by mail '" + email + "'.", e);
         }
 
@@ -110,7 +117,7 @@ public class AccountServiceImpl implements AccountService {
                     ? "Successfully was find account by login '{}': {}."
                     : "Account with login '{}' not found in the database.", login);
         } catch (DaoException e) {
-            LOGGER.error("Error when searching for an account by login '{}'.", login);
+            LOGGER.error("Error when searching for an account by login '{}'.", login, e);
             throw new ServiceException("Error when searching for an account by login '" + login + "'.", e);
         }
 
@@ -128,10 +135,10 @@ public class AccountServiceImpl implements AccountService {
         try {
             result = accountDao.updateAccount(account);
             LOGGER.info(result
-                    ? "Successfully was update account '{}' in the database."
-                    : "Account doesn't update '{}' in the database.", account);
+                    ? "Successfully was updateEntity account '{}' in the database."
+                    : "Account doesn't updateEntity '{}' in the database.", account);
         } catch (DaoException e) {
-            LOGGER.error("Error when updating account '{}'.", account);
+            LOGGER.error("Error when updating account '{}'.", account, e);
             throw new ServiceException("Error when updating account '" + account + "'.", e);
         }
     }

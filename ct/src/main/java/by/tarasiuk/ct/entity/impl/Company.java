@@ -44,11 +44,12 @@ public class Company implements Entity {
 
     @Override
     public String toString() {
-        return new StringBuilder("Company{")
-                .append("id='").append(id).append('\'')
-                .append("name='").append(name).append('\'')
-                .append(", address='").append(address).append('\'')
-                .append(", phoneNumber='").append(phoneNumber).append('\'')
-                .append('}').toString();
+        final StringBuilder sb = new StringBuilder("Company{");
+        sb.append("id=").append(id);
+        sb.append(", name='").append(name).append('\'');
+        sb.append(", address='").append(address).append('\'');
+        sb.append(", phoneNumber='").append(phoneNumber).append('\'');
+        sb.append('}');
+        return sb.toString();
     }
 }

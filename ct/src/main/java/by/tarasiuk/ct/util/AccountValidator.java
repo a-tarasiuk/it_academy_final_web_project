@@ -11,19 +11,19 @@ import java.util.regex.Pattern;
 public class AccountValidator {
     private static final Logger LOGGER = LogManager.getLogger();
 
-    public static final String REGEX_VALID_ACCOUNT_FIRST_NAME = "\\p{Lu}\\p{Ll}{2,50}$";
-    public static final String REGEX_VALID_ACCOUNT_LAST_NAME = "^\\p{Lu}\\p{Ll}{2,50}$";
-    public static final String REGEX_VALID_ACCOUNT_LOGIN = "^[\\p{L}\\p{Nd}]{3,50}$";
-    public static final String REGEX_VALID_ACCOUNT_EMAIL = "^(([^<>()\\[\\]\\.,;:\\s@\"]+(\\.[^<>()\\[\\]\\.,;:\\s@\"]+)*)|(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
-    public static final String REGEX_VALID_COMPANY_NAME = "^[\\p{L}\\p{Nd}\\p{P}\\p{Zs}]{3,150}$";
-    public static final String REGEX_VALID_COMPANY_ADDRESS = "^[\\p{L}\\p{Nd}\\p{P}\\p{Zs}]{3,200}$";
-    public static final String REGEX_VALID_COMPANY_PHONE_NUMBER = "^\\p{Nd}{11,16}$";
-    public static final String REGEX_VALID_ACCOUNT_PASSWORD = "^.{8,30}$";
+    private static final String REGEX_VALID_ACCOUNT_FIRST_NAME = "\\p{Lu}\\p{Ll}{2,50}$";
+    private static final String REGEX_VALID_ACCOUNT_LAST_NAME = "^\\p{Lu}\\p{Ll}{2,50}$";
+    private static final String REGEX_VALID_ACCOUNT_LOGIN = "^[\\p{L}\\p{Nd}]{3,50}$";
+    private static final String REGEX_VALID_ACCOUNT_EMAIL = "^(([^<>()\\[\\]\\.,;:\\s@\"]+(\\.[^<>()\\[\\]\\.,;:\\s@\"]+)*)|(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
+    private static final String REGEX_VALID_COMPANY_NAME = "^[\\p{L}\\p{Nd}\\p{P}\\p{Zs}]{3,150}$";
+    private static final String REGEX_VALID_COMPANY_ADDRESS = "^[\\p{L}\\p{Nd}\\p{P}\\p{Zs}]{3,200}$";
+    private static final String REGEX_VALID_COMPANY_PHONE_NUMBER = "^\\p{Nd}{11,16}$";
+    private static final String REGEX_VALID_ACCOUNT_PASSWORD = "^.{8,30}$";
 
     private AccountValidator() {
     }
 
-    public static boolean isValidSingInData(String login, String password) {
+    public static boolean isValidSignInData(String login, String password) {
         if(login == null || password == null || login.isEmpty() || password.isEmpty()) {
             return false;
         }
@@ -31,7 +31,7 @@ public class AccountValidator {
         return isValidLogin(login) && isValidPassword(password);
     }
 
-    public static boolean isValidSingUpData(Map<String, String> signUp) {
+    public static boolean isValidSignUpData(Map<String, String> signUp) {
         boolean result;
 
         if(signUp == null || signUp.isEmpty()) {

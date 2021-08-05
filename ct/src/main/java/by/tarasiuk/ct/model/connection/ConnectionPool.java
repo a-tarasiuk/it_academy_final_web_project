@@ -39,8 +39,7 @@ public class ConnectionPool {
                 LOGGER.info("{} was created.", connection);
 
                 freeProxyConnections.offer(proxyConnection);
-                LOGGER.info("{} was added on free proxy connections, size: {}.",
-                        connection, freeProxyConnections.size());
+                LOGGER.info("{} was added on free proxy connections, size: {}.", connection, freeProxyConnections.size());
             } catch (SQLException e) {
                 countAttempts++;
                 LOGGER.warn("Database access error occurs or the url.", e);
@@ -75,7 +74,7 @@ public class ConnectionPool {
             currentProxyConnection = freeProxyConnections.take();
             activeProxyConnections.put(currentProxyConnection);
         } catch (InterruptedException e) {
-            LOGGER.warn("{} interrupted.", Thread.currentThread().getName());
+            LOGGER.warn("{} interrupted.", Thread.currentThread().getName(), e);
             Thread.currentThread().interrupt();
         }
 
@@ -91,18 +90,22 @@ public class ConnectionPool {
         ProxyConnection currentConnection = null;
 
         try {
-            currentConnection = activeProxyConnections.remove(connection)
-                            && connection.isValid(DEFAULT_TIMEOUT_SECONDS) ?
+            currentConnection = activeProxyConnections.remove(connection) && connection.isValid(DEFAULT_TIMEOUT_SECONDS) ?
                     (ProxyConnection) connection : ConnectionFactory.createConnection();
 
             if(!currentConnection.getAutoCommit()) {
                 currentConnection.setAutoCommit(true);
             }
+
+            freeProxyConnections.put(currentConnection);   //todo использовать put() вместо offer() - узнать почему
         } catch (SQLException e) {
             LOGGER.warn("Timeout period expires before the operation completes.", e);
+        } catch (InterruptedException e) {
+            LOGGER.warn("{} interrupted.", Thread.currentThread().getName(), e);
+            Thread.currentThread().interrupt();
         }
 
-        return freeProxyConnections.offer(currentConnection);
+        return true;                                    //fixme
     }
 
     public void destroyPool() {
@@ -110,7 +113,7 @@ public class ConnectionPool {
             try {
                 freeProxyConnections.take().reallyClose();
             } catch (SQLException | InterruptedException e) {
-                LOGGER.warn("Can't close the connection.");
+                LOGGER.warn("Can't really close the connection.", e);
             }
         }
 

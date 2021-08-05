@@ -7,7 +7,6 @@ import jakarta.mail.internet.MimeMessage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Properties;
 
@@ -29,27 +28,22 @@ public class EmailSender {
     private static final Session session;
 
     static  {
-        try {
-            Properties properties = PropertiesLoader.getProperties(PROPERTIES_EMAIL);
+        Properties properties = PropertiesLoader.getProperties(PROPERTIES_EMAIL);
 
-            user = properties.getProperty(USER_NAME);
-            password = properties.getProperty(USER_PASSWORD);
-            personalName = properties.getProperty(PERSONAL);
+        user = properties.getProperty(USER_NAME);
+        password = properties.getProperty(USER_PASSWORD);
+        personalName = properties.getProperty(PERSONAL);
 
-            // Authentication
-            Authenticator authenticator = new Authenticator() {
-                @Override
-                protected PasswordAuthentication getPasswordAuthentication() {
-                    return new PasswordAuthentication(user, password);
-                }
-            };
+        // Authentication
+        Authenticator authenticator = new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(user, password);
+            }
+        };
 
-            session = Session.getDefaultInstance(properties, authenticator);
-            session.setDebug(true);
-        } catch (IOException e) {
-            LOGGER.fatal("Properties to send a message cannot be loaded.", e);
-            throw new RuntimeException("Properties to send a message cannot be loaded.", e);
-        }
+        session = Session.getDefaultInstance(properties, authenticator);
+        session.setDebug(true);
     }
 
     private EmailSender() {
