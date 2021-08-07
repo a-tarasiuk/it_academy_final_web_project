@@ -1,6 +1,6 @@
 package by.tarasiuk.ct.model.dao;
 
-import by.tarasiuk.ct.entity.impl.Account;
+import by.tarasiuk.ct.model.entity.impl.Account;
 import by.tarasiuk.ct.exception.DaoException;
 
 import java.util.Optional;

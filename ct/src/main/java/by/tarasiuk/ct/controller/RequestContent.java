@@ -1,6 +1,5 @@
 package by.tarasiuk.ct.controller;
 
-import by.tarasiuk.ct.manager.AttributeName;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
@@ -127,8 +126,6 @@ public class RequestContent {
     }
 
     private HashMap<String, String> buildRequestParameters(HttpServletRequest request) {
-        request.removeAttribute(AttributeName.COMMAND);
-
         requestParameters = new HashMap<>();
         Enumeration<String> parameterNames = request.getParameterNames();
 

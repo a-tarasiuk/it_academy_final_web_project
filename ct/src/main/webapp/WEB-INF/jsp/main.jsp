@@ -24,7 +24,7 @@
             <div id="middle">
                 <c:choose>
                     <c:when test="${not empty sessionScope.account}">
-                        <jsp:include page="/WEB-INF/jsp/trading/trading.jsp"/>
+                        <jsp:include page="/WEB-INF/jsp/trading/allOffers.jsp"/>
                     </c:when>
 
                     <c:otherwise>

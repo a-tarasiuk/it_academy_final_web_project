@@ -25,4 +25,22 @@
         <tag-class>by.tarasiuk.ct.tag.ErrorPageTag</tag-class>
         <body-content>empty</body-content>
     </tag>
+
+    <tag>
+        <name>information_message</name>
+        <tag-class>by.tarasiuk.ct.tag.InformationMessageTag</tag-class>
+        <body-content>empty</body-content>
+    </tag>
+
+    <tag>
+        <name>all_offer_list</name>
+        <tag-class>by.tarasiuk.ct.tag.AllOfferListTag</tag-class>
+        <body-content>empty</body-content>
+    </tag>
+
+    <tag>
+        <name>account_offer_list</name>
+        <tag-class>by.tarasiuk.ct.tag.AccountOfferListTag</tag-class>
+        <body-content>empty</body-content>
+    </tag>
 </taglib>

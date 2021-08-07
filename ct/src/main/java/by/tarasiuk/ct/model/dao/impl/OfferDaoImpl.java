@@ -1,19 +1,17 @@
 package by.tarasiuk.ct.model.dao.impl;
 
-import by.tarasiuk.ct.entity.Entity;
-import by.tarasiuk.ct.entity.impl.Offer;
-import by.tarasiuk.ct.entity.impl.Offer.Status;
 import by.tarasiuk.ct.exception.DaoException;
 import by.tarasiuk.ct.model.dao.BaseDao;
 import by.tarasiuk.ct.model.dao.OfferDao;
+import by.tarasiuk.ct.model.dao.builder.OfferDaoBuilder;
+import by.tarasiuk.ct.model.entity.impl.Offer;
+import by.tarasiuk.ct.model.entity.impl.Offer.Status;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,8 +19,9 @@ public class OfferDaoImpl extends BaseDao<Offer> implements OfferDao {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final OfferDaoImpl instance = new OfferDaoImpl();
 
-    private final String SQL_PROCEDURE_CREATE_OFFER = "{CALL create_offer (?, ?, ?, ?, ?, ?, ?, ?, ?)}";
-    //private final String SQL_PROCEDURE_UPDATE_TOKEN = "{CALL update_offer (?, ?, ?, ?)}";
+    private static final String SQL_PROCEDURE_CREATE_OFFER = "{CALL create_offer (?, ?, ?, ?, ?, ?, ?, ?, ?)}";
+    private static final String SQL_PROCEDURE_FIND_ALL_OFFERS = "{CALL find_all_offers ()}";
+    private static final String SQL_PROCEDURE_FIND_ALL_OFFERS_BY_ACCOUNT_ID = "{CALL find_all_offers_by_account_id (?)}";
 
     private static final class IndexCreate {
         private static final int ACCOUNT_ID = 1;
@@ -36,15 +35,6 @@ public class OfferDaoImpl extends BaseDao<Offer> implements OfferDao {
         private static final int STATUS = 9;
     }
 
-    /*
-    private static final class IndexUpdate {
-        private static final int TOKEN_ID = 1;
-        private static final int ACCOUNT_ID = 2;
-        private static final int TOKEN_NUMBER = 3;
-        private static final int TOKEN_STATUS = 4;
-    }
-     */
-
     private OfferDaoImpl() {
     }
 
@@ -57,7 +47,7 @@ public class OfferDaoImpl extends BaseDao<Offer> implements OfferDao {
 
         long accountId = offer.getAccountId();
         String productName = offer.getProductName();
-        float productWeight = offer.getProductFreight();
+        float productWeight = offer.getProductWeight();
         float productVolume = offer.getProductVolume();
         String addressFrom = offer.getAddressFrom();
         String addressTo = offer.getAddressTo();
@@ -90,8 +80,48 @@ public class OfferDaoImpl extends BaseDao<Offer> implements OfferDao {
 
 
     @Override
-    public List<Entity> findAll() throws DaoException {
-        return null;
+    public List<Offer> findAll() throws DaoException {
+        Connection connection = connectionPool.getConnection();
+        List<Offer> offers = new ArrayList<>();
+
+        try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_ALL_OFFERS);
+             ResultSet result = statement.executeQuery()) {
+
+            while (result.next()) {
+                Offer offer = OfferDaoBuilder.build(result);
+                offers.add(offer);
+            }
+        } catch (SQLException e) {
+            LOGGER.error("Error when find all offers.", e);
+            throw new DaoException("Error when find all offers.", e);
+        } finally {
+            closeConnection(connection);
+        }
+
+        return offers;
+    }
+
+    public List<Offer> findListOffersByAccountId(long accountId) throws DaoException {
+        Connection connection = connectionPool.getConnection();
+        List<Offer> offers = new ArrayList<>();
+
+        try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_ALL_OFFERS_BY_ACCOUNT_ID)) {
+            statement.setLong(IndexCreate.ACCOUNT_ID, accountId);
+
+            try (ResultSet result = statement.executeQuery()) {
+                while (result.next()) {
+                    Offer offer = OfferDaoBuilder.build(result);
+                    offers.add(offer);
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.error("Error when performing offers search by account id '{}'.", accountId, e);
+            throw new DaoException("Error when performing offers search by account id '" + accountId + "'.", e);
+        } finally {
+            closeConnection(connection);
+        }
+
+        return offers;
     }
 
     @Override
@@ -100,7 +130,7 @@ public class OfferDaoImpl extends BaseDao<Offer> implements OfferDao {
     }
 
     @Override
-    public Optional<Offer> findEntityById(int id) throws DaoException {
+    public Optional<Offer> findEntityById(long id) throws DaoException {
         return Optional.empty();
     }
 }

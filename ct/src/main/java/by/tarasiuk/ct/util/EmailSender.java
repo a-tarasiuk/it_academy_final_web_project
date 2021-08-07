@@ -10,6 +10,9 @@ import org.apache.logging.log4j.Logger;
 import java.io.UnsupportedEncodingException;
 import java.util.Properties;
 
+import static by.tarasiuk.ct.manager.MessageKey.EMAIL_SUBJECT_COMPLETION_REGISTRATION;
+import static by.tarasiuk.ct.manager.MessageKey.EMAIL_TEXT_COMPLETION_REGISTRATION;
+
 public class EmailSender {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final String PROPERTIES_EMAIL = "email.properties";
@@ -21,6 +24,7 @@ public class EmailSender {
     private static final String LINK_START = "http://localhost:8081/controller?account_email=";
     private static final String LINK_COMMAND = "&command=activate_account";
     private static final String LINK_TOKEN = "&token_number=";
+    private static final String LINK_LOCALE = "&locale=";
     private static final String CONTENT = "text/html";
     private static final String user;
     private static final String password;
@@ -50,13 +54,15 @@ public class EmailSender {
     }
 
     public static void sendActivationEmail(String locale, String firstName, String emailTo, String token) {
-        String emailSubject = MessageManager.findMassage(SUBJECT_COMPLETION_REGISTRATION, locale);
-        String formatMessage = MessageManager.findMassage(TEXT_COMPLETION_REGISTRATION, locale);
+        String emailSubject = MessageManager.findMassage(EMAIL_SUBJECT_COMPLETION_REGISTRATION, locale);
+        String formatMessage = MessageManager.findMassage(EMAIL_TEXT_COMPLETION_REGISTRATION, locale);
         StringBuilder link = new StringBuilder(LINK_START)
                 .append(emailTo)
                 .append(LINK_COMMAND)
                 .append(LINK_TOKEN)
-                .append(token);
+                .append(token)
+                .append(LINK_LOCALE)
+                .append(locale);
         String emailMessage = String.format(formatMessage, firstName, link);
 
         try {

@@ -1,7 +1,7 @@
 package by.tarasiuk.ct.controller;
 
-import by.tarasiuk.ct.command.Command;
-import by.tarasiuk.ct.command.CommandProvider;
+import by.tarasiuk.ct.controller.command.Command;
+import by.tarasiuk.ct.controller.command.CommandProvider;
 import by.tarasiuk.ct.manager.PagePath;
 import by.tarasiuk.ct.model.connection.ConnectionPool;
 import jakarta.servlet.RequestDispatcher;

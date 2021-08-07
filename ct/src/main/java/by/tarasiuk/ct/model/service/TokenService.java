@@ -1,7 +1,7 @@
 package by.tarasiuk.ct.model.service;
 
-import by.tarasiuk.ct.entity.impl.Account;
-import by.tarasiuk.ct.entity.impl.Token;
+import by.tarasiuk.ct.model.entity.impl.Account;
+import by.tarasiuk.ct.model.entity.impl.Token;
 import by.tarasiuk.ct.exception.ServiceException;
 
 import java.util.Optional;

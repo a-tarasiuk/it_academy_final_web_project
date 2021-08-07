@@ -1,6 +1,6 @@
 package by.tarasiuk.ct.tag;
 
-import by.tarasiuk.ct.entity.impl.Account;
+import by.tarasiuk.ct.model.entity.impl.Account;
 import by.tarasiuk.ct.manager.AttributeName;
 import by.tarasiuk.ct.util.MessageManager;
 import jakarta.servlet.http.HttpSession;

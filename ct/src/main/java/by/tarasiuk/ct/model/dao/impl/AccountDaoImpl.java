@@ -1,16 +1,18 @@
 package by.tarasiuk.ct.model.dao.impl;
 
-import by.tarasiuk.ct.entity.impl.Account;
-import by.tarasiuk.ct.entity.Entity;
 import by.tarasiuk.ct.exception.DaoException;
 import by.tarasiuk.ct.manager.AttributeName;
 import by.tarasiuk.ct.model.dao.AccountDao;
 import by.tarasiuk.ct.model.dao.BaseDao;
-import by.tarasiuk.ct.util.AccountBuilder;
+import by.tarasiuk.ct.model.entity.impl.Account;
+import by.tarasiuk.ct.model.dao.builder.AccountDaoBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -19,11 +21,11 @@ public class AccountDaoImpl extends BaseDao<Account> implements AccountDao {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final AccountDaoImpl instance = new AccountDaoImpl();
     
-    private final String SQL_PROCEDURE_CREATE_ACCOUNT = "{CALL create_account (?, ?, ?, ?, ?, ?, ?, ?)}";
-    private final String SQL_PROCEDURE_FIND_ACCOUNT_BY_LOGIN = "{CALL find_account_by_login (?)}";
-    private final String SQL_PROCEDURE_FIND_PASSWORD_BY_LOGIN = "{CALL find_password_by_login (?)}";
-    private final String SQL_PROCEDURE_FIND_ACCOUNT_BY_EMAIL = "{CALL find_account_by_email (?)}";
-    private final String SQL_PROCEDURE_UPDATE_ACCOUNT = "{CALL update_account (?, ?, ?, ?, ?, ?, ?, ?)}";
+    private static final String SQL_PROCEDURE_CREATE_ACCOUNT = "{CALL create_account (?, ?, ?, ?, ?, ?, ?, ?)}";
+    private static final String SQL_PROCEDURE_FIND_ACCOUNT_BY_LOGIN = "{CALL find_account_by_login (?)}";
+    private static final String SQL_PROCEDURE_FIND_PASSWORD_BY_LOGIN = "{CALL find_password_by_login (?)}";
+    private static final String SQL_PROCEDURE_FIND_ACCOUNT_BY_EMAIL = "{CALL find_account_by_email (?)}";
+    private static final String SQL_PROCEDURE_UPDATE_ACCOUNT = "{CALL update_account (?, ?, ?, ?, ?, ?, ?, ?)}";
 
     private AccountDaoImpl() {
     }
@@ -33,7 +35,7 @@ public class AccountDaoImpl extends BaseDao<Account> implements AccountDao {
     }
 
     @Override
-    public Optional<Account> findEntityById(int id) throws DaoException {
+    public Optional<Account> findEntityById(long id) throws DaoException {
         return Optional.empty(); // todo
     }
 
@@ -43,7 +45,7 @@ public class AccountDaoImpl extends BaseDao<Account> implements AccountDao {
     }
 
     @Override
-    public List<Entity> findAll() throws DaoException {
+    public List<Account> findAll() throws DaoException {
         return null;
     }
 
@@ -62,7 +64,7 @@ public class AccountDaoImpl extends BaseDao<Account> implements AccountDao {
 
             try (ResultSet result = statement.executeQuery()) {
                 if (result.next()) {
-                    Account account = AccountBuilder.buildAccount(result);
+                    Account account = AccountDaoBuilder.buildAccount(result);
                     findAccount = Optional.of(account);
                 } else {
                     findAccount = Optional.empty();
@@ -114,7 +116,7 @@ public class AccountDaoImpl extends BaseDao<Account> implements AccountDao {
 
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    Account account = AccountBuilder.buildAccount(resultSet);
+                    Account account = AccountDaoBuilder.buildAccount(resultSet);
                     findAccount = Optional.of(account);
                 } else {
                     findAccount = Optional.empty();

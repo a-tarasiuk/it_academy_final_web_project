@@ -1,11 +1,10 @@
 package by.tarasiuk.ct.model.dao.impl;
 
-import by.tarasiuk.ct.entity.impl.Company;
-import by.tarasiuk.ct.entity.Entity;
 import by.tarasiuk.ct.exception.DaoException;
 import by.tarasiuk.ct.model.dao.BaseDao;
 import by.tarasiuk.ct.model.dao.CompanyDao;
-import by.tarasiuk.ct.util.CompanyBuilder;
+import by.tarasiuk.ct.model.entity.impl.Company;
+import by.tarasiuk.ct.model.dao.builder.CompanyDaoBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -22,6 +21,18 @@ public class CompanyDaoImpl extends BaseDao<Company> implements CompanyDao {
 
     private static final String SQL_PROCEDURE_CREATE_COMPANY = "{CALL create_company (?, ?, ?)}";
     private static final String SQL_PROCEDURE_FIND_COMPANY_BY_NAME = "{CALL find_company_by_name (?)}";
+    private static final String SQL_PROCEDURE_FIND_COMPANY_BY_ID = "{CALL find_company_by_id (?)}";
+
+    private static final class IndexFind {
+        private static final int NAME = 1;
+        private static final int ID = 1;
+    }
+
+    private static final class IndexCreate {
+        private static final int NAME = 1;
+        private static final int ADDRESS = 2;
+        private static final int PHONE_NUMBER = 3;
+    }
 
     private CompanyDaoImpl() {
     }
@@ -30,7 +41,7 @@ public class CompanyDaoImpl extends BaseDao<Company> implements CompanyDao {
         return instance;
     }
 
-    public Optional<Company> findCompanyByName(String name) throws DaoException {
+    public Optional<Company> findEntityByName(String name) throws DaoException {
         Connection connection = connectionPool.getConnection();
         Optional<Company> findCompany;
 
@@ -39,7 +50,7 @@ public class CompanyDaoImpl extends BaseDao<Company> implements CompanyDao {
 
             try (ResultSet result = statement.executeQuery()) {
                 if (result.next()) {
-                    Company company = CompanyBuilder.buildCompany(result);
+                    Company company = CompanyDaoBuilder.buildCompany(result);
                     findCompany = Optional.of(company);
                 } else {
                     findCompany = Optional.empty();
@@ -55,12 +66,13 @@ public class CompanyDaoImpl extends BaseDao<Company> implements CompanyDao {
         }
     }
 
-    public boolean createCompany(Company company) throws DaoException {
+    @Override
+    public boolean createEntity(Company entity) throws DaoException {
         Connection connection = connectionPool.getConnection();
 
-        String name = company.getName();
-        String address = company.getAddress();
-        String phoneNumber = company.getPhoneNumber();
+        String name = entity.getName();
+        String address = entity.getAddress();
+        String phoneNumber = entity.getPhoneNumber();
 
         try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_CREATE_COMPANY)) {
             statement.setString(IndexCreate.NAME, name);
@@ -69,23 +81,18 @@ public class CompanyDaoImpl extends BaseDao<Company> implements CompanyDao {
 
             statement.executeUpdate();
 
-            LOGGER.info("Company was successfully created in the database: {}.", company);
+            LOGGER.info("Company was successfully created in the database: {}.", entity);
             return true;
         } catch (SQLException e) {
-            LOGGER.error("Failed to create company in the database: {}.", company, e);
-            throw new DaoException("Failed to create company in the database: " + company + ".", e);
+            LOGGER.error("Failed to create company in the database: {}.", entity, e);
+            throw new DaoException("Failed to create company in the database: " + entity + ".", e);
         } finally {
             closeConnection(connection);
         }
     }
 
     @Override
-    public boolean createEntity(Company entity) throws DaoException {
-        return false;
-    }
-
-    @Override
-    public List<Entity> findAll() throws DaoException {
+    public List<Company> findAll() throws DaoException {
         return null;
     }
 
@@ -95,17 +102,28 @@ public class CompanyDaoImpl extends BaseDao<Company> implements CompanyDao {
     }
 
     @Override
-    public Optional<Company> findEntityById(int id) throws DaoException {
-        return Optional.empty();
-    }
+    public Optional<Company> findEntityById(long id) throws DaoException {
+        Connection connection = connectionPool.getConnection();
+        Optional<Company> findCompany;
 
-    private static final class IndexFind {
-        private static final int NAME = 1;
-    }
+        try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_COMPANY_BY_ID)) {
+            statement.setLong(IndexFind.ID, id);
 
-    private static final class IndexCreate {
-        private static final int NAME = 1;
-        private static final int ADDRESS = 2;
-        private static final int PHONE_NUMBER = 3;
+            try (ResultSet result = statement.executeQuery()) {
+                if (result.next()) {
+                    Company company = CompanyDaoBuilder.buildCompany(result);
+                    findCompany = Optional.of(company);
+                } else {
+                    findCompany = Optional.empty();
+                }
+            }
+
+            return findCompany;
+        } catch (SQLException e) {
+            LOGGER.error("Error when performing company search by id '{}'.", id, e);
+            throw new DaoException("Error when performing company search by id '" + id + "'.", e);
+        } finally {
+            closeConnection(connection);
+        }
     }
 }

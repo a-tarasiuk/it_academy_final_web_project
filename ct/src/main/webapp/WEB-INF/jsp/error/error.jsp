@@ -29,29 +29,29 @@
             <div id="error-wrapper">
                 <div class="ew-column">
                     <div class="ew-row">
-                        <span>ssssssssssssssssssssss</span>
+                        <span><fmt:message key="error.statusCode"/></span>
                     </div>
 
                     <div class="ew-row">
-                        <span>xxx</span>
+                        <span><fmt:message key="error.exception.type"/></span>
                     </div>
 
                     <div class="ew-row">
-                        <span>xxx</span>
+                        <span><fmt:message key="error.exception.message"/></span>
                     </div>
                 </div>
 
                 <div class="ew-column">
                     <div class="ew-row">
-                        <span>sss</span>
+                        <span>${pageContext.errorData.statusCode}</span>
                     </div>
 
                     <div class="ew-row">
-                        <span>xxddddddddddddddddddddx</span>
+                        <span>${pageContext.errorData.throwable}</span>
                     </div>
 
                     <div class="ew-row">
-                        <span>xxx</span>
+                        <span>${pageContext.errorData.throwable}</span>
                     </div>
                 </div>
             </div>

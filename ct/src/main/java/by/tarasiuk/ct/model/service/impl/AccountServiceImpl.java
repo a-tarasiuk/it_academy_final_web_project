@@ -1,12 +1,12 @@
 package by.tarasiuk.ct.model.service.impl;
 
-import by.tarasiuk.ct.entity.impl.Account;
+import by.tarasiuk.ct.model.entity.impl.Account;
 import by.tarasiuk.ct.exception.DaoException;
 import by.tarasiuk.ct.exception.ServiceException;
 import by.tarasiuk.ct.model.dao.DaoProvider;
 import by.tarasiuk.ct.model.dao.impl.AccountDaoImpl;
 import by.tarasiuk.ct.model.service.AccountService;
-import by.tarasiuk.ct.util.AccountBuilder;
+import by.tarasiuk.ct.model.dao.builder.AccountDaoBuilder;
 import by.tarasiuk.ct.util.AccountValidator;
 import by.tarasiuk.ct.util.BouncyCastle;
 import by.tarasiuk.ct.util.EmailSender;
@@ -72,8 +72,8 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public boolean signUp(Map<String, String> signUpData) throws ServiceException {
-        Account account = AccountBuilder.buildAccount(signUpData);
+    public boolean createAccount(Map<String, String> signUpData) throws ServiceException {
+        Account account = AccountDaoBuilder.buildAccount(signUpData);
         String password = signUpData.get(ACCOUNT_PASSWORD);
         String encodingPassword = BouncyCastle.encoding(password);
 

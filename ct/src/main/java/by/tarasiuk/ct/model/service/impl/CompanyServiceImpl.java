@@ -1,12 +1,12 @@
 package by.tarasiuk.ct.model.service.impl;
 
-import by.tarasiuk.ct.entity.impl.Company;
+import by.tarasiuk.ct.model.entity.impl.Company;
 import by.tarasiuk.ct.exception.DaoException;
 import by.tarasiuk.ct.exception.ServiceException;
 import by.tarasiuk.ct.model.dao.DaoProvider;
 import by.tarasiuk.ct.model.dao.impl.CompanyDaoImpl;
 import by.tarasiuk.ct.model.service.CompanyService;
-import by.tarasiuk.ct.util.CompanyBuilder;
+import by.tarasiuk.ct.model.dao.builder.CompanyDaoBuilder;
 import by.tarasiuk.ct.util.CompanyValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -32,11 +32,11 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public boolean createNewCompany(Map<String, String> companyData) throws ServiceException {
-        Company company = CompanyBuilder.buildCompany(companyData);
+    public boolean createCompany(Map<String, String> companyData) throws ServiceException {
+        Company company = CompanyDaoBuilder.buildCompany(companyData);
 
         try {
-            return companyDao.createCompany(company);
+            return companyDao.createEntity(company);
         } catch (DaoException e) {
             LOGGER.error("Error while creating: '{}'.", company, e);
             throw new ServiceException("Error while creating: '" + company + "'.", e);
@@ -48,7 +48,7 @@ public class CompanyServiceImpl implements CompanyService {
         Optional<Company> optionalCompany;
 
         try {
-            optionalCompany = companyDao.findCompanyByName(name);
+            optionalCompany = companyDao.findEntityByName(name);
             LOGGER.info(optionalCompany.isPresent()
                     ? "Successfully was find company by name '{}'."
                     : "Company with name '{}' not found in the database.", name);
@@ -58,5 +58,21 @@ public class CompanyServiceImpl implements CompanyService {
         }
 
         return optionalCompany;
+    }
+
+    public Optional<Company> findCompanyById(long companyId) throws ServiceException {
+        Optional<Company> findCompany;
+
+        try {
+            findCompany = companyDao.findEntityById(companyId);
+            LOGGER.info(findCompany.isPresent()
+                    ? "Successfully was find company by id '{}'."
+                    : "Company with id '{}' not found in the database.", companyId);
+        } catch (DaoException e) {
+            LOGGER.error("Error when searching for an company by id '{}'.", companyId, e);
+            throw new ServiceException("Error when searching for an company by id '" + companyId + "'.", e);
+        }
+
+        return findCompany;
     }
 }

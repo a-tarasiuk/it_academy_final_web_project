@@ -1,9 +1,6 @@
 package by.tarasiuk.ct.manager;
 
-public class AttributeName {
-    private AttributeName() {
-    }
-
+public final class AttributeName {
     /**
      * Command attribute from JSP page.
      */
@@ -65,17 +62,17 @@ public class AttributeName {
     /**
      * Message attributes from JSP page.
      */
-    public static final String SHOW_MESSAGE_QUERY_ERROR = "message_query_error";
-    public static final String SHOW_MESSAGE_ERROR_LOGIN_ALREADY_EXIST = "error_login_already_exist";
-    public static final String SHOW_MESSAGE_ERROR_EMAIL_ALREADY_EXIST = "error_email_already_exist";
-    public static final String SHOW_MESSAGE_ERROR_COMPANY_ALREADY_EXIST = "error_company_already_exist";
-    public static final String SHOW_MESSAGE_INCORRECT_SIGN_IN_DATA = "incorrect_sign_in_data";
-    public static final String SHOW_MESSAGE_INCORRECT_SIGN_UP_DATA = "incorrect_sign_up_data";
-    public static final String SHOW_MESSAGE_BANNED_ACCOUNT = "account_banned";
-    public static final String SHOW_MESSAGE_NOT_ACTIVATED_ACCOUNT = "account_not_activated";
+    public static final String INFORMATION_MESSAGE = "information_message";
+    public static final String MESSAGE_QUERY_ERROR = "message_query_error";
+    public static final String MESSAGE_ERROR_LOGIN_ALREADY_EXIST = "error_login_already_exist";
+    public static final String MESSAGE_ERROR_EMAIL_ALREADY_EXIST = "error_email_already_exist";
+    public static final String MESSAGE_ERROR_COMPANY_ALREADY_EXIST = "error_company_already_exist";
+    public static final String MESSAGE_INCORRECT_SIGN_IN_DATA = "incorrect_sign_in_data";
+    public static final String MESSAGE_INCORRECT_SIGN_UP_DATA = "incorrect_sign_up_data";
+    public static final String MESSAGE_INCORRECT_OFFER_DATA = "incorrect_offer_data";
+    public static final String MESSAGE_BANNED_ACCOUNT = "account_banned";
+    public static final String MESSAGE_NOT_ACTIVATED_ACCOUNT = "account_not_activated";
 
-    /**
-     * Messages
-     */
-    public static final String MESSAGE = "message";
+    private AttributeName() {
+    }
 }

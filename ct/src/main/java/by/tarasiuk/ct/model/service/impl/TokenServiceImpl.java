@@ -1,7 +1,7 @@
 package by.tarasiuk.ct.model.service.impl;
 
-import by.tarasiuk.ct.entity.impl.Account;
-import by.tarasiuk.ct.entity.impl.Token;
+import by.tarasiuk.ct.model.entity.impl.Account;
+import by.tarasiuk.ct.model.entity.impl.Token;
 import by.tarasiuk.ct.exception.DaoException;
 import by.tarasiuk.ct.exception.ServiceException;
 import by.tarasiuk.ct.model.dao.DaoProvider;

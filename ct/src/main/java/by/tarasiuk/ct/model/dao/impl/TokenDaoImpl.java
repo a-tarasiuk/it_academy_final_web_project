@@ -1,10 +1,9 @@
 package by.tarasiuk.ct.model.dao.impl;
 
-import by.tarasiuk.ct.entity.Entity;
-import by.tarasiuk.ct.entity.impl.Token;
 import by.tarasiuk.ct.exception.DaoException;
 import by.tarasiuk.ct.model.dao.BaseDao;
 import by.tarasiuk.ct.model.dao.TokenDao;
+import by.tarasiuk.ct.model.entity.impl.Token;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -23,9 +22,9 @@ public class TokenDaoImpl extends BaseDao<Token> implements TokenDao {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final TokenDaoImpl instance = new TokenDaoImpl();
 
-    private final String SQL_PROCEDURE_CREATE_TOKEN = "{CALL create_token (?, ?, ?)}";
-    private final String SQL_PROCEDURE_UPDATE_TOKEN = "{CALL update_token (?, ?, ?, ?)}";
-    private final String SQL_PROCEDURE_FIND_TOKEN_BY_ACCOUNT_ID = "{CALL find_token_by_account_id (?)}";    //fixme (может сделать метод, который принимает аккаунт, извлекает ИД аккаунта и передает в другой метод
+    private static final String SQL_PROCEDURE_CREATE_TOKEN = "{CALL create_token (?, ?, ?)}";
+    private static final String SQL_PROCEDURE_UPDATE_TOKEN = "{CALL update_token (?, ?, ?, ?)}";
+    private static final String SQL_PROCEDURE_FIND_TOKEN_BY_ACCOUNT_ID = "{CALL find_token_by_account_id (?)}";    //fixme (может сделать метод, который принимает аккаунт, извлекает ИД аккаунта и передает в другой метод
 
     private TokenDaoImpl() {
     }
@@ -123,7 +122,7 @@ public class TokenDaoImpl extends BaseDao<Token> implements TokenDao {
     }
 
     @Override
-    public List<Entity> findAll() throws DaoException {
+    public List<Token> findAll() throws DaoException {
         return null;
     }
 
@@ -133,7 +132,7 @@ public class TokenDaoImpl extends BaseDao<Token> implements TokenDao {
     }
 
     @Override
-    public Optional<Token> findEntityById(int id) throws DaoException {
+    public Optional<Token> findEntityById(long id) throws DaoException {
         return Optional.empty();
     }
 
