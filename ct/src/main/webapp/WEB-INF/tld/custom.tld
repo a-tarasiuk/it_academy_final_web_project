@@ -33,14 +33,56 @@
     </tag>
 
     <tag>
-        <name>all_offer_list</name>
-        <tag-class>by.tarasiuk.ct.tag.AllOfferListTag</tag-class>
+        <name>open_offers_list</name>
+        <tag-class>by.tarasiuk.ct.tag.OpenOfferListTag</tag-class>
         <body-content>empty</body-content>
     </tag>
 
     <tag>
         <name>account_offer_list</name>
         <tag-class>by.tarasiuk.ct.tag.AccountOfferListTag</tag-class>
+        <body-content>empty</body-content>
+    </tag>
+
+    <tag>
+        <name>account_trading_list</name>
+        <tag-class>by.tarasiuk.ct.tag.AccountTradingListTag</tag-class>
+        <body-content>empty</body-content>
+    </tag>
+
+    <tag>
+        <name>employee_info</name>
+        <tag-class>by.tarasiuk.ct.tag.EmployeeInfoTag</tag-class>
+        <body-content>empty</body-content>
+    </tag>
+
+    <tag>
+        <name>account_employee_list</name>
+        <tag-class>by.tarasiuk.ct.tag.AccountEmployeeListTag</tag-class>
+        <body-content>empty</body-content>
+    </tag>
+
+    <tag>
+        <name>offer_viewer</name>
+        <tag-class>by.tarasiuk.ct.tag.OfferViewerTag</tag-class>
+        <body-content>empty</body-content>
+    </tag>
+
+    <tag>
+        <name>account_menu</name>
+        <tag-class>by.tarasiuk.ct.tag.AccountMenuTag</tag-class>
+        <body-content>empty</body-content>
+    </tag>
+
+    <tag>
+        <name>trading_history</name>
+        <tag-class>by.tarasiuk.ct.tag.TradingHistoryTag</tag-class>
+        <body-content>empty</body-content>
+    </tag>
+
+    <tag>
+        <name>trading_freight</name>
+        <tag-class>by.tarasiuk.ct.tag.TradingFreightTag</tag-class>
         <body-content>empty</body-content>
     </tag>
 </taglib>

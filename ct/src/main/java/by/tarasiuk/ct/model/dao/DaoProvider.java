@@ -1,10 +1,6 @@
 package by.tarasiuk.ct.model.dao;
 
-import by.tarasiuk.ct.model.dao.impl.AccountDaoImpl;
-import by.tarasiuk.ct.model.dao.impl.CompanyDaoImpl;
-import by.tarasiuk.ct.model.dao.impl.EmployeeDaoImpl;
-import by.tarasiuk.ct.model.dao.impl.OfferDaoImpl;
-import by.tarasiuk.ct.model.dao.impl.TokenDaoImpl;
+import by.tarasiuk.ct.model.dao.impl.*;
 
 public class DaoProvider {
     private static final AccountDaoImpl accountDao = AccountDaoImpl.getInstance();
@@ -12,6 +8,7 @@ public class DaoProvider {
     private static final TokenDaoImpl tokenDao = TokenDaoImpl.getInstance();
     private static final OfferDaoImpl offerDao = OfferDaoImpl.getInstance();
     private static final EmployeeDaoImpl employeeDao = EmployeeDaoImpl.getInstance();
+    private static final TradingDaoImpl tradingDao = TradingDaoImpl.getInstance();
 
     private DaoProvider() {
     }
@@ -34,5 +31,9 @@ public class DaoProvider {
 
     public static EmployeeDaoImpl getEmployeeDao() {
         return employeeDao;
+    }
+
+    public static TradingDaoImpl getTradingDao() {
+        return tradingDao;
     }
 }

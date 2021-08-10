@@ -9,7 +9,7 @@ public class Offer implements Entity {
     private static final long serialVersionUID = 44109233988771624L;
 
     private long id;
-    private long accountId;
+    private long employeeId;
     private String productName;
     private float productWeight;
     private float productVolume;
@@ -32,12 +32,12 @@ public class Offer implements Entity {
         this.id = id;
     }
 
-    public long getAccountId() {
-        return accountId;
+    public long getEmployeeId() {
+        return employeeId;
     }
 
-    public void setAccountId(long accountId) {
-        this.accountId = accountId;
+    public void setEmployeeId(long employeeId) {
+        this.employeeId = employeeId;
     }
 
     public String getProductName() {
@@ -108,7 +108,7 @@ public class Offer implements Entity {
     public String toString() {
         final StringBuilder sb = new StringBuilder("Offer{");
         sb.append("id=").append(id);
-        sb.append(", accountId=").append(accountId);
+        sb.append(", employeeId=").append(employeeId);
         sb.append(", productName='").append(productName).append('\'');
         sb.append(", productWeight=").append(productWeight);
         sb.append(", productVolume=").append(productVolume);

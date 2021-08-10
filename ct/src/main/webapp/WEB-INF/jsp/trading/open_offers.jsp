@@ -20,36 +20,34 @@
     </head>
 
     <body>
-        <div id="m-left">
-            <div id="ml-company-logo">
-                <span>${account.firstName}, welcome to the <b>Cargo Trading!</b></span>
-            </div>
+        <div id="container">
+            <jsp:include page="/WEB-INF/jsp/common/header.jsp"/>
 
-            <a class="ml-item" href="${pageContext.request.contextPath}/controller?command=go_to_account_offers_page">
-                <span class="icon icon-archive">&nbsp;</span>
-                <fmt:message key="offer.my"/>
-            </a>
-
-            <a class="ml-item" href="${pageContext.request.contextPath}/controller?command=go_to_create_offer_page">
-                <span class="icon icon-users">&nbsp;</span>
-                <fmt:message key="employees.my"/>
-            </a>
-        </div>
-
-        <div id="m-right">
-            <div id="mr-up">
-                <div id="window-title">
-                    <fmt:message key="offer.all"/>
+            <div id="middle">
+                <div id="m-left">
+                    <ct:employee_info/>
+                    <ct:account_menu/>
                 </div>
 
-                <a class="btn-confirm" href="${pageContext.request.contextPath}/controller?command=go_to_create_offer_page">
-                    <fmt:message key="cargo.button.createOffer"/>
-                </a>
+                <div id="m-right">
+                    <div id="mr-up">
+                        <div id="window-title">
+                            <fmt:message key="offer.all"/>
+                        </div>
+
+                        <a class="btn-simple btn-green" href="${pageContext.request.contextPath}/controller?command=go_to_create_offer_page">
+                            <span class="icon icon-plus">&nbsp;</span>
+                            <fmt:message key="cargo.button.createOffer"/>
+                        </a>
+                    </div>
+
+                    <div id="mr-down">
+                        <ct:open_offers_list/>
+                    </div>
+                </div>
             </div>
 
-            <div id="mr-down">
-                <ct:all_offer_list/>
-            </div>
+            <jsp:include page="/WEB-INF/jsp/common/footer.jsp"/>
         </div>
     </body>
 </html>

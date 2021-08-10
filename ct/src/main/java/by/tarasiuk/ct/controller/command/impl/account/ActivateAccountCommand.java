@@ -1,4 +1,4 @@
-package by.tarasiuk.ct.controller.command.impl;
+package by.tarasiuk.ct.controller.command.impl.account;
 
 import by.tarasiuk.ct.controller.RequestContent;
 import by.tarasiuk.ct.controller.command.Command;
@@ -25,7 +25,7 @@ import static by.tarasiuk.ct.manager.AttributeName.TOKEN_NUMBER;
 import static by.tarasiuk.ct.manager.MessageKey.ACCOUNT_ALREADY_ACTIVATED;
 import static by.tarasiuk.ct.manager.MessageKey.ACCOUNT_EMAIL_NOT_EXIST;
 import static by.tarasiuk.ct.manager.MessageKey.ACCOUNT_SUCCESSFULLY_ACTIVATED;
-import static by.tarasiuk.ct.manager.MessageKey.QUERY_ERROR;
+import static by.tarasiuk.ct.manager.MessageKey.MESSAGE_QUERY_ERROR;
 import static by.tarasiuk.ct.manager.MessageKey.TOKEN_INCORRECT;
 import static by.tarasiuk.ct.manager.MessageKey.TOKEN_NOT_EXIST;
 
@@ -93,7 +93,7 @@ public class ActivateAccountCommand implements Command {
                 }
             }
         } catch (ServiceException e) {
-            message = QUERY_ERROR;
+            message = MESSAGE_QUERY_ERROR;
             LOGGER.warn("Error when activating email '{}'.", email);
         }
 

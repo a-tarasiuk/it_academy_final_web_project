@@ -4,7 +4,7 @@ public final class MessageKey {
     /**
      * For all queries
      */
-    public static final String QUERY_ERROR = "message.query.error";
+    public static final String MESSAGE_QUERY_ERROR = "message.query.error";
 
     /**
      * Confirm sign up message
@@ -30,6 +30,11 @@ public final class MessageKey {
     public static final String OFFER_SUCCESSFULLY_CREATED = "message.offer.create.successfully";
 
     /**
+     * Create trading
+     */
+    public static final String TRADING_SUCCESSFULLY_CREATED = "message.trading.create.successfully";
+
+    /**
      * Activation email
      */
     public static final String EMAIL_SUBJECT_COMPLETION_REGISTRATION = "email.signUp.completionRegistration.subject";
@@ -45,7 +50,60 @@ public final class MessageKey {
     public static final String OFFER_ADDRESS = "offer.table.address";
     public static final String OFFER_CREATION_DATE = "offer.table.creationDate";
     public static final String OFFER_FREIGHT = "offer.table.freight";
+    public static final String OFFER_MY_FREIGHT = "offer.table.myFreight";
     public static final String OFFERS_DO_NOT_EXIST = "offer.table.doNotExist";
+    public static final String OFFER_STATUS = "offer.status";
+    public static final String OFFER_TON = "offer.ton";
+    public static final String OFFER_EMPTY = "offer.table.empty";
+    public static final String OFFER_ALL = "offer.all";
+    public static final String OFFER_MY = "offer.my";
+
+    /**
+     * Account table
+     */
+    public static final String EMPLOYEE_FIRST_NAME = "employee.table.firstName";
+    public static final String EMPLOYEE_LAST_NAME = "employee.table.lastName";
+    public static final String EMPLOYEE_LOGIN = "employee.table.login";
+    public static final String EMPLOYEE_EMAIL = "employee.table.email";
+    public static final String EMPLOYEE_REGISTRATION_DATE = "employee.table.registrationDate";
+    public static final String EMPLOYEE_ROLE = "employee.table.role";
+    public static final String EMPLOYEE_STATUS = "employee.table.status";
+    public static final String EMPLOYEES_MY = "employees.my";
+
+    /**
+     * Freight offer
+     */
+    public static final String FREIGHT_OFFER = "freight.offer";
+
+    /**
+     * Trading
+     */
+    public static final String MY_TRADINGS = "tradings.my";
+    public static final String TRADING_HISTORY = "trading.history";
+    public static final String TRADINGS_EMPTY = "tradings.list.empty";
+    public static final String TRADINGS_LIMITATION = "tradings.limitation";
+    public static final String TRADINGS_DO_NOT_EXIST = "tradings.table.doNotExist";
+
+    /**
+     * Placeholders
+     */
+    public static final String PLACEHOLDER_OFFER_FREIGHT = "offer.freight";
+
+    /**
+     * Descriptions
+     */
+    public static final String DESCRIPTION_TRADING_FREIGHT = "description.tradingFreight";
+
+    /**
+     * Descriptions
+     */
+    public static final String MESSAGE_WARN = "message.code.tamperingDetected";
+
+    /**
+     * Headers
+     */
+    public static final String HEADER_ACCOUNT_INFO = "header.accountInfo";
+    public static final String HEADER_MENU = "header.menu";
 
     private MessageKey() {
     }

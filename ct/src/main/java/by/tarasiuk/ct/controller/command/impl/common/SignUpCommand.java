@@ -1,4 +1,4 @@
-package by.tarasiuk.ct.controller.command.impl;
+package by.tarasiuk.ct.controller.command.impl.common;
 
 import by.tarasiuk.ct.controller.RequestContent;
 import by.tarasiuk.ct.controller.command.Command;

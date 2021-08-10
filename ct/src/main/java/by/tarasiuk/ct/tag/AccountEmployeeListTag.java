@@ -1,6 +1,7 @@
 package by.tarasiuk.ct.tag;
 
 import by.tarasiuk.ct.exception.ServiceException;
+import by.tarasiuk.ct.manager.MessageKey;
 import by.tarasiuk.ct.model.entity.impl.Company;
 import by.tarasiuk.ct.model.entity.impl.Employee;
 import by.tarasiuk.ct.model.entity.impl.Offer;
@@ -19,9 +20,9 @@ import java.util.List;
 import java.util.Optional;
 
 import static by.tarasiuk.ct.manager.AttributeName.LOCALE;
-import static by.tarasiuk.ct.manager.MessageKey.*;
+import static by.tarasiuk.ct.manager.MessageKey.OFFERS_DO_NOT_EXIST;
 
-public class AllOfferListTag extends TagSupport {
+public class AccountEmployeeListTag extends TagSupport {
     private static final long serialVersionUID = -5150821270017826128L;
     private static final OfferServiceImpl offerService = ServiceProvider.getOfferService();
     private static final EmployeeServiceImpl employeeService = ServiceProvider.getEmployeeService();
@@ -32,27 +33,27 @@ public class AllOfferListTag extends TagSupport {
         HttpSession session = pageContext.getSession();
 
         String locale = (String) session.getAttribute(LOCALE);
-        String titleCompany = MessageManager.findMassage(OFFER_COMPANY_NAME, locale);
-        String titleProductName = MessageManager.findMassage(OFFER_PRODUCT_NAME, locale);
-        String titleProductWeight = MessageManager.findMassage(OFFER_PRODUCT_WEIGHT, locale);
-        String titleProductVolume = MessageManager.findMassage(OFFER_PRODUCT_VOLUME, locale);
-        String titleAddress = MessageManager.findMassage(OFFER_ADDRESS, locale);
-        String titleCreationDate = MessageManager.findMassage(OFFER_CREATION_DATE, locale);
-        String titleFreight = MessageManager.findMassage(OFFER_FREIGHT, locale);
+        String titleFirstName = MessageManager.findMassage(MessageKey.EMPLOYEE_FIRST_NAME, locale);
+        String titleLastName = MessageManager.findMassage(MessageKey.EMPLOYEE_LAST_NAME, locale);
+        String titleLogin = MessageManager.findMassage(MessageKey.EMPLOYEE_LOGIN, locale);
+        String titleEmail = MessageManager.findMassage(MessageKey.EMPLOYEE_EMAIL, locale);
+        String titleRegistrationDate = MessageManager.findMassage(MessageKey.EMPLOYEE_REGISTRATION_DATE, locale);
+        String titleRole = MessageManager.findMassage(MessageKey.EMPLOYEE_ROLE, locale);
+        String titleStatus = MessageManager.findMassage(MessageKey.EMPLOYEE_STATUS, locale);
 
         try {
             StringBuilder table = new StringBuilder("<table>")
                     .append("<tr>")
-                    .append("<th>").append(titleCompany).append("</th>")
-                    .append("<th>").append(titleAddress).append("</th>")
-                    .append("<th>").append(titleProductWeight).append("</th>")
-                    .append("<th>").append(titleProductVolume).append("</th>")
-                    .append("<th>").append(titleProductName).append("</th>")
-                    .append("<th>").append(titleCreationDate).append("</th>")
-                    .append("<th>").append(titleFreight).append("</th>")
+                    .append("<th>").append(titleFirstName).append("</th>")
+                    .append("<th>").append(titleLastName).append("</th>")
+                    .append("<th>").append(titleLogin).append("</th>")
+                    .append("<th>").append(titleEmail).append("</th>")
+                    .append("<th>").append(titleRegistrationDate).append("</th>")
+                    .append("<th>").append(titleRole).append("</th>")
+                    .append("<th>").append(titleStatus).append("</th>")
                     .append("</tr>");
 
-            List<Offer> offers = offerService.findListOffers();
+            List<Offer> offers = offerService.findAllOfferList();
 
             if(offers == null || offers.isEmpty()) {
                 String titleOffersDoNotExist = MessageManager.findMassage(OFFERS_DO_NOT_EXIST, locale);
@@ -61,7 +62,7 @@ public class AllOfferListTag extends TagSupport {
                         .append("</tr>");
             } else {
                 for(Offer offer: offers) {
-                    long accountId = offer.getAccountId();
+                    long accountId = offer.getEmployeeId(); // fixme employee
                     Optional<Employee> findEmployee = employeeService.findEmployeeByAccountId(accountId);
 
                     if(findEmployee.isPresent()) {

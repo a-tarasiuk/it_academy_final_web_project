@@ -7,12 +7,12 @@ import by.tarasiuk.ct.manager.PagePath;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class GoToAccountOffersPageCommand implements Command {
+public class GoToAccountEmployeesPageCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
 
     @Override
     public String execute(RequestContent requestContent) {
-        LOGGER.info("Command '{}' return path '{}'", CommandType.GO_TO_ACCOUNT_OFFERS_PAGE, PagePath.ACCOUNT_OFFERS);
-        return PagePath.ACCOUNT_OFFERS;
+        LOGGER.info("Command '{}' return path '{}'", CommandType.GO_TO_ACCOUNT_EMPLOYEES_PAGE, PagePath.ACCOUNT_EMPLOYEES);
+        return PagePath.ACCOUNT_EMPLOYEES;
     }
 }

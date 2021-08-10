@@ -51,4 +51,20 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         return findEmployee;
     }
+
+    public Optional<Employee> findEmployeeById(long employeeId) throws ServiceException {
+        Optional<Employee> findEmployee;
+
+        try {
+            findEmployee = employeeDao.findEntityById(employeeId);
+            LOGGER.info(findEmployee.isPresent()
+                    ? "Successfully was find employee by id '{}'."
+                    : "Employee with account id '{}' not found in the database.", employeeId);
+        } catch (DaoException e) {
+            LOGGER.error("Error when searching for an employee by id '{}'.", employeeId, e);
+            throw new ServiceException("Error when searching for an employee by account id '" + employeeId + "'.", e);
+        }
+
+        return findEmployee;
+    }
 }

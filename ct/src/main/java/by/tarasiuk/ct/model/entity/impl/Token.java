@@ -3,6 +3,8 @@ package by.tarasiuk.ct.model.entity.impl;
 import by.tarasiuk.ct.model.entity.Entity;
 
 public class Token implements Entity {
+    private static final long serialVersionUID = -3694202731606343552L;
+
     private long id;
     private long accountId;
     private String number;

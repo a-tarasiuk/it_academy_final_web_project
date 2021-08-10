@@ -13,6 +13,7 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/cargo.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/offer.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/icon.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/table.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/font-awesome.min.css">
@@ -25,30 +26,24 @@
 
             <div id="middle">
                 <div id="m-left">
-                    <div id="ml-company-logo">
-                        <span>${account.firstName}, welcome to the <b>Cargo Trading!</b></span>
-                    </div>
-
-                    <a class="ml-item" href="${pageContext.request.contextPath}/controller?command=go_to_account_offers_page">
-                        <span class="icon icon-archive">&nbsp;</span>
-                        <fmt:message key="offer.my"/>
-                    </a>
-
-                    <a class="ml-item" href="${pageContext.request.contextPath}/controller?command=go_to_create_offer_page">
-                        <span class="icon icon-users">&nbsp;</span>
-                        <fmt:message key="employees.my"/>
-                    </a>
+                    <ct:employee_info/>
+                    <ct:account_menu/>
                 </div>
 
                 <div id="m-right">
                     <div id="mr-up">
                         <div id="window-title">
-                            <fmt:message key="offer.my"/>
+                            <fmt:message key="employees.my"/>
                         </div>
+
+                        <a class="btn-simple btn-green" href="${pageContext.request.contextPath}/controller?command=go_to_account_offers_page">
+                            <span class="icon icon-user-plus">&nbsp;</span>
+                            <fmt:message key="employees.create"/>
+                        </a>
                     </div>
 
                     <div id="mr-down">
-                        <ct:account_offer_list/>
+                        <ct:account_employee_list/>
                     </div>
                 </div>
             </div>

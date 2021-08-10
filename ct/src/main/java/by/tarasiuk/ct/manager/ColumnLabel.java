@@ -27,6 +27,12 @@ public final class ColumnLabel {
     public static final String OFFER_STATUS = "offer_status";
 
     /**
+     * Columns of the Tradings database table.
+     */
+    public static final String TRADING_ID = "trading_id";
+    public static final String TRADING_FREIGHT = "trading_freight";
+
+    /**
      * Columns of the Employees database table.
      */
     public static final String EMPLOYEE_ID = "employee_id";

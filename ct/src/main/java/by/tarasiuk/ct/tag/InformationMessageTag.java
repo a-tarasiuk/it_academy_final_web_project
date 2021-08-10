@@ -1,5 +1,6 @@
 package by.tarasiuk.ct.tag;
 
+import by.tarasiuk.ct.manager.AttributeName;
 import by.tarasiuk.ct.util.MessageManager;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -9,7 +10,10 @@ import jakarta.servlet.jsp.tagext.TagSupport;
 
 import java.io.IOException;
 
-import static by.tarasiuk.ct.manager.AttributeName.*;
+import static by.tarasiuk.ct.manager.AttributeName.ACCOUNT_EMAIL;
+import static by.tarasiuk.ct.manager.AttributeName.INFORMATION_MESSAGE;
+import static by.tarasiuk.ct.manager.AttributeName.LOCALE;
+import static by.tarasiuk.ct.manager.AttributeName.TOKEN_NUMBER;
 import static by.tarasiuk.ct.manager.MessageKey.*;
 
 public class InformationMessageTag extends TagSupport {
@@ -29,7 +33,7 @@ public class InformationMessageTag extends TagSupport {
         switch (keyMessage) {
             case CONFIRM_MESSAGE:
                 block.append("<span class=\"icon icon-info-circle x2 icon-green\"></span>");
-                valueMessage = String.format(valueMessage, request.getParameter(ACCOUNT_FIRST_NAME), request.getParameter(ACCOUNT_EMAIL));
+                valueMessage = String.format(valueMessage, request.getParameter(AttributeName.ACCOUNT_FIRST_NAME), request.getParameter(ACCOUNT_EMAIL));
                 break;
             case OFFER_SUCCESSFULLY_CREATED:
                 block.append("<span class=\"icon icon-check-circle x2 icon-green\"></span>");
@@ -47,6 +51,8 @@ public class InformationMessageTag extends TagSupport {
             case ACCOUNT_SUCCESSFULLY_ACTIVATED:
                 block.append("<span class=\"icon icon-check-circle x2 icon-green\"></span>");
                 valueMessage = String.format(valueMessage, request.getParameter(ACCOUNT_EMAIL));
+            case TRADING_SUCCESSFULLY_CREATED:
+                block.append("<span class=\"icon icon-check-circle x2 icon-green\"></span>");
             default:
                 break;  //todo
         }

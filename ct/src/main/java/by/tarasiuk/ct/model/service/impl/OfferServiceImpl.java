@@ -13,6 +13,7 @@ import org.apache.logging.log4j.Logger;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 import static by.tarasiuk.ct.manager.AttributeName.OFFER_ADDRESS_FROM;
 import static by.tarasiuk.ct.manager.AttributeName.OFFER_ADDRESS_TO;
@@ -34,18 +35,18 @@ public class OfferServiceImpl implements OfferService {
         return instance;
     }
 
-    public boolean createOffer(long accountId, HashMap<String, String> offerData) throws ServiceException {
-        String productName = offerData.get(OFFER_PRODUCT_NAME);
+    public boolean createOffer(long employeeId, HashMap<String, String> offerData) throws ServiceException {
         float productWeight = Float.parseFloat(offerData.get(OFFER_PRODUCT_WEIGHT));
         float productVolume = Float.parseFloat(offerData.get(OFFER_PRODUCT_VOLUME));
+        float freight = Float.parseFloat(offerData.get(OFFER_FREIGHT));
+        String productName = offerData.get(OFFER_PRODUCT_NAME);
         String addressFrom = offerData.get(OFFER_ADDRESS_FROM);
         String addressTo = offerData.get(OFFER_ADDRESS_TO);
-        float freight = Float.parseFloat(offerData.get(OFFER_FREIGHT));
         LocalDate creationDate = LocalDate.now();
         Status status = Status.OPEN;
 
         Offer offer = new Offer();
-        offer.setAccountId(accountId);
+        offer.setEmployeeId(employeeId);
         offer.setProductName(productName);
         offer.setProductWeight(productWeight);
         offer.setProductVolume(productVolume);
@@ -63,13 +64,24 @@ public class OfferServiceImpl implements OfferService {
         }
     }
 
-    public List<Offer> findListOffers() throws ServiceException {
+    public List<Offer> findAllOfferList() throws ServiceException {
         List<Offer> offers;
         try {
              offers = offerDao.findAll();
         } catch (DaoException e) {
             LOGGER.error("Error while find all offers.", e);
             throw new ServiceException("Error while find all offers.", e);
+        }
+        return offers;
+    }
+
+    public List<Offer> findOpenOfferList() throws ServiceException {
+        List<Offer> offers;
+        try {
+            offers = offerDao.findOpenOffers();
+        } catch (DaoException e) {
+            LOGGER.error("Error while find all opened offers.", e);
+            throw new ServiceException("Error while find all opened offers.", e);
         }
         return offers;
     }
@@ -83,6 +95,15 @@ public class OfferServiceImpl implements OfferService {
             throw new ServiceException("Error while find all offers by account id '" + accountId + "'.", e);
         }
         return offers;
+    }
+
+    public Optional<Offer> findOfferById(long offerId) throws ServiceException {
+        try {
+            return offerDao.findEntityById(offerId);
+        } catch (DaoException e) {
+            LOGGER.error("Error while find offer by id '{}'.", offerId, e);
+            throw new ServiceException("Error while find offer by id '" + offerId + "'.", e);
+        }
     }
 
     public boolean isValidOfferData(HashMap<String, String> offerData) throws ServiceException {

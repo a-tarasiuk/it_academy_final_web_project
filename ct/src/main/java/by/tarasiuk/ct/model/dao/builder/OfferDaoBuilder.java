@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
-import static by.tarasiuk.ct.manager.ColumnLabel.ACCOUNT_ID;
+import static by.tarasiuk.ct.manager.ColumnLabel.EMPLOYEE_ID;
 import static by.tarasiuk.ct.manager.ColumnLabel.OFFER_ADDRESS_FROM;
 import static by.tarasiuk.ct.manager.ColumnLabel.OFFER_ADDRESS_TO;
 import static by.tarasiuk.ct.manager.ColumnLabel.OFFER_CREATION_DATE;
@@ -24,7 +24,7 @@ public class OfferDaoBuilder {
 
     public static Offer build(ResultSet resultSet) throws SQLException {
         long offerId = resultSet.getLong(OFFER_ID);
-        long accountId = resultSet.getLong(ACCOUNT_ID);
+        long employeeId = resultSet.getLong(EMPLOYEE_ID);
         String productName = resultSet.getString(OFFER_PRODUCT_NAME);
         float productWeight = resultSet.getFloat(OFFER_PRODUCT_WEIGHT);
         float productVolume = resultSet.getFloat(OFFER_PRODUCT_VOLUME);
@@ -36,7 +36,7 @@ public class OfferDaoBuilder {
 
         Offer offer = new Offer();
         offer.setId(offerId);
-        offer.setAccountId(accountId);
+        offer.setEmployeeId(employeeId);
         offer.setProductName(productName);
         offer.setProductWeight(productWeight);
         offer.setProductVolume(productVolume);

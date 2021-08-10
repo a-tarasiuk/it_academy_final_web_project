@@ -21,6 +21,7 @@ public class EmployeeDaoImpl extends BaseDao<Employee> implements EmployeeDao {
 
     private static final String SQL_PROCEDURE_CREATE_EMPLOYEE = "{CALL create_employee (?, ?)}";
     private static final String SQL_PROCEDURE_FIND_EMPLOYEE_BY_ACCOUNT_ID = "{CALL find_employee_by_account_id (?)}";
+    private static final String SQL_PROCEDURE_FIND_EMPLOYEE_BY_ID = "{CALL find_employee_by_id (?)}";
 
     private static final class IndexCreate {
         private static final int ACCOUNT_ID = 1;
@@ -28,6 +29,7 @@ public class EmployeeDaoImpl extends BaseDao<Employee> implements EmployeeDao {
     }
 
     private static final class IndexFind {
+        private static final int EMPLOYEE_D = 1;
         private static final int ACCOUNT_ID = 1;
     }
 
@@ -99,6 +101,27 @@ public class EmployeeDaoImpl extends BaseDao<Employee> implements EmployeeDao {
 
     @Override
     public Optional<Employee> findEntityById(long id) throws DaoException {
-        return Optional.empty();
+        Connection connection = connectionPool.getConnection();
+        Optional<Employee> findEmployee;
+
+        try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_EMPLOYEE_BY_ID)) {
+            statement.setLong(IndexFind.EMPLOYEE_D, id);
+
+            try (ResultSet result = statement.executeQuery()) {
+                if (result.next()) {
+                    Employee employee = EmployeeDaoBuilder.build(result);
+                    findEmployee = Optional.of(employee);
+                } else {
+                    findEmployee = Optional.empty();
+                }
+            }
+
+            return findEmployee;
+        } catch (SQLException e) {
+            LOGGER.error("Error when performing employee search by id '{}'.", id, e);
+            throw new DaoException("Error when performing employee search by id '" + id + "'.", e);
+        } finally {
+            closeConnection(connection);
+        }
     }
 }

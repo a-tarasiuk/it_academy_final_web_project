@@ -50,18 +50,33 @@ public final class AttributeName {
     /**
      * Offer attributes.
      */
+    public static final String OFFER = "offer";
+    public static final String OFFER_LIST = "offer_list";
+    public static final String OFFER_ID = "offer_id";
     public static final String OFFER_PRODUCT_NAME = "offer_product_name";
     public static final String OFFER_PRODUCT_WEIGHT = "offer_product_weight";
     public static final String OFFER_PRODUCT_VOLUME = "offer_product_volume";
     public static final String OFFER_ADDRESS_FROM = "offer_address_from";
     public static final String OFFER_ADDRESS_TO = "offer_address_to";
     public static final String OFFER_FREIGHT = "offer_freight";
-    public static final String OFFER_CREATION_DATE = "offer_creation_date";
     public static final String OFFER_STATUS = "offer_status";
+
+    /**
+     * Employees attributes.
+     */
+    public static final String EMPLOYEE_ID = "employee_id";
+
+    /**
+     * Offer attributes.
+     */
+    public static final String TRADING_FREIGHT = "trading_freight";
+    public static final String TRADING_LIST = "trading_list";
+    public static final String TRADING_MAP = "trading_map";
 
     /**
      * Message attributes from JSP page.
      */
+    public static final String MESSAGE = "message";
     public static final String INFORMATION_MESSAGE = "information_message";
     public static final String MESSAGE_QUERY_ERROR = "message_query_error";
     public static final String MESSAGE_ERROR_LOGIN_ALREADY_EXIST = "error_login_already_exist";
@@ -70,6 +85,7 @@ public final class AttributeName {
     public static final String MESSAGE_INCORRECT_SIGN_IN_DATA = "incorrect_sign_in_data";
     public static final String MESSAGE_INCORRECT_SIGN_UP_DATA = "incorrect_sign_up_data";
     public static final String MESSAGE_INCORRECT_OFFER_DATA = "incorrect_offer_data";
+    public static final String MESSAGE_INCORRECT_TRADING_FREIGHT = "incorrect_trading_freight";
     public static final String MESSAGE_BANNED_ACCOUNT = "account_banned";
     public static final String MESSAGE_NOT_ACTIVATED_ACCOUNT = "account_not_activated";
 

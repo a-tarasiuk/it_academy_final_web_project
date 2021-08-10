@@ -1,16 +1,12 @@
 package by.tarasiuk.ct.controller.command;
 
-import by.tarasiuk.ct.controller.command.impl.ActivateAccountCommand;
-import by.tarasiuk.ct.controller.command.impl.ChangeLocalePageCommand;
-import by.tarasiuk.ct.controller.command.impl.CreateOfferCommand;
-import by.tarasiuk.ct.controller.command.impl.LogoutCommand;
-import by.tarasiuk.ct.controller.command.impl.SignInCommand;
-import by.tarasiuk.ct.controller.command.impl.SignUpCommand;
-import by.tarasiuk.ct.controller.command.impl.go.GoToAccountOffersPageCommand;
-import by.tarasiuk.ct.controller.command.impl.go.GoToCreateOfferPageCommand;
-import by.tarasiuk.ct.controller.command.impl.go.GoToMainPageCommand;
-import by.tarasiuk.ct.controller.command.impl.go.GoToSignInPageCommand;
-import by.tarasiuk.ct.controller.command.impl.go.GoToSignUpPageCommand;
+import by.tarasiuk.ct.controller.command.impl.account.ActivateAccountCommand;
+import by.tarasiuk.ct.controller.command.impl.common.ChangeLocalePageCommand;
+import by.tarasiuk.ct.controller.command.impl.offer.*;
+import by.tarasiuk.ct.controller.command.impl.common.LogoutCommand;
+import by.tarasiuk.ct.controller.command.impl.common.SignInCommand;
+import by.tarasiuk.ct.controller.command.impl.common.SignUpCommand;
+import by.tarasiuk.ct.controller.command.impl.go.*;
 
 /**
  * All available commands of the application
@@ -28,7 +24,12 @@ public enum CommandType {
     GO_TO_SIGN_IN_PAGE(new GoToSignInPageCommand()),
     GO_TO_SIGN_UP_PAGE(new GoToSignUpPageCommand()),
     GO_TO_CREATE_OFFER_PAGE(new GoToCreateOfferPageCommand()),
-    GO_TO_ACCOUNT_OFFERS_PAGE(new GoToAccountOffersPageCommand());
+    GO_TO_ACCOUNT_EMPLOYEES_PAGE(new GoToAccountEmployeesPageCommand()),
+    SHOW_OPEN_OFFERS(new ShowOpenOffersCommand()),
+    SHOW_TRADING_OFFER(new ShowTradingOfferCommand()),
+    SHOW_ACCOUNT_OFFERS(new ShowAccountOffersCommand()),
+    SHOW_ACCOUNT_TRADINGS(new ShowAccountTradingsCommand()),
+    CREATE_TRADING(new CreateTradingCommand());
 
     /**
      * Command.
