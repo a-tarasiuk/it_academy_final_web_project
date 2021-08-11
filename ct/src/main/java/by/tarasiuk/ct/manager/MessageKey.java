@@ -48,6 +48,8 @@ public final class MessageKey {
     public static final String OFFER_PRODUCT_WEIGHT = "offer.table.productWeight";
     public static final String OFFER_PRODUCT_VOLUME = "offer.table.productVolume";
     public static final String OFFER_ADDRESS = "offer.table.address";
+    public static final String OFFER_ADDRESS_FROM = "offer.addressFrom";
+    public static final String OFFER_ADDRESS_TO = "offer.addressTo";
     public static final String OFFER_CREATION_DATE = "offer.table.creationDate";
     public static final String OFFER_FREIGHT = "offer.table.freight";
     public static final String OFFER_MY_FREIGHT = "offer.table.myFreight";

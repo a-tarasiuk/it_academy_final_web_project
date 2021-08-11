@@ -28,6 +28,7 @@ import static by.tarasiuk.ct.manager.MessageKey.OFFER_TON;
 public class AccountOfferListTag extends TagSupport {
     private static final long serialVersionUID = -5150821270017826128L;
     private static final Logger LOGGER = LogManager.getLogger();
+    private static final String UNICODE_INDEX_NUMBER = "&#x2116;";
 
     @Override
     public int doStartTag() throws JspException {
@@ -47,52 +48,59 @@ public class AccountOfferListTag extends TagSupport {
         String titleTon = MessageManager.findMassage(OFFER_TON, locale);
 
         try {
-            StringBuilder table = new StringBuilder("<table>")
-                    .append("<tr>")
-                    .append("<th>").append(titleAddress).append("</th>")
-                    .append("<th>").append(titleProductWeight).append("&nbsp(").append(titleTon).append(")").append("</th>")
-                    .append("<th>").append(titleProductVolume).append("</th>")
-                    .append("<th>").append(titleProductName).append("</th>")
-                    .append("<th>").append(titleCreationDate).append("</th>")
-                    .append("<th>").append(titleFreight).append("\n&#36;").append("</th>")
-                    .append("<th>").append(titleStatus).append("</th>")
-                    .append("</tr>");
+            StringBuilder table = new StringBuilder("<form class=\"table\" action=\"controller\" method=\"get\">")
+                    .append("<input type=\"hidden\" name=\"command\" value=\"show_account_offer\">")
+                    .append("<div class=\"table-row\">")
+                    .append("<div class=\"table-header\">").append(UNICODE_INDEX_NUMBER).append("</div>")
+                    .append("<div class=\"table-header\">").append(titleAddress).append("</div>")
+                    .append("<div class=\"table-header\">").append(titleProductWeight).append("&nbsp(").append(titleTon).append(")").append("</div>")
+                    .append("<div class=\"table-header\">").append(titleProductVolume).append("</div>")
+                    .append("<div class=\"table-header\">").append(titleProductName).append("</div>")
+                    .append("<div class=\"table-header\">").append(titleCreationDate).append("</div>")
+                    .append("<div class=\"table-header\">").append(titleFreight).append("\n&#36;").append("</div>")
+                    .append("<div class=\"table-header\">").append(titleStatus).append("</div>")
+                    .append("</div>");
 
             if(offers == null || offers.isEmpty()) {
                 String titleOffersDoNotExist = MessageManager.findMassage(OFFERS_DO_NOT_EXIST, locale);
-                table.append("<tr><td colspan=\"7\">")
+                table.append("<div class=\"table-row\">")
+                        .append("<div class=\"table-data\">")
                         .append(titleOffersDoNotExist)
-                        .append("</td></tr>");
+                        .append("</div>")
+                        .append("</div>");
             } else {
-                for(Offer offer: offers) {
-                    table.append("<tr>")
-                            .append("<td>").append(offer.getAddressFrom()).append(" - ").append(offer.getAddressTo()) .append("</td>")
-                            .append("<td>").append(offer.getProductWeight()).append("</td>")
-                            .append("<td>").append(offer.getProductVolume()).append("</td>")
-                            .append("<td>").append(offer.getProductName()).append("</td>")
-                            .append("<td>").append(offer.getCreationDate()).append("</td>")
-                            .append("<td>").append(offer.getFreight()).append("</td>");
+                for(int i = 0; i < offers.size(); i++) {
+                    Offer offer = offers.get(i);
+                    long offerId = offer.getId();
+                    table.append("<a class=\"table-row\" href=\"/controller?command=show_account_offer&offer_id=").append(offerId).append("\">")
+                            .append("<div class=\"table-data\">").append(i + 1).append("</div>")
+                            .append("<div class=\"table-data\">").append(offer.getAddressFrom()).append(" - ").append(offer.getAddressTo()) .append("</div>")
+                            .append("<div class=\"table-data\">").append(offer.getProductWeight()).append("</div>")
+                            .append("<div class=\"table-data\">").append(offer.getProductVolume()).append("</div>")
+                            .append("<div class=\"table-data\">").append(offer.getProductName()).append("</div>")
+                            .append("<div class=\"table-data\">").append(offer.getCreationDate()).append("</div>")
+                            .append("<div class=\"table-data\">").append(offer.getFreight()).append("</div>");
 
                     Offer.Status offerStatus = offer.getStatus();
 
                     switch (offerStatus) {
                         case OPEN:
-                            table.append("<td class=\"bc-green\">");
+                            table.append("<div class=\"table-data bc-green\">");
                             break;
                         case CLOSED:
-                            table.append("<td class=\"bc-red\">");
+                            table.append("<div class=\"table-data bc-red\">");
                             break;
                         default:
                             LOGGER.warn("Nonexistent constant '{}' in '{}'.", offerStatus, offerStatus.getDeclaringClass());
                             throw new EnumConstantNotPresentException(offerStatus.getClass(), offerStatus.toString()); //fixme Need an exception?
                     }
 
-                    table.append(offer.getStatus()).append("</td>")
-                            .append("</tr>");
+                    table.append(offer.getStatus()).append("</div>")
+                            .append("</a>");
                 }
             }
 
-            table.append("</table>");
+            table.append("</form>");
 
             JspWriter out = pageContext.getOut();
             out.write(table.toString());

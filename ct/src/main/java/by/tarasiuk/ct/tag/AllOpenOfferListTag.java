@@ -28,7 +28,7 @@ import static by.tarasiuk.ct.manager.MessageKey.OFFER_PRODUCT_NAME;
 import static by.tarasiuk.ct.manager.MessageKey.OFFER_PRODUCT_VOLUME;
 import static by.tarasiuk.ct.manager.MessageKey.OFFER_PRODUCT_WEIGHT;
 
-public class OpenOfferListTag extends TagSupport {
+public class AllOpenOfferListTag extends TagSupport {
     private static final long serialVersionUID = -5150821270017826128L;
     private static final String UNICODE_INDEX_NUMBER = "&#x2116;";
     private static final OfferServiceImpl offerService = ServiceProvider.getOfferService();

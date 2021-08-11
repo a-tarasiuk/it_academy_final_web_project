@@ -27,7 +27,7 @@ public class OfferDaoImpl extends BaseDao<Offer> implements OfferDao {
     private static final String SQL_PROCEDURE_FIND_ALL_OFFERS = "{CALL find_all_offers ()}";
     private static final String SQL_PROCEDURE_FIND_OPEN_OFFERS = "{CALL find_open_offers ()}";
     private static final String SQL_PROCEDURE_FIND_OFFER_BY_ID = "{CALL find_offer_by_id (?)}";
-    private static final String SQL_PROCEDURE_FIND_ALL_OFFERS_BY_ACCOUNT_ID = "{CALL find_all_offers_by_account_id (?)}";
+    private static final String SQL_PROCEDURE_FIND_ALL_OFFERS_BY_EMPLOYEE_ID = "{CALL find_all_offers_by_employee_id (?)}";
 
     private OfferDaoImpl() {
     }
@@ -50,6 +50,7 @@ public class OfferDaoImpl extends BaseDao<Offer> implements OfferDao {
 
     private static final class IndexFind {
         private static final int OFFER_ID = 1;
+        private static final int EMPLOYEE_ID = 1;
     }
 
     public boolean createEntity(Offer offer) throws DaoException {
@@ -132,12 +133,12 @@ public class OfferDaoImpl extends BaseDao<Offer> implements OfferDao {
         return offers;
     }
 
-    public List<Offer> findListOffersByAccountId(long accountId) throws DaoException {
+    public List<Offer> findOfferListByEmployeeId(long employeeId) throws DaoException {
         Connection connection = connectionPool.getConnection();
         List<Offer> offers = new ArrayList<>();
 
-        try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_ALL_OFFERS_BY_ACCOUNT_ID)) {
-            statement.setLong(IndexCreate.EMPLOYEE_ID, accountId);
+        try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_ALL_OFFERS_BY_EMPLOYEE_ID)) {
+            statement.setLong(IndexFind.EMPLOYEE_ID, employeeId);
 
             try (ResultSet result = statement.executeQuery()) {
                 while (result.next()) {
@@ -146,8 +147,8 @@ public class OfferDaoImpl extends BaseDao<Offer> implements OfferDao {
                 }
             }
         } catch (SQLException e) {
-            LOGGER.error("Error when performing offers search by account id '{}'.", accountId, e);
-            throw new DaoException("Error when performing offers search by account id '" + accountId + "'.", e);
+            LOGGER.error("Error when performing offers search by employee id '{}'.", employeeId, e);
+            throw new DaoException("Error when performing offers search by employee id '" + employeeId + "'.", e);
         } finally {
             closeConnection(connection);
         }

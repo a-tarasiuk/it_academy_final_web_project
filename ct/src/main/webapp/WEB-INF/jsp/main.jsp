@@ -32,6 +32,7 @@
                     </c:otherwise>
                 </c:choose>
             </div>
+
             <jsp:include page="common/footer.jsp"/>
         </div>
     </body>

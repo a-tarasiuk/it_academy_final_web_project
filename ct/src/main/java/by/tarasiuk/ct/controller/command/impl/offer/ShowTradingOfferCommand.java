@@ -12,6 +12,7 @@ import by.tarasiuk.ct.model.entity.impl.Offer;
 import by.tarasiuk.ct.model.service.ServiceProvider;
 import by.tarasiuk.ct.model.service.impl.EmployeeServiceImpl;
 import by.tarasiuk.ct.model.service.impl.OfferServiceImpl;
+import by.tarasiuk.ct.model.service.impl.TradingServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -27,6 +28,7 @@ public class ShowTradingOfferCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final OfferServiceImpl offerService = ServiceProvider.getOfferService();
     private static final EmployeeServiceImpl employeeService = ServiceProvider.getEmployeeService();
+    private static final TradingServiceImpl tradingService = ServiceProvider.getTradingService();
 
     @Override
     public String execute(RequestContent content) {
@@ -48,7 +50,6 @@ public class ShowTradingOfferCommand implements Command {
                     Employee employee = findEmployee.get();
                     long currentEmployeeId = employee.getId();
                     content.putRequestAttribute(OFFER, offer);
-                    System.out.println("INPUTING OFFER:" + offer);
                     content.putRequestAttribute(EMPLOYEE_ID, currentEmployeeId);
                 }
 

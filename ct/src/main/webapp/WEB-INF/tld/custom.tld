@@ -33,14 +33,20 @@
     </tag>
 
     <tag>
-        <name>open_offers_list</name>
-        <tag-class>by.tarasiuk.ct.tag.OpenOfferListTag</tag-class>
+        <name>all_open_offers_list</name>
+        <tag-class>by.tarasiuk.ct.tag.AllOpenOfferListTag</tag-class>
         <body-content>empty</body-content>
     </tag>
 
     <tag>
         <name>account_offer_list</name>
         <tag-class>by.tarasiuk.ct.tag.AccountOfferListTag</tag-class>
+        <body-content>empty</body-content>
+    </tag>
+
+    <tag>
+        <name>account_offer_viewer</name>
+        <tag-class>by.tarasiuk.ct.tag.AccountOfferViewerTag</tag-class>
         <body-content>empty</body-content>
     </tag>
 

@@ -31,9 +31,9 @@ public class EmployeeInfoTag extends TagSupport {
     @Override
     public int doStartTag() throws JspException {
         HttpSession session = pageContext.getSession();
-
-        String locale = (String) session.getAttribute(LOCALE);
         Account sessionAccount = (Account) session.getAttribute(AttributeName.ACCOUNT);
+        String locale = (String) session.getAttribute(LOCALE);
+
         String firstName = sessionAccount.getFirstName();
         String email = sessionAccount.getEmail();
         String role = sessionAccount.getRole().toString();

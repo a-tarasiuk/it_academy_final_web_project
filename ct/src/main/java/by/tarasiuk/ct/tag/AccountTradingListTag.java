@@ -2,11 +2,6 @@ package by.tarasiuk.ct.tag;
 
 import by.tarasiuk.ct.manager.AttributeName;
 import by.tarasiuk.ct.model.entity.impl.Offer;
-import by.tarasiuk.ct.model.service.ServiceProvider;
-import by.tarasiuk.ct.model.service.impl.AccountServiceImpl;
-import by.tarasiuk.ct.model.service.impl.CompanyServiceImpl;
-import by.tarasiuk.ct.model.service.impl.OfferServiceImpl;
-import by.tarasiuk.ct.model.service.impl.TradingServiceImpl;
 import by.tarasiuk.ct.util.MessageManager;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -21,16 +16,22 @@ import java.util.Map;
 import java.util.Set;
 
 import static by.tarasiuk.ct.manager.AttributeName.LOCALE;
-import static by.tarasiuk.ct.manager.MessageKey.*;
+import static by.tarasiuk.ct.manager.MessageKey.OFFER_ADDRESS;
+import static by.tarasiuk.ct.manager.MessageKey.OFFER_COMPANY_NAME;
+import static by.tarasiuk.ct.manager.MessageKey.OFFER_CREATION_DATE;
+import static by.tarasiuk.ct.manager.MessageKey.OFFER_FREIGHT;
+import static by.tarasiuk.ct.manager.MessageKey.OFFER_MY_FREIGHT;
+import static by.tarasiuk.ct.manager.MessageKey.OFFER_PRODUCT_NAME;
+import static by.tarasiuk.ct.manager.MessageKey.OFFER_PRODUCT_VOLUME;
+import static by.tarasiuk.ct.manager.MessageKey.OFFER_PRODUCT_WEIGHT;
+import static by.tarasiuk.ct.manager.MessageKey.OFFER_STATUS;
+import static by.tarasiuk.ct.manager.MessageKey.OFFER_TON;
+import static by.tarasiuk.ct.manager.MessageKey.TRADINGS_DO_NOT_EXIST;
 
 public class AccountTradingListTag extends TagSupport {
     private static final long serialVersionUID = -5150821270017826128L;
     private static final Logger LOGGER = LogManager.getLogger();
     private static final String UNICODE_INDEX_NUMBER = "&#x2116;";
-    private static final AccountServiceImpl accountService = ServiceProvider.getAccountService();
-    private static final CompanyServiceImpl companyService = ServiceProvider.getCompanyService();
-    private static final TradingServiceImpl tradingService = ServiceProvider.getTradingService();
-    private static final OfferServiceImpl offerService = ServiceProvider.getOfferService();
 
     @Override
     public int doStartTag() throws JspException {
@@ -69,7 +70,7 @@ public class AccountTradingListTag extends TagSupport {
             if(tradingList == null || tradingList.isEmpty()) {
                 String titleTradingsDoNotExist = MessageManager.findMassage(TRADINGS_DO_NOT_EXIST, locale);
 
-                table.append("<tr><td colspan=\"9\">")
+                table.append("<tr><td colspan=\"10\">")
                         .append(titleTradingsDoNotExist)
                         .append("</td></tr>");
             } else {
@@ -78,7 +79,6 @@ public class AccountTradingListTag extends TagSupport {
                 int counter = 0;
                 for (Map.Entry<Offer, Float> current : set) {
                     Offer offer = current.getKey();
-                    //companyService.
                     float freight = current.getValue();
 
                     table.append("<tr>")
@@ -90,7 +90,7 @@ public class AccountTradingListTag extends TagSupport {
                             .append("<td>").append(offer.getProductName()).append("</td>")
                             .append("<td>").append(offer.getCreationDate()).append("</td>")
                             .append("<td>").append(offer.getFreight()).append("</td>")
-                            .append("<td>").append(freight).append("</td>");
+                            .append("<td class=\"block-colour-grey\"><b>").append(freight).append("</b></td>");
 
                     Offer.Status offerStatus = offer.getStatus();
 

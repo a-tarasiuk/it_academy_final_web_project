@@ -10,6 +10,7 @@ public final class PagePath {
     public static final String TRADING = "/WEB-INF/jsp/trading/trading.jsp";
     public static final String OPEN_OFFERS = "/WEB-INF/jsp/trading/open_offers.jsp";
     public static final String ACCOUNT_OFFERS = "/WEB-INF/jsp/trading/account_offers.jsp";
+    public static final String ACCOUNT_OFFER = "/WEB-INF/jsp/trading/account_offer.jsp";
     public static final String ACCOUNT_TRADINGS = "/WEB-INF/jsp/trading/account_tradings.jsp";
     public static final String ACCOUNT_EMPLOYEES = "/WEB-INF/jsp/trading/account_employees.jsp";
 

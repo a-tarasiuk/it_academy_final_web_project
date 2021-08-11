@@ -17,7 +17,7 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/icon.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/table.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/font-awesome.min.css">
-        <title><fmt:message key="offer.my"/></title>
+        <title><fmt:message key="offer.viewer"/></title>
     </head>
 
     <body>
@@ -33,22 +33,15 @@
                 <div id="m-right">
                     <div id="mr-up">
                         <div id="window-title">
-                            <fmt:message key="offer.my"/>
+                            <fmt:message key="offer.viewer"/>
                         </div>
 
-                        <form id="ow-buttons" action="controller" method="get">
-                            <input type="hidden" name="command" value="show_account_offers">
+                        <form id="ow-buttons" action="controller" method="post">
+                            <input type="hidden" name="command" value="close_offer">
 
-                            <button type="submit" class="btn-simple btn-green">
-                                <fmt:message key="offer.allMy"/>
-                            </button>
-
-                            <button type="submit" name="offer_status" value="open" class="btn-simple btn-green">
-                                <fmt:message key="offer.open"/>
-                            </button>
-
-                            <button type="submit" name="offer_status" value="closed" class="btn-simple btn-green">
-                                <fmt:message key="offer.closed"/>
+                            <button type="submit" class="btn-simple btn-red" name="offer_id" value="${offer.id}">
+                                <span class="icon icon-close">&nbsp;</span>
+                                <fmt:message key="offer.deactivate"/>
                             </button>
                         </form>
                     </div>
@@ -56,10 +49,11 @@
                     <div id="mr-down">
                         <div class="sub-title">
                             <span class="icon icon-circle" style="color: dodgerblue">&nbsp;</span>
-                            <fmt:message key="offer.view"/>
+                            <fmt:message key="offer.change"/>
                         </div>
 
-                        <ct:account_offer_list/>
+                        <ct:account_offer_viewer/>
+                        <ct:trading_history/>
                     </div>
                 </div>
             </div>

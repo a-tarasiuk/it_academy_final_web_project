@@ -42,7 +42,7 @@
                     </div>
 
                     <div id="mr-down">
-                        <ct:open_offers_list/>
+                        <ct:all_open_offers_list/>
                     </div>
                 </div>
             </div>
