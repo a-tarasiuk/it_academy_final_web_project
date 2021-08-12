@@ -49,6 +49,7 @@ public class CompanyServiceImpl implements CompanyService {
 
         try {
             optionalCompany = companyDao.findEntityByName(name);
+
             LOGGER.info(optionalCompany.isPresent()
                     ? "Successfully was find company by name '{}'."
                     : "Company with name '{}' not found in the database.", name);
@@ -65,6 +66,7 @@ public class CompanyServiceImpl implements CompanyService {
 
         try {
             findCompany = companyDao.findEntityById(companyId);
+
             LOGGER.info(findCompany.isPresent()
                     ? "Successfully was find company by id '{}'."
                     : "Company with id '{}' not found in the database.", companyId);

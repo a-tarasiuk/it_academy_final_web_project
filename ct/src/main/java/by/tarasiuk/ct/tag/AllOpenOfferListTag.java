@@ -63,9 +63,8 @@ public class AllOpenOfferListTag extends TagSupport {
 
             if(openOfferList == null || openOfferList.isEmpty()) {
                 String titleOffersDoNotExist = MessageManager.findMassage(OFFERS_DO_NOT_EXIST, locale);
-                table.append("<tr><td>")
-                        .append(titleOffersDoNotExist)
-                        .append("</td></tr></form>");
+                table.append(titleOffersDoNotExist)
+                        .append("</form>");
             } else {
                 for(int i = 0; i < openOfferList.size(); i++) {
                     Offer offer = openOfferList.get(i);

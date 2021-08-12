@@ -10,5 +10,6 @@ ct/src/main/webapp/static
 *.iml
 *.css
 *.js
+*.properties
 *.ico
 *.tld

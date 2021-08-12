@@ -19,7 +19,20 @@ import org.apache.logging.log4j.Logger;
 import java.util.HashMap;
 import java.util.Optional;
 
-import static by.tarasiuk.ct.manager.AttributeName.*;
+import static by.tarasiuk.ct.manager.AttributeName.ACCOUNT_CONFIRM_PASSWORD;
+import static by.tarasiuk.ct.manager.AttributeName.ACCOUNT_EMAIL;
+import static by.tarasiuk.ct.manager.AttributeName.ACCOUNT_FIRST_NAME;
+import static by.tarasiuk.ct.manager.AttributeName.ACCOUNT_LOGIN;
+import static by.tarasiuk.ct.manager.AttributeName.ACCOUNT_PASSWORD;
+import static by.tarasiuk.ct.manager.AttributeName.COMMAND;
+import static by.tarasiuk.ct.manager.AttributeName.COMPANY_NAME;
+import static by.tarasiuk.ct.manager.AttributeName.INFORMATION_MESSAGE;
+import static by.tarasiuk.ct.manager.AttributeName.LOCALE;
+import static by.tarasiuk.ct.manager.AttributeName.MESSAGE_ERROR_COMPANY_ALREADY_EXIST;
+import static by.tarasiuk.ct.manager.AttributeName.MESSAGE_ERROR_EMAIL_ALREADY_EXIST;
+import static by.tarasiuk.ct.manager.AttributeName.MESSAGE_ERROR_LOGIN_ALREADY_EXIST;
+import static by.tarasiuk.ct.manager.AttributeName.MESSAGE_INCORRECT_SIGN_UP_DATA;
+import static by.tarasiuk.ct.manager.AttributeName.MESSAGE_QUERY_ERROR;
 
 public class SignUpCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();

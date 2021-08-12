@@ -20,6 +20,8 @@
         <div id="right-menu">
             <ct:locale_button/>
             <ct:account_buttons/>
+
+            <a class="menu-button button-colour-standard" href="${pageContext.request.contextPath}/controller?command=go_to_account_editor_page"><span class="icon icon-users">&nbsp;</span>Employees</a>
         </div>
     </div>
 </div>

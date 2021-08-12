@@ -18,7 +18,6 @@ public class AccountMenuTag extends TagSupport {
         String locale = (String) pageContext.getSession().getAttribute(LOCALE);
         String titleOfferAll = MessageManager.findMassage(MessageKey.OFFER_ALL, locale);
         String titleOfferMy = MessageManager.findMassage(MessageKey.OFFER_MY, locale);
-        String titleEmployeesMy = MessageManager.findMassage(MessageKey.EMPLOYEES_MY, locale);
         String titleTradingsHistory = MessageManager.findMassage(MessageKey.MY_TRADINGS, locale);
 
         StringBuilder menu = new StringBuilder("<a class=\"ml-item\" href=\"/controller?command=show_open_offers\">")
@@ -32,10 +31,6 @@ public class AccountMenuTag extends TagSupport {
                 .append("<a class=\"ml-item\" href=\"/controller?command=show_account_tradings\">")
                 .append("<div class=\"icon-block\">").append("<span class=\"icon icon-history\"></span>").append("</div>")
                 .append(titleTradingsHistory)
-                .append("</a>")
-                .append("<a class=\"ml-item\" href=\"/controller?command=go_to_account_employees_page\">")
-                .append("<div class=\"icon-block\">").append("<span class=\"icon icon-users\"></span>").append("</div>")
-                .append(titleEmployeesMy)
                 .append("</a>");
 
         JspWriter out = pageContext.getOut();

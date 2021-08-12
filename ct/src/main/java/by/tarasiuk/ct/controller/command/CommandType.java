@@ -1,6 +1,7 @@
 package by.tarasiuk.ct.controller.command;
 
 import by.tarasiuk.ct.controller.command.impl.account.ActivateAccountCommand;
+import by.tarasiuk.ct.controller.command.impl.account.ShowAccountSettingsCommand;
 import by.tarasiuk.ct.controller.command.impl.common.ChangeLocalePageCommand;
 import by.tarasiuk.ct.controller.command.impl.offer.*;
 import by.tarasiuk.ct.controller.command.impl.common.LogoutCommand;
@@ -25,6 +26,7 @@ public enum CommandType {
     GO_TO_SIGN_UP_PAGE(new GoToSignUpPageCommand()),
     GO_TO_CREATE_OFFER_PAGE(new GoToCreateOfferPageCommand()),
     GO_TO_ACCOUNT_EMPLOYEES_PAGE(new GoToAccountEmployeesPageCommand()),
+    SHOW_ACCOUNT_SETTINGS(new ShowAccountSettingsCommand()),
     SHOW_OPEN_OFFERS(new ShowOpenOffersCommand()),
     SHOW_OFFER_EDITOR(new ShowOfferEditorCommand()),
     SHOW_TRADING_OFFER(new ShowTradingOfferCommand()),

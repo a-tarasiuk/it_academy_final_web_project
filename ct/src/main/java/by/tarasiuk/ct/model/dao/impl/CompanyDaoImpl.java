@@ -22,6 +22,7 @@ public class CompanyDaoImpl extends BaseDao<Company> implements CompanyDao {
     private static final String SQL_PROCEDURE_CREATE_COMPANY = "{CALL create_company (?, ?, ?)}";
     private static final String SQL_PROCEDURE_FIND_COMPANY_BY_NAME = "{CALL find_company_by_name (?)}";
     private static final String SQL_PROCEDURE_FIND_COMPANY_BY_ID = "{CALL find_company_by_id (?)}";
+    private static final String SQL_PROCEDURE_UPDATE_COMPANY_BY_ID = "{CALL update_company_by_id (?, ?, ?, ?)}";
 
     private static final class IndexFind {
         private static final int NAME = 1;
@@ -32,6 +33,13 @@ public class CompanyDaoImpl extends BaseDao<Company> implements CompanyDao {
         private static final int NAME = 1;
         private static final int ADDRESS = 2;
         private static final int PHONE_NUMBER = 3;
+    }
+
+    private static final class IndexUpdate {
+        private static final int COMPANY_ID = 1;
+        private static final int COMPANY_NAME = 2;
+        private static final int COMPANY_ADDRESS = 3;
+        private static final int COMPANY_PHONE_NUMBER = 4;
     }
 
     private CompanyDaoImpl() {
@@ -98,7 +106,29 @@ public class CompanyDaoImpl extends BaseDao<Company> implements CompanyDao {
 
     @Override
     public boolean updateEntity(Company entity) throws DaoException {
-        return true;
+        Connection connection = connectionPool.getConnection();
+
+        long companyId = entity.getId();
+        String companyName = entity.getName();
+        String companyAddress = entity.getAddress();
+        String companyPhoneNumber = entity.getPhoneNumber();
+
+        try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_UPDATE_COMPANY_BY_ID)) {
+            statement.setLong(IndexUpdate.COMPANY_ID, companyId);
+            statement.setString(IndexUpdate.COMPANY_NAME, companyName);
+            statement.setString(IndexUpdate.COMPANY_ADDRESS, companyAddress);
+            statement.setString(IndexUpdate.COMPANY_PHONE_NUMBER, companyPhoneNumber);
+
+            statement.executeUpdate();
+
+            LOGGER.info("Offer '{}' has been successfully updated in the database.", entity);
+            return true;    //fixme -> statement.executeUpdate(); (см. выше).
+        } catch (SQLException e) {
+            LOGGER.error("Failed updating company '{}' in the database.", entity, e);
+            throw new DaoException("Failed updating company '" + entity + "' in the database.", e);
+        } finally {
+            closeConnection(connection);
+        }
     }
 
     @Override
