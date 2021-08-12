@@ -95,8 +95,8 @@ public class EmployeeDaoImpl extends BaseDao<Employee> implements EmployeeDao {
     }
 
     @Override
-    public Employee updateEntity(Employee entity) throws DaoException {
-        return null;
+    public boolean updateEntity(Employee entity) throws DaoException {
+        return true;
     }
 
     @Override

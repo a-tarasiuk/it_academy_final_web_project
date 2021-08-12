@@ -28,7 +28,7 @@
             <form action="controller" method="post" novalidate>
                 <div class="row">
                     <label class="description">
-                        <fmt:message key="form.signUp.warning"/>
+                        <fmt:message key="form.warning"/>
                     </label>
                 </div>
 

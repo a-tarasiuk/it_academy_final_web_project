@@ -82,7 +82,7 @@ public class TradingHistoryTag extends TagSupport {
                     }
                 } else {
                     String messageEmpty = MessageManager.findMassage(TRADINGS_EMPTY, locale);
-                    table.append("<tr><td colspan=\"3\" align=\"center\">")
+                    table.append("<tr><td colspan=\"4\" align=\"center\">")
                             .append(messageEmpty)
                             .append("</td></tr>");
                 }

@@ -26,12 +26,16 @@ public enum CommandType {
     GO_TO_CREATE_OFFER_PAGE(new GoToCreateOfferPageCommand()),
     GO_TO_ACCOUNT_EMPLOYEES_PAGE(new GoToAccountEmployeesPageCommand()),
     SHOW_OPEN_OFFERS(new ShowOpenOffersCommand()),
+    SHOW_OFFER_EDITOR(new ShowOfferEditorCommand()),
     SHOW_TRADING_OFFER(new ShowTradingOfferCommand()),
+    SHOW_TRADING_VIEWER(new ShowTradingViewerCommand()),
     SHOW_ACCOUNT_OFFERS(new ShowAccountListOfferCommand()),
     SHOW_ACCOUNT_OFFER(new ShowAccountOfferCommand()),
     SHOW_ACCOUNT_TRADINGS(new ShowAccountTradingsCommand()),
-    CLOSE_OFFER(new CloseOfferCommand()),
-    CREATE_TRADING(new CreateTradingCommand());
+    DEACTIVATE_OFFER(new DeactivateOfferCommand()),
+    CREATE_TRADING(new CreateTradingCommand()),
+    APPLY_FREIGHT(new ApplyFreightCommand()),
+    UPDATE_OFFER(new UpdateOfferCommand());
 
     /**
      * Command.

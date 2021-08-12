@@ -28,6 +28,8 @@ public class OfferDaoImpl extends BaseDao<Offer> implements OfferDao {
     private static final String SQL_PROCEDURE_FIND_OPEN_OFFERS = "{CALL find_open_offers ()}";
     private static final String SQL_PROCEDURE_FIND_OFFER_BY_ID = "{CALL find_offer_by_id (?)}";
     private static final String SQL_PROCEDURE_FIND_ALL_OFFERS_BY_EMPLOYEE_ID = "{CALL find_all_offers_by_employee_id (?)}";
+    private static final String SQL_PROCEDURE_UPDATE_OFFER_STATUS_BY_ID = "{CALL update_offer_status_by_id (?, ?)}";
+    private static final String SQL_PROCEDURE_UPDATE_OFFER_BY_ID = "{CALL update_offer_by_id (?, ?, ?, ?, ?, ?, ?)}";
 
     private OfferDaoImpl() {
     }
@@ -48,9 +50,24 @@ public class OfferDaoImpl extends BaseDao<Offer> implements OfferDao {
         private static final int STATUS = 9;
     }
 
+    private static final class IndexUpdate {
+        private static final int OFFER_ID = 1;
+        private static final int PRODUCT_NAME = 2;
+        private static final int PRODUCT_WEIGHT = 3;
+        private static final int PRODUCT_VOLUME = 4;
+        private static final int ADDRESS_FROM = 5;
+        private static final int ADDRESS_TO = 6;
+        private static final int FREIGHT = 7;
+    }
+
     private static final class IndexFind {
         private static final int OFFER_ID = 1;
         private static final int EMPLOYEE_ID = 1;
+    }
+
+    private static final class IndexStatusUpdate {
+        private static final int OFFER_ID = 1;
+        private static final int OFFER_STATUS = 2;
     }
 
     public boolean createEntity(Offer offer) throws DaoException {
@@ -89,6 +106,24 @@ public class OfferDaoImpl extends BaseDao<Offer> implements OfferDao {
         }
     }
 
+    public boolean updateOfferStatusById(long id, Offer.Status status) throws DaoException {
+        Connection connection = connectionPool.getConnection();
+
+        try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_UPDATE_OFFER_STATUS_BY_ID)) {
+            statement.setLong(IndexStatusUpdate.OFFER_ID, id);
+            statement.setString(IndexStatusUpdate.OFFER_STATUS, status.toString());
+
+            statement.executeUpdate();
+
+            LOGGER.info("Offer with id '{}' has successfully updated status to '{}' in the database.", id, status);
+            return true;    //fixme -> statement.executeUpdate(); (см. выше).
+        } catch (SQLException e) {
+            LOGGER.error("Failed updating offer with ID '{}' to status '{}' in the database.", id, status, e);
+            throw new DaoException("Failed updating offer with ID '" + id + "' to status '" + status + "' in the database.", e);
+        } finally {
+            closeConnection(connection);
+        }
+    }
 
     @Override
     public List<Offer> findAll() throws DaoException {
@@ -157,8 +192,36 @@ public class OfferDaoImpl extends BaseDao<Offer> implements OfferDao {
     }
 
     @Override
-    public Offer updateEntity(Offer entity) throws DaoException {
-        return null;
+    public boolean updateEntity(Offer entity) throws DaoException {
+        Connection connection = connectionPool.getConnection();
+
+        long offerId = entity.getId();
+        String productName = entity.getProductName();
+        float productWeight = entity.getProductWeight();
+        float productVolume = entity.getProductVolume();
+        String addressFrom = entity.getAddressFrom();
+        String addressTo = entity.getAddressTo();
+        float offerFreight = entity.getFreight();
+
+        try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_UPDATE_OFFER_BY_ID)) {
+            statement.setLong(IndexUpdate.OFFER_ID, offerId);
+            statement.setString(IndexUpdate.PRODUCT_NAME, productName);
+            statement.setFloat(IndexUpdate.PRODUCT_WEIGHT, productWeight);
+            statement.setFloat(IndexUpdate.PRODUCT_VOLUME, productVolume);
+            statement.setString(IndexUpdate.ADDRESS_FROM, addressFrom);
+            statement.setString(IndexUpdate.ADDRESS_TO, addressTo);
+            statement.setFloat(IndexUpdate.FREIGHT, offerFreight);
+
+            statement.executeUpdate();
+
+            LOGGER.info("Offer '{}' has been successfully updated in the database.", entity);
+            return true;    //fixme -> statement.executeUpdate(); (см. выше).
+        } catch (SQLException e) {
+            LOGGER.error("Failed updating offer '{}' in the database.", entity, e);
+            throw new DaoException("Failed updating offer '" + entity + "' in the database.", e);
+        } finally {
+            closeConnection(connection);
+        }
     }
 
     @Override

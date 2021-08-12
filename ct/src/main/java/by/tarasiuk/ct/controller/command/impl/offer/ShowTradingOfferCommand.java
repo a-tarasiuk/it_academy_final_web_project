@@ -53,7 +53,7 @@ public class ShowTradingOfferCommand implements Command {
                     content.putRequestAttribute(EMPLOYEE_ID, currentEmployeeId);
                 }
 
-                page = PagePath.TRADING;
+                page = PagePath.ACCOUNT_TRADING;
             } else {
                 page = PagePath.OPEN_OFFERS;
             }

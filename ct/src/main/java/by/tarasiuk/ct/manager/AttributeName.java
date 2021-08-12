@@ -37,6 +37,7 @@ public final class AttributeName {
     /**
      * Company attributes from JSP page.
      */
+    public static final String COMPANY = "company";
     public static final String COMPANY_ID = "company_id";
     public static final String COMPANY_NAME = "company_name";
     public static final String COMPANY_ADDRESS = "company_address";
@@ -69,9 +70,11 @@ public final class AttributeName {
     /**
      * Offer attributes.
      */
+    public static final String TRADING = "trading";
     public static final String TRADING_FREIGHT = "trading_freight";
-    public static final String TRADING_LIST = "trading_list";
     public static final String TRADING_MAP = "trading_map";
+    public static final String TRADING_ID = "trading_id";
+    public static final String TRADING_STATUS = "trading_status";
 
     /**
      * Message attributes from JSP page.

@@ -5,6 +5,7 @@
 
 <fmt:setLocale value="${sessionScope.locale}" scope="session"/>
 <fmt:setBundle basename="locale"/>
+<jsp:useBean id="offer" scope="request" type="by.tarasiuk.ct.model.entity.impl.Offer"/>
 
 <html>
     <head>
@@ -36,24 +37,50 @@
                             <fmt:message key="offer.viewer"/>
                         </div>
 
-                        <form id="ow-buttons" action="controller" method="post">
-                            <input type="hidden" name="command" value="close_offer">
+                        <c:if test="${offer.status == 'OPEN'}">
+                            <div id="ow-buttons">
+                                <form action="controller" method="post">
+                                    <input type="hidden" name="command" value="show_offer_editor">
 
-                            <button type="submit" class="btn-simple btn-red" name="offer_id" value="${offer.id}">
-                                <span class="icon icon-close">&nbsp;</span>
-                                <fmt:message key="offer.deactivate"/>
-                            </button>
-                        </form>
+                                    <button type="submit" class="btn-simple btn-blue" name="offer_id" value="${offer.id}">
+                                        <span class="icon icon-pencil">&nbsp;</span>
+                                        <fmt:message key="offer.edit"/>
+                                    </button>
+                                </form>
+
+                                <form action="controller" method="post">
+                                    <input type="hidden" name="command" value="deactivate_offer">
+
+                                    <button type="submit" class="btn-simple btn-red" name="offer_id" value="${offer.id}">
+                                        <span class="icon icon-close">&nbsp;</span>
+                                        <fmt:message key="offer.deactivate"/>
+                                    </button>
+                                </form>
+                            </div>
+                        </c:if>
                     </div>
 
                     <div id="mr-down">
                         <div class="sub-title">
                             <span class="icon icon-circle" style="color: dodgerblue">&nbsp;</span>
-                            <fmt:message key="offer.change"/>
+                            <fmt:message key="offer.applyFreight"/>
                         </div>
 
                         <ct:account_offer_viewer/>
-                        <ct:trading_history/>
+
+                        <div class="title">
+                            <fmt:message key="tradings.actions"/>
+                        </div>
+
+                        <div class="sub-title">
+                            <span class="icon icon-circle" style="color: dodgerblue">&nbsp;</span>
+                            <fmt:message key="tradings.info"/>
+                        </div>
+
+                        <form style="display: flex; width: inherit" action="controller" method="post">
+                            <input type="hidden" name="command" value="show_trading_viewer">
+                            <ct:trading_action/>
+                        </form>
                     </div>
                 </div>
             </div>

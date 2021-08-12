@@ -39,16 +39,16 @@
                         <form id="ow-buttons" action="controller" method="get">
                             <input type="hidden" name="command" value="show_account_tradings">
 
-                            <button type="submit" class="btn-simple btn-green">
+                            <button type="submit" class="btn-simple btn-blue">
                                 <fmt:message key="tradings.allMy"/>
                             </button>
 
-                            <button type="submit" name="offer_status" value="open" class="btn-simple btn-green">
-                                <fmt:message key="tradings.open"/>
+                            <button type="submit" name="trading_status" value="accepted" class="btn-simple btn-blue">
+                                <fmt:message key="tradings.accepted"/>
                             </button>
 
-                            <button type="submit" name="offer_status" value="closed" class="btn-simple btn-green">
-                                <fmt:message key="tradings.closed"/>
+                            <button type="submit" name="trading_status" value="not_accepted" class="btn-simple btn-blue">
+                                <fmt:message key="tradings.notAccepted"/>
                             </button>
                         </form>
                     </div>

@@ -39,7 +39,6 @@ public class OfferViewerTag extends TagSupport {
         HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
 
         Offer offer = (Offer) request.getAttribute(OFFER);
-        System.out.println("YES:" + offer);
         String titleCompany = MessageManager.findMassage(OFFER_COMPANY_NAME, locale);
         String titleProductName = MessageManager.findMassage(OFFER_PRODUCT_NAME, locale);
         String titleProductWeight = MessageManager.findMassage(OFFER_PRODUCT_WEIGHT, locale);

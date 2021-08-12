@@ -23,7 +23,6 @@ import static by.tarasiuk.ct.manager.MessageKey.OFFER_PRODUCT_NAME;
 import static by.tarasiuk.ct.manager.MessageKey.OFFER_PRODUCT_VOLUME;
 import static by.tarasiuk.ct.manager.MessageKey.OFFER_PRODUCT_WEIGHT;
 import static by.tarasiuk.ct.manager.MessageKey.OFFER_STATUS;
-import static by.tarasiuk.ct.manager.MessageKey.OFFER_TON;
 
 public class AccountOfferListTag extends TagSupport {
     private static final long serialVersionUID = -5150821270017826128L;
@@ -45,7 +44,6 @@ public class AccountOfferListTag extends TagSupport {
         String titleCreationDate = MessageManager.findMassage(OFFER_CREATION_DATE, locale);
         String titleFreight = MessageManager.findMassage(OFFER_FREIGHT, locale);
         String titleStatus = MessageManager.findMassage(OFFER_STATUS, locale);
-        String titleTon = MessageManager.findMassage(OFFER_TON, locale);
 
         try {
             StringBuilder table = new StringBuilder("<form class=\"table\" action=\"controller\" method=\"get\">")
@@ -53,11 +51,11 @@ public class AccountOfferListTag extends TagSupport {
                     .append("<div class=\"table-row\">")
                     .append("<div class=\"table-header\">").append(UNICODE_INDEX_NUMBER).append("</div>")
                     .append("<div class=\"table-header\">").append(titleAddress).append("</div>")
-                    .append("<div class=\"table-header\">").append(titleProductWeight).append("&nbsp(").append(titleTon).append(")").append("</div>")
+                    .append("<div class=\"table-header\">").append(titleProductWeight).append("</div>")
                     .append("<div class=\"table-header\">").append(titleProductVolume).append("</div>")
                     .append("<div class=\"table-header\">").append(titleProductName).append("</div>")
                     .append("<div class=\"table-header\">").append(titleCreationDate).append("</div>")
-                    .append("<div class=\"table-header\">").append(titleFreight).append("\n&#36;").append("</div>")
+                    .append("<div class=\"table-header\">").append(titleFreight).append("</div>")
                     .append("<div class=\"table-header\">").append(titleStatus).append("</div>")
                     .append("</div>");
 
@@ -85,17 +83,17 @@ public class AccountOfferListTag extends TagSupport {
 
                     switch (offerStatus) {
                         case OPEN:
-                            table.append("<div class=\"table-data bc-green\">");
+                            table.append("<div class=\"table-data bc-green\"><b>");
                             break;
                         case CLOSED:
-                            table.append("<div class=\"table-data bc-red\">");
+                            table.append("<div class=\"table-data bc-red\"><b>");
                             break;
                         default:
                             LOGGER.warn("Nonexistent constant '{}' in '{}'.", offerStatus, offerStatus.getDeclaringClass());
                             throw new EnumConstantNotPresentException(offerStatus.getClass(), offerStatus.toString()); //fixme Need an exception?
                     }
 
-                    table.append(offer.getStatus()).append("</div>")
+                    table.append(offer.getStatus()).append("</b></div>")
                             .append("</a>");
                 }
             }

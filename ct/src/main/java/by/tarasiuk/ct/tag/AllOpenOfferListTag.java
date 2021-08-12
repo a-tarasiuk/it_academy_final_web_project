@@ -1,13 +1,13 @@
 package by.tarasiuk.ct.tag;
 
 import by.tarasiuk.ct.exception.ServiceException;
+import by.tarasiuk.ct.manager.AttributeName;
 import by.tarasiuk.ct.model.entity.impl.Company;
 import by.tarasiuk.ct.model.entity.impl.Employee;
 import by.tarasiuk.ct.model.entity.impl.Offer;
 import by.tarasiuk.ct.model.service.ServiceProvider;
 import by.tarasiuk.ct.model.service.impl.CompanyServiceImpl;
 import by.tarasiuk.ct.model.service.impl.EmployeeServiceImpl;
-import by.tarasiuk.ct.model.service.impl.OfferServiceImpl;
 import by.tarasiuk.ct.util.MessageManager;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.jsp.JspException;
@@ -31,7 +31,6 @@ import static by.tarasiuk.ct.manager.MessageKey.OFFER_PRODUCT_WEIGHT;
 public class AllOpenOfferListTag extends TagSupport {
     private static final long serialVersionUID = -5150821270017826128L;
     private static final String UNICODE_INDEX_NUMBER = "&#x2116;";
-    private static final OfferServiceImpl offerService = ServiceProvider.getOfferService();
     private static final EmployeeServiceImpl employeeService = ServiceProvider.getEmployeeService();
     private static final CompanyServiceImpl companyService = ServiceProvider.getCompanyService();
 
@@ -40,6 +39,7 @@ public class AllOpenOfferListTag extends TagSupport {
         HttpSession session = pageContext.getSession();
 
         String locale = (String) session.getAttribute(LOCALE);
+        List<Offer> openOfferList = (List<Offer>) pageContext.getRequest().getAttribute(AttributeName.OFFER_LIST);
         String titleCompany = MessageManager.findMassage(OFFER_COMPANY_NAME, locale);
         String titleProductName = MessageManager.findMassage(OFFER_PRODUCT_NAME, locale);
         String titleProductWeight = MessageManager.findMassage(OFFER_PRODUCT_WEIGHT, locale);
@@ -61,16 +61,14 @@ public class AllOpenOfferListTag extends TagSupport {
                         .append("<div class=\"table-header\">").append(titleFreight).append("</div>")
                     .append("</div>");
 
-            List<Offer> offers = offerService.findAllOfferList();
-
-            if(offers == null || offers.isEmpty()) {
+            if(openOfferList == null || openOfferList.isEmpty()) {
                 String titleOffersDoNotExist = MessageManager.findMassage(OFFERS_DO_NOT_EXIST, locale);
-                table.append("<div class=\"table-row\">")
+                table.append("<tr><td>")
                         .append(titleOffersDoNotExist)
-                        .append("</div>");
+                        .append("</td></tr></form>");
             } else {
-                for(int i = 0; i < offers.size(); i++) {
-                    Offer offer = offers.get(i);
+                for(int i = 0; i < openOfferList.size(); i++) {
+                    Offer offer = openOfferList.get(i);
                     long employeeId = offer.getEmployeeId();
                     Optional<Employee> findEmployee = employeeService.findEmployeeById(employeeId);
 

@@ -2,6 +2,7 @@ package by.tarasiuk.ct.model.service.impl;
 
 import by.tarasiuk.ct.exception.DaoException;
 import by.tarasiuk.ct.exception.ServiceException;
+import by.tarasiuk.ct.manager.AttributeName;
 import by.tarasiuk.ct.model.dao.DaoProvider;
 import by.tarasiuk.ct.model.dao.impl.OfferDaoImpl;
 import by.tarasiuk.ct.model.entity.impl.Offer;
@@ -13,6 +14,7 @@ import org.apache.logging.log4j.Logger;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static by.tarasiuk.ct.manager.AttributeName.OFFER_ADDRESS_FROM;
@@ -64,6 +66,43 @@ public class OfferServiceImpl implements OfferService {
         }
     }
 
+    public boolean updateOffer(Map<String, String> offerData) throws ServiceException {
+        long offerId = Long.parseLong(offerData.get(AttributeName.OFFER_ID));
+        String productName = offerData.get(OFFER_PRODUCT_NAME);
+        float productWeight = Float.parseFloat(offerData.get(OFFER_PRODUCT_WEIGHT));
+        float productVolume = Float.parseFloat(offerData.get(OFFER_PRODUCT_VOLUME));
+        String addressFrom = offerData.get(OFFER_ADDRESS_FROM);
+        String addressTo = offerData.get(OFFER_ADDRESS_TO);
+        float offerFreight = Float.parseFloat(offerData.get(OFFER_FREIGHT));
+
+        Offer offer = new Offer();
+        offer.setId(offerId);
+        offer.setProductName(productName);
+        offer.setProductWeight(productWeight);
+        offer.setProductVolume(productVolume);
+        offer.setAddressFrom(addressFrom);
+        offer.setAddressTo(addressTo);
+        offer.setFreight(offerFreight);
+
+        try {
+            return offerDao.updateEntity(offer);
+        } catch (DaoException e) {
+            LOGGER.error("Error while updating offer with ID '{}'.", offerId, e);
+            throw new ServiceException("Error while updating offer with ID '" + offerId +"'.", e);
+        }
+    }
+
+    public boolean closeOfferById(long id) throws ServiceException {
+        Status status = Status.CLOSED;
+
+        try {
+            return offerDao.updateOfferStatusById(id, status);
+        } catch (DaoException e) {
+            LOGGER.error("Error while closing offer with ID '{}'.", id, e);
+            throw new ServiceException("Error while closing offer with ID '" + id +"'.", e);
+        }
+    }
+
     public List<Offer> findAllOfferList() throws ServiceException {
         List<Offer> offers;
         try {
@@ -106,7 +145,7 @@ public class OfferServiceImpl implements OfferService {
         }
     }
 
-    public boolean isValidOfferData(HashMap<String, String> offerData) throws ServiceException {
+    public boolean isValidOfferData(Map<String, String> offerData) throws ServiceException {
         return OfferValidator.isValidOfferData(offerData);
     }
 }

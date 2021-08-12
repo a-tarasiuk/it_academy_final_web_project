@@ -39,15 +39,15 @@
                         <form id="ow-buttons" action="controller" method="get">
                             <input type="hidden" name="command" value="show_account_offers">
 
-                            <button type="submit" class="btn-simple btn-green">
+                            <button type="submit" class="btn-simple btn-blue">
                                 <fmt:message key="offer.allMy"/>
                             </button>
 
-                            <button type="submit" name="offer_status" value="open" class="btn-simple btn-green">
+                            <button type="submit" name="offer_status" value="open" class="btn-simple btn-blue">
                                 <fmt:message key="offer.open"/>
                             </button>
 
-                            <button type="submit" name="offer_status" value="closed" class="btn-simple btn-green">
+                            <button type="submit" name="offer_status" value="closed" class="btn-simple btn-blue">
                                 <fmt:message key="offer.closed"/>
                             </button>
                         </form>

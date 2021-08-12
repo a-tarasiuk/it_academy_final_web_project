@@ -97,8 +97,8 @@ public class CompanyDaoImpl extends BaseDao<Company> implements CompanyDao {
     }
 
     @Override
-    public Company updateEntity(Company entity) throws DaoException {
-        return null;
+    public boolean updateEntity(Company entity) throws DaoException {
+        return true;
     }
 
     @Override

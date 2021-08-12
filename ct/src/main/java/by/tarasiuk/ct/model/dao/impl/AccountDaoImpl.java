@@ -22,6 +22,7 @@ public class AccountDaoImpl extends BaseDao<Account> implements AccountDao {
     private static final AccountDaoImpl instance = new AccountDaoImpl();
     
     private static final String SQL_PROCEDURE_CREATE_ACCOUNT = "{CALL create_account (?, ?, ?, ?, ?, ?, ?, ?)}";
+    private static final String SQL_PROCEDURE_FIND_ACCOUNT_BY_ID = "{CALL find_account_by_id (?)}";
     private static final String SQL_PROCEDURE_FIND_ACCOUNT_BY_LOGIN = "{CALL find_account_by_login (?)}";
     private static final String SQL_PROCEDURE_FIND_PASSWORD_BY_LOGIN = "{CALL find_password_by_login (?)}";
     private static final String SQL_PROCEDURE_FIND_ACCOUNT_BY_EMAIL = "{CALL find_account_by_email (?)}";
@@ -34,9 +35,58 @@ public class AccountDaoImpl extends BaseDao<Account> implements AccountDao {
         return instance;
     }
 
+    private static final class IndexFind {
+        private static final int ACCOUNT_ID = 1;
+        private static final int LOGIN = 1;
+        private static final int EMAIL = 1;
+    }
+
+    private static final class CreateIndex {
+        private static final int FIRST_NAME = 1;
+        private static final int LAST_NAME = 2;
+        private static final int LOGIN = 3;
+        private static final int EMAIL = 4;
+        private static final int REGISTRATION_DATE = 5;
+        private static final int PASSWORD_CODED = 6;
+        private static final int ROLE = 7;
+        private static final int STATUS = 8;
+    }
+
+    private static final class UpdateIndex {
+        private static final int ACCOUNT_ID = 1;
+        private static final int FIRST_NAME = 2;
+        private static final int LAST_NAME = 3;
+        private static final int LOGIN = 4;
+        private static final int EMAIL = 5;
+        private static final int REGISTRATION_DATE = 6;
+        private static final int ROLE = 7;
+        private static final int STATUS = 8;
+    }
+
     @Override
     public Optional<Account> findEntityById(long id) throws DaoException {
-        return Optional.empty(); // todo
+        Connection connection = connectionPool.getConnection();
+        Optional<Account> findAccount;
+
+        try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_ACCOUNT_BY_ID)) {
+            statement.setLong(IndexFind.ACCOUNT_ID, id);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    Account account = AccountDaoBuilder.buildAccount(resultSet);
+                    findAccount = Optional.of(account);
+                } else {
+                    findAccount = Optional.empty();
+                }
+            }
+
+            return findAccount;
+        } catch (SQLException e) {
+            LOGGER.error("Error when performing account search by id '{}'.", id, e);
+            throw new DaoException("Error when performing account search by id '" + id + "'.", e);
+        } finally {
+            closeConnection(connection);
+        }
     }
 
     @Override
@@ -50,8 +100,8 @@ public class AccountDaoImpl extends BaseDao<Account> implements AccountDao {
     }
 
     @Override
-    public Account updateEntity(Account account) {
-        return null;
+    public boolean updateEntity(Account account) {
+        return true;
     }
 
     @Override
@@ -207,32 +257,5 @@ public class AccountDaoImpl extends BaseDao<Account> implements AccountDao {
         } finally {
             closeConnection(connection);
         }
-    }
-
-    private static final class IndexFind {
-        private static final int LOGIN = 1;
-        private static final int EMAIL = 1;
-    }
-
-    private static final class CreateIndex {
-        private static final int FIRST_NAME = 1;
-        private static final int LAST_NAME = 2;
-        private static final int LOGIN = 3;
-        private static final int EMAIL = 4;
-        private static final int REGISTRATION_DATE = 5;
-        private static final int PASSWORD_CODED = 6;
-        private static final int ROLE = 7;
-        private static final int STATUS = 8;
-    }
-
-    private static final class UpdateIndex {
-        private static final int ACCOUNT_ID = 1;
-        private static final int FIRST_NAME = 2;
-        private static final int LAST_NAME = 3;
-        private static final int LOGIN = 4;
-        private static final int EMAIL = 5;
-        private static final int REGISTRATION_DATE = 6;
-        private static final int ROLE = 7;
-        private static final int STATUS = 8;
     }
 }

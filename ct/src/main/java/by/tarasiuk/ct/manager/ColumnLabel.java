@@ -31,6 +31,7 @@ public final class ColumnLabel {
      */
     public static final String TRADING_ID = "trading_id";
     public static final String TRADING_FREIGHT = "trading_freight";
+    public static final String TRADING_STATUS = "trading_status";
 
     /**
      * Columns of the Employees database table.

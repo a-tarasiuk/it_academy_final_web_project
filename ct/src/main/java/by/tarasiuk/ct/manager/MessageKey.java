@@ -12,6 +12,13 @@ public final class MessageKey {
     public static final String CONFIRM_MESSAGE = "form.signUp.confirmEmail";
 
     /**
+     * For all queries
+     */
+    public static final String BUTTON_SUBMIT = "button.label.submit";
+    public static final String BUTTON_EDIT = "button.label.edit";
+    public static final String BUTTON_APPLY = "button.label.apply";
+
+    /**
      * Activate account
      */
     public static final String ACCOUNT_EMAIL_NOT_EXIST = "message.notExist.email";
@@ -51,7 +58,7 @@ public final class MessageKey {
     public static final String OFFER_ADDRESS_FROM = "offer.addressFrom";
     public static final String OFFER_ADDRESS_TO = "offer.addressTo";
     public static final String OFFER_CREATION_DATE = "offer.table.creationDate";
-    public static final String OFFER_FREIGHT = "offer.table.freight";
+    public static final String OFFER_FREIGHT = "offer.freight";
     public static final String OFFER_MY_FREIGHT = "offer.table.myFreight";
     public static final String OFFERS_DO_NOT_EXIST = "offer.table.doNotExist";
     public static final String OFFER_STATUS = "offer.status";
@@ -83,8 +90,9 @@ public final class MessageKey {
     public static final String MY_TRADINGS = "tradings.my";
     public static final String TRADING_HISTORY = "trading.history";
     public static final String TRADINGS_EMPTY = "tradings.list.empty";
-    public static final String TRADINGS_LIMITATION = "tradings.limitation";
     public static final String TRADINGS_DO_NOT_EXIST = "tradings.table.doNotExist";
+    public static final String TRADINGS_STATUS = "tradings.table.status";
+    public static final String TRADINGS_ACTION = "tradings.table.action";
 
     /**
      * Placeholders

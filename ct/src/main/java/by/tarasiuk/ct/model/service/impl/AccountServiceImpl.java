@@ -90,6 +90,22 @@ public class AccountServiceImpl implements AccountService {
         EmailSender.sendActivationEmail(locale, firstName, emailTo, token);
     }
 
+    public Optional<Account> findAccountById(long accountId) throws ServiceException {
+        Optional<Account> optionalAccount;
+
+        try {
+            optionalAccount = accountDao.findEntityById(accountId);
+            LOGGER.info(optionalAccount.isPresent()
+                    ? "Successfully was find account by id '{}'."
+                    : "Account with id '{}' not found in the database.", accountId);
+        } catch (DaoException e) {
+            LOGGER.error("Error when searching for an account by id '{}'.", accountId, e);
+            throw new ServiceException("Error when searching for an account by id '" + accountId + "'.", e);
+        }
+
+        return optionalAccount;
+    }
+
     @Override
     public Optional<Account> findAccountByEmail(String email) throws ServiceException {
         Optional<Account> optionalAccount;

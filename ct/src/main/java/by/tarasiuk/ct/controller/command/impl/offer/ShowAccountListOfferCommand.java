@@ -74,7 +74,7 @@ public class ShowAccountListOfferCommand implements Command {
             page = PagePath.ACCOUNT_OFFERS;
         } catch (ServiceException e) {
             LOGGER.error("Failed to process the command '{}'.", CommandType.SHOW_ACCOUNT_OFFERS, e);
-            page = PagePath.TRADING;
+            page = PagePath.ACCOUNT_TRADING;
         }
 
         return page;

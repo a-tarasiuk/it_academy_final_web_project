@@ -9,6 +9,12 @@ public class Trading implements Entity {
     long offerId;
     long employeeId;
     float freight;
+    Status status;
+
+    public enum Status {
+        ACCEPTED,
+        NOT_ACCEPTED,
+    }
 
     public long getId() {
         return id;
@@ -42,6 +48,14 @@ public class Trading implements Entity {
         this.freight = freight;
     }
 
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Trading{");
@@ -49,6 +63,7 @@ public class Trading implements Entity {
         sb.append(", offerId=").append(offerId);
         sb.append(", employeeId=").append(employeeId);
         sb.append(", freight=").append(freight);
+        sb.append(", status=").append(status);
         sb.append('}');
         return sb.toString();
     }

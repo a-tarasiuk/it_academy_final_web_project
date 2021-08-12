@@ -2,6 +2,7 @@ package by.tarasiuk.ct.tag;
 
 import by.tarasiuk.ct.manager.AttributeName;
 import by.tarasiuk.ct.model.entity.impl.Offer;
+import by.tarasiuk.ct.model.entity.impl.Trading;
 import by.tarasiuk.ct.util.MessageManager;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -24,9 +25,8 @@ import static by.tarasiuk.ct.manager.MessageKey.OFFER_MY_FREIGHT;
 import static by.tarasiuk.ct.manager.MessageKey.OFFER_PRODUCT_NAME;
 import static by.tarasiuk.ct.manager.MessageKey.OFFER_PRODUCT_VOLUME;
 import static by.tarasiuk.ct.manager.MessageKey.OFFER_PRODUCT_WEIGHT;
-import static by.tarasiuk.ct.manager.MessageKey.OFFER_STATUS;
-import static by.tarasiuk.ct.manager.MessageKey.OFFER_TON;
 import static by.tarasiuk.ct.manager.MessageKey.TRADINGS_DO_NOT_EXIST;
+import static by.tarasiuk.ct.manager.MessageKey.TRADINGS_STATUS;
 
 public class AccountTradingListTag extends TagSupport {
     private static final long serialVersionUID = -5150821270017826128L;
@@ -39,7 +39,7 @@ public class AccountTradingListTag extends TagSupport {
         HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
 
         String locale = (String) session.getAttribute(LOCALE);
-        Map<Offer, Float> tradingList = (Map<Offer, Float>) request.getAttribute(AttributeName.TRADING_MAP);
+        Map<Offer, Trading> tradingList = (Map<Offer, Trading>) request.getAttribute(AttributeName.TRADING_MAP);
 
         String titleProductName = MessageManager.findMassage(OFFER_PRODUCT_NAME, locale);
         String titleCompanyName = MessageManager.findMassage(OFFER_COMPANY_NAME, locale);
@@ -49,8 +49,7 @@ public class AccountTradingListTag extends TagSupport {
         String titleCreationDate = MessageManager.findMassage(OFFER_CREATION_DATE, locale);
         String titleFreight = MessageManager.findMassage(OFFER_FREIGHT, locale);
         String titleMyFreight = MessageManager.findMassage(OFFER_MY_FREIGHT, locale);
-        String titleStatus = MessageManager.findMassage(OFFER_STATUS, locale);
-        String titleTon = MessageManager.findMassage(OFFER_TON, locale);
+        String titleTradingStatus = MessageManager.findMassage(TRADINGS_STATUS, locale);
 
         try {
             StringBuilder table = new StringBuilder("<table>")
@@ -58,13 +57,13 @@ public class AccountTradingListTag extends TagSupport {
                     .append("<th>").append(UNICODE_INDEX_NUMBER).append("</th>")
                     .append("<th>").append(titleCompanyName).append("</th>")
                     .append("<th>").append(titleAddress).append("</th>")
-                    .append("<th>").append(titleProductWeight).append("&nbsp(").append(titleTon).append(")").append("</th>")
+                    .append("<th>").append(titleProductWeight).append("</th>")
                     .append("<th>").append(titleProductVolume).append("</th>")
                     .append("<th>").append(titleProductName).append("</th>")
                     .append("<th>").append(titleCreationDate).append("</th>")
                     .append("<th>").append(titleFreight).append("\n&#36;").append("</th>")
                     .append("<th>").append(titleMyFreight).append("\n&#36;").append("</th>")
-                    .append("<th>").append(titleStatus).append("</th>")
+                    .append("<th>").append(titleTradingStatus).append("</th>")
                     .append("</tr>");
 
             if(tradingList == null || tradingList.isEmpty()) {
@@ -74,12 +73,14 @@ public class AccountTradingListTag extends TagSupport {
                         .append(titleTradingsDoNotExist)
                         .append("</td></tr>");
             } else {
-                Set<Map.Entry<Offer, Float>> set = tradingList.entrySet();
+                Set<Map.Entry<Offer, Trading>> set = tradingList.entrySet();
 
                 int counter = 0;
-                for (Map.Entry<Offer, Float> current : set) {
+                for (Map.Entry<Offer, Trading> current : set) {
                     Offer offer = current.getKey();
-                    float freight = current.getValue();
+                    Trading trading = current.getValue();
+                    float tradingFreight = trading.getFreight();
+                    Trading.Status tradingStatus = trading.getStatus();
 
                     table.append("<tr>")
                             .append("<td>").append(++counter).append("</td>")
@@ -90,25 +91,22 @@ public class AccountTradingListTag extends TagSupport {
                             .append("<td>").append(offer.getProductName()).append("</td>")
                             .append("<td>").append(offer.getCreationDate()).append("</td>")
                             .append("<td>").append(offer.getFreight()).append("</td>")
-                            .append("<td class=\"block-colour-grey\"><b>").append(freight).append("</b></td>");
+                            .append("<td class=\"block-colour-grey\"><b>").append(tradingFreight).append("</b></td>");
 
-                    Offer.Status offerStatus = offer.getStatus();
-
-                    switch (offerStatus) {
-                        case OPEN:
-                            table.append("<td class=\"bc-green\">");
+                    switch (tradingStatus) {
+                        case ACCEPTED:
+                            table.append("<td class=\"bc-green\"><b>");
                             break;
-                        case CLOSED:
-                            table.append("<td class=\"bc-red\">");
+                        case NOT_ACCEPTED:
+                            table.append("<td class=\"bc-red\"><b>");
                             break;
                         default:
-                            LOGGER.warn("Nonexistent constant '{}' in '{}'.", offerStatus, offerStatus.getDeclaringClass());
-                            throw new EnumConstantNotPresentException(offerStatus.getClass(), offerStatus.toString()); //fixme Need an exception?
+                            LOGGER.warn("Nonexistent constant '{}' in '{}'.", tradingStatus, tradingStatus.getDeclaringClass());
+                            throw new EnumConstantNotPresentException(tradingStatus.getClass(), tradingStatus.toString()); //fixme Need an exception?
                     }
 
-                    table.append(offer.getStatus()).append("</td>")
+                    table.append(tradingStatus).append("</b></td>")
                             .append("</tr>");
-
                 }
             }
 

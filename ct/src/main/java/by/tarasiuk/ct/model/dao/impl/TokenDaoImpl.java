@@ -127,8 +127,8 @@ public class TokenDaoImpl extends BaseDao<Token> implements TokenDao {
     }
 
     @Override
-    public Token updateEntity(Token entity) throws DaoException {
-        return null;
+    public boolean updateEntity(Token entity) throws DaoException {
+        return true;
     }
 
     @Override

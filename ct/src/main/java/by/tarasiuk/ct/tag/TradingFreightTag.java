@@ -24,11 +24,10 @@ public class TradingFreightTag extends TagSupport {
         HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
         String locale = (String) session.getAttribute(LOCALE);
 
-        String value = (String) request.getAttribute(AttributeName.TRADING_FREIGHT);
         String title = MessageManager.findMassage(MessageKey.FREIGHT_OFFER, locale);
         String placeholder = MessageManager.findMassage(MessageKey.PLACEHOLDER_OFFER_FREIGHT, locale);
         String description = MessageManager.findMassage(MessageKey.DESCRIPTION_TRADING_FREIGHT, locale);
-        String limitations = MessageManager.findMassage(MessageKey.TRADINGS_LIMITATION, locale);
+        String button = MessageManager.findMassage(MessageKey.BUTTON_SUBMIT, locale);
 
         Offer offer = (Offer) request.getAttribute(OFFER);
         long offerId = offer.getId();
@@ -38,11 +37,10 @@ public class TradingFreightTag extends TagSupport {
         if(creatorEmployeeId != currentEmployeeId) {
             StringBuilder table = new StringBuilder("<input type=\"hidden\" name=\"offer_id\" value=\"").append(offerId).append("\" form=\"trading\">")
                     .append("<div class=\"title\">").append(title).append("</div>")
-                    .append("<div class=\"sub-title\">").append(limitations).append("</div>")
                     .append("<form id=\"trading\" class=\"trading\" action=\"controller\" method=\"get\">")
                     .append("<div class=\"trading-section\">&#x24;</div>")
-                    .append("<div class=\"trading-section\"><input type=\"text\" id=\"freight\" name=\"trading_freight\" value=\"").append(value != null ? value : "").append("\" placeholder=\"").append(placeholder).append("\" oninput=\"validateFreight()\" autofocus required></div>")
-                    .append("<div class=\"trading-section\"><button class=\"btn-simple btn-green\" id=\"confirm\" name=\"command\" value=\"create_trading\" type=\"submit\">Submit</button></div>")
+                    .append("<div class=\"trading-section\"><input type=\"text\" id=\"freight\" name=\"trading_freight\"").append("\" placeholder=\"").append(placeholder).append("\" oninput=\"validateFreight()\" autofocus required></div>")
+                    .append("<div class=\"trading-section\"><button class=\"btn-simple btn-green\" id=\"confirm\" name=\"command\" value=\"create_trading\" type=\"submit\">").append(button).append("</button></div>")
                     .append("</form>")
                     .append("<label id=\"description_freight\" class=\"description\">").append(description).append("</label>");
             try {

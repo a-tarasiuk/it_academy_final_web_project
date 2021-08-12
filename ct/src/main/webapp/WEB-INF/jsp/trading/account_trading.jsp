@@ -41,6 +41,11 @@
                     </div>
 
                     <div id="mr-down">
+                        <div class="sub-title">
+                            <span class="icon icon-info-circle" style="color: dodgerblue">&nbsp;</span>
+                            <fmt:message key="tradings.limitation"/>
+                        </div>
+
                         <ct:offer_viewer/>
                         <ct:trading_freight/>
 

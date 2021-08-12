@@ -11,6 +11,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.List;
+import java.util.Optional;
 
 public class TradingServiceImpl implements TradingService {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -29,6 +30,7 @@ public class TradingServiceImpl implements TradingService {
         trading.setOfferId(offerId);
         trading.setEmployeeId(employeeId);
         trading.setFreight(freight);
+        trading.setStatus(Trading.Status.NOT_ACCEPTED);
 
         try {
             return tradingDao.createEntity(trading);
@@ -58,6 +60,26 @@ public class TradingServiceImpl implements TradingService {
             throw new ServiceException("Error while find all tradings by employee id '" + employeeId + "'.", e);
         }
         return tradings;
+    }
+
+    public Optional<Trading> findTradingById(long tradingId) throws ServiceException {
+        try {
+            return tradingDao.findEntityById(tradingId);
+        } catch (DaoException e) {
+            LOGGER.error("Error while find trading by id '{}'.", tradingId, e);
+            throw new ServiceException("Error while find trading by id '" + tradingId + "'.", e);
+        }
+    }
+
+    public boolean acceptTradingById(long tradingId) throws ServiceException {
+        Trading.Status status = Trading.Status.ACCEPTED;
+
+        try {
+            return tradingDao.updateTradingStatusById(tradingId, status);
+        } catch (DaoException e) {
+            LOGGER.error("Error while find trading by id '{}'.", tradingId, e);
+            throw new ServiceException("Error while find trading by id '" + tradingId + "'.", e);
+        }
     }
 
     public boolean isValidFreight(String freight) throws ServiceException {

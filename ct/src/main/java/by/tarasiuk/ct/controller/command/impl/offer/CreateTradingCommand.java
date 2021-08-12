@@ -4,6 +4,7 @@ import by.tarasiuk.ct.controller.RequestContent;
 import by.tarasiuk.ct.controller.command.Command;
 import by.tarasiuk.ct.controller.command.CommandType;
 import by.tarasiuk.ct.exception.ServiceException;
+import by.tarasiuk.ct.manager.AttributeName;
 import by.tarasiuk.ct.manager.PagePath;
 import by.tarasiuk.ct.model.entity.impl.Account;
 import by.tarasiuk.ct.model.entity.impl.Employee;
@@ -17,12 +18,10 @@ import java.util.HashMap;
 import java.util.Optional;
 
 import static by.tarasiuk.ct.manager.AttributeName.ACCOUNT;
-import static by.tarasiuk.ct.manager.AttributeName.INFORMATION_MESSAGE;
 import static by.tarasiuk.ct.manager.AttributeName.MESSAGE_INCORRECT_TRADING_FREIGHT;
 import static by.tarasiuk.ct.manager.AttributeName.MESSAGE_QUERY_ERROR;
 import static by.tarasiuk.ct.manager.AttributeName.OFFER_ID;
 import static by.tarasiuk.ct.manager.AttributeName.TRADING_FREIGHT;
-import static by.tarasiuk.ct.manager.MessageKey.TRADING_SUCCESSFULLY_CREATED;
 
 public class CreateTradingCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -41,7 +40,7 @@ public class CreateTradingCommand implements Command {
             if(!tradingService.isValidFreight(tradingFreight)) {
                 content.putRequestAttribute(TRADING_FREIGHT, tradingFreight);
                 content.putRequestAttribute(MESSAGE_INCORRECT_TRADING_FREIGHT, true);
-                page = PagePath.TRADING;
+                page = PagePath.ACCOUNT_TRADING;
             } else {
                 try {
                     Account account = (Account) sessionAttributes.get(ACCOUNT);
@@ -54,20 +53,20 @@ public class CreateTradingCommand implements Command {
                         long employeeId = employee.getId();
                         long freight = Long.parseLong(tradingFreight);
                         tradingService.createTrading(offerId, employeeId, freight);
-                        content.putRequestAttribute(INFORMATION_MESSAGE, TRADING_SUCCESSFULLY_CREATED);
+                        content.putRequestAttribute(AttributeName.OFFER_ID, offerId);
                     }
 
-                    page = PagePath.INFO;
+                    page = PagePath.TRADING_CREATE_INFO;
                 } catch (ServiceException e) {
                     LOGGER.warn("Can't create trading: '{}'.", requestParameters);
                     content.putRequestAttributes(requestParameters);
                     content.putRequestAttribute(MESSAGE_QUERY_ERROR, true);
-                    page = PagePath.TRADING;
+                    page = PagePath.ACCOUNT_TRADING;
                 }
             }
         } catch (ServiceException e) {
             LOGGER.error("Failed to process the command '{}'.", CommandType.CREATE_TRADING, e);
-            page = PagePath.TRADING;
+            page = PagePath.ACCOUNT_TRADING;
         }
 
         return page;
