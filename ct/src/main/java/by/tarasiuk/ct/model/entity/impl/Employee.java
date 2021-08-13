@@ -34,6 +34,32 @@ public class Employee implements Entity {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (!(obj instanceof Employee)) {
+            return false;
+        }
+
+        Employee employee = (Employee) obj;
+
+        return id == employee.id && accountId == employee.getAccountId() && companyId == employee.getCompanyId();
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 17;
+
+        result = 31 * result + Long.hashCode(id);
+        result = 31 * result + Long.hashCode(accountId);
+        result = 31 * result + Long.hashCode(companyId);
+
+        return result;
+    }
+
+    @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Employee{");
         sb.append("id=").append(id);

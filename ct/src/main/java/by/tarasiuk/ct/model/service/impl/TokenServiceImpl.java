@@ -60,13 +60,16 @@ public class TokenServiceImpl implements TokenService {
         return optionalToken;
     }
 
+    @Override
     public void changeTokenStatus(Token token, Token.Status status) throws ServiceException {
         token.setStatus(status);
         updateToken(token);
     }
 
+    @Override
     public boolean updateToken(Token token) throws ServiceException {
         boolean result;
+
         try {
             result = tokenDao.updateToken(token);
             LOGGER.info(result

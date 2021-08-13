@@ -105,6 +105,43 @@ public class Offer implements Entity {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (!(obj instanceof Offer)) {
+            return false;
+        }
+
+        Offer offer = (Offer) obj;
+
+        return id == offer.id && employeeId == offer.employeeId && productName.equals(offer.productName)
+                && productWeight == offer.productWeight && productVolume == offer.productVolume
+                && addressFrom.equals(offer.addressFrom) && addressTo.equals(offer.addressTo)
+                && freight == offer.freight && creationDate.equals(offer.creationDate)
+                && status.name().equals(offer.status.name());
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 17;
+
+        result = 31 * result + Long.hashCode(id);
+        result = 31 * result + Long.hashCode(employeeId);
+        result = 31 * result + ((productName != null) ? productName.hashCode() : 0);
+        result = 31 * result + Float.hashCode(productWeight);
+        result = 31 * result + Float.hashCode(productVolume);
+        result = 31 * result + ((addressFrom != null) ? addressFrom.hashCode() : 0);
+        result = 31 * result + ((addressTo != null) ? addressTo.hashCode() : 0);
+        result = 31 * result + Float.hashCode(freight);
+        result = 31 * result + creationDate.hashCode();
+        result = 31 * result + ((status != null) ? status.hashCode() : 0);
+
+        return result;
+    }
+
+    @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Offer{");
         sb.append("id=").append(id);

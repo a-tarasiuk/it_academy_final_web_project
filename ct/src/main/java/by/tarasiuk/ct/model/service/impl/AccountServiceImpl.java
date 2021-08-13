@@ -140,11 +140,13 @@ public class AccountServiceImpl implements AccountService {
         return optionalAccount;
     }
 
+    @Override
     public void changeAccountStatus(Account account, Account.Status status) throws ServiceException {
         account.setStatus(status);
         updateAccount(account);
     }
 
+    @Override
     public void updateAccount(Account account) throws ServiceException {
         boolean result;
 

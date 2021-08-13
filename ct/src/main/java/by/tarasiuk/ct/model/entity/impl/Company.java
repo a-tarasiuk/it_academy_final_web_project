@@ -43,6 +43,34 @@ public class Company implements Entity {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (!(obj instanceof Company)) {
+            return false;
+        }
+
+        Company company = (Company) obj;
+
+        return id == company.id && name.equals(company.name) && address.equals(company.address)
+                && phoneNumber.equals(company.phoneNumber);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 17;
+
+        result = 31 * result + Long.hashCode(id);
+        result = 31 * result + ((name != null) ? name.hashCode() : 0);
+        result = 31 * result + ((name != null) ? address.hashCode() : 0);
+        result = 31 * result + ((name != null) ? phoneNumber.hashCode() : 0);
+
+        return result;
+    }
+
+    @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Company{");
         sb.append("id=").append(id);

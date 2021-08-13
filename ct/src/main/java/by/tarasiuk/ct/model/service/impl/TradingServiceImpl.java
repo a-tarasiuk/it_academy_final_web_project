@@ -25,6 +25,7 @@ public class TradingServiceImpl implements TradingService {
         return instance;
     }
 
+    @Override
     public boolean createTrading(long offerId, long employeeId, float freight) throws ServiceException {
         Trading trading = new Trading();
         trading.setOfferId(offerId);
@@ -40,6 +41,7 @@ public class TradingServiceImpl implements TradingService {
         }
     }
 
+    @Override
     public List<Trading> findListTradingsByOfferId(long offerId) throws ServiceException {
         List<Trading> tradings;
         try {
@@ -62,6 +64,7 @@ public class TradingServiceImpl implements TradingService {
         return tradings;
     }
 
+    @Override
     public Optional<Trading> findTradingById(long tradingId) throws ServiceException {
         try {
             return tradingDao.findEntityById(tradingId);
@@ -71,6 +74,7 @@ public class TradingServiceImpl implements TradingService {
         }
     }
 
+    @Override
     public boolean acceptTradingById(long tradingId) throws ServiceException {
         Trading.Status status = Trading.Status.ACCEPTED;
 
@@ -82,6 +86,7 @@ public class TradingServiceImpl implements TradingService {
         }
     }
 
+    @Override
     public boolean isValidFreight(String freight) throws ServiceException {
         return TradingValidator.isValidFreight(freight);
     }

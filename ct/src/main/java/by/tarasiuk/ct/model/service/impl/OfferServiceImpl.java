@@ -37,6 +37,7 @@ public class OfferServiceImpl implements OfferService {
         return instance;
     }
 
+    @Override
     public boolean createOffer(long employeeId, HashMap<String, String> offerData) throws ServiceException {
         float productWeight = Float.parseFloat(offerData.get(OFFER_PRODUCT_WEIGHT));
         float productVolume = Float.parseFloat(offerData.get(OFFER_PRODUCT_VOLUME));
@@ -66,6 +67,7 @@ public class OfferServiceImpl implements OfferService {
         }
     }
 
+    @Override
     public boolean updateOffer(Map<String, String> offerData) throws ServiceException {
         long offerId = Long.parseLong(offerData.get(AttributeName.OFFER_ID));
         String productName = offerData.get(OFFER_PRODUCT_NAME);
@@ -92,6 +94,7 @@ public class OfferServiceImpl implements OfferService {
         }
     }
 
+    @Override
     public boolean closeOfferById(long id) throws ServiceException {
         Status status = Status.CLOSED;
 
@@ -103,6 +106,7 @@ public class OfferServiceImpl implements OfferService {
         }
     }
 
+    @Override
     public List<Offer> findAllOfferList() throws ServiceException {
         List<Offer> offers;
         try {
@@ -114,6 +118,7 @@ public class OfferServiceImpl implements OfferService {
         return offers;
     }
 
+    @Override
     public List<Offer> findOpenOfferList() throws ServiceException {
         List<Offer> offers;
         try {
@@ -125,6 +130,7 @@ public class OfferServiceImpl implements OfferService {
         return offers;
     }
 
+    @Override
     public List<Offer> findOfferListByEmployeeId(long employeeId) throws ServiceException {
         List<Offer> offers;
         try {
@@ -136,6 +142,7 @@ public class OfferServiceImpl implements OfferService {
         return offers;
     }
 
+    @Override
     public Optional<Offer> findOfferById(long offerId) throws ServiceException {
         try {
             return offerDao.findEntityById(offerId);
@@ -145,6 +152,7 @@ public class OfferServiceImpl implements OfferService {
         }
     }
 
+    @Override
     public boolean isValidOfferData(Map<String, String> offerData) throws ServiceException {
         return OfferValidator.isValidOfferData(offerData);
     }

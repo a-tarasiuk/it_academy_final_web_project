@@ -61,6 +61,7 @@ public class CompanyServiceImpl implements CompanyService {
         return optionalCompany;
     }
 
+    @Override
     public Optional<Company> findCompanyById(long companyId) throws ServiceException {
         Optional<Company> findCompany;
 

@@ -57,6 +57,35 @@ public class Trading implements Entity {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (!(obj instanceof Trading)) {
+            return false;
+        }
+
+        Trading trading = (Trading) obj;
+
+        return id == trading.id && offerId == trading.offerId && employeeId == trading.employeeId
+                && freight == trading.freight && status.name().equals(trading.status.name());
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 17;
+
+        result = 31 * result + Long.hashCode(id);
+        result = 31 * result + Long.hashCode(offerId);
+        result = 31 * result + Long.hashCode(employeeId);
+        result = 31 * result + Float.hashCode(freight);
+        result = 31 * result + ((status != null) ? status.hashCode() : 0);
+
+        return result;
+    }
+
+    @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Trading{");
         sb.append("id=").append(id);

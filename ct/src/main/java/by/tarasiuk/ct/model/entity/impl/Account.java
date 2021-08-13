@@ -105,7 +105,26 @@ public class Account implements Entity {
 
         Account account = (Account) obj;
 
-        return login != null && login.equals(account.login);
+        return id == account.id && firstName.equals(account.firstName) && lastName.equals(account.lastName)
+                && login.equals(account.login) && email.equals(account.email)
+                && registrationDate.toString().equals(account.registrationDate.toString())
+                && role.name().equals(account.role.name()) && status.name().equals(account.status.name());
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 17;
+
+        result = 31 * result + Long.hashCode(id);
+        result = 31 * result + ((firstName != null) ? firstName.hashCode() : 0);
+        result = 31 * result + ((lastName != null) ? lastName.hashCode() : 0);
+        result = 31 * result + ((login != null) ? login.hashCode() : 0);
+        result = 31 * result + ((email != null) ? email.hashCode() : 0);
+        result = 31 * result + ((registrationDate != null) ? registrationDate.hashCode() : 0);
+        result = 31 * result + ((role != null) ? role.hashCode() : 0);
+        result = 31 * result + ((status != null) ? status.hashCode() : 0);
+
+        return result;
     }
 
     @Override

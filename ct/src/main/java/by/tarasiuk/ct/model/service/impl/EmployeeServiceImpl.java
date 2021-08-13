@@ -23,6 +23,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         return instance;
     }
 
+    @Override
     public boolean createEmployee(long accountId, long companyId) throws ServiceException {
         Employee employee = new Employee();
         employee.setAccountId(accountId);
@@ -36,6 +37,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
     }
 
+    @Override
     public Optional<Employee> findEmployeeByAccountId(long accountId) throws ServiceException {
         Optional<Employee> findEmployee;
 
@@ -52,6 +54,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         return findEmployee;
     }
 
+    @Override
     public Optional<Employee> findEmployeeById(long employeeId) throws ServiceException {
         Optional<Employee> findEmployee;
 
