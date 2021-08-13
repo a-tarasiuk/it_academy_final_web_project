@@ -21,16 +21,20 @@ public class MessageManager {
     public static String findMassage(String key, String locale) {
         String message;
 
-        switch (locale != null ? locale : LOCALE) {
-            case RU_RU:
-                message = ruRu.getString(key);
-                break;
-            case EN_US:
-                message = enUs.getString(key);
-                break;
-            default:
-                message = baseLocale.getString(key);
-                break;
+        try {
+            switch (locale != null ? locale : LOCALE) {
+                case RU_RU:
+                    message = ruRu.getString(key);
+                    break;
+                case EN_US:
+                    message = enUs.getString(key);
+                    break;
+                default:
+                    message = baseLocale.getString(key);
+                    break;
+            }
+        } catch (NullPointerException e) {
+            message = baseLocale.getString(key);
         }
 
         return message;
