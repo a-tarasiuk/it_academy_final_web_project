@@ -1,6 +1,6 @@
 package by.tarasiuk.ct.tag;
 
-import by.tarasiuk.ct.manager.AttributeName;
+import by.tarasiuk.ct.controller.command.AttributeName;
 import by.tarasiuk.ct.model.entity.impl.Offer;
 import by.tarasiuk.ct.util.MessageManager;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,15 +13,15 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 
-import static by.tarasiuk.ct.manager.AttributeName.LOCALE;
-import static by.tarasiuk.ct.manager.MessageKey.OFFER_ADDRESS_FROM;
-import static by.tarasiuk.ct.manager.MessageKey.OFFER_ADDRESS_TO;
-import static by.tarasiuk.ct.manager.MessageKey.OFFER_CREATION_DATE;
-import static by.tarasiuk.ct.manager.MessageKey.OFFER_FREIGHT;
-import static by.tarasiuk.ct.manager.MessageKey.OFFER_PRODUCT_NAME;
-import static by.tarasiuk.ct.manager.MessageKey.OFFER_PRODUCT_VOLUME;
-import static by.tarasiuk.ct.manager.MessageKey.OFFER_PRODUCT_WEIGHT;
-import static by.tarasiuk.ct.manager.MessageKey.OFFER_STATUS;
+import static by.tarasiuk.ct.controller.command.AttributeName.LOCALE;
+import static by.tarasiuk.ct.util.MessageKey.OFFER_ADDRESS_FROM;
+import static by.tarasiuk.ct.util.MessageKey.OFFER_ADDRESS_TO;
+import static by.tarasiuk.ct.util.MessageKey.OFFER_CREATION_DATE;
+import static by.tarasiuk.ct.util.MessageKey.OFFER_FREIGHT;
+import static by.tarasiuk.ct.util.MessageKey.OFFER_PRODUCT_NAME;
+import static by.tarasiuk.ct.util.MessageKey.OFFER_PRODUCT_VOLUME;
+import static by.tarasiuk.ct.util.MessageKey.OFFER_PRODUCT_WEIGHT;
+import static by.tarasiuk.ct.util.MessageKey.OFFER_STATUS;
 
 public class AccountOfferViewerTag extends TagSupport {
     private static final long serialVersionUID = -5150821270017826128L;

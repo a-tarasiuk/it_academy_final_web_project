@@ -16,7 +16,7 @@ import java.util.Optional;
 public class TokenServiceImpl implements TokenService {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final TokenServiceImpl instance = new TokenServiceImpl();
-    private static final TokenDaoImpl tokenDao = DaoProvider.getTokenDao();
+    private final TokenDaoImpl tokenDao = DaoProvider.getTokenDao();
 
     private TokenServiceImpl() {
     }
@@ -44,12 +44,12 @@ public class TokenServiceImpl implements TokenService {
 
     @Override
     public Optional<Token> findTokenByAccount(Account account) throws ServiceException {
-        Optional<Token> optionalToken;
+        Optional<Token> findToken;
         long accountId = account.getId();
 
         try {
-            optionalToken = tokenDao.findTokenByAccountId(accountId);
-            LOGGER.info(optionalToken.isPresent()
+            findToken = tokenDao.findTokenByAccountId(accountId);
+            LOGGER.info(findToken.isPresent()
                     ? "Successfully was find token for account '{}'."
                     : "Token with account id '{}' not found in the database.", account);
         } catch (DaoException e) {
@@ -57,7 +57,7 @@ public class TokenServiceImpl implements TokenService {
             throw new ServiceException("Error when searching an token for account '" + account + "'.", e);
         }
 
-        return optionalToken;
+        return findToken;
     }
 
     @Override

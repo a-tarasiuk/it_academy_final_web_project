@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
 
-import static by.tarasiuk.ct.manager.AttributeName.*;
+import static by.tarasiuk.ct.controller.command.AttributeName.*;
 
 public class CompanyDaoBuilder {
     private static final Logger LOGGER = LogManager.getLogger();

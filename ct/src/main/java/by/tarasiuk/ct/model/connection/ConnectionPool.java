@@ -87,8 +87,7 @@ public class ConnectionPool {
             return false;
         }
 
-        ProxyConnection currentConnection = null;
-
+        ProxyConnection currentConnection;
         try {
             currentConnection = activeProxyConnections.remove(connection) && connection.isValid(DEFAULT_TIMEOUT_SECONDS) ?
                     (ProxyConnection) connection : ConnectionFactory.createConnection();
@@ -97,7 +96,7 @@ public class ConnectionPool {
                 currentConnection.setAutoCommit(true);
             }
 
-            freeProxyConnections.put(currentConnection);   //todo использовать put() вместо offer() - узнать почему
+            freeProxyConnections.put(currentConnection);
         } catch (SQLException e) {
             LOGGER.warn("Timeout period expires before the operation completes.", e);
         } catch (InterruptedException e) {
@@ -105,7 +104,7 @@ public class ConnectionPool {
             Thread.currentThread().interrupt();
         }
 
-        return true;                                    //fixme
+        return true;
     }
 
     public void destroyPool() {

@@ -5,6 +5,7 @@ import org.bouncycastle.util.encoders.Hex;
 
 public class BouncyCastle {
     private static final WhirlpoolDigest messageDigest = new WhirlpoolDigest();
+
     private BouncyCastle() {
     }
 

@@ -1,33 +1,39 @@
 package by.tarasiuk.ct.model.service.impl;
 
-import by.tarasiuk.ct.model.entity.impl.Account;
+import by.tarasiuk.ct.controller.command.AttributeName;
 import by.tarasiuk.ct.exception.DaoException;
 import by.tarasiuk.ct.exception.ServiceException;
 import by.tarasiuk.ct.model.dao.DaoProvider;
-import by.tarasiuk.ct.model.dao.impl.AccountDaoImpl;
-import by.tarasiuk.ct.model.service.AccountService;
 import by.tarasiuk.ct.model.dao.builder.AccountDaoBuilder;
-import by.tarasiuk.ct.util.AccountValidator;
+import by.tarasiuk.ct.model.dao.impl.AccountDaoImpl;
+import by.tarasiuk.ct.model.entity.impl.Account;
+import by.tarasiuk.ct.model.service.AccountService;
 import by.tarasiuk.ct.util.BouncyCastle;
 import by.tarasiuk.ct.util.EmailSender;
+import by.tarasiuk.ct.validator.AccountValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.Map;
 import java.util.Optional;
 
-import static by.tarasiuk.ct.manager.AttributeName.ACCOUNT_PASSWORD;
+import static by.tarasiuk.ct.controller.command.AttributeName.ACCOUNT_PASSWORD;
 
 public class AccountServiceImpl implements AccountService {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final AccountServiceImpl instance = new AccountServiceImpl();
-    private static final AccountDaoImpl accountDao = DaoProvider.getAccountDao();
+    private final AccountDaoImpl accountDao = DaoProvider.getAccountDao();
 
     private AccountServiceImpl() {
     }
 
     public static AccountServiceImpl getInstance() {
         return instance;
+    }
+
+    @Override
+    public boolean validatePersonalAccountData(Map<String, String> accountData) throws ServiceException {
+        return AccountValidator.isValidPersonalAccountData(accountData);
     }
 
     @Override
@@ -42,11 +48,11 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Optional<Account> signIn(String login, String password) throws ServiceException {
-        Optional<Account> optionalAccount;
+        Optional<Account> findAccount;
         try {
-            optionalAccount = accountDao.findAccountByLogin(login);
+            findAccount = accountDao.findAccountByLogin(login);
 
-            if (optionalAccount.isPresent()) {
+            if (findAccount.isPresent()) {
                 LOGGER.info("Account with login '{}' was found in the database.", login);
                 Optional<String> optionalPassword = accountDao.findPasswordByLogin(login);
 
@@ -56,11 +62,11 @@ public class AccountServiceImpl implements AccountService {
 
                     if(!encodedPassword.equals(findPassword)) {
                         LOGGER.info("Incorrect password for login '{}'.", login);
-                        optionalAccount = Optional.empty();
+                        findAccount = Optional.empty();
                     }
                 }
             } else {
-                optionalAccount = Optional.empty();
+                findAccount = Optional.empty();
                 LOGGER.info("Account with login '{}' not found in the database.", login);
             }
         } catch (DaoException e) {
@@ -68,7 +74,7 @@ public class AccountServiceImpl implements AccountService {
             throw new ServiceException("Sign in error for login '" + login + "'.", e);
         }
 
-        return optionalAccount;
+        return findAccount;
     }
 
     @Override
@@ -91,11 +97,11 @@ public class AccountServiceImpl implements AccountService {
     }
 
     public Optional<Account> findAccountById(long accountId) throws ServiceException {
-        Optional<Account> optionalAccount;
+        Optional<Account> findAccount;
 
         try {
-            optionalAccount = accountDao.findEntityById(accountId);
-            LOGGER.info(optionalAccount.isPresent()
+            findAccount = accountDao.findEntityById(accountId);
+            LOGGER.info(findAccount.isPresent()
                     ? "Successfully was find account by id '{}'."
                     : "Account with id '{}' not found in the database.", accountId);
         } catch (DaoException e) {
@@ -103,16 +109,16 @@ public class AccountServiceImpl implements AccountService {
             throw new ServiceException("Error when searching for an account by id '" + accountId + "'.", e);
         }
 
-        return optionalAccount;
+        return findAccount;
     }
 
     @Override
     public Optional<Account> findAccountByEmail(String email) throws ServiceException {
-        Optional<Account> optionalAccount;
+        Optional<Account> findAccount;
 
         try {
-            optionalAccount = accountDao.findAccountByEmail(email);
-            LOGGER.info(optionalAccount.isPresent()
+            findAccount = accountDao.findAccountByEmail(email);
+            LOGGER.info(findAccount.isPresent()
                     ? "Successfully was find account by email '{}'."
                     : "Account with email '{}' not found in the database.", email);
         } catch (DaoException e) {
@@ -120,16 +126,16 @@ public class AccountServiceImpl implements AccountService {
             throw new ServiceException("Error when searching for an account by mail '" + email + "'.", e);
         }
 
-        return optionalAccount;
+        return findAccount;
     }
 
     @Override
     public Optional<Account> findAccountByLogin(String login) throws ServiceException {
-        Optional<Account> optionalAccount;
+        Optional<Account> findAccount;
 
         try {
-            optionalAccount = accountDao.findAccountByLogin(login);
-            LOGGER.info(optionalAccount.isPresent()
+            findAccount = accountDao.findAccountByLogin(login);
+            LOGGER.info(findAccount.isPresent()
                     ? "Successfully was find account by login '{}': {}."
                     : "Account with login '{}' not found in the database.", login);
         } catch (DaoException e) {
@@ -137,27 +143,53 @@ public class AccountServiceImpl implements AccountService {
             throw new ServiceException("Error when searching for an account by login '" + login + "'.", e);
         }
 
-        return optionalAccount;
+        return findAccount;
     }
 
+    //todo сделать by id и двумя методами, если возможно
     @Override
     public void changeAccountStatus(Account account, Account.Status status) throws ServiceException {
         account.setStatus(status);
         updateAccount(account);
     }
 
-    @Override
-    public void updateAccount(Account account) throws ServiceException {
+    public void updatePersonalDataByAccountId(long id, Map<String, String> personalData) throws ServiceException {
+        try {
+            Optional<Account> findAccount = accountDao.findEntityById(id);
+
+            if(findAccount.isPresent()) {
+                String accountFirstName = personalData.get(AttributeName.ACCOUNT_FIRST_NAME);
+                String accountLastName = personalData.get(AttributeName.ACCOUNT_LAST_NAME);
+
+                Account account = findAccount.get();
+                account.setFirstName(accountFirstName);
+                account.setLastName(accountLastName);
+
+                boolean result = updateAccount(account);
+
+                LOGGER.info(result
+                        ? "Successfully was update for account ID '{}' personal data '{}' in the database."
+                        : "Account with ID '{}' doesn't update personal data '{}' in the database.", id, personalData);
+            }
+        } catch (DaoException e) {
+            LOGGER.error("Error when updating personal data '{}' for account with ID '{}'.", personalData, id, e);
+            throw new ServiceException("Error when updating personal data '" + personalData + "' for account with ID '" + id + "'.", e);
+        }
+    }
+
+    private boolean updateAccount(Account account) throws ServiceException {
         boolean result;
 
         try {
-            result = accountDao.updateAccount(account);
+            result = accountDao.updateEntity(account);
             LOGGER.info(result
-                    ? "Successfully was updateEntity account '{}' in the database."
-                    : "Account doesn't updateEntity '{}' in the database.", account);
+                    ? "Successfully was update account '{}' in the database."
+                    : "Account doesn't update account '{}' in the database.", account);
         } catch (DaoException e) {
             LOGGER.error("Error when updating account '{}'.", account, e);
             throw new ServiceException("Error when updating account '" + account + "'.", e);
         }
+
+        return result;
     }
 }

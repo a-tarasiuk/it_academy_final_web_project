@@ -1,4 +1,4 @@
-package by.tarasiuk.ct.manager;
+package by.tarasiuk.ct.controller.command;
 
 public final class PagePath {
     public static final String INDEX = "index.jsp";
@@ -6,6 +6,7 @@ public final class PagePath {
     public static final String SIGN_IN = "/WEB-INF/jsp/sign/sign-in.jsp";
     public static final String SIGN_UP = "/WEB-INF/jsp/sign/sign-up.jsp";
     public static final String INFO = "/WEB-INF/jsp/sign/info.jsp";
+    public static final String ERROR = "/WEB-INF/jsp/error/error.jsp";
     public static final String ACCOUNT_SETTINGS = "/WEB-INF/jsp/account/account_settings.jsp";
     public static final String CREATE_OFFER = "/WEB-INF/jsp/offer/offer_creator.jsp";
     public static final String OFFER_EDITOR = "/WEB-INF/jsp/offer/offer_editor.jsp";

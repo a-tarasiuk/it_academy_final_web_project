@@ -1,6 +1,6 @@
 package by.tarasiuk.ct.tag;
 
-import by.tarasiuk.ct.manager.AttributeName;
+import by.tarasiuk.ct.controller.command.AttributeName;
 import by.tarasiuk.ct.model.entity.impl.Offer;
 import by.tarasiuk.ct.model.entity.impl.Trading;
 import by.tarasiuk.ct.util.MessageManager;
@@ -16,17 +16,17 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.Set;
 
-import static by.tarasiuk.ct.manager.AttributeName.LOCALE;
-import static by.tarasiuk.ct.manager.MessageKey.OFFER_ADDRESS;
-import static by.tarasiuk.ct.manager.MessageKey.OFFER_COMPANY_NAME;
-import static by.tarasiuk.ct.manager.MessageKey.OFFER_CREATION_DATE;
-import static by.tarasiuk.ct.manager.MessageKey.OFFER_FREIGHT;
-import static by.tarasiuk.ct.manager.MessageKey.OFFER_MY_FREIGHT;
-import static by.tarasiuk.ct.manager.MessageKey.OFFER_PRODUCT_NAME;
-import static by.tarasiuk.ct.manager.MessageKey.OFFER_PRODUCT_VOLUME;
-import static by.tarasiuk.ct.manager.MessageKey.OFFER_PRODUCT_WEIGHT;
-import static by.tarasiuk.ct.manager.MessageKey.TRADINGS_DO_NOT_EXIST;
-import static by.tarasiuk.ct.manager.MessageKey.TRADINGS_STATUS;
+import static by.tarasiuk.ct.controller.command.AttributeName.LOCALE;
+import static by.tarasiuk.ct.util.MessageKey.OFFER_ADDRESS;
+import static by.tarasiuk.ct.util.MessageKey.OFFER_COMPANY_NAME;
+import static by.tarasiuk.ct.util.MessageKey.OFFER_CREATION_DATE;
+import static by.tarasiuk.ct.util.MessageKey.OFFER_FREIGHT;
+import static by.tarasiuk.ct.util.MessageKey.OFFER_MY_FREIGHT;
+import static by.tarasiuk.ct.util.MessageKey.OFFER_PRODUCT_NAME;
+import static by.tarasiuk.ct.util.MessageKey.OFFER_PRODUCT_VOLUME;
+import static by.tarasiuk.ct.util.MessageKey.OFFER_PRODUCT_WEIGHT;
+import static by.tarasiuk.ct.util.MessageKey.TRADINGS_DO_NOT_EXIST;
+import static by.tarasiuk.ct.util.MessageKey.TRADINGS_STATUS;
 
 public class AccountTradingListTag extends TagSupport {
     private static final long serialVersionUID = -5150821270017826128L;
@@ -102,7 +102,7 @@ public class AccountTradingListTag extends TagSupport {
                             break;
                         default:
                             LOGGER.warn("Nonexistent constant '{}' in '{}'.", tradingStatus, tradingStatus.getDeclaringClass());
-                            throw new EnumConstantNotPresentException(tradingStatus.getClass(), tradingStatus.toString()); //fixme Need an exception?
+                            throw new EnumConstantNotPresentException(tradingStatus.getClass(), tradingStatus.toString());
                     }
 
                     table.append(tradingStatus).append("</b></td>")

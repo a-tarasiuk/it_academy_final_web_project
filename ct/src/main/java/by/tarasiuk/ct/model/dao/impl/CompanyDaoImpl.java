@@ -49,11 +49,12 @@ public class CompanyDaoImpl extends BaseDao<Company> implements CompanyDao {
         return instance;
     }
 
+    @Override
     public Optional<Company> findEntityByName(String name) throws DaoException {
-        Connection connection = connectionPool.getConnection();
         Optional<Company> findCompany;
 
-        try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_COMPANY_BY_NAME)) {
+        try (Connection connection = connectionPool.getConnection();
+                PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_COMPANY_BY_NAME)) {
             statement.setString(IndexFind.NAME, name);
 
             try (ResultSet result = statement.executeQuery()) {
@@ -69,20 +70,17 @@ public class CompanyDaoImpl extends BaseDao<Company> implements CompanyDao {
         } catch (SQLException e) {
             LOGGER.error("Error when performing company search by name '{}'.", name, e);
             throw new DaoException("Error when performing company search by name '" + name + "'.", e);
-        } finally {
-            closeConnection(connection);
         }
     }
 
     @Override
     public boolean createEntity(Company entity) throws DaoException {
-        Connection connection = connectionPool.getConnection();
-
         String name = entity.getName();
         String address = entity.getAddress();
         String phoneNumber = entity.getPhoneNumber();
 
-        try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_CREATE_COMPANY)) {
+        try (Connection connection = connectionPool.getConnection();
+                PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_CREATE_COMPANY)) {
             statement.setString(IndexCreate.NAME, name);
             statement.setString(IndexCreate.ADDRESS, address);
             statement.setString(IndexCreate.PHONE_NUMBER, phoneNumber);
@@ -94,8 +92,6 @@ public class CompanyDaoImpl extends BaseDao<Company> implements CompanyDao {
         } catch (SQLException e) {
             LOGGER.error("Failed to create company in the database: {}.", entity, e);
             throw new DaoException("Failed to create company in the database: " + entity + ".", e);
-        } finally {
-            closeConnection(connection);
         }
     }
 
@@ -106,14 +102,13 @@ public class CompanyDaoImpl extends BaseDao<Company> implements CompanyDao {
 
     @Override
     public boolean updateEntity(Company entity) throws DaoException {
-        Connection connection = connectionPool.getConnection();
-
         long companyId = entity.getId();
         String companyName = entity.getName();
         String companyAddress = entity.getAddress();
         String companyPhoneNumber = entity.getPhoneNumber();
 
-        try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_UPDATE_COMPANY_BY_ID)) {
+        try (Connection connection = connectionPool.getConnection();
+                PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_UPDATE_COMPANY_BY_ID)) {
             statement.setLong(IndexUpdate.COMPANY_ID, companyId);
             statement.setString(IndexUpdate.COMPANY_NAME, companyName);
             statement.setString(IndexUpdate.COMPANY_ADDRESS, companyAddress);
@@ -126,17 +121,15 @@ public class CompanyDaoImpl extends BaseDao<Company> implements CompanyDao {
         } catch (SQLException e) {
             LOGGER.error("Failed updating company '{}' in the database.", entity, e);
             throw new DaoException("Failed updating company '" + entity + "' in the database.", e);
-        } finally {
-            closeConnection(connection);
         }
     }
 
     @Override
     public Optional<Company> findEntityById(long id) throws DaoException {
-        Connection connection = connectionPool.getConnection();
         Optional<Company> findCompany;
 
-        try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_COMPANY_BY_ID)) {
+        try (Connection connection = connectionPool.getConnection();
+                PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_COMPANY_BY_ID)) {
             statement.setLong(IndexFind.ID, id);
 
             try (ResultSet result = statement.executeQuery()) {
@@ -152,8 +145,6 @@ public class CompanyDaoImpl extends BaseDao<Company> implements CompanyDao {
         } catch (SQLException e) {
             LOGGER.error("Error when performing company search by id '{}'.", id, e);
             throw new DaoException("Error when performing company search by id '" + id + "'.", e);
-        } finally {
-            closeConnection(connection);
         }
     }
 }

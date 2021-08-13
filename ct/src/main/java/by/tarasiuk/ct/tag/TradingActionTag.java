@@ -1,6 +1,6 @@
 package by.tarasiuk.ct.tag;
 
-import by.tarasiuk.ct.manager.AttributeName;
+import by.tarasiuk.ct.controller.command.AttributeName;
 import by.tarasiuk.ct.model.entity.impl.Offer;
 import by.tarasiuk.ct.model.entity.impl.Trading;
 import by.tarasiuk.ct.util.MessageManager;
@@ -13,10 +13,10 @@ import jakarta.servlet.jsp.tagext.TagSupport;
 import java.io.IOException;
 import java.util.Map;
 
-import static by.tarasiuk.ct.manager.AttributeName.LOCALE;
-import static by.tarasiuk.ct.manager.MessageKey.OFFER_COMPANY_NAME;
-import static by.tarasiuk.ct.manager.MessageKey.OFFER_FREIGHT;
-import static by.tarasiuk.ct.manager.MessageKey.TRADINGS_EMPTY;
+import static by.tarasiuk.ct.controller.command.AttributeName.LOCALE;
+import static by.tarasiuk.ct.util.MessageKey.OFFER_COMPANY_NAME;
+import static by.tarasiuk.ct.util.MessageKey.OFFER_FREIGHT;
+import static by.tarasiuk.ct.util.MessageKey.TRADINGS_EMPTY;
 
 public class TradingActionTag extends TagSupport {
     private static final long serialVersionUID = -5150821270017826128L;

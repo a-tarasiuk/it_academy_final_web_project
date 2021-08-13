@@ -1,7 +1,7 @@
 package by.tarasiuk.ct.tag;
 
 import by.tarasiuk.ct.exception.ServiceException;
-import by.tarasiuk.ct.manager.AttributeName;
+import by.tarasiuk.ct.controller.command.AttributeName;
 import by.tarasiuk.ct.model.entity.impl.Account;
 import by.tarasiuk.ct.model.entity.impl.Company;
 import by.tarasiuk.ct.model.entity.impl.Employee;
@@ -18,9 +18,9 @@ import jakarta.servlet.jsp.tagext.TagSupport;
 import java.io.IOException;
 import java.util.Optional;
 
-import static by.tarasiuk.ct.manager.AttributeName.LOCALE;
-import static by.tarasiuk.ct.manager.MessageKey.HEADER_ACCOUNT_INFO;
-import static by.tarasiuk.ct.manager.MessageKey.HEADER_MENU;
+import static by.tarasiuk.ct.controller.command.AttributeName.LOCALE;
+import static by.tarasiuk.ct.util.MessageKey.HEADER_ACCOUNT_INFO;
+import static by.tarasiuk.ct.util.MessageKey.HEADER_MENU;
 
 public class EmployeeInfoTag extends TagSupport {
     private static final long serialVersionUID = -5150821270017826128L;

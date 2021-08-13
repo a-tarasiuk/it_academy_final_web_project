@@ -7,7 +7,7 @@ import by.tarasiuk.ct.model.dao.DaoProvider;
 import by.tarasiuk.ct.model.dao.impl.CompanyDaoImpl;
 import by.tarasiuk.ct.model.service.CompanyService;
 import by.tarasiuk.ct.model.dao.builder.CompanyDaoBuilder;
-import by.tarasiuk.ct.util.CompanyValidator;
+import by.tarasiuk.ct.validator.CompanyValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -17,7 +17,7 @@ import java.util.Optional;
 public class CompanyServiceImpl implements CompanyService {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final CompanyServiceImpl companyService = new CompanyServiceImpl();
-    private static final CompanyDaoImpl companyDao = DaoProvider.getCompanyDao();
+    private final CompanyDaoImpl companyDao = DaoProvider.getCompanyDao();
 
     private CompanyServiceImpl() {
     }
@@ -45,12 +45,12 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public Optional<Company> findCompanyByName(String name) throws ServiceException {
-        Optional<Company> optionalCompany;
+        Optional<Company> findCompany;
 
         try {
-            optionalCompany = companyDao.findEntityByName(name);
+            findCompany = companyDao.findEntityByName(name);
 
-            LOGGER.info(optionalCompany.isPresent()
+            LOGGER.info(findCompany.isPresent()
                     ? "Successfully was find company by name '{}'."
                     : "Company with name '{}' not found in the database.", name);
         } catch (DaoException e) {
@@ -58,7 +58,7 @@ public class CompanyServiceImpl implements CompanyService {
             throw new ServiceException("Error when searching for an company by name '" + name + "'.", e);
         }
 
-        return optionalCompany;
+        return findCompany;
     }
 
     @Override

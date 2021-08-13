@@ -1,15 +1,15 @@
 package by.tarasiuk.ct.model.dao.builder;
 
-import by.tarasiuk.ct.manager.ColumnLabel;
+import by.tarasiuk.ct.model.dao.ColumnLabel;
 import by.tarasiuk.ct.model.entity.impl.Trading;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static by.tarasiuk.ct.manager.ColumnLabel.EMPLOYEE_ID;
-import static by.tarasiuk.ct.manager.ColumnLabel.OFFER_ID;
-import static by.tarasiuk.ct.manager.ColumnLabel.TRADING_FREIGHT;
-import static by.tarasiuk.ct.manager.ColumnLabel.TRADING_ID;
+import static by.tarasiuk.ct.model.dao.ColumnLabel.EMPLOYEE_ID;
+import static by.tarasiuk.ct.model.dao.ColumnLabel.OFFER_ID;
+import static by.tarasiuk.ct.model.dao.ColumnLabel.TRADING_FREIGHT;
+import static by.tarasiuk.ct.model.dao.ColumnLabel.TRADING_ID;
 
 public class TradingDaoBuilder {
 

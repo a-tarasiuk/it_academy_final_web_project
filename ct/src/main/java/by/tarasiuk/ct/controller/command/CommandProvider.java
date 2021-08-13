@@ -1,6 +1,5 @@
 package by.tarasiuk.ct.controller.command;
 
-import by.tarasiuk.ct.manager.AttributeName;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

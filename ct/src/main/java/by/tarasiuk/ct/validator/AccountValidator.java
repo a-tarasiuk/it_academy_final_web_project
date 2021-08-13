@@ -1,6 +1,6 @@
-package by.tarasiuk.ct.util;
+package by.tarasiuk.ct.validator;
 
-import by.tarasiuk.ct.manager.AttributeName;
+import by.tarasiuk.ct.controller.command.AttributeName;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -21,6 +21,17 @@ public class AccountValidator {
     private static final String REGEX_VALID_ACCOUNT_PASSWORD = "^.{8,30}$";
 
     private AccountValidator() {
+    }
+
+    public static boolean isValidPersonalAccountData(Map<String, String> accountData) {
+        String accountFirstName = accountData.get(AttributeName.ACCOUNT_FIRST_NAME);
+        String accountLastName = accountData.get(AttributeName.ACCOUNT_LAST_NAME);
+
+        if(accountFirstName == null || accountLastName == null || accountFirstName.isEmpty() || accountLastName.isEmpty()) {
+            return false;
+        }
+
+        return isValidFirstName(accountFirstName) && isValidLastName(accountLastName);
     }
 
     public static boolean isValidSignInData(String login, String password) {

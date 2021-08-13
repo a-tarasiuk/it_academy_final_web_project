@@ -1,9 +1,10 @@
 package by.tarasiuk.ct.util;
 
+import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
-import static by.tarasiuk.ct.manager.AttributeName.EN_US;
-import static by.tarasiuk.ct.manager.AttributeName.RU_RU;
+import static by.tarasiuk.ct.controller.command.AttributeName.EN_US;
+import static by.tarasiuk.ct.controller.command.AttributeName.RU_RU;
 
 /**
  * Message manager, that helps with tags localization.
@@ -37,7 +38,7 @@ public class MessageManager {
                         message = baseLocale.getString(key);
                         break;
                 }
-            } catch (NullPointerException e) {
+            } catch (MissingResourceException e) {
                 message = baseLocale.getString(key);
             }
         }

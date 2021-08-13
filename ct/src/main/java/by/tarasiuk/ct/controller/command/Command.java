@@ -9,7 +9,7 @@ import by.tarasiuk.ct.controller.RequestContent;
 public interface Command {
     String execute(RequestContent content);
 
-    default void refresh() {
+    default void refresh() {    //todo
         // метод для возвращения на ту же самую страницу, это защита от F5
         /* code */
     }

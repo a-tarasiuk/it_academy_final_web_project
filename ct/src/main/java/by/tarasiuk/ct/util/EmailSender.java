@@ -1,6 +1,11 @@
 package by.tarasiuk.ct.util;
 
-import jakarta.mail.*;
+import jakarta.mail.Authenticator;
+import jakarta.mail.Message;
+import jakarta.mail.MessagingException;
+import jakarta.mail.PasswordAuthentication;
+import jakarta.mail.Session;
+import jakarta.mail.Transport;
 import jakarta.mail.internet.AddressException;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
@@ -10,8 +15,8 @@ import org.apache.logging.log4j.Logger;
 import java.io.UnsupportedEncodingException;
 import java.util.Properties;
 
-import static by.tarasiuk.ct.manager.MessageKey.EMAIL_SUBJECT_COMPLETION_REGISTRATION;
-import static by.tarasiuk.ct.manager.MessageKey.EMAIL_TEXT_COMPLETION_REGISTRATION;
+import static by.tarasiuk.ct.util.MessageKey.EMAIL_SUBJECT_COMPLETION_REGISTRATION;
+import static by.tarasiuk.ct.util.MessageKey.EMAIL_TEXT_COMPLETION_REGISTRATION;
 
 public class EmailSender {
     private static final Logger LOGGER = LogManager.getLogger();

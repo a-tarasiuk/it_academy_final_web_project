@@ -4,7 +4,7 @@ import by.tarasiuk.ct.controller.RequestContent;
 import by.tarasiuk.ct.controller.command.Command;
 import by.tarasiuk.ct.controller.command.CommandType;
 import by.tarasiuk.ct.exception.ServiceException;
-import by.tarasiuk.ct.manager.PagePath;
+import by.tarasiuk.ct.controller.command.PagePath;
 import by.tarasiuk.ct.model.entity.impl.Account;
 import by.tarasiuk.ct.model.entity.impl.Employee;
 import by.tarasiuk.ct.model.entity.impl.Offer;
@@ -21,16 +21,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import static by.tarasiuk.ct.manager.AttributeName.ACCOUNT;
-import static by.tarasiuk.ct.manager.AttributeName.TRADING_MAP;
-import static by.tarasiuk.ct.manager.AttributeName.TRADING_STATUS;
+import static by.tarasiuk.ct.controller.command.AttributeName.ACCOUNT;
+import static by.tarasiuk.ct.controller.command.AttributeName.TRADING_MAP;
+import static by.tarasiuk.ct.controller.command.AttributeName.TRADING_STATUS;
 
 
 public class ShowAccountTradingsCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
-    private static final OfferServiceImpl offerService = ServiceProvider.getOfferService();
-    private static final TradingServiceImpl tradingService = ServiceProvider.getTradingService();
-    private static final EmployeeServiceImpl employeeService = ServiceProvider.getEmployeeService();
+    private final OfferServiceImpl offerService = ServiceProvider.getOfferService();
+    private final TradingServiceImpl tradingService = ServiceProvider.getTradingService();
+    private final EmployeeServiceImpl employeeService = ServiceProvider.getEmployeeService();
 
     @Override
     public String execute(RequestContent content) {

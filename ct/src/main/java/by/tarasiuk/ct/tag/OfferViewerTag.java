@@ -17,16 +17,16 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Optional;
 
-import static by.tarasiuk.ct.manager.AttributeName.LOCALE;
-import static by.tarasiuk.ct.manager.AttributeName.OFFER;
-import static by.tarasiuk.ct.manager.MessageKey.OFFER_ADDRESS;
-import static by.tarasiuk.ct.manager.MessageKey.OFFER_COMPANY_NAME;
-import static by.tarasiuk.ct.manager.MessageKey.OFFER_CREATION_DATE;
-import static by.tarasiuk.ct.manager.MessageKey.OFFER_EMPTY;
-import static by.tarasiuk.ct.manager.MessageKey.OFFER_FREIGHT;
-import static by.tarasiuk.ct.manager.MessageKey.OFFER_PRODUCT_NAME;
-import static by.tarasiuk.ct.manager.MessageKey.OFFER_PRODUCT_VOLUME;
-import static by.tarasiuk.ct.manager.MessageKey.OFFER_PRODUCT_WEIGHT;
+import static by.tarasiuk.ct.controller.command.AttributeName.LOCALE;
+import static by.tarasiuk.ct.controller.command.AttributeName.OFFER;
+import static by.tarasiuk.ct.util.MessageKey.OFFER_ADDRESS;
+import static by.tarasiuk.ct.util.MessageKey.OFFER_COMPANY_NAME;
+import static by.tarasiuk.ct.util.MessageKey.OFFER_CREATION_DATE;
+import static by.tarasiuk.ct.util.MessageKey.OFFER_EMPTY;
+import static by.tarasiuk.ct.util.MessageKey.OFFER_FREIGHT;
+import static by.tarasiuk.ct.util.MessageKey.OFFER_PRODUCT_NAME;
+import static by.tarasiuk.ct.util.MessageKey.OFFER_PRODUCT_VOLUME;
+import static by.tarasiuk.ct.util.MessageKey.OFFER_PRODUCT_WEIGHT;
 
 public class OfferViewerTag extends TagSupport {
     private static final long serialVersionUID = -5150821270017826128L;

@@ -2,12 +2,28 @@ package by.tarasiuk.ct.controller.command;
 
 import by.tarasiuk.ct.controller.command.impl.account.ActivateAccountCommand;
 import by.tarasiuk.ct.controller.command.impl.account.ShowAccountSettingsCommand;
+import by.tarasiuk.ct.controller.command.impl.account.UpdateAccountCommand;
 import by.tarasiuk.ct.controller.command.impl.common.ChangeLocalePageCommand;
-import by.tarasiuk.ct.controller.command.impl.offer.*;
 import by.tarasiuk.ct.controller.command.impl.common.LogoutCommand;
 import by.tarasiuk.ct.controller.command.impl.common.SignInCommand;
 import by.tarasiuk.ct.controller.command.impl.common.SignUpCommand;
-import by.tarasiuk.ct.controller.command.impl.go.*;
+import by.tarasiuk.ct.controller.command.impl.go.GoToAccountEmployeesPageCommand;
+import by.tarasiuk.ct.controller.command.impl.go.GoToCreateOfferPageCommand;
+import by.tarasiuk.ct.controller.command.impl.go.GoToMainPageCommand;
+import by.tarasiuk.ct.controller.command.impl.go.GoToSignInPageCommand;
+import by.tarasiuk.ct.controller.command.impl.go.GoToSignUpPageCommand;
+import by.tarasiuk.ct.controller.command.impl.offer.ApplyFreightCommand;
+import by.tarasiuk.ct.controller.command.impl.offer.CreateOfferCommand;
+import by.tarasiuk.ct.controller.command.impl.offer.CreateTradingCommand;
+import by.tarasiuk.ct.controller.command.impl.offer.DeactivateOfferCommand;
+import by.tarasiuk.ct.controller.command.impl.offer.ShowAccountListOfferCommand;
+import by.tarasiuk.ct.controller.command.impl.offer.ShowAccountOfferCommand;
+import by.tarasiuk.ct.controller.command.impl.offer.ShowAccountTradingsCommand;
+import by.tarasiuk.ct.controller.command.impl.offer.ShowOfferEditorCommand;
+import by.tarasiuk.ct.controller.command.impl.offer.ShowOpenOffersCommand;
+import by.tarasiuk.ct.controller.command.impl.offer.ShowTradingOfferCommand;
+import by.tarasiuk.ct.controller.command.impl.offer.ShowTradingViewerCommand;
+import by.tarasiuk.ct.controller.command.impl.offer.UpdateOfferCommand;
 
 /**
  * All available commands of the application
@@ -37,6 +53,7 @@ public enum CommandType {
     DEACTIVATE_OFFER(new DeactivateOfferCommand()),
     CREATE_TRADING(new CreateTradingCommand()),
     APPLY_FREIGHT(new ApplyFreightCommand()),
+    UPDATE_ACCOUNT(new UpdateAccountCommand()),
     UPDATE_OFFER(new UpdateOfferCommand());
 
     /**

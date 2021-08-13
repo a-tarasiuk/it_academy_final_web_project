@@ -6,7 +6,7 @@ import by.tarasiuk.ct.model.dao.DaoProvider;
 import by.tarasiuk.ct.model.dao.impl.TradingDaoImpl;
 import by.tarasiuk.ct.model.entity.impl.Trading;
 import by.tarasiuk.ct.model.service.TradingService;
-import by.tarasiuk.ct.util.TradingValidator;
+import by.tarasiuk.ct.validator.TradingValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,7 +16,7 @@ import java.util.Optional;
 public class TradingServiceImpl implements TradingService {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final TradingServiceImpl instance = new TradingServiceImpl();
-    private static final TradingDaoImpl tradingDao = DaoProvider.getTradingDao();
+    private final TradingDaoImpl tradingDao = DaoProvider.getTradingDao();
 
     private TradingServiceImpl() {
     }

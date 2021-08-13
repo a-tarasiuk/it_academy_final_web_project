@@ -2,7 +2,7 @@ package by.tarasiuk.ct.model.dao.impl;
 
 import by.tarasiuk.ct.exception.DaoException;
 import by.tarasiuk.ct.model.dao.BaseDao;
-import by.tarasiuk.ct.model.dao.OfferDao;
+import by.tarasiuk.ct.model.dao.TradingDao;
 import by.tarasiuk.ct.model.dao.builder.TradingDaoBuilder;
 import by.tarasiuk.ct.model.entity.impl.Trading;
 import org.apache.logging.log4j.LogManager;
@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class TradingDaoImpl extends BaseDao<Trading> implements OfferDao {
+public class TradingDaoImpl extends BaseDao<Trading> implements TradingDao {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final TradingDaoImpl instance = new TradingDaoImpl();
 
@@ -51,15 +51,15 @@ public class TradingDaoImpl extends BaseDao<Trading> implements OfferDao {
         return instance;
     }
 
+    @Override
     public boolean createEntity(Trading trading) throws DaoException {
-        Connection connection = connectionPool.getConnection();
-
         long offerId = trading.getOfferId();
         long employeeId = trading.getEmployeeId();
         float freight = trading.getFreight();
         Trading.Status status = trading.getStatus();
 
-        try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_CREATE_TRADING)) {
+        try (Connection connection = connectionPool.getConnection();
+                PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_CREATE_TRADING)) {
             statement.setLong(IndexCreate.OFFER_ID, offerId);
             statement.setLong(IndexCreate.EMPLOYEE_ID, employeeId);
             statement.setFloat(IndexCreate.TRADING_FREIGHT, freight);
@@ -72,15 +72,13 @@ public class TradingDaoImpl extends BaseDao<Trading> implements OfferDao {
         } catch (SQLException e) {
             LOGGER.error("Failed to create trading in the database: {}.", trading, e);
             throw new DaoException("Failed to create trading in the database: " + trading + ".", e);
-        } finally {
-            closeConnection(connection);
         }
     }
 
+    @Override
     public boolean updateTradingStatusById(long tradingId, Trading.Status status) throws DaoException {
-        Connection connection = connectionPool.getConnection();
-
-        try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_UPDATE_TRADING_STATUS_BY_ID)) {
+        try (Connection connection = connectionPool.getConnection();
+                PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_UPDATE_TRADING_STATUS_BY_ID)) {
             statement.setLong(IndexUpdate.TRADING_ID, tradingId);
             statement.setString(IndexUpdate.TRADING_STATUS, status.name());
 
@@ -91,16 +89,15 @@ public class TradingDaoImpl extends BaseDao<Trading> implements OfferDao {
         } catch (SQLException e) {
             LOGGER.error("Failed updating trading with ID '{}' to status '{}' in the database.", tradingId, status, e);
             throw new DaoException("Failed updating trading with ID '" + tradingId + "' to status '" + status + "' in the database.", e);
-        } finally {
-            closeConnection(connection);
         }
     }
 
+    @Override
     public List<Trading> findListTradingsByOfferId(long offerId) throws DaoException {
-        Connection connection = connectionPool.getConnection();
         List<Trading> tradings = new ArrayList<>();
 
-        try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_TRADINGS_BY_OFFER_ID)) {
+        try (Connection connection = connectionPool.getConnection();
+                PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_TRADINGS_BY_OFFER_ID)) {
             statement.setLong(IndexFind.OFFER_ID, offerId);
 
             try (ResultSet result = statement.executeQuery()) {
@@ -112,18 +109,17 @@ public class TradingDaoImpl extends BaseDao<Trading> implements OfferDao {
         } catch (SQLException e) {
             LOGGER.error("Error when performing tradings search by offer id '{}'.", offerId, e);
             throw new DaoException("Error when performing tradings search by offer id '" + offerId + "'.", e);
-        } finally {
-            closeConnection(connection);
         }
 
         return tradings;
     }
 
+    @Override
     public List<Trading> findListTradingsByEmployeeId(long employeeId) throws DaoException {
-        Connection connection = connectionPool.getConnection();
         List<Trading> tradings = new ArrayList<>();
 
-        try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_TRADINGS_BY_EMPLOYEE_ID)) {
+        try (Connection connection = connectionPool.getConnection();
+                PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_TRADINGS_BY_EMPLOYEE_ID)) {
             statement.setLong(IndexFind.EMPLOYEE_ID, employeeId);
 
             try (ResultSet result = statement.executeQuery()) {
@@ -135,8 +131,6 @@ public class TradingDaoImpl extends BaseDao<Trading> implements OfferDao {
         } catch (SQLException e) {
             LOGGER.error("Error when performing tradings search by employee id '{}'.", employeeId, e);
             throw new DaoException("Error when performing tradings search by employee id '" + employeeId + "'.", e);
-        } finally {
-            closeConnection(connection);
         }
 
         return tradings;
@@ -154,10 +148,10 @@ public class TradingDaoImpl extends BaseDao<Trading> implements OfferDao {
 
     @Override
     public Optional<Trading> findEntityById(long id) throws DaoException {
-        Connection connection = connectionPool.getConnection();
         Optional<Trading> findTrading;
 
-        try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_TRADING_BY_ID)) {
+        try (Connection connection = connectionPool.getConnection();
+                PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_TRADING_BY_ID)) {
             statement.setLong(IndexFind.TRADING_ID, id);
 
             try (ResultSet result = statement.executeQuery()) {
@@ -173,8 +167,6 @@ public class TradingDaoImpl extends BaseDao<Trading> implements OfferDao {
         } catch (SQLException e) {
             LOGGER.error("Error when performing tradings search by id '{}'.", id, e);
             throw new DaoException("Error when performing tradings search by id '" + id + "'.", e);
-        } finally {
-            closeConnection(connection);
         }
 
         return findTrading;

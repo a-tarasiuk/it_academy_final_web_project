@@ -5,9 +5,9 @@ import by.tarasiuk.ct.model.entity.impl.Employee;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static by.tarasiuk.ct.manager.ColumnLabel.ACCOUNT_ID;
-import static by.tarasiuk.ct.manager.ColumnLabel.COMPANY_ID;
-import static by.tarasiuk.ct.manager.ColumnLabel.EMPLOYEE_ID;
+import static by.tarasiuk.ct.model.dao.ColumnLabel.ACCOUNT_ID;
+import static by.tarasiuk.ct.model.dao.ColumnLabel.COMPANY_ID;
+import static by.tarasiuk.ct.model.dao.ColumnLabel.EMPLOYEE_ID;
 
 public class EmployeeDaoBuilder {
 

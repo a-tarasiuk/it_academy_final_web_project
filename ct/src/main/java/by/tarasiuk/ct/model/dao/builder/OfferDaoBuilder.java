@@ -6,16 +6,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
-import static by.tarasiuk.ct.manager.ColumnLabel.EMPLOYEE_ID;
-import static by.tarasiuk.ct.manager.ColumnLabel.OFFER_ADDRESS_FROM;
-import static by.tarasiuk.ct.manager.ColumnLabel.OFFER_ADDRESS_TO;
-import static by.tarasiuk.ct.manager.ColumnLabel.OFFER_CREATION_DATE;
-import static by.tarasiuk.ct.manager.ColumnLabel.OFFER_FREIGHT;
-import static by.tarasiuk.ct.manager.ColumnLabel.OFFER_ID;
-import static by.tarasiuk.ct.manager.ColumnLabel.OFFER_PRODUCT_NAME;
-import static by.tarasiuk.ct.manager.ColumnLabel.OFFER_PRODUCT_VOLUME;
-import static by.tarasiuk.ct.manager.ColumnLabel.OFFER_PRODUCT_WEIGHT;
-import static by.tarasiuk.ct.manager.ColumnLabel.OFFER_STATUS;
+import static by.tarasiuk.ct.model.dao.ColumnLabel.EMPLOYEE_ID;
+import static by.tarasiuk.ct.model.dao.ColumnLabel.OFFER_ADDRESS_FROM;
+import static by.tarasiuk.ct.model.dao.ColumnLabel.OFFER_ADDRESS_TO;
+import static by.tarasiuk.ct.model.dao.ColumnLabel.OFFER_CREATION_DATE;
+import static by.tarasiuk.ct.model.dao.ColumnLabel.OFFER_FREIGHT;
+import static by.tarasiuk.ct.model.dao.ColumnLabel.OFFER_ID;
+import static by.tarasiuk.ct.model.dao.ColumnLabel.OFFER_PRODUCT_NAME;
+import static by.tarasiuk.ct.model.dao.ColumnLabel.OFFER_PRODUCT_VOLUME;
+import static by.tarasiuk.ct.model.dao.ColumnLabel.OFFER_PRODUCT_WEIGHT;
+import static by.tarasiuk.ct.model.dao.ColumnLabel.OFFER_STATUS;
 
 public class OfferDaoBuilder {
 

@@ -14,9 +14,9 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
-import static by.tarasiuk.ct.manager.ColumnLabel.TOKEN_ID;
-import static by.tarasiuk.ct.manager.ColumnLabel.TOKEN_NUMBER;
-import static by.tarasiuk.ct.manager.ColumnLabel.TOKEN_STATUS;
+import static by.tarasiuk.ct.model.dao.ColumnLabel.TOKEN_ID;
+import static by.tarasiuk.ct.model.dao.ColumnLabel.TOKEN_NUMBER;
+import static by.tarasiuk.ct.model.dao.ColumnLabel.TOKEN_STATUS;
 
 public class TokenDaoImpl extends BaseDao<Token> implements TokenDao {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -33,15 +33,27 @@ public class TokenDaoImpl extends BaseDao<Token> implements TokenDao {
         return instance;
     }
 
+    private static final class IndexUpdate {
+        private static final int TOKEN_ID = 1;
+        private static final int ACCOUNT_ID = 2;
+        private static final int TOKEN_NUMBER = 3;
+        private static final int TOKEN_STATUS = 4;
+    }
+
+    private static final class IndexCreate {
+        private static final int ACCOUNT_ID = 1;
+        private static final int TOKEN_NUMBER = 2;
+        private static final int TOKEN_STATUS = 3;
+    }
+
     @Override
     public boolean createToken(Token token) throws DaoException {
-        Connection connection = connectionPool.getConnection();
-
         long accountId = token.getAccountId();
         String number = token.getNumber();
         String status = token.getStatus().toString();
 
-        try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_CREATE_TOKEN)) {
+        try (Connection connection = connectionPool.getConnection();
+                PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_CREATE_TOKEN)) {
             statement.setLong(IndexCreate.ACCOUNT_ID, accountId);
             statement.setString(IndexCreate.TOKEN_NUMBER, number);
             statement.setString(IndexCreate.TOKEN_STATUS, status);
@@ -53,16 +65,15 @@ public class TokenDaoImpl extends BaseDao<Token> implements TokenDao {
         } catch (SQLException e) {
             LOGGER.error("Failed to create token in the database: {}.", token, e);
             throw new DaoException("Failed to create token in the database: " + token + ".", e);
-        } finally {
-            closeConnection(connection);
         }
     }
 
+    @Override
     public Optional<Token> findTokenByAccountId(long accountId) throws DaoException {
-        Connection connection = connectionPool.getConnection();
         Optional<Token> optionalToken;
 
-        try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_TOKEN_BY_ACCOUNT_ID)) {
+        try (Connection connection = connectionPool.getConnection();
+                PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_TOKEN_BY_ACCOUNT_ID)) {
             statement.setLong(IndexCreate.ACCOUNT_ID, accountId);
 
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -85,8 +96,6 @@ public class TokenDaoImpl extends BaseDao<Token> implements TokenDao {
         } catch (SQLException e) {
             LOGGER.error("Failed to find token by account id '{}' in the database.", accountId, e);
             throw new DaoException("Failed to find token by account id '" + accountId + "' in the database.", e);
-        } finally {
-            closeConnection(connection);
         }
 
         return optionalToken;
@@ -94,14 +103,13 @@ public class TokenDaoImpl extends BaseDao<Token> implements TokenDao {
 
     @Override
     public boolean updateToken(Token token) throws DaoException {
-        Connection connection = connectionPool.getConnection();
-
         long tokenId = token.getId();
         long accountId = token.getAccountId();
         String tokenNumber = token.getNumber();
         String tokenStatus = token.getStatus().name();
 
-        try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_UPDATE_TOKEN)) {
+        try (Connection connection = connectionPool.getConnection();
+                PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_UPDATE_TOKEN)) {
             statement.setLong(IndexUpdate.TOKEN_ID, tokenId);
             statement.setLong(IndexUpdate.ACCOUNT_ID, accountId);
             statement.setString(IndexUpdate.TOKEN_NUMBER, tokenNumber);
@@ -111,8 +119,6 @@ public class TokenDaoImpl extends BaseDao<Token> implements TokenDao {
         } catch (SQLException e) {
             LOGGER.error("Failed to updateEntity token '{}' in the database.", token, e);
             throw new DaoException("Failed to updateEntity token '" + token + "' in the database.", e);
-        } finally {
-            closeConnection(connection);
         }
     }
 
@@ -134,18 +140,5 @@ public class TokenDaoImpl extends BaseDao<Token> implements TokenDao {
     @Override
     public Optional<Token> findEntityById(long id) throws DaoException {
         return Optional.empty();
-    }
-
-    private static final class IndexUpdate {
-        private static final int TOKEN_ID = 1;
-        private static final int ACCOUNT_ID = 2;
-        private static final int TOKEN_NUMBER = 3;
-        private static final int TOKEN_STATUS = 4;
-    }
-
-    private static final class IndexCreate {
-        private static final int ACCOUNT_ID = 1;
-        private static final int TOKEN_NUMBER = 2;
-        private static final int TOKEN_STATUS = 3;
     }
 }

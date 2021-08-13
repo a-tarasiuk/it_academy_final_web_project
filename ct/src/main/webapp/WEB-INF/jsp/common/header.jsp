@@ -21,7 +21,28 @@
             <ct:locale_button/>
             <ct:account_buttons/>
 
-            <a class="menu-button button-colour-standard" href="${pageContext.request.contextPath}/controller?command=go_to_account_editor_page"><span class="icon icon-users">&nbsp;</span>Employees</a>
+            <div class="dropdown-wrapper">
+                <button class="dropdown-button button-colour-standard">
+                    <span class="icon icon-building">&nbsp;</span>
+                    <fmt:message key="header.button.label.company"/>&nbsp;&nbsp;
+                    <span class="icon icon-caret-down"></span>
+                </button>
+
+                <div class="content-wrapper">
+                    <form class="dropdown-content" action="controller" method="get">
+                        <button type="submit" name="command" value="go_to_account_editor_page">
+                            <span class="icon icon-cog">&nbsp;</span>
+                            <fmt:message key="header.button.label.companySettings"/>
+                        </button>
+
+                        <button type="submit" name="command" value="">
+                            <span class="icon icon-users">&nbsp;</span>
+                            <fmt:message key="header.button.label.employeesSettings"/>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>

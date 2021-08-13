@@ -1,6 +1,6 @@
 package by.tarasiuk.ct.controller.filter;
 
-import by.tarasiuk.ct.manager.PagePath;
+import by.tarasiuk.ct.controller.command.PagePath;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

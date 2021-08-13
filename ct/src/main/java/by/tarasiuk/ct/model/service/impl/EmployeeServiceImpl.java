@@ -14,7 +14,7 @@ import java.util.Optional;
 public class EmployeeServiceImpl implements EmployeeService {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final EmployeeServiceImpl instance = new EmployeeServiceImpl();
-    private static final EmployeeDaoImpl employeeDao = DaoProvider.getEmployeeDao();
+    private final EmployeeDaoImpl employeeDao = DaoProvider.getEmployeeDao();
 
     private EmployeeServiceImpl() {
     }

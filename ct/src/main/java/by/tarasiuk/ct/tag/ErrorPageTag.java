@@ -1,6 +1,6 @@
 package by.tarasiuk.ct.tag;
 
-import by.tarasiuk.ct.manager.AttributeName;
+import by.tarasiuk.ct.controller.command.AttributeName;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.jsp.ErrorData;
 import jakarta.servlet.jsp.JspException;

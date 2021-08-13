@@ -1,4 +1,4 @@
-package by.tarasiuk.ct.manager;
+package by.tarasiuk.ct.util;
 
 public final class MessageKey {
     /**
@@ -62,7 +62,6 @@ public final class MessageKey {
     public static final String OFFER_MY_FREIGHT = "offer.table.myFreight";
     public static final String OFFERS_DO_NOT_EXIST = "offer.table.doNotExist";
     public static final String OFFER_STATUS = "offer.status";
-    public static final String OFFER_TON = "offer.ton";
     public static final String OFFER_EMPTY = "offer.table.empty";
     public static final String OFFER_ALL = "offer.all";
     public static final String OFFER_MY = "offer.my";
@@ -77,7 +76,6 @@ public final class MessageKey {
     public static final String EMPLOYEE_REGISTRATION_DATE = "employee.table.registrationDate";
     public static final String EMPLOYEE_ROLE = "employee.table.role";
     public static final String EMPLOYEE_STATUS = "employee.table.status";
-    public static final String EMPLOYEES_MY = "employees.my";
 
     /**
      * Freight offer
@@ -92,7 +90,6 @@ public final class MessageKey {
     public static final String TRADINGS_EMPTY = "tradings.list.empty";
     public static final String TRADINGS_DO_NOT_EXIST = "tradings.table.doNotExist";
     public static final String TRADINGS_STATUS = "tradings.table.status";
-    public static final String TRADINGS_ACTION = "tradings.table.action";
 
     /**
      * Placeholders

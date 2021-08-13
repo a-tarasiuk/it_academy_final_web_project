@@ -40,11 +40,12 @@ public class EmployeeDaoImpl extends BaseDao<Employee> implements EmployeeDao {
         return instance;
     }
 
+    @Override
     public Optional<Employee> findEntityByAccountId(long accountId) throws DaoException {
-        Connection connection = connectionPool.getConnection();
         Optional<Employee> findEmployee;
 
-        try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_EMPLOYEE_BY_ACCOUNT_ID)) {
+        try (Connection connection = connectionPool.getConnection();
+                PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_EMPLOYEE_BY_ACCOUNT_ID)) {
             statement.setLong(IndexFind.ACCOUNT_ID, accountId);
 
             try (ResultSet result = statement.executeQuery()) {
@@ -60,8 +61,6 @@ public class EmployeeDaoImpl extends BaseDao<Employee> implements EmployeeDao {
         } catch (SQLException e) {
             LOGGER.error("Error when performing employee search by account id '{}'.", accountId, e);
             throw new DaoException("Error when performing employee search by account id '" + accountId + "'.", e);
-        } finally {
-            closeConnection(connection);
         }
     }
 
@@ -72,13 +71,12 @@ public class EmployeeDaoImpl extends BaseDao<Employee> implements EmployeeDao {
 
     @Override
     public boolean createEntity(Employee entity) throws DaoException {
-        Connection connection = connectionPool.getConnection();
-
         long accountId = entity.getAccountId();
         long companyId = entity.getCompanyId();
 
 
-    try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_CREATE_EMPLOYEE)) {
+    try (Connection connection = connectionPool.getConnection();
+            PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_CREATE_EMPLOYEE)) {
             statement.setLong(IndexCreate.ACCOUNT_ID, accountId);
             statement.setLong(IndexCreate.COMPANY_ID, companyId);
 
@@ -89,8 +87,6 @@ public class EmployeeDaoImpl extends BaseDao<Employee> implements EmployeeDao {
         } catch (SQLException e) {
             LOGGER.error("Failed to create employee in the database: {}.", entity, e);
             throw new DaoException("Failed to create employee in the database: " + entity + ".", e);
-        } finally {
-            closeConnection(connection);
         }
     }
 
@@ -101,10 +97,10 @@ public class EmployeeDaoImpl extends BaseDao<Employee> implements EmployeeDao {
 
     @Override
     public Optional<Employee> findEntityById(long id) throws DaoException {
-        Connection connection = connectionPool.getConnection();
         Optional<Employee> findEmployee;
 
-        try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_EMPLOYEE_BY_ID)) {
+        try (Connection connection = connectionPool.getConnection();
+                PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_EMPLOYEE_BY_ID)) {
             statement.setLong(IndexFind.EMPLOYEE_D, id);
 
             try (ResultSet result = statement.executeQuery()) {
@@ -120,8 +116,6 @@ public class EmployeeDaoImpl extends BaseDao<Employee> implements EmployeeDao {
         } catch (SQLException e) {
             LOGGER.error("Error when performing employee search by id '{}'.", id, e);
             throw new DaoException("Error when performing employee search by id '" + id + "'.", e);
-        } finally {
-            closeConnection(connection);
         }
     }
 }

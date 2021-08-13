@@ -24,7 +24,7 @@
 
     <div id="middle">
         <div id="info">
-            <span class="icon icon-exclamation-circle x4"></span>
+            <span class="icon icon-exclamation-circle icon-red x4"></span>
             <span id="info-header"><fmt:message key="error.404.header"/></span>
             <span id="info-message"><fmt:message key="error.404.message"/>&nbsp<a class="btn-confirm" href="/"><fmt:message key="button.label.homepage"/></a></span>
         </div>

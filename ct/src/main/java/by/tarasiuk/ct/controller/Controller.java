@@ -2,7 +2,7 @@ package by.tarasiuk.ct.controller;
 
 import by.tarasiuk.ct.controller.command.Command;
 import by.tarasiuk.ct.controller.command.CommandProvider;
-import by.tarasiuk.ct.manager.PagePath;
+import by.tarasiuk.ct.controller.command.PagePath;
 import by.tarasiuk.ct.model.connection.ConnectionPool;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -22,7 +22,6 @@ import java.util.Optional;
 @WebServlet(urlPatterns = {"/controller"})
 public class Controller extends HttpServlet {
     private static final Logger LOGGER = LogManager.getLogger();
-    private static final long serialVersionUID = -5845944618545604913L;
 
     /**
      * Default GET method.

@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class RequestContent {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -44,6 +45,10 @@ public class RequestContent {
 
     public HashMap<String, Object> getSessionAttributes() {
         return new HashMap<>(sessionAttributes);
+    }
+
+    public Optional<Object> findSessionAttribute(String key) {
+        return Optional.ofNullable(sessionAttributes.get(key));
     }
 
     public void putRequestAttribute(String key, Object obj) {

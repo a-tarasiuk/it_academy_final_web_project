@@ -4,7 +4,7 @@ import by.tarasiuk.ct.controller.RequestContent;
 import by.tarasiuk.ct.controller.command.Command;
 import by.tarasiuk.ct.controller.command.CommandType;
 import by.tarasiuk.ct.exception.ServiceException;
-import by.tarasiuk.ct.manager.PagePath;
+import by.tarasiuk.ct.controller.command.PagePath;
 import by.tarasiuk.ct.model.entity.impl.Offer;
 import by.tarasiuk.ct.model.service.ServiceProvider;
 import by.tarasiuk.ct.model.service.impl.OfferServiceImpl;
@@ -14,12 +14,12 @@ import org.apache.logging.log4j.Logger;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static by.tarasiuk.ct.manager.AttributeName.OFFER_LIST;
+import static by.tarasiuk.ct.controller.command.AttributeName.OFFER_LIST;
 
 
 public class ShowOpenOffersCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
-    private static final OfferServiceImpl offerService = ServiceProvider.getOfferService();
+    private final OfferServiceImpl offerService = ServiceProvider.getOfferService();
 
     @Override
     public String execute(RequestContent content) {

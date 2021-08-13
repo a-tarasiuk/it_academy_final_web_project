@@ -70,9 +70,8 @@ public class OfferDaoImpl extends BaseDao<Offer> implements OfferDao {
         private static final int OFFER_STATUS = 2;
     }
 
+    @Override
     public boolean createEntity(Offer offer) throws DaoException {
-        Connection connection = connectionPool.getConnection();
-
         long employeeId = offer.getEmployeeId();
         String productName = offer.getProductName();
         float productWeight = offer.getProductWeight();
@@ -83,7 +82,8 @@ public class OfferDaoImpl extends BaseDao<Offer> implements OfferDao {
         LocalDate creationDate = offer.getCreationDate();
         Status status = offer.getStatus();
 
-        try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_CREATE_OFFER)) {
+        try (Connection connection = connectionPool.getConnection();
+                PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_CREATE_OFFER)) {
             statement.setLong(IndexCreate.EMPLOYEE_ID, employeeId);
             statement.setString(IndexCreate.PRODUCT_NAME, productName);
             statement.setFloat(IndexCreate.PRODUCT_WEIGHT, productWeight);
@@ -101,100 +101,11 @@ public class OfferDaoImpl extends BaseDao<Offer> implements OfferDao {
         } catch (SQLException e) {
             LOGGER.error("Failed to create offer in the database: {}.", offer, e);
             throw new DaoException("Failed to create offer in the database: " + offer + ".", e);
-        } finally {
-            closeConnection(connection);
         }
-    }
-
-    public boolean updateOfferStatusById(long id, Offer.Status status) throws DaoException {
-        Connection connection = connectionPool.getConnection();
-
-        try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_UPDATE_OFFER_STATUS_BY_ID)) {
-            statement.setLong(IndexStatusUpdate.OFFER_ID, id);
-            statement.setString(IndexStatusUpdate.OFFER_STATUS, status.toString());
-
-            statement.executeUpdate();
-
-            LOGGER.info("Offer with id '{}' has successfully updated status to '{}' in the database.", id, status);
-            return true;    //fixme -> statement.executeUpdate(); (см. выше).
-        } catch (SQLException e) {
-            LOGGER.error("Failed updating offer with ID '{}' to status '{}' in the database.", id, status, e);
-            throw new DaoException("Failed updating offer with ID '" + id + "' to status '" + status + "' in the database.", e);
-        } finally {
-            closeConnection(connection);
-        }
-    }
-
-    @Override
-    public List<Offer> findAll() throws DaoException {
-        Connection connection = connectionPool.getConnection();
-        List<Offer> offers = new ArrayList<>();
-
-        try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_ALL_OFFERS);
-             ResultSet result = statement.executeQuery()) {
-
-            while (result.next()) {
-                Offer offer = OfferDaoBuilder.build(result);
-                offers.add(offer);
-            }
-        } catch (SQLException e) {
-            LOGGER.error("Error when find all offers.", e);
-            throw new DaoException("Error when find all offers.", e);
-        } finally {
-            closeConnection(connection);
-        }
-
-        return offers;
-    }
-
-    public List<Offer> findOpenOffers() throws DaoException {
-        Connection connection = connectionPool.getConnection();
-        List<Offer> offers = new ArrayList<>();
-
-        try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_OPEN_OFFERS);
-             ResultSet result = statement.executeQuery()) {
-
-            while (result.next()) {
-                Offer offer = OfferDaoBuilder.build(result);
-                offers.add(offer);
-            }
-        } catch (SQLException e) {
-            LOGGER.error("Error when find all offers.", e);
-            throw new DaoException("Error when find all offers.", e);
-        } finally {
-            closeConnection(connection);
-        }
-
-        return offers;
-    }
-
-    public List<Offer> findOfferListByEmployeeId(long employeeId) throws DaoException {
-        Connection connection = connectionPool.getConnection();
-        List<Offer> offers = new ArrayList<>();
-
-        try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_ALL_OFFERS_BY_EMPLOYEE_ID)) {
-            statement.setLong(IndexFind.EMPLOYEE_ID, employeeId);
-
-            try (ResultSet result = statement.executeQuery()) {
-                while (result.next()) {
-                    Offer offer = OfferDaoBuilder.build(result);
-                    offers.add(offer);
-                }
-            }
-        } catch (SQLException e) {
-            LOGGER.error("Error when performing offers search by employee id '{}'.", employeeId, e);
-            throw new DaoException("Error when performing offers search by employee id '" + employeeId + "'.", e);
-        } finally {
-            closeConnection(connection);
-        }
-
-        return offers;
     }
 
     @Override
     public boolean updateEntity(Offer entity) throws DaoException {
-        Connection connection = connectionPool.getConnection();
-
         long offerId = entity.getId();
         String productName = entity.getProductName();
         float productWeight = entity.getProductWeight();
@@ -203,7 +114,8 @@ public class OfferDaoImpl extends BaseDao<Offer> implements OfferDao {
         String addressTo = entity.getAddressTo();
         float offerFreight = entity.getFreight();
 
-        try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_UPDATE_OFFER_BY_ID)) {
+        try (Connection connection = connectionPool.getConnection();
+                PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_UPDATE_OFFER_BY_ID)) {
             statement.setLong(IndexUpdate.OFFER_ID, offerId);
             statement.setString(IndexUpdate.PRODUCT_NAME, productName);
             statement.setFloat(IndexUpdate.PRODUCT_WEIGHT, productWeight);
@@ -219,17 +131,94 @@ public class OfferDaoImpl extends BaseDao<Offer> implements OfferDao {
         } catch (SQLException e) {
             LOGGER.error("Failed updating offer '{}' in the database.", entity, e);
             throw new DaoException("Failed updating offer '" + entity + "' in the database.", e);
-        } finally {
-            closeConnection(connection);
         }
     }
 
     @Override
+    public boolean updateOfferStatusById(long id, Offer.Status status) throws DaoException {
+        try (Connection connection = connectionPool.getConnection();
+                PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_UPDATE_OFFER_STATUS_BY_ID)) {
+            statement.setLong(IndexStatusUpdate.OFFER_ID, id);
+            statement.setString(IndexStatusUpdate.OFFER_STATUS, status.toString());
+
+            statement.executeUpdate();
+
+            LOGGER.info("Offer with id '{}' has successfully updated status to '{}' in the database.", id, status);
+            return true;    //fixme -> statement.executeUpdate(); (см. выше).
+        } catch (SQLException e) {
+            LOGGER.error("Failed updating offer with ID '{}' to status '{}' in the database.", id, status, e);
+            throw new DaoException("Failed updating offer with ID '" + id + "' to status '" + status + "' in the database.", e);
+        }
+    }
+
+    @Override
+    public List<Offer> findAll() throws DaoException {
+        List<Offer> offers = new ArrayList<>();
+
+        try (Connection connection = connectionPool.getConnection();
+                PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_ALL_OFFERS);
+             ResultSet result = statement.executeQuery()) {
+
+            while (result.next()) {
+                Offer offer = OfferDaoBuilder.build(result);
+                offers.add(offer);
+            }
+        } catch (SQLException e) {
+            LOGGER.error("Error when find all offers.", e);
+            throw new DaoException("Error when find all offers.", e);
+        }
+
+        return offers;
+    }
+
+    @Override
+    public List<Offer> findOpenOffers() throws DaoException {
+        List<Offer> offers = new ArrayList<>();
+
+        try (Connection connection = connectionPool.getConnection();
+                PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_OPEN_OFFERS);
+             ResultSet result = statement.executeQuery()) {
+
+            while (result.next()) {
+                Offer offer = OfferDaoBuilder.build(result);
+                offers.add(offer);
+            }
+        } catch (SQLException e) {
+            LOGGER.error("Error when find all offers.", e);
+            throw new DaoException("Error when find all offers.", e);
+        }
+
+        return offers;
+    }
+
+    @Override
+    public List<Offer> findOfferListByEmployeeId(long employeeId) throws DaoException {
+        List<Offer> offers = new ArrayList<>();
+
+        try (Connection connection = connectionPool.getConnection();
+                PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_ALL_OFFERS_BY_EMPLOYEE_ID)) {
+            statement.setLong(IndexFind.EMPLOYEE_ID, employeeId);
+
+            try (ResultSet result = statement.executeQuery()) {
+                while (result.next()) {
+                    Offer offer = OfferDaoBuilder.build(result);
+                    offers.add(offer);
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.error("Error when performing offers search by employee id '{}'.", employeeId, e);
+            throw new DaoException("Error when performing offers search by employee id '" + employeeId + "'.", e);
+        }
+
+        return offers;
+    }
+
+    @Override
     public Optional<Offer> findEntityById(long id) throws DaoException {
-        Connection connection = connectionPool.getConnection();
         Offer offer = null;
 
-        try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_OFFER_BY_ID)) {
+        try (Connection connection = connectionPool.getConnection();
+                PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_OFFER_BY_ID)) {
             statement.setLong(IndexFind.OFFER_ID, id);
 
             try (ResultSet result = statement.executeQuery()) {
@@ -240,8 +229,6 @@ public class OfferDaoImpl extends BaseDao<Offer> implements OfferDao {
         } catch (SQLException e) {
             LOGGER.error("Error when performing offer search by id '{}'.", id, e);
             throw new DaoException("Error when performing offer search by id '" + id + "'.", e);
-        } finally {
-            closeConnection(connection);
         }
 
         return Optional.ofNullable(offer);

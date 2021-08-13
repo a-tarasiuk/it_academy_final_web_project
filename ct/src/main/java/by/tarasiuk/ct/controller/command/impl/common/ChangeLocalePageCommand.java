@@ -1,22 +1,21 @@
 package by.tarasiuk.ct.controller.command.impl.common;
 
-import by.tarasiuk.ct.controller.command.Command;
 import by.tarasiuk.ct.controller.RequestContent;
-import by.tarasiuk.ct.manager.PagePath;
+import by.tarasiuk.ct.controller.command.Command;
+import by.tarasiuk.ct.controller.command.PagePath;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import java.util.Map;
 
-import java.util.HashMap;
-
-import static by.tarasiuk.ct.manager.AttributeName.LOCALE;
+import static by.tarasiuk.ct.controller.command.AttributeName.LOCALE;
 
 public class ChangeLocalePageCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
 
     @Override
     public String execute(RequestContent content) {
-        HashMap<String, String> requestParameters = content.getRequestParameters();
-        HashMap<String, Object> sessionAttributes = content.getSessionAttributes();
+        Map<String, String> requestParameters = content.getRequestParameters();
+        Map<String, Object> sessionAttributes = content.getSessionAttributes();
 
         String newLocale = requestParameters.get(LOCALE);
         String oldLocale = (String) sessionAttributes.get(LOCALE);

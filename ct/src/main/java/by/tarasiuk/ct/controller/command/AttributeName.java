@@ -1,4 +1,4 @@
-package by.tarasiuk.ct.manager;
+package by.tarasiuk.ct.controller.command;
 
 public final class AttributeName {
     /**
@@ -79,7 +79,8 @@ public final class AttributeName {
     /**
      * Message attributes from JSP page.
      */
-    public static final String MESSAGE = "message";
+    public static final String SUCCESSFUL_OPERATION = "successful_operation";
+    public static final String INVALID_DATA = "invalid_data";
     public static final String INFORMATION_MESSAGE = "information_message";
     public static final String MESSAGE_QUERY_ERROR = "message_query_error";
     public static final String MESSAGE_ERROR_LOGIN_ALREADY_EXIST = "error_login_already_exist";

@@ -1,6 +1,5 @@
 package by.tarasiuk.ct.model.entity.impl;
 
-
 import by.tarasiuk.ct.model.entity.Entity;
 
 import java.time.LocalDate;

@@ -1,34 +1,32 @@
 package by.tarasiuk.ct.controller.command.impl.offer;
 
 import by.tarasiuk.ct.controller.RequestContent;
+import by.tarasiuk.ct.controller.command.AttributeName;
 import by.tarasiuk.ct.controller.command.Command;
 import by.tarasiuk.ct.controller.command.CommandType;
+import by.tarasiuk.ct.controller.command.PagePath;
 import by.tarasiuk.ct.exception.ServiceException;
-import by.tarasiuk.ct.manager.AttributeName;
-import by.tarasiuk.ct.manager.PagePath;
 import by.tarasiuk.ct.model.entity.impl.Account;
 import by.tarasiuk.ct.model.entity.impl.Employee;
 import by.tarasiuk.ct.model.entity.impl.Offer;
 import by.tarasiuk.ct.model.service.ServiceProvider;
 import by.tarasiuk.ct.model.service.impl.EmployeeServiceImpl;
 import by.tarasiuk.ct.model.service.impl.OfferServiceImpl;
-import by.tarasiuk.ct.model.service.impl.TradingServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.HashMap;
 import java.util.Optional;
 
-import static by.tarasiuk.ct.manager.AttributeName.EMPLOYEE_ID;
-import static by.tarasiuk.ct.manager.AttributeName.OFFER;
-import static by.tarasiuk.ct.manager.AttributeName.OFFER_ID;
+import static by.tarasiuk.ct.controller.command.AttributeName.EMPLOYEE_ID;
+import static by.tarasiuk.ct.controller.command.AttributeName.OFFER;
+import static by.tarasiuk.ct.controller.command.AttributeName.OFFER_ID;
 
 
 public class ShowTradingOfferCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
-    private static final OfferServiceImpl offerService = ServiceProvider.getOfferService();
-    private static final EmployeeServiceImpl employeeService = ServiceProvider.getEmployeeService();
-    private static final TradingServiceImpl tradingService = ServiceProvider.getTradingService();
+    private final OfferServiceImpl offerService = ServiceProvider.getOfferService();
+    private final EmployeeServiceImpl employeeService = ServiceProvider.getEmployeeService();
 
     @Override
     public String execute(RequestContent content) {

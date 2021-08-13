@@ -1,7 +1,7 @@
 package by.tarasiuk.ct.tag;
 
-import by.tarasiuk.ct.manager.AttributeName;
-import by.tarasiuk.ct.manager.MessageKey;
+import by.tarasiuk.ct.controller.command.AttributeName;
+import by.tarasiuk.ct.util.MessageKey;
 import by.tarasiuk.ct.model.entity.impl.Offer;
 import by.tarasiuk.ct.util.MessageManager;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,8 +12,8 @@ import jakarta.servlet.jsp.tagext.TagSupport;
 
 import java.io.IOException;
 
-import static by.tarasiuk.ct.manager.AttributeName.LOCALE;
-import static by.tarasiuk.ct.manager.AttributeName.OFFER;
+import static by.tarasiuk.ct.controller.command.AttributeName.LOCALE;
+import static by.tarasiuk.ct.controller.command.AttributeName.OFFER;
 
 public class TradingFreightTag extends TagSupport {
     private static final long serialVersionUID = -5150821270017826128L;

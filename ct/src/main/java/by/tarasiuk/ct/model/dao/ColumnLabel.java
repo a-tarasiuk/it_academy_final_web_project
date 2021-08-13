@@ -1,4 +1,4 @@
-package by.tarasiuk.ct.manager;
+package by.tarasiuk.ct.model.dao;
 
 public final class ColumnLabel {
     /**

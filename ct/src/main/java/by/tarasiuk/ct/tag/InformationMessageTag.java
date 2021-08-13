@@ -1,23 +1,26 @@
 package by.tarasiuk.ct.tag;
 
-import by.tarasiuk.ct.manager.AttributeName;
+import by.tarasiuk.ct.controller.command.AttributeName;
 import by.tarasiuk.ct.util.MessageManager;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.jsp.JspException;
 import jakarta.servlet.jsp.JspWriter;
 import jakarta.servlet.jsp.tagext.TagSupport;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 
-import static by.tarasiuk.ct.manager.AttributeName.ACCOUNT_EMAIL;
-import static by.tarasiuk.ct.manager.AttributeName.INFORMATION_MESSAGE;
-import static by.tarasiuk.ct.manager.AttributeName.LOCALE;
-import static by.tarasiuk.ct.manager.AttributeName.TOKEN_NUMBER;
-import static by.tarasiuk.ct.manager.MessageKey.*;
+import static by.tarasiuk.ct.controller.command.AttributeName.ACCOUNT_EMAIL;
+import static by.tarasiuk.ct.controller.command.AttributeName.INFORMATION_MESSAGE;
+import static by.tarasiuk.ct.controller.command.AttributeName.LOCALE;
+import static by.tarasiuk.ct.controller.command.AttributeName.TOKEN_NUMBER;
+import static by.tarasiuk.ct.util.MessageKey.*;
 
 public class InformationMessageTag extends TagSupport {
     private static final long serialVersionUID = -5150821270017826128L;
+    private static final Logger LOGGER = LogManager.getLogger();
 
     @Override
     public int doStartTag() throws JspException {
@@ -54,7 +57,8 @@ public class InformationMessageTag extends TagSupport {
             case TRADING_SUCCESSFULLY_CREATED:
                 block.append("<span class=\"icon icon-check-circle x2 icon-green\"></span>");
             default:
-                break;  //todo
+                LOGGER.warn("Nonexistent constant '{}' in '{}'.", keyMessage, keyMessage.getClass());
+                throw new IllegalArgumentException(keyMessage);
         }
 
         block.append("</div>")

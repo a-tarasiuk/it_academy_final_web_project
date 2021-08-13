@@ -1,7 +1,7 @@
 package by.tarasiuk.ct.tag;
 
 import by.tarasiuk.ct.exception.ServiceException;
-import by.tarasiuk.ct.manager.AttributeName;
+import by.tarasiuk.ct.controller.command.AttributeName;
 import by.tarasiuk.ct.model.entity.impl.Company;
 import by.tarasiuk.ct.model.entity.impl.Employee;
 import by.tarasiuk.ct.model.entity.impl.Offer;
@@ -21,8 +21,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
-import static by.tarasiuk.ct.manager.AttributeName.LOCALE;
-import static by.tarasiuk.ct.manager.MessageKey.*;
+import static by.tarasiuk.ct.controller.command.AttributeName.LOCALE;
+import static by.tarasiuk.ct.util.MessageKey.*;
 
 public class TradingHistoryTag extends TagSupport {
     private static final long serialVersionUID = -5150821270017826128L;

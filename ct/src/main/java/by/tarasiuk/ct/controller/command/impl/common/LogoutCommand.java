@@ -3,8 +3,8 @@ package by.tarasiuk.ct.controller.command.impl.common;
 import by.tarasiuk.ct.controller.command.Command;
 import by.tarasiuk.ct.controller.RequestContent;
 import by.tarasiuk.ct.model.entity.impl.Account;
-import by.tarasiuk.ct.manager.AttributeName;
-import by.tarasiuk.ct.manager.PagePath;
+import by.tarasiuk.ct.controller.command.AttributeName;
+import by.tarasiuk.ct.controller.command.PagePath;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

@@ -13,8 +13,8 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 
 import static by.tarasiuk.ct.model.entity.impl.Account.Role;
-import static by.tarasiuk.ct.manager.AttributeName.ACCOUNT;
-import static by.tarasiuk.ct.manager.AttributeName.SHOW_ADMIN_PANEL;
+import static by.tarasiuk.ct.controller.command.AttributeName.ACCOUNT;
+import static by.tarasiuk.ct.controller.command.AttributeName.SHOW_ADMIN_PANEL;
 
 @WebFilter
 public class AdministratorFilter implements Filter {

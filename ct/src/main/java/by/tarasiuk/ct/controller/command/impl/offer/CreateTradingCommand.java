@@ -4,8 +4,8 @@ import by.tarasiuk.ct.controller.RequestContent;
 import by.tarasiuk.ct.controller.command.Command;
 import by.tarasiuk.ct.controller.command.CommandType;
 import by.tarasiuk.ct.exception.ServiceException;
-import by.tarasiuk.ct.manager.AttributeName;
-import by.tarasiuk.ct.manager.PagePath;
+import by.tarasiuk.ct.controller.command.AttributeName;
+import by.tarasiuk.ct.controller.command.PagePath;
 import by.tarasiuk.ct.model.entity.impl.Account;
 import by.tarasiuk.ct.model.entity.impl.Employee;
 import by.tarasiuk.ct.model.service.ServiceProvider;
@@ -17,16 +17,16 @@ import org.apache.logging.log4j.Logger;
 import java.util.HashMap;
 import java.util.Optional;
 
-import static by.tarasiuk.ct.manager.AttributeName.ACCOUNT;
-import static by.tarasiuk.ct.manager.AttributeName.MESSAGE_INCORRECT_TRADING_FREIGHT;
-import static by.tarasiuk.ct.manager.AttributeName.MESSAGE_QUERY_ERROR;
-import static by.tarasiuk.ct.manager.AttributeName.OFFER_ID;
-import static by.tarasiuk.ct.manager.AttributeName.TRADING_FREIGHT;
+import static by.tarasiuk.ct.controller.command.AttributeName.ACCOUNT;
+import static by.tarasiuk.ct.controller.command.AttributeName.MESSAGE_INCORRECT_TRADING_FREIGHT;
+import static by.tarasiuk.ct.controller.command.AttributeName.MESSAGE_QUERY_ERROR;
+import static by.tarasiuk.ct.controller.command.AttributeName.OFFER_ID;
+import static by.tarasiuk.ct.controller.command.AttributeName.TRADING_FREIGHT;
 
 public class CreateTradingCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
-    private static final TradingServiceImpl tradingService = ServiceProvider.getTradingService();
-    private static final EmployeeServiceImpl employeeService = ServiceProvider.getEmployeeService();
+    private final TradingServiceImpl tradingService = ServiceProvider.getTradingService();
+    private final EmployeeServiceImpl employeeService = ServiceProvider.getEmployeeService();
 
     @Override
     public String execute(RequestContent content) {

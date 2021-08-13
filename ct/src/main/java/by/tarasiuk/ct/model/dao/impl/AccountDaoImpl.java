@@ -1,7 +1,7 @@
 package by.tarasiuk.ct.model.dao.impl;
 
 import by.tarasiuk.ct.exception.DaoException;
-import by.tarasiuk.ct.manager.AttributeName;
+import by.tarasiuk.ct.controller.command.AttributeName;
 import by.tarasiuk.ct.model.dao.AccountDao;
 import by.tarasiuk.ct.model.dao.BaseDao;
 import by.tarasiuk.ct.model.entity.impl.Account;
@@ -65,10 +65,10 @@ public class AccountDaoImpl extends BaseDao<Account> implements AccountDao {
 
     @Override
     public Optional<Account> findEntityById(long id) throws DaoException {
-        Connection connection = connectionPool.getConnection();
         Optional<Account> findAccount;
 
-        try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_ACCOUNT_BY_ID)) {
+        try (Connection connection = connectionPool.getConnection();
+                PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_ACCOUNT_BY_ID)) {
             statement.setLong(IndexFind.ACCOUNT_ID, id);
 
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -84,8 +84,6 @@ public class AccountDaoImpl extends BaseDao<Account> implements AccountDao {
         } catch (SQLException e) {
             LOGGER.error("Error when performing account search by id '{}'.", id, e);
             throw new DaoException("Error when performing account search by id '" + id + "'.", e);
-        } finally {
-            closeConnection(connection);
         }
     }
 
@@ -100,16 +98,11 @@ public class AccountDaoImpl extends BaseDao<Account> implements AccountDao {
     }
 
     @Override
-    public boolean updateEntity(Account account) {
-        return true;
-    }
-
-    @Override
     public Optional<Account> findAccountByLogin(String login) throws DaoException {
-        Connection connection = connectionPool.getConnection();
         Optional<Account> findAccount;
 
-        try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_ACCOUNT_BY_LOGIN)) {
+        try (Connection connection = connectionPool.getConnection();
+                PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_ACCOUNT_BY_LOGIN)) {
             statement.setString(IndexFind.LOGIN, login);
 
             try (ResultSet result = statement.executeQuery()) {
@@ -123,8 +116,6 @@ public class AccountDaoImpl extends BaseDao<Account> implements AccountDao {
         } catch (SQLException e) {
             LOGGER.error("Error when performing account search by login '{}'.", login, e);
             throw new DaoException("Error when performing account search by login '" + login + "'.", e);
-        } finally {
-            closeConnection(connection);
         }
 
         return findAccount;
@@ -132,10 +123,10 @@ public class AccountDaoImpl extends BaseDao<Account> implements AccountDao {
 
     @Override
     public Optional<String> findPasswordByLogin(String login) throws DaoException {
-        Connection connection = connectionPool.getConnection();
         Optional<String> optionalPassword;
 
-        try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_PASSWORD_BY_LOGIN)) {
+        try (Connection connection = connectionPool.getConnection();
+                PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_PASSWORD_BY_LOGIN)) {
             statement.setString(IndexFind.LOGIN, login);
 
             try (ResultSet result = statement.executeQuery()) {
@@ -151,17 +142,15 @@ public class AccountDaoImpl extends BaseDao<Account> implements AccountDao {
         } catch (SQLException e) {
             LOGGER.error("Error when performing account search password by login '{}'.", login, e);
             throw new DaoException("Error when performing account search password by login '" + login + "'.", e);
-        } finally {
-            closeConnection(connection);
         }
     }
 
     @Override
     public Optional<Account> findAccountByEmail(String email) throws DaoException {
-        Connection connection = connectionPool.getConnection();
         Optional<Account> findAccount;
 
-        try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_ACCOUNT_BY_EMAIL)) {
+        try (Connection connection = connectionPool.getConnection();
+                PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_ACCOUNT_BY_EMAIL)) {
             statement.setString(IndexFind.EMAIL, email);
 
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -177,8 +166,6 @@ public class AccountDaoImpl extends BaseDao<Account> implements AccountDao {
         } catch (SQLException e) {
             LOGGER.error("Error when performing account search by email '{}'.", email, e);
             throw new DaoException("Error when performing account search by email '" + email + "'.", e);
-        } finally {
-            closeConnection(connection);
         }
     }
 
@@ -193,8 +180,6 @@ public class AccountDaoImpl extends BaseDao<Account> implements AccountDao {
      */
     @Override
     public boolean createAccount(Account account, String encodingPassword) throws DaoException {
-        Connection connection = connectionPool.getConnection();
-
         String firstName = account.getFirstName();
         String lastName = account.getLastName();
         String login = account.getLogin();
@@ -203,7 +188,8 @@ public class AccountDaoImpl extends BaseDao<Account> implements AccountDao {
         String role = account.getRole().toString();
         String status = account.getStatus().toString();
 
-        try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_CREATE_ACCOUNT)) {
+        try (Connection connection = connectionPool.getConnection();
+                PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_CREATE_ACCOUNT)) {
             statement.setString(CreateIndex.FIRST_NAME, firstName);
             statement.setString(CreateIndex.LAST_NAME, lastName);
             statement.setString(CreateIndex.LOGIN, login);
@@ -220,24 +206,22 @@ public class AccountDaoImpl extends BaseDao<Account> implements AccountDao {
         } catch (SQLException e) {
             LOGGER.error("Failed to create account '{}' in the database.", account, e);
             throw new DaoException("Failed to create account '" + account + "' in the database.", e);
-        } finally {
-            closeConnection(connection);
         }
     }
 
-    public boolean updateAccount(Account account) throws DaoException {
-        Connection connection = connectionPool.getConnection();
+    @Override
+    public boolean updateEntity(Account entity) throws DaoException {
+        long accountId = entity.getId();
+        String firstName = entity.getFirstName();
+        String lastName = entity.getLastName();
+        String login = entity.getLogin();
+        String email = entity.getEmail();
+        LocalDate registrationDate = entity.getRegistrationDate();
+        String role = entity.getRole().toString();
+        String status = entity.getStatus().toString();
 
-        long accountId = account.getId();
-        String firstName = account.getFirstName();
-        String lastName = account.getLastName();
-        String login = account.getLogin();
-        String email = account.getEmail();
-        LocalDate registrationDate = account.getRegistrationDate();
-        String role = account.getRole().toString();
-        String status = account.getStatus().toString();
-
-        try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_UPDATE_ACCOUNT)) {
+        try (Connection connection = connectionPool.getConnection();
+                PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_UPDATE_ACCOUNT)) {
             statement.setLong(UpdateIndex.ACCOUNT_ID, accountId);
             statement.setString(UpdateIndex.FIRST_NAME, firstName);
             statement.setString(UpdateIndex.LAST_NAME, lastName);
@@ -249,13 +233,11 @@ public class AccountDaoImpl extends BaseDao<Account> implements AccountDao {
 
             statement.executeUpdate();
 
-            LOGGER.info("Account was successfully updated in the database: {}.", account);
+            LOGGER.info("Account was successfully updated in the database: {}.", entity);
             return true;
         } catch (SQLException e) {
-            LOGGER.error("Failed to updateEntity account '{}' in the database.", account, e);
-            throw new DaoException("Failed to updateEntity account '" + account + "' in the database.", e);
-        } finally {
-            closeConnection(connection);
+            LOGGER.error("Failed to updateEntity entity '{}' in the database.", entity, e);
+            throw new DaoException("Failed to updateEntity entity '" + entity + "' in the database.", e);
         }
     }
 }

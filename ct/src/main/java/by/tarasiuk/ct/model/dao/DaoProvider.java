@@ -1,6 +1,11 @@
 package by.tarasiuk.ct.model.dao;
 
-import by.tarasiuk.ct.model.dao.impl.*;
+import by.tarasiuk.ct.model.dao.impl.AccountDaoImpl;
+import by.tarasiuk.ct.model.dao.impl.CompanyDaoImpl;
+import by.tarasiuk.ct.model.dao.impl.EmployeeDaoImpl;
+import by.tarasiuk.ct.model.dao.impl.OfferDaoImpl;
+import by.tarasiuk.ct.model.dao.impl.TokenDaoImpl;
+import by.tarasiuk.ct.model.dao.impl.TradingDaoImpl;
 
 public class DaoProvider {
     private static final AccountDaoImpl accountDao = AccountDaoImpl.getInstance();

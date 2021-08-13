@@ -2,12 +2,12 @@ package by.tarasiuk.ct.model.service.impl;
 
 import by.tarasiuk.ct.exception.DaoException;
 import by.tarasiuk.ct.exception.ServiceException;
-import by.tarasiuk.ct.manager.AttributeName;
+import by.tarasiuk.ct.controller.command.AttributeName;
 import by.tarasiuk.ct.model.dao.DaoProvider;
 import by.tarasiuk.ct.model.dao.impl.OfferDaoImpl;
 import by.tarasiuk.ct.model.entity.impl.Offer;
 import by.tarasiuk.ct.model.service.OfferService;
-import by.tarasiuk.ct.util.OfferValidator;
+import by.tarasiuk.ct.validator.OfferValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,18 +16,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import static by.tarasiuk.ct.manager.AttributeName.OFFER_ADDRESS_FROM;
-import static by.tarasiuk.ct.manager.AttributeName.OFFER_ADDRESS_TO;
-import static by.tarasiuk.ct.manager.AttributeName.OFFER_FREIGHT;
-import static by.tarasiuk.ct.manager.AttributeName.OFFER_PRODUCT_NAME;
-import static by.tarasiuk.ct.manager.AttributeName.OFFER_PRODUCT_VOLUME;
-import static by.tarasiuk.ct.manager.AttributeName.OFFER_PRODUCT_WEIGHT;
+import static by.tarasiuk.ct.controller.command.AttributeName.OFFER_ADDRESS_FROM;
+import static by.tarasiuk.ct.controller.command.AttributeName.OFFER_ADDRESS_TO;
+import static by.tarasiuk.ct.controller.command.AttributeName.OFFER_FREIGHT;
+import static by.tarasiuk.ct.controller.command.AttributeName.OFFER_PRODUCT_NAME;
+import static by.tarasiuk.ct.controller.command.AttributeName.OFFER_PRODUCT_VOLUME;
+import static by.tarasiuk.ct.controller.command.AttributeName.OFFER_PRODUCT_WEIGHT;
 import static by.tarasiuk.ct.model.entity.impl.Offer.Status;
 
 public class OfferServiceImpl implements OfferService {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final OfferServiceImpl instance = new OfferServiceImpl();
-    private static final OfferDaoImpl offerDao = DaoProvider.getOfferDao();
+    private final OfferDaoImpl offerDao = DaoProvider.getOfferDao();
 
     private OfferServiceImpl() {
     }

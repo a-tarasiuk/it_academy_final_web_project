@@ -3,7 +3,7 @@ package by.tarasiuk.ct.controller.command.impl.account;
 import by.tarasiuk.ct.controller.RequestContent;
 import by.tarasiuk.ct.controller.command.Command;
 import by.tarasiuk.ct.exception.ServiceException;
-import by.tarasiuk.ct.manager.PagePath;
+import by.tarasiuk.ct.controller.command.PagePath;
 import by.tarasiuk.ct.model.entity.impl.Account;
 import by.tarasiuk.ct.model.entity.impl.Token;
 import by.tarasiuk.ct.model.service.ServiceProvider;
@@ -17,22 +17,22 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import static by.tarasiuk.ct.manager.AttributeName.ACCOUNT;
-import static by.tarasiuk.ct.manager.AttributeName.ACCOUNT_EMAIL;
-import static by.tarasiuk.ct.manager.AttributeName.INFORMATION_MESSAGE;
-import static by.tarasiuk.ct.manager.AttributeName.LOCALE;
-import static by.tarasiuk.ct.manager.AttributeName.TOKEN_NUMBER;
-import static by.tarasiuk.ct.manager.MessageKey.ACCOUNT_ALREADY_ACTIVATED;
-import static by.tarasiuk.ct.manager.MessageKey.ACCOUNT_EMAIL_NOT_EXIST;
-import static by.tarasiuk.ct.manager.MessageKey.ACCOUNT_SUCCESSFULLY_ACTIVATED;
-import static by.tarasiuk.ct.manager.MessageKey.MESSAGE_QUERY_ERROR;
-import static by.tarasiuk.ct.manager.MessageKey.TOKEN_INCORRECT;
-import static by.tarasiuk.ct.manager.MessageKey.TOKEN_NOT_EXIST;
+import static by.tarasiuk.ct.controller.command.AttributeName.ACCOUNT;
+import static by.tarasiuk.ct.controller.command.AttributeName.ACCOUNT_EMAIL;
+import static by.tarasiuk.ct.controller.command.AttributeName.INFORMATION_MESSAGE;
+import static by.tarasiuk.ct.controller.command.AttributeName.LOCALE;
+import static by.tarasiuk.ct.controller.command.AttributeName.TOKEN_NUMBER;
+import static by.tarasiuk.ct.util.MessageKey.ACCOUNT_ALREADY_ACTIVATED;
+import static by.tarasiuk.ct.util.MessageKey.ACCOUNT_EMAIL_NOT_EXIST;
+import static by.tarasiuk.ct.util.MessageKey.ACCOUNT_SUCCESSFULLY_ACTIVATED;
+import static by.tarasiuk.ct.util.MessageKey.MESSAGE_QUERY_ERROR;
+import static by.tarasiuk.ct.util.MessageKey.TOKEN_INCORRECT;
+import static by.tarasiuk.ct.util.MessageKey.TOKEN_NOT_EXIST;
 
 public class ActivateAccountCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
-    private static final AccountServiceImpl accountService = ServiceProvider.getAccountService();
-    private static final TokenServiceImpl tokenService = ServiceProvider.getTokenService();
+    private final AccountServiceImpl accountService = ServiceProvider.getAccountService();
+    private final TokenServiceImpl tokenService = ServiceProvider.getTokenService();
 
     @Override
     public String execute(RequestContent content) {

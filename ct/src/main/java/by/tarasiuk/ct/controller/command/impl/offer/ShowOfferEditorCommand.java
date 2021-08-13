@@ -4,8 +4,8 @@ import by.tarasiuk.ct.controller.RequestContent;
 import by.tarasiuk.ct.controller.command.Command;
 import by.tarasiuk.ct.controller.command.CommandType;
 import by.tarasiuk.ct.exception.ServiceException;
-import by.tarasiuk.ct.manager.AttributeName;
-import by.tarasiuk.ct.manager.PagePath;
+import by.tarasiuk.ct.controller.command.AttributeName;
+import by.tarasiuk.ct.controller.command.PagePath;
 import by.tarasiuk.ct.model.entity.impl.Offer;
 import by.tarasiuk.ct.model.service.ServiceProvider;
 import by.tarasiuk.ct.model.service.impl.OfferServiceImpl;
@@ -18,7 +18,7 @@ import java.util.Optional;
 
 public class ShowOfferEditorCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
-    private static final OfferServiceImpl offerService = ServiceProvider.getOfferService();
+    private final OfferServiceImpl offerService = ServiceProvider.getOfferService();
 
     @Override
     public String execute(RequestContent content) {

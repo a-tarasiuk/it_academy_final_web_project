@@ -51,14 +51,12 @@
                     </div>
 
                     <div class="ew-row">
-                        <span>${pageContext.errorData.throwable}</span>
+                        <span>${exception.printStackTrace(pageContext.response.writer)}</span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <jsp:include page="/WEB-INF/jsp/common/footer.jsp"/>
 </div>
 </body>
 </html>

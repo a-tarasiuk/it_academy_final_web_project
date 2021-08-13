@@ -1,6 +1,6 @@
-package by.tarasiuk.ct.util;
+package by.tarasiuk.ct.validator;
 
-import by.tarasiuk.ct.manager.AttributeName;
+import by.tarasiuk.ct.controller.command.AttributeName;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

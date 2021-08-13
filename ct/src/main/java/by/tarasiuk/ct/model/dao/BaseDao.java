@@ -17,8 +17,8 @@ public abstract class BaseDao <E extends Entity> {
     protected ConnectionPool connectionPool = ConnectionPool.getInstance();
 
     public abstract boolean createEntity(E entity) throws DaoException;
-    public abstract List<E> findAll() throws DaoException;
     public abstract boolean updateEntity(E entity) throws DaoException;
+    public abstract List<E> findAll() throws DaoException;
     public abstract Optional<E> findEntityById(long id) throws DaoException;
 
     public void closeConnection(Connection connection) {
