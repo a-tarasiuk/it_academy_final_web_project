@@ -2,7 +2,8 @@ package by.tarasiuk.ct.util;
 
 import java.util.ResourceBundle;
 
-import static by.tarasiuk.ct.manager.AttributeName.*;
+import static by.tarasiuk.ct.manager.AttributeName.EN_US;
+import static by.tarasiuk.ct.manager.AttributeName.RU_RU;
 
 /**
  * Message manager, that helps with tags localization.
@@ -21,20 +22,24 @@ public class MessageManager {
     public static String findMassage(String key, String locale) {
         String message;
 
-        try {
-            switch (locale != null ? locale : LOCALE) {
-                case RU_RU:
-                    message = ruRu.getString(key);
-                    break;
-                case EN_US:
-                    message = enUs.getString(key);
-                    break;
-                default:
-                    message = baseLocale.getString(key);
-                    break;
-            }
-        } catch (NullPointerException e) {
+        if(locale == null || locale.isEmpty()) {
             message = baseLocale.getString(key);
+        } else {
+            try {
+                switch (locale.toUpperCase()) {
+                    case RU_RU:
+                        message = ruRu.getString(key);
+                        break;
+                    case EN_US:
+                        message = enUs.getString(key);
+                        break;
+                    default:
+                        message = baseLocale.getString(key);
+                        break;
+                }
+            } catch (NullPointerException e) {
+                message = baseLocale.getString(key);
+            }
         }
 
         return message;
