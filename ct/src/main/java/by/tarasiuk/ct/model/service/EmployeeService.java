@@ -7,8 +7,6 @@ import java.util.Optional;
 
 public interface EmployeeService {
     boolean createEmployee(long accountId, long companyId) throws ServiceException;
-
     Optional<Employee> findEmployeeByAccountId(long accountId) throws ServiceException;
-
     Optional<Employee> findEmployeeById(long employeeId) throws ServiceException;
 }

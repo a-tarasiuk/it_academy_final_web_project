@@ -13,7 +13,7 @@ import by.tarasiuk.ct.model.service.impl.OfferServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import static by.tarasiuk.ct.manager.AttributeName.ACCOUNT;
@@ -30,8 +30,8 @@ public class CreateOfferCommand implements Command {
     @Override
     public String execute(RequestContent content) {
         String page;
-        HashMap<String, String> offerData = content.getRequestParameters();
-        HashMap<String, Object> sessionAttributes = content.getSessionAttributes();
+        Map<String, String> offerData = content.getRequestParameters();
+        Map<String, Object> sessionAttributes = content.getSessionAttributes();
 
         try {
             if(!offerService.isValidOfferData(offerData)) {

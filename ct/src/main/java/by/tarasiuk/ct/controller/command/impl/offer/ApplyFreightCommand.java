@@ -27,7 +27,6 @@ public class ApplyFreightCommand implements Command {
         String page = PagePath.FREIGHT_APPLY;
         Map<String, String> parameters = content.getRequestParameters();
         long tradingId = Long.parseLong(parameters.get(AttributeName.TRADING_ID));
-        System.out.println("TRADING ID:" + tradingId);
 
         try {
             Optional<Trading> findTrading = tradingService.findTradingById(tradingId);

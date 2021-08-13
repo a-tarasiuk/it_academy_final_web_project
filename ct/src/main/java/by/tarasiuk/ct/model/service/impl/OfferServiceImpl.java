@@ -12,7 +12,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -38,7 +37,7 @@ public class OfferServiceImpl implements OfferService {
     }
 
     @Override
-    public boolean createOffer(long employeeId, HashMap<String, String> offerData) throws ServiceException {
+    public boolean createOffer(long employeeId, Map<String, String> offerData) throws ServiceException {
         float productWeight = Float.parseFloat(offerData.get(OFFER_PRODUCT_WEIGHT));
         float productVolume = Float.parseFloat(offerData.get(OFFER_PRODUCT_VOLUME));
         float freight = Float.parseFloat(offerData.get(OFFER_FREIGHT));
