@@ -5,7 +5,7 @@
 
 <fmt:setLocale value="${sessionScope.locale}" scope="session"/>
 <fmt:setBundle basename="locale"/>
-<jsp:useBean id="account" scope="session" class="by.tarasiuk.ct.model.entity.impl.Account"/>
+<jsp:useBean id="company" scope="request" class="by.tarasiuk.ct.model.entity.impl.Company"/>
 
 <html>
     <head>
@@ -15,8 +15,8 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/icon.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/font-awesome.min.css">
-        <script src="${pageContext.request.contextPath}/js/password_validation.js"></script>
-        <title><fmt:message key="account.page.password"/></title>
+        <script src="${pageContext.request.contextPath}/js/company_validation.js"></script>
+        <title><fmt:message key="company.title.settings"/></title>
     </head>
 
     <body>
@@ -32,27 +32,18 @@
                 <div id="m-right">
                     <div id="mr-up">
                         <div id="window-title">
-                            <fmt:message key="account.page.password"/>
+                            <fmt:message key="company.title.settings"/>
                         </div>
-
-                        <form action="controller" method="post">
-                            <input type="hidden" name="command" value="show_account_settings_page">
-
-                            <button class="btn-confirm" href="${pageContext.request.contextPath}/controller?command=go_to_create_offer_page">
-                                <span class="icon icon-cog">&nbsp;</span>
-                                <fmt:message key="account.page.setting"/>
-                            </button>
-                        </form>
                     </div>
 
                     <div id="mr-down">
                         <form action="controller" method="post">
-                            <input type="hidden" name="command" value="update_password">
+                            <input type="hidden" name="command" value="update_company">
 
                             <div class="ad-row">
                                 <div class="sub-title">
                                     <span class="icon icon-circle" style="color: dodgerblue">&nbsp;</span>
-                                    <fmt:message key="page.title.account.password"/>
+                                    <fmt:message key="company.page.info"/>
                                 </div>
                             </div>
 
@@ -60,15 +51,21 @@
                                 <div class="block">
                                     <div class="data">
                                         <div class="icon-block">
-                                            <span class="icon icon-lock"></span>
+                                            <span class="icon icon-building"></span>
                                         </div>
 
                                         <div class="input-block">
-                                            <input type="password" id="account_old_password" name="account_old_password" placeholder="<fmt:message key="placeholder.password.old"/>" oninput="validateOldPassword()" required autofocus>
+                                            <input type="text" value="${company.name}" disabled>
                                         </div>
                                     </div>
 
-                                    <label id="description_account_old_password" class="description"><fmt:message key="description.valid.userPassword"/></label>
+                                    <label id="description_company_name" class="description"><fmt:message key="description.valid.companyName"/></label>
+
+                                    <div class="error-message row">
+                                        <c:if test="${error_company_already_exist == true}">
+                                            <fmt:message key="message.exist.company"/>
+                                        </c:if>
+                                    </div>
                                 </div>
                             </div>
 
@@ -76,29 +73,29 @@
                                 <div class="block">
                                     <div class="data">
                                         <div class="icon-block">
-                                            <span class="icon icon-lock"></span>
+                                            <span class="icon icon-map-marker"></span>
                                         </div>
 
                                         <div class="input-block">
-                                            <input type="password" id="account_new_password" name="account_new_password" placeholder="<fmt:message key="placeholder.password.new"/>" oninput="validateNewPassword()" required>
+                                            <input type="text" id="company_address" name="company_address" value="${company.address}" oninput="validateCompanyAddress()" required>
                                         </div>
                                     </div>
 
-                                    <label id="description_account_new_password" class="description"><fmt:message key="description.valid.userPassword"/></label>
+                                    <label id="description_company_address" class="description"><fmt:message key="description.valid.companyAddress"/></label>
                                 </div>
 
                                 <div class="block">
                                     <div class="data">
                                         <div class="icon-block">
-                                            <span class="icon icon-lock"></span>
+                                            <span class="icon icon-phone"></span>
                                         </div>
 
                                         <div class="input-block">
-                                            <input type="password" id="account_confirm_new_password" name="account_confirm_new_password" placeholder="<fmt:message key="placeholder.password.confirmNew"/>" oninput="validateConfirmNewPassword()" required>
+                                            <input type="text" id="company_phone_number" name="company_phone_number" value="${company.phoneNumber}" oninput="validateCompanyPhoneNumber()" required>
                                         </div>
                                     </div>
 
-                                    <label id="description_account_confirm_new_password" class="description"><fmt:message key="description.valid.userPassword"/></label>
+                                    <label id="description_company_phone_number" class="description"><fmt:message key="description.valid.companyPhoneNumber"/></label>
                                 </div>
                             </div>
 
@@ -111,12 +108,7 @@
 
                                     <c:if test="${invalid_data == true}">
                                         <span class="icon icon-circle icon-red">&nbsp;</span>
-                                        <fmt:message key="message.invalid.password"/>
-                                    </c:if>
-
-                                    <c:if test="${wrong_password == true}">
-                                        <span class="icon icon-circle icon-red">&nbsp;</span>
-                                        <fmt:message key="message.wrong.password"/>
+                                        <fmt:message key="message.invalid.company.data"/>
                                     </c:if>
                                 </div>
 
@@ -129,9 +121,9 @@
                             </div>
 
                             <div class="ad-row">
-                                <button class="btn-confirm" type="submit">
+                                <button class="btn-confirm" type="submit" name="company_id" value="${company.id}">
                                     <span class="icon icon-floppy-o">&nbsp;</span>
-                                    <fmt:message key="button.label.password.set"/>
+                                    <fmt:message key="button.label.save"/>
                                 </button>
                             </div>
                         </form>

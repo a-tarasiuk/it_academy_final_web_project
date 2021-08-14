@@ -1,12 +1,12 @@
 package by.tarasiuk.ct.model.service.impl;
 
-import by.tarasiuk.ct.model.entity.impl.Company;
 import by.tarasiuk.ct.exception.DaoException;
 import by.tarasiuk.ct.exception.ServiceException;
 import by.tarasiuk.ct.model.dao.DaoProvider;
-import by.tarasiuk.ct.model.dao.impl.CompanyDaoImpl;
-import by.tarasiuk.ct.model.service.CompanyService;
 import by.tarasiuk.ct.model.dao.builder.CompanyDaoBuilder;
+import by.tarasiuk.ct.model.dao.impl.CompanyDaoImpl;
+import by.tarasiuk.ct.model.entity.impl.Company;
+import by.tarasiuk.ct.model.service.CompanyService;
 import by.tarasiuk.ct.validator.CompanyValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -29,6 +29,10 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public boolean validateCompany(Map<String, String> companyData) throws ServiceException {
         return CompanyValidator.isValidCompany(companyData);
+    }
+
+    public boolean validateCompanyData(String address, String phoneNumber) throws ServiceException {
+        return CompanyValidator.isValidCompanyData(address, phoneNumber);
     }
 
     @Override
@@ -77,5 +81,31 @@ public class CompanyServiceImpl implements CompanyService {
         }
 
         return findCompany;
+    }
+
+    public boolean updateCompanyDataById(long companyId, String address, String phoneNumber) throws ServiceException {
+        boolean result = false;
+
+        try {
+            Optional<Company> findCompany = companyDao.findEntityById(companyId);
+
+            if(findCompany.isPresent()) {
+                Company company = findCompany.get();
+                company.setAddress(address);
+                company.setPhoneNumber(phoneNumber);
+
+                result = companyDao.updateEntity(company);
+            }
+
+        } catch (DaoException e) {
+            LOGGER.error("Error when updating company data by company id '{}'.", companyId, e);
+            throw new ServiceException("Error when updating company data by company id '" + companyId + "'.", e);
+        }
+
+        LOGGER.info(result
+                ? "Successfully updated company data for company with ID '{}'."
+                : "Company data for company with ID '{}' not updated.", companyId);
+
+        return result;
     }
 }

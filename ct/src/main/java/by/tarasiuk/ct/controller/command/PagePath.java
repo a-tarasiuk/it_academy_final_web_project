@@ -46,6 +46,11 @@ public final class PagePath {
     public static final String FREIGHT_APPLY = "/WEB-INF/jsp/info/freight_apply_info.jsp";
 
     /**
+     * Company pages
+     */
+    public static final String COMPANY_SETTINGS = "/WEB-INF/jsp/company/company_settings.jsp";
+
+    /**
      * Trading pages
      */
     public static final String TRADING_VIEWER = "/WEB-INF/jsp/trading/trading_viewer.jsp";

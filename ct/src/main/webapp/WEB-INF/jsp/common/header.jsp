@@ -30,7 +30,7 @@
 
                 <div class="content-wrapper">
                     <form class="dropdown-content" action="controller" method="get">
-                        <button type="submit" name="command" value="go_to_account_editor_page">
+                        <button type="submit" name="command" value="show_company_settings_page">
                             <span class="icon icon-cog">&nbsp;</span>
                             <fmt:message key="header.button.label.companySettings"/>
                         </button>

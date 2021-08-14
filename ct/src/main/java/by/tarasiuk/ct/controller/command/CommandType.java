@@ -1,12 +1,14 @@
 package by.tarasiuk.ct.controller.command;
 
 import by.tarasiuk.ct.controller.command.impl.account.ActivateAccountCommand;
-import by.tarasiuk.ct.controller.command.impl.account.ShowAccountSettingsCommand;
+import by.tarasiuk.ct.controller.command.impl.account.ShowAccountSettingsPageCommand;
 import by.tarasiuk.ct.controller.command.impl.account.UpdateAccountCommand;
 import by.tarasiuk.ct.controller.command.impl.common.ChangeLocalePageCommand;
 import by.tarasiuk.ct.controller.command.impl.common.LogoutCommand;
 import by.tarasiuk.ct.controller.command.impl.common.SignInCommand;
 import by.tarasiuk.ct.controller.command.impl.common.SignUpCommand;
+import by.tarasiuk.ct.controller.command.impl.company.ShowCompanySettingsPageCommand;
+import by.tarasiuk.ct.controller.command.impl.company.UpdateCompanyCommand;
 import by.tarasiuk.ct.controller.command.impl.go.GoToAccountEmployeesPageCommand;
 import by.tarasiuk.ct.controller.command.impl.go.GoToAccountPasswordPageCommand;
 import by.tarasiuk.ct.controller.command.impl.go.GoToCreateOfferPageCommand;
@@ -45,7 +47,7 @@ public enum CommandType {
     GO_TO_CREATE_OFFER_PAGE(new GoToCreateOfferPageCommand()),
     GO_TO_ACCOUNT_EMPLOYEES_PAGE(new GoToAccountEmployeesPageCommand()),
     GO_TO_ACCOUNT_PASSWORD_PAGE(new GoToAccountPasswordPageCommand()),
-    SHOW_ACCOUNT_SETTINGS(new ShowAccountSettingsCommand()),
+    SHOW_ACCOUNT_SETTINGS_PAGE(new ShowAccountSettingsPageCommand()),
     SHOW_OPEN_OFFERS(new ShowOpenOffersCommand()),
     SHOW_OFFER_EDITOR(new ShowOfferEditorCommand()),
     SHOW_TRADING_OFFER(new ShowTradingOfferCommand()),
@@ -53,11 +55,13 @@ public enum CommandType {
     SHOW_ACCOUNT_OFFERS(new ShowAccountListOfferCommand()),
     SHOW_ACCOUNT_OFFER(new ShowAccountOfferCommand()),
     SHOW_ACCOUNT_TRADINGS(new ShowAccountTradingsCommand()),
+    SHOW_COMPANY_SETTINGS_PAGE(new ShowCompanySettingsPageCommand()),
     DEACTIVATE_OFFER(new DeactivateOfferCommand()),
     CREATE_TRADING(new CreateTradingCommand()),
     APPLY_FREIGHT(new ApplyFreightCommand()),
     UPDATE_ACCOUNT(new UpdateAccountCommand()),
     UPDATE_PASSWORD(new UpdatePasswordCommand()),
+    UPDATE_COMPANY(new UpdateCompanyCommand()),
     UPDATE_OFFER(new UpdateOfferCommand());
 
     /**

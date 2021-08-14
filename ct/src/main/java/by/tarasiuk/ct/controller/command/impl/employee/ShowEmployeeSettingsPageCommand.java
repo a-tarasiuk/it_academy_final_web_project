@@ -1,4 +1,4 @@
-package by.tarasiuk.ct.controller.command.impl.account;
+package by.tarasiuk.ct.controller.command.impl.employee;
 
 import by.tarasiuk.ct.controller.RequestContent;
 import by.tarasiuk.ct.controller.command.AttributeName;
@@ -15,7 +15,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.Map;
 import java.util.Optional;
 
-public class ShowAccountSettingsCommand implements Command {
+public class ShowEmployeeSettingsPageCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     private final AccountServiceImpl accountService = ServiceProvider.getAccountService();
 
@@ -34,11 +34,11 @@ public class ShowAccountSettingsCommand implements Command {
                 requestContent.putRequestAttribute(AttributeName.ACCOUNT, currentAccount);
             }
         } catch (ServiceException e) {
-            LOGGER.error("Failed to process the command '{}'.", CommandType.SHOW_ACCOUNT_SETTINGS, e);
+            LOGGER.error("Failed to process the command '{}'.", CommandType.SHOW_ACCOUNT_SETTINGS_PAGE, e);
             page = PagePath.ACCOUNT_OFFERS;
         }
 
-        LOGGER.info("Command '{}' return path '{}'", CommandType.SHOW_ACCOUNT_SETTINGS, PagePath.ACCOUNT_SETTINGS);
+        LOGGER.info("Command '{}' return path '{}'", CommandType.SHOW_ACCOUNT_SETTINGS_PAGE, PagePath.ACCOUNT_SETTINGS);
         return page;
     }
 }

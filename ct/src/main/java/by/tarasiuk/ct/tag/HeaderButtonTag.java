@@ -57,7 +57,7 @@ public class HeaderButtonTag extends TagSupport {
                     .append("</button>")
                     .append("<div class=\"content-wrapper\">")
                     .append("<form class=\"dropdown-content\" method=\"get\" action=\"controller\">")
-                    .append("<button type=\"submit\" name=\"command\" value=\"show_account_settings\">")
+                    .append("<button type=\"submit\" name=\"command\" value=\"show_account_settings_page\">")
                     .append("<span class=\"icon icon-cog\">&nbsp;</span>")
                     .append(labelSetting)
                     .append("</button>")

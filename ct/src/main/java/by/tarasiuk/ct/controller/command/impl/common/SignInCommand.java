@@ -1,13 +1,16 @@
 package by.tarasiuk.ct.controller.command.impl.common;
 
 import by.tarasiuk.ct.controller.RequestContent;
+import by.tarasiuk.ct.controller.command.AttributeName;
 import by.tarasiuk.ct.controller.command.Command;
 import by.tarasiuk.ct.controller.command.CommandType;
-import by.tarasiuk.ct.exception.ServiceException;
 import by.tarasiuk.ct.controller.command.PagePath;
+import by.tarasiuk.ct.exception.ServiceException;
 import by.tarasiuk.ct.model.entity.impl.Account;
+import by.tarasiuk.ct.model.entity.impl.Employee;
 import by.tarasiuk.ct.model.service.ServiceProvider;
 import by.tarasiuk.ct.model.service.impl.AccountServiceImpl;
+import by.tarasiuk.ct.model.service.impl.EmployeeServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -24,6 +27,7 @@ import static by.tarasiuk.ct.controller.command.AttributeName.MESSAGE_NOT_ACTIVA
 public class SignInCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     private final AccountServiceImpl accountService = ServiceProvider.getAccountService();
+    private final EmployeeServiceImpl employeeService = ServiceProvider.getEmployeeService();
 
     @Override
     public String execute(RequestContent content) {
@@ -48,7 +52,13 @@ public class SignInCommand implements Command {
 
                     switch (status) {
                         case ACTIVATED:
-                            content.putSessionAttribute(ACCOUNT, account);
+                            long accountId = account.getId();
+                            Optional<Employee> findEmployee = employeeService.findEmployeeByAccountId(accountId);
+                            if(findEmployee.isPresent()) {
+                                Employee employee = findEmployee.get();
+                                content.putSessionAttribute(AttributeName.EMPLOYEE, employee);
+                                content.putSessionAttribute(ACCOUNT, account);
+                            }
                             page = PagePath.MAIN;
                             LOGGER.info("Sign in successfully for account with login '{}' (status '{}', role '{}').", login, status, account.getRole());
                             break;

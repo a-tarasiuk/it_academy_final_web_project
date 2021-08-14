@@ -17,7 +17,6 @@ public final class AttributeName {
      * Administrator attributes
      */
     public static final String SHOW_ADMIN_PANEL = "show_administrator_panel";
-
     /**
      * Account attributes from JSP page.
      */
@@ -68,6 +67,7 @@ public final class AttributeName {
     /**
      * Employees attributes.
      */
+    public static final String EMPLOYEE = "employee";
     public static final String EMPLOYEE_ID = "employee_id";
 
     /**

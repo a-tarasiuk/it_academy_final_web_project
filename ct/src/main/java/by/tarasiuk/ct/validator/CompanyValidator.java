@@ -22,7 +22,7 @@ public class CompanyValidator {
         boolean result;
 
         if(companyData == null || companyData.isEmpty()) {
-            LOGGER.info("Incorrect company data!");
+            LOGGER.info("Incorrect company!");
             result = false;
         } else {
             String name = companyData.get(AttributeName.COMPANY_NAME);
@@ -30,6 +30,19 @@ public class CompanyValidator {
             String phoneNumber = companyData.get(AttributeName.COMPANY_PHONE_NUMBER);
 
             result = isValidName(name) && isValidAddress(address) && isValidPhoneNumber(phoneNumber);
+        }
+
+        return result;
+    }
+
+    public static boolean isValidCompanyData(String address, String phoneNumber) {
+        boolean result;
+
+        if(address == null || phoneNumber == null || address.isEmpty() || phoneNumber.isEmpty()) {
+            LOGGER.info("Incorrect company data!");
+            result = false;
+        } else {
+            result = isValidAddress(address) && isValidPhoneNumber(phoneNumber);
         }
 
         return result;
