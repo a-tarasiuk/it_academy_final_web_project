@@ -9,8 +9,8 @@
     <short-name>ct</short-name>
 
     <tag>
-        <name>account_buttons</name>
-        <tag-class>by.tarasiuk.ct.tag.AccountButtonTag</tag-class>
+        <name>header_buttons</name>
+        <tag-class>by.tarasiuk.ct.tag.HeaderButtonTag</tag-class>
         <body-content>empty</body-content>
     </tag>
 

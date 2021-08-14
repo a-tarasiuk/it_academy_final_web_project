@@ -111,7 +111,7 @@ public class AccountValidator {
         return result;
     }
 
-    private static boolean isValidPassword(String password) {
+    public static boolean isValidPassword(String password) {
         boolean result = password != null && !password.isEmpty() && isFoundMatcher(password, REGEX_VALID_ACCOUNT_PASSWORD);
         LOGGER.info(result ? "{} '{}' is valid." : "{} '{}' invalid.", "Password", password);
         return result;

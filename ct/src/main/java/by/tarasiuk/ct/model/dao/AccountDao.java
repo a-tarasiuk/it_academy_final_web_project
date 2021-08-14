@@ -8,6 +8,9 @@ import java.util.Optional;
 public interface AccountDao {
     boolean createAccount(Account account, String encodingPassword) throws DaoException;
     Optional<Account> findAccountByLogin(String login) throws DaoException;
+
+    Optional<String> findPasswordByAccountId(long accountId) throws DaoException;
+
     Optional<Account> findAccountByEmail(String email) throws DaoException;
     Optional<String> findPasswordByLogin(String login) throws DaoException;
 }

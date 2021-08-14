@@ -12,7 +12,7 @@ public class GoToAccountPasswordPageCommand implements Command {
 
     @Override
     public String execute(RequestContent requestContent) {
-        LOGGER.info("Command '{}' return path '{}'", CommandType.GO_TO_MAIN_PAGE, PagePath.MAIN);
-        return PagePath.MAIN;
+        LOGGER.info("Command '{}' return path '{}'", CommandType.GO_TO_ACCOUNT_PASSWORD_PAGE, PagePath.ACCOUNT_PASSWORD);
+        return PagePath.ACCOUNT_PASSWORD;
     }
 }

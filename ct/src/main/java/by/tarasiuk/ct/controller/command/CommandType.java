@@ -8,6 +8,7 @@ import by.tarasiuk.ct.controller.command.impl.common.LogoutCommand;
 import by.tarasiuk.ct.controller.command.impl.common.SignInCommand;
 import by.tarasiuk.ct.controller.command.impl.common.SignUpCommand;
 import by.tarasiuk.ct.controller.command.impl.go.GoToAccountEmployeesPageCommand;
+import by.tarasiuk.ct.controller.command.impl.go.GoToAccountPasswordPageCommand;
 import by.tarasiuk.ct.controller.command.impl.go.GoToCreateOfferPageCommand;
 import by.tarasiuk.ct.controller.command.impl.go.GoToMainPageCommand;
 import by.tarasiuk.ct.controller.command.impl.go.GoToSignInPageCommand;
@@ -24,6 +25,7 @@ import by.tarasiuk.ct.controller.command.impl.offer.ShowOpenOffersCommand;
 import by.tarasiuk.ct.controller.command.impl.offer.ShowTradingOfferCommand;
 import by.tarasiuk.ct.controller.command.impl.offer.ShowTradingViewerCommand;
 import by.tarasiuk.ct.controller.command.impl.offer.UpdateOfferCommand;
+import by.tarasiuk.ct.controller.command.impl.offer.UpdatePasswordCommand;
 
 /**
  * All available commands of the application
@@ -42,6 +44,7 @@ public enum CommandType {
     GO_TO_SIGN_UP_PAGE(new GoToSignUpPageCommand()),
     GO_TO_CREATE_OFFER_PAGE(new GoToCreateOfferPageCommand()),
     GO_TO_ACCOUNT_EMPLOYEES_PAGE(new GoToAccountEmployeesPageCommand()),
+    GO_TO_ACCOUNT_PASSWORD_PAGE(new GoToAccountPasswordPageCommand()),
     SHOW_ACCOUNT_SETTINGS(new ShowAccountSettingsCommand()),
     SHOW_OPEN_OFFERS(new ShowOpenOffersCommand()),
     SHOW_OFFER_EDITOR(new ShowOfferEditorCommand()),
@@ -54,6 +57,7 @@ public enum CommandType {
     CREATE_TRADING(new CreateTradingCommand()),
     APPLY_FREIGHT(new ApplyFreightCommand()),
     UPDATE_ACCOUNT(new UpdateAccountCommand()),
+    UPDATE_PASSWORD(new UpdatePasswordCommand()),
     UPDATE_OFFER(new UpdateOfferCommand());
 
     /**

@@ -10,7 +10,7 @@ import jakarta.servlet.jsp.tagext.TagSupport;
 
 import java.io.IOException;
 
-public class AccountButtonTag extends TagSupport {
+public class HeaderButtonTag extends TagSupport {
     private static final long serialVersionUID = -5150821270017826128L;
 
     @Override

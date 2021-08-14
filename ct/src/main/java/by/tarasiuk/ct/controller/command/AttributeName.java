@@ -31,6 +31,9 @@ public final class AttributeName {
     public static final String ACCOUNT_ROLE = "account_role";
     public static final String ACCOUNT_STATUS = "account_status";
     public static final String ACCOUNT_PASSWORD = "account_password";
+    public static final String ACCOUNT_OLD_PASSWORD = "account_old_password";
+    public static final String ACCOUNT_NEW_PASSWORD = "account_new_password";
+    public static final String ACCOUNT_CONFIRM_NEW_PASSWORD = "account_confirm_new_password";
     public static final String ACCOUNT_PASSWORD_ENCODED = "account_password_encoded";
     public static final String ACCOUNT_CONFIRM_PASSWORD = "account_confirm_password";
 
@@ -81,6 +84,7 @@ public final class AttributeName {
      */
     public static final String SUCCESSFUL_OPERATION = "successful_operation";
     public static final String INVALID_DATA = "invalid_data";
+    public static final String WRONG_PASSWORD = "wrong_password";
     public static final String INFORMATION_MESSAGE = "information_message";
     public static final String MESSAGE_QUERY_ERROR = "message_query_error";
     public static final String MESSAGE_ERROR_LOGIN_ALREADY_EXIST = "error_login_already_exist";

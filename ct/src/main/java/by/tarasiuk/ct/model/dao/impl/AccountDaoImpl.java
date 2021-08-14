@@ -25,6 +25,8 @@ public class AccountDaoImpl extends BaseDao<Account> implements AccountDao {
     private static final String SQL_PROCEDURE_FIND_ACCOUNT_BY_ID = "{CALL find_account_by_id (?)}";
     private static final String SQL_PROCEDURE_FIND_ACCOUNT_BY_LOGIN = "{CALL find_account_by_login (?)}";
     private static final String SQL_PROCEDURE_FIND_PASSWORD_BY_LOGIN = "{CALL find_password_by_login (?)}";
+    private static final String SQL_PROCEDURE_FIND_PASSWORD_BY_ACCOUNT_ID = "{CALL find_password_by_account_id (?)}";
+    private static final String SQL_PROCEDURE_SET_PASSWORD_BY_ACCOUNT_ID = "{CALL set_password_by_account_id (?, ?)}";
     private static final String SQL_PROCEDURE_FIND_ACCOUNT_BY_EMAIL = "{CALL find_account_by_email (?)}";
     private static final String SQL_PROCEDURE_UPDATE_ACCOUNT = "{CALL update_account (?, ?, ?, ?, ?, ?, ?, ?)}";
 
@@ -55,6 +57,7 @@ public class AccountDaoImpl extends BaseDao<Account> implements AccountDao {
     private static final class UpdateIndex {
         private static final int ACCOUNT_ID = 1;
         private static final int FIRST_NAME = 2;
+        private static final int ENCODING_PASSWORD = 2;
         private static final int LAST_NAME = 3;
         private static final int LOGIN = 4;
         private static final int EMAIL = 5;
@@ -142,6 +145,30 @@ public class AccountDaoImpl extends BaseDao<Account> implements AccountDao {
         } catch (SQLException e) {
             LOGGER.error("Error when performing account search password by login '{}'.", login, e);
             throw new DaoException("Error when performing account search password by login '" + login + "'.", e);
+        }
+    }
+
+    @Override
+    public Optional<String> findPasswordByAccountId(long accountId) throws DaoException {
+        Optional<String> optionalPassword;
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_PASSWORD_BY_ACCOUNT_ID)) {
+            statement.setLong(IndexFind.ACCOUNT_ID, accountId);
+
+            try (ResultSet result = statement.executeQuery()) {
+                if (result.next()) {
+                    String password = result.getString(AttributeName.ACCOUNT_PASSWORD_ENCODED);
+                    optionalPassword = Optional.of(password);
+                } else {
+                    optionalPassword = Optional.empty();
+                }
+            }
+
+            return optionalPassword;
+        } catch (SQLException e) {
+            LOGGER.error("Error when performing search password by account id '{}'.", accountId, e);
+            throw new DaoException("Error when performing search password by account id '" + accountId + "'.", e);
         }
     }
 
@@ -236,8 +263,24 @@ public class AccountDaoImpl extends BaseDao<Account> implements AccountDao {
             LOGGER.info("Account was successfully updated in the database: {}.", entity);
             return true;
         } catch (SQLException e) {
-            LOGGER.error("Failed to updateEntity entity '{}' in the database.", entity, e);
-            throw new DaoException("Failed to updateEntity entity '" + entity + "' in the database.", e);
+            LOGGER.error("Failed to update account '{}' in the database.", entity, e);
+            throw new DaoException("Failed to update account '" + entity + "' in the database.", e);
+        }
+    }
+
+    public boolean updatePasswordByAccountId(long accountId, String encodingPassword) throws DaoException {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_SET_PASSWORD_BY_ACCOUNT_ID)) {
+            statement.setLong(UpdateIndex.ACCOUNT_ID, accountId);
+            statement.setString(UpdateIndex.ENCODING_PASSWORD, encodingPassword);
+
+            statement.executeUpdate();
+
+            LOGGER.info("Password was successfully updated for account with ID '{}' in the database.", accountId);
+            return true;
+        } catch (SQLException e) {
+            LOGGER.error("Failed to update password for account with ID '{}' in the database.", accountId, e);
+            throw new DaoException("Failed to update password for account with ID '" + accountId + "' in the database.", e);
         }
     }
 }

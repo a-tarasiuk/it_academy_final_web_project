@@ -47,6 +47,59 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    public boolean changeAccountPasswordByAccountId(long accountId, String newPassword) throws ServiceException {
+        boolean result;
+
+        try {
+            String encodingNewPassword = BouncyCastle.encoding(newPassword);
+
+            result = accountDao.updatePasswordByAccountId(accountId, encodingNewPassword);
+
+            LOGGER.info(result
+                    ? "Password successfully was changed for account with ID '{}'."
+                    : "Failed to change password for account with ID", accountId);
+        } catch (DaoException e) {
+            LOGGER.error("Error on change password for account with ID '{}'.", accountId, e);
+            throw new ServiceException("Error on change password for account with ID '" + accountId + "'.", e);
+        }
+
+        return result;
+    }
+
+    public boolean isAccountPasswordByAccountId(long accountId, String password) throws ServiceException {
+        boolean result = false;
+
+        try {
+            Optional<String> findCurrentPassword = accountDao.findPasswordByAccountId(accountId);
+
+            if(findCurrentPassword.isPresent()) {
+                String encodingCurrentPassword = findCurrentPassword.get();
+                String encodingPassword = BouncyCastle.encoding(password);
+
+                result = encodingCurrentPassword.equals(encodingPassword);
+            }
+        } catch (DaoException e) {
+            LOGGER.error("Error on change password for account with ID '{}'.", accountId, e);
+            throw new ServiceException("Error on change password for account with ID '" + accountId + "'.", e);
+        }
+
+        return result;
+    }
+
+    public boolean validatePasswordsForChange(String oldPassword, String newPassword, String confirmNewPassword) {
+        if(oldPassword == null || newPassword == null || confirmNewPassword == null
+                || oldPassword.isEmpty() || newPassword.isEmpty() || confirmNewPassword.isEmpty()) {
+            return false;
+        }
+
+        boolean isValidOldPassword = AccountValidator.isValidPassword(oldPassword);
+        boolean isValidNewPassword = AccountValidator.isValidPassword(newPassword);
+        boolean isValidConfirmNewPassword = AccountValidator.isValidPassword(confirmNewPassword);
+
+        return  isValidOldPassword && isValidNewPassword && isValidConfirmNewPassword;
+    }
+
+    @Override
     public Optional<Account> signIn(String login, String password) throws ServiceException {
         Optional<Account> findAccount;
         try {
@@ -146,7 +199,6 @@ public class AccountServiceImpl implements AccountService {
         return findAccount;
     }
 
-    //todo сделать by id и двумя методами, если возможно
     @Override
     public void changeAccountStatus(Account account, Account.Status status) throws ServiceException {
         account.setStatus(status);

@@ -19,7 +19,7 @@
 
         <div id="right-menu">
             <ct:locale_button/>
-            <ct:account_buttons/>
+            <ct:header_buttons/>
 
             <div class="dropdown-wrapper">
                 <button class="dropdown-button button-colour-standard">
