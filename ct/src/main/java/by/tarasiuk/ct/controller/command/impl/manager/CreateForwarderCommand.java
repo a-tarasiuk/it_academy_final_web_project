@@ -14,12 +14,14 @@ import by.tarasiuk.ct.model.service.impl.EmployeeServiceImpl;
 import by.tarasiuk.ct.model.service.impl.TokenServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.util.Map;
 import java.util.Optional;
 
 import static by.tarasiuk.ct.controller.command.AttributeName.INFORMATION_MESSAGE;
 
+/**
+ * Create new account with the FORWARDER role
+ */
 public class CreateForwarderCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     private final AccountServiceImpl accountService = ServiceProvider.getAccountService();

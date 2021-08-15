@@ -33,6 +33,9 @@ import static by.tarasiuk.ct.controller.command.AttributeName.MESSAGE_ERROR_LOGI
 import static by.tarasiuk.ct.controller.command.AttributeName.MESSAGE_INCORRECT_SIGN_UP_DATA;
 import static by.tarasiuk.ct.controller.command.AttributeName.MESSAGE_QUERY_ERROR;
 
+/**
+ * Sign up command
+ */
 public class SignUpCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     private final AccountServiceImpl accountService = ServiceProvider.getAccountService();

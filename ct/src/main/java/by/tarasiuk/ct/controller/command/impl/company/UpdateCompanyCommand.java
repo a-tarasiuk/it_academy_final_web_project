@@ -10,7 +10,6 @@ import by.tarasiuk.ct.model.service.ServiceProvider;
 import by.tarasiuk.ct.model.service.impl.CompanyServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.util.Map;
 import java.util.Optional;
 
@@ -19,7 +18,9 @@ import static by.tarasiuk.ct.controller.command.AttributeName.INVALID_DATA;
 import static by.tarasiuk.ct.controller.command.AttributeName.MESSAGE_QUERY_ERROR;
 import static by.tarasiuk.ct.controller.command.AttributeName.SUCCESSFUL_OPERATION;
 
-
+/**
+ * Update company information command
+ */
 public class UpdateCompanyCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     private final CompanyServiceImpl companyService = ServiceProvider.getCompanyService();

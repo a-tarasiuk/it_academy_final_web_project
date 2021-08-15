@@ -9,6 +9,9 @@ import java.util.Map;
 
 import static by.tarasiuk.ct.controller.command.AttributeName.LOCALE;
 
+/**
+ * Change locale command for pages
+ */
 public class ChangeLocalePageCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
 

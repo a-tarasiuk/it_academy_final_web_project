@@ -13,7 +13,6 @@ import by.tarasiuk.ct.model.service.impl.AccountServiceImpl;
 import by.tarasiuk.ct.model.service.impl.EmployeeServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -31,7 +30,6 @@ public class ShowForwarderSettingsPageCommand implements Command {
 
         if(findEmployee.isPresent()) {
             Employee currentEmployee = (Employee) findEmployee.get();
-            System.out.println("EMPLOYEE------------------------------------------" + currentEmployee);
             long companyId = currentEmployee.getCompanyId();
 
             try {

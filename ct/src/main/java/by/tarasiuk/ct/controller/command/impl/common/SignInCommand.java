@@ -15,7 +15,6 @@ import by.tarasiuk.ct.model.service.impl.CompanyServiceImpl;
 import by.tarasiuk.ct.model.service.impl.EmployeeServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.util.Map;
 import java.util.Optional;
 
@@ -26,6 +25,9 @@ import static by.tarasiuk.ct.controller.command.AttributeName.MESSAGE_BANNED_ACC
 import static by.tarasiuk.ct.controller.command.AttributeName.MESSAGE_INCORRECT_SIGN_IN_DATA;
 import static by.tarasiuk.ct.controller.command.AttributeName.MESSAGE_NOT_ACTIVATED_ACCOUNT;
 
+/**
+ * Sign in command
+ */
 public class SignInCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     private final AccountServiceImpl accountService = ServiceProvider.getAccountService();

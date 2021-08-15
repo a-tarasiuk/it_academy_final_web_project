@@ -18,7 +18,9 @@ import static by.tarasiuk.ct.controller.command.AttributeName.INFORMATION_MESSAG
 import static by.tarasiuk.ct.controller.command.AttributeName.INVALID_DATA;
 import static by.tarasiuk.ct.controller.command.AttributeName.SUCCESSFUL_OPERATION;
 
-
+/**
+ * Update account command
+ */
 public class UpdateAccountCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     private final AccountServiceImpl accountService = ServiceProvider.getAccountService();

@@ -15,6 +15,9 @@ import org.apache.logging.log4j.Logger;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * Show account settings page command
+ */
 public class ShowAccountSettingsPageCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     private final AccountServiceImpl accountService = ServiceProvider.getAccountService();

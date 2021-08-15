@@ -7,9 +7,11 @@ import by.tarasiuk.ct.controller.command.AttributeName;
 import by.tarasiuk.ct.controller.command.PagePath;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.util.HashMap;
 
+/**
+ * Logout command for account
+ */
 public class LogoutCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
 

@@ -201,7 +201,5 @@
             </form>
         </div>
     </div>
-
-    <script type="text/javascript" src="../../static/js/password.js"></script>
 </body>
 </html>

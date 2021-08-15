@@ -12,8 +12,6 @@ import by.tarasiuk.ct.model.service.impl.TokenServiceImpl;
 import by.tarasiuk.ct.util.MessageManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -29,15 +27,19 @@ import static by.tarasiuk.ct.util.MessageKey.MESSAGE_QUERY_ERROR;
 import static by.tarasiuk.ct.util.MessageKey.TOKEN_INCORRECT;
 import static by.tarasiuk.ct.util.MessageKey.TOKEN_NOT_EXIST;
 
+/**
+ * Activate account command
+ */
 public class ActivateAccountCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     private final AccountServiceImpl accountService = ServiceProvider.getAccountService();
     private final TokenServiceImpl tokenService = ServiceProvider.getTokenService();
 
+
     @Override
     public String execute(RequestContent content) {
         Map<String, String> requestParameters = content.getRequestParameters();
-        HashMap<String, Object> sessionAttributes = content.getSessionAttributes();
+        Map<String, Object> sessionAttributes = content.getSessionAttributes();
 
         String message;
         String locale = (String) sessionAttributes.get(LOCALE);

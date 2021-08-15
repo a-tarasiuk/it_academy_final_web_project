@@ -7,6 +7,9 @@ import by.tarasiuk.ct.controller.command.PagePath;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * Go to the sign in page command
+ */
 public class GoToSignInPageCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
 

@@ -7,6 +7,9 @@ import by.tarasiuk.ct.controller.command.PagePath;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * Go to the account password page command to change password
+ */
 public class GoToAccountPasswordPageCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
 

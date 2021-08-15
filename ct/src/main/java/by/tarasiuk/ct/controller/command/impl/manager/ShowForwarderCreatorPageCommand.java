@@ -12,9 +12,11 @@ import by.tarasiuk.ct.model.service.ServiceProvider;
 import by.tarasiuk.ct.model.service.impl.CompanyServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.util.Optional;
 
+/**
+ * Show the page for creating a new account with the FORWARDER role
+ */
 public class ShowForwarderCreatorPageCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     private final CompanyServiceImpl companyService = ServiceProvider.getCompanyService();
