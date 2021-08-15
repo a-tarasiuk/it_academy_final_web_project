@@ -12,7 +12,7 @@ public class GoToAccountEmployeesPageCommand implements Command {
 
     @Override
     public String execute(RequestContent requestContent) {
-        LOGGER.info("Command '{}' return path '{}'", CommandType.GO_TO_ACCOUNT_EMPLOYEES_PAGE, PagePath.ACCOUNT_EMPLOYEES);
-        return PagePath.ACCOUNT_EMPLOYEES;
+        LOGGER.info("Command '{}' return path '{}'", CommandType.GO_TO_ACCOUNT_EMPLOYEES_PAGE, PagePath.ACCOUNT_FORWARDERS);
+        return PagePath.ACCOUNT_FORWARDERS;
     }
 }

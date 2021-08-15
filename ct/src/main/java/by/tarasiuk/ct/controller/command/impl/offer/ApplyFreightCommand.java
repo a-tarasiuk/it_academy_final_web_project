@@ -24,7 +24,7 @@ public class ApplyFreightCommand implements Command {
 
     @Override
     public String execute(RequestContent content) {
-        String page = PagePath.FREIGHT_APPLY;
+        String page = PagePath.FREIGHT_APPLY_INFO;
         Map<String, String> parameters = content.getRequestParameters();
         long tradingId = Long.parseLong(parameters.get(AttributeName.TRADING_ID));
 

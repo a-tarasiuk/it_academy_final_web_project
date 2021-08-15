@@ -7,7 +7,6 @@ import org.apache.logging.log4j.Logger;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.Map;
 
 import static by.tarasiuk.ct.controller.command.AttributeName.ACCOUNT_EMAIL;
 import static by.tarasiuk.ct.controller.command.AttributeName.ACCOUNT_FIRST_NAME;
@@ -24,18 +23,6 @@ public class AccountDaoBuilder {
     private AccountDaoBuilder() {
     }
 
-    public static Account buildAccount(Map<String, String> accountData) {
-        String firstName = accountData.get(ACCOUNT_FIRST_NAME);
-        String lastName = accountData.get(ACCOUNT_LAST_NAME);
-        String login = accountData.get(ACCOUNT_LOGIN);
-        String email = accountData.get(ACCOUNT_EMAIL);
-        LocalDate registrationDate = LocalDate.now();
-        Account.Role role = Account.Role.MANAGER;
-        Account.Status status = Account.Status.NOT_ACTIVATED;
-
-        Account account = new Account();
-        return getAccount(firstName, lastName, login, email, registrationDate, role, status, account);
-    }
 
     public static Account buildAccount(ResultSet resultSet) throws SQLException {
         long id = resultSet.getLong(ACCOUNT_ID);
@@ -49,10 +36,6 @@ public class AccountDaoBuilder {
 
         Account account = new Account();
         account.setId(id);
-        return getAccount(firstName, lastName, login, email, registrationDate, role, status, account);
-    }
-
-    private static Account getAccount(String firstName, String lastName, String login, String email, LocalDate registrationDate, Account.Role role, Account.Status status, Account account) {
         account.setFirstName(firstName);
         account.setLastName(lastName);
         account.setLogin(login);
@@ -61,7 +44,7 @@ public class AccountDaoBuilder {
         account.setRole(role);
         account.setStatus(status);
 
-        LOGGER.info("Account with login '{}' successfully build: {}.", login, account);
+        LOGGER.info("Successfully build account from result set: {}.", account);
         return account;
     }
 }

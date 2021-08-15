@@ -9,6 +9,9 @@ import by.tarasiuk.ct.controller.command.impl.common.SignInCommand;
 import by.tarasiuk.ct.controller.command.impl.common.SignUpCommand;
 import by.tarasiuk.ct.controller.command.impl.company.ShowCompanySettingsPageCommand;
 import by.tarasiuk.ct.controller.command.impl.company.UpdateCompanyCommand;
+import by.tarasiuk.ct.controller.command.impl.manager.CreateForwarderCommand;
+import by.tarasiuk.ct.controller.command.impl.manager.ShowForwarderCreatorPageCommand;
+import by.tarasiuk.ct.controller.command.impl.manager.ShowForwarderSettingsPageCommand;
 import by.tarasiuk.ct.controller.command.impl.go.GoToAccountEmployeesPageCommand;
 import by.tarasiuk.ct.controller.command.impl.go.GoToAccountPasswordPageCommand;
 import by.tarasiuk.ct.controller.command.impl.go.GoToCreateOfferPageCommand;
@@ -47,6 +50,7 @@ public enum CommandType {
     GO_TO_CREATE_OFFER_PAGE(new GoToCreateOfferPageCommand()),
     GO_TO_ACCOUNT_EMPLOYEES_PAGE(new GoToAccountEmployeesPageCommand()),
     GO_TO_ACCOUNT_PASSWORD_PAGE(new GoToAccountPasswordPageCommand()),
+    SHOW_FORWARDER_CREATOR_PAGE(new ShowForwarderCreatorPageCommand()),
     SHOW_ACCOUNT_SETTINGS_PAGE(new ShowAccountSettingsPageCommand()),
     SHOW_OPEN_OFFERS(new ShowOpenOffersCommand()),
     SHOW_OFFER_EDITOR(new ShowOfferEditorCommand()),
@@ -56,8 +60,10 @@ public enum CommandType {
     SHOW_ACCOUNT_OFFER(new ShowAccountOfferCommand()),
     SHOW_ACCOUNT_TRADINGS(new ShowAccountTradingsCommand()),
     SHOW_COMPANY_SETTINGS_PAGE(new ShowCompanySettingsPageCommand()),
+    SHOW_FORWARDER_SETTINGS_PAGE(new ShowForwarderSettingsPageCommand()),
     DEACTIVATE_OFFER(new DeactivateOfferCommand()),
     CREATE_TRADING(new CreateTradingCommand()),
+    CREATE_FORWARDER(new CreateForwarderCommand()),
     APPLY_FREIGHT(new ApplyFreightCommand()),
     UPDATE_ACCOUNT(new UpdateAccountCommand()),
     UPDATE_PASSWORD(new UpdatePasswordCommand()),

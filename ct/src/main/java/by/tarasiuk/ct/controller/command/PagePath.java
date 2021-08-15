@@ -12,7 +12,12 @@ public final class PagePath {
      */
     public static final String SIGN_IN = "/WEB-INF/jsp/sign/sign-in.jsp";
     public static final String SIGN_UP = "/WEB-INF/jsp/sign/sign-up.jsp";
+
+    /**
+     * Information message pages
+     */
     public static final String INFO = "/WEB-INF/jsp/sign/info.jsp";
+    public static final String INFORMATION_MESSAGE = "/WEB-INF/jsp/info/information_message.jsp";
 
     /**
      * Error pages
@@ -33,7 +38,7 @@ public final class PagePath {
     public static final String ACCOUNT_OFFER = "/WEB-INF/jsp/account/account_offer.jsp";
     public static final String ACCOUNT_TRADING = "/WEB-INF/jsp/account/account_trading.jsp";
     public static final String ACCOUNT_TRADINGS = "/WEB-INF/jsp/account/account_tradings.jsp";
-    public static final String ACCOUNT_EMPLOYEES = "/WEB-INF/jsp/account/account_employees.jsp";
+    public static final String ACCOUNT_FORWARDERS = "/WEB-INF/jsp/account/account_forwarders.jsp";
     public static final String ACCOUNT_PASSWORD = "/WEB-INF/jsp/account/account_password.jsp";
     public static final String ACCOUNT_SETTINGS = "/WEB-INF/jsp/account/account_settings.jsp";
 
@@ -43,12 +48,19 @@ public final class PagePath {
     public static final String TRADING_CREATE_INFO = "/WEB-INF/jsp/info/trading_create_info.jsp";
     public static final String OFFER_EDIT_INFO = "/WEB-INF/jsp/info/offer_edit_info.jsp";
     public static final String OFFER_DEACTIVATE_INFO = "/WEB-INF/jsp/info/offer_deactivate_info.jsp";
-    public static final String FREIGHT_APPLY = "/WEB-INF/jsp/info/freight_apply_info.jsp";
+    public static final String FREIGHT_APPLY_INFO = "/WEB-INF/jsp/info/freight_apply_info.jsp";
+    public static final String FORWARDER_CREATED_INFO = "/WEB-INF/jsp/info/forwarder_created_info.jsp";
 
     /**
      * Company pages
      */
     public static final String COMPANY_SETTINGS = "/WEB-INF/jsp/company/company_settings.jsp";
+
+    /**
+     * Employee pages
+     */
+    public static final String FORWARDER_SETTINGS = "/WEB-INF/jsp/manager/forwarder_settings.jsp";
+    public static final String FORWARDER_CREATOR = "/WEB-INF/jsp/manager/forwarder_creator.jsp";
 
     /**
      * Trading pages

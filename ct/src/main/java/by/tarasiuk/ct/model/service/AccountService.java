@@ -11,7 +11,6 @@ public interface AccountService {
     void sendActivationEmail(String locale, String firstName, String emailTo, String token);
     boolean validateSignInData(String login, String password) throws ServiceException;
     boolean validateSignUpData(Map<String, String> signUpData) throws ServiceException;
-    boolean createAccount(Map<String, String> signUpData) throws ServiceException;
     boolean validatePersonalAccountData(Map<String, String> accountData) throws ServiceException;
     boolean changeAccountPasswordByAccountId(long accountId, String newPassword) throws ServiceException;
     Optional<Account> signIn(String login, String password) throws ServiceException;

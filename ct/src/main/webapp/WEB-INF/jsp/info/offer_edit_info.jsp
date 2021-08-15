@@ -15,7 +15,7 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/icon.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/font-awesome.min.css">
-        <title><fmt:message key="error.title"/>&nbsp;${pageContext.errorData.statusCode}</title>
+        <title><fmt:message key="html.head.title.info"/></title>
     </head>
 
     <body>

@@ -71,7 +71,7 @@ public class SignUpCommand implements Command {
                     content.putRequestAttribute(INFORMATION_MESSAGE, MessageKey.CONFIRM_MESSAGE);
 
                     companyService.createCompany(signUpData);
-                    accountService.createAccount(signUpData);
+                    accountService.createManager(signUpData);
 
                     Optional<Account> optionalAccount = accountService.findAccountByEmail(email);
                     Optional<Company> optionalCompany = companyService.findCompanyByName(companyName);

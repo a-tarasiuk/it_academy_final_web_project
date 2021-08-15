@@ -4,10 +4,10 @@ import by.tarasiuk.ct.controller.command.AttributeName;
 import by.tarasiuk.ct.exception.DaoException;
 import by.tarasiuk.ct.exception.ServiceException;
 import by.tarasiuk.ct.model.dao.DaoProvider;
-import by.tarasiuk.ct.model.dao.builder.AccountDaoBuilder;
 import by.tarasiuk.ct.model.dao.impl.AccountDaoImpl;
 import by.tarasiuk.ct.model.entity.impl.Account;
 import by.tarasiuk.ct.model.service.AccountService;
+import by.tarasiuk.ct.model.service.builder.AccountServiceBuilder;
 import by.tarasiuk.ct.util.BouncyCastle;
 import by.tarasiuk.ct.util.EmailSender;
 import by.tarasiuk.ct.validator.AccountValidator;
@@ -44,6 +44,10 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public boolean validateSignUpData(Map<String, String> signUpData) throws ServiceException {
         return AccountValidator.isValidSignUpData(signUpData);
+    }
+
+    public boolean validateAccountData(Map<String, String> accountData) throws ServiceException {
+        return AccountValidator.isValidAccountData(accountData);
     }
 
     @Override
@@ -130,18 +134,18 @@ public class AccountServiceImpl implements AccountService {
         return findAccount;
     }
 
-    @Override
-    public boolean createAccount(Map<String, String> signUpData) throws ServiceException {
-        Account account = AccountDaoBuilder.buildAccount(signUpData);
-        String password = signUpData.get(ACCOUNT_PASSWORD);
-        String encodingPassword = BouncyCastle.encoding(password);
+    public boolean createForwarder(Map<String, String> forwarderData) throws ServiceException {
+        Account.Role role = Account.Role.FORWARDER;
+        Account account = AccountServiceBuilder.buildAccount(forwarderData, role);
+        String password = forwarderData.get(ACCOUNT_PASSWORD);
+        return createAccount(account, password);
+    }
 
-        try {
-            return accountDao.createAccount(account, encodingPassword);
-        } catch (DaoException e) {
-            LOGGER.error("Account creation error '{}'.", signUpData, e);
-            throw new ServiceException("Account creation error: " + signUpData, e);
-        }
+    public boolean createManager(Map<String, String> managerData) throws ServiceException {
+        Account.Role role = Account.Role.MANAGER;
+        Account account = AccountServiceBuilder.buildAccount(managerData, role);
+        String password = managerData.get(ACCOUNT_PASSWORD);
+        return createAccount(account, password);
     }
 
     @Override
@@ -199,12 +203,6 @@ public class AccountServiceImpl implements AccountService {
         return findAccount;
     }
 
-    @Override
-    public void changeAccountStatus(Account account, Account.Status status) throws ServiceException {
-        account.setStatus(status);
-        updateAccount(account);
-    }
-
     public void updatePersonalDataByAccountId(long id, Map<String, String> personalData) throws ServiceException {
         try {
             Optional<Account> findAccount = accountDao.findEntityById(id);
@@ -229,6 +227,12 @@ public class AccountServiceImpl implements AccountService {
         }
     }
 
+    @Override
+    public void changeAccountStatus(Account account, Account.Status status) throws ServiceException {
+        account.setStatus(status);
+        updateAccount(account);
+    }
+
     private boolean updateAccount(Account account) throws ServiceException {
         boolean result;
 
@@ -243,5 +247,16 @@ public class AccountServiceImpl implements AccountService {
         }
 
         return result;
+    }
+
+    private boolean createAccount(Account account, String password) throws ServiceException {
+        String encodingPassword = BouncyCastle.encoding(password);
+
+        try {
+            return accountDao.createAccount(account, encodingPassword);
+        } catch (DaoException e) {
+            LOGGER.error("Account creation error '{}'.", account, e);
+            throw new ServiceException("Account creation error: " + account, e);
+        }
     }
 }

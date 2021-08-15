@@ -35,9 +35,9 @@
                             <fmt:message key="header.button.label.companySettings"/>
                         </button>
 
-                        <button type="submit" name="command" value="">
+                        <button type="submit" name="command" value="show_forwarder_settings_page">
                             <span class="icon icon-users">&nbsp;</span>
-                            <fmt:message key="header.button.label.employeesSettings"/>
+                            <fmt:message key="header.button.label.forwarder.settings"/>
                         </button>
                     </form>
                 </div>

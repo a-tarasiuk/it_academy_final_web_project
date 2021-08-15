@@ -1,6 +1,5 @@
 package by.tarasiuk.ct.tag;
 
-import by.tarasiuk.ct.controller.command.AttributeName;
 import by.tarasiuk.ct.util.MessageManager;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -13,10 +12,18 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 
 import static by.tarasiuk.ct.controller.command.AttributeName.ACCOUNT_EMAIL;
+import static by.tarasiuk.ct.controller.command.AttributeName.ACCOUNT_FIRST_NAME;
 import static by.tarasiuk.ct.controller.command.AttributeName.INFORMATION_MESSAGE;
 import static by.tarasiuk.ct.controller.command.AttributeName.LOCALE;
 import static by.tarasiuk.ct.controller.command.AttributeName.TOKEN_NUMBER;
-import static by.tarasiuk.ct.util.MessageKey.*;
+import static by.tarasiuk.ct.util.MessageKey.ACCOUNT_ALREADY_ACTIVATED;
+import static by.tarasiuk.ct.util.MessageKey.ACCOUNT_EMAIL_NOT_EXIST;
+import static by.tarasiuk.ct.util.MessageKey.ACCOUNT_SUCCESSFULLY_ACTIVATED;
+import static by.tarasiuk.ct.util.MessageKey.CONFIRM_MESSAGE;
+import static by.tarasiuk.ct.util.MessageKey.OFFER_SUCCESSFULLY_CREATED;
+import static by.tarasiuk.ct.util.MessageKey.TOKEN_INCORRECT;
+import static by.tarasiuk.ct.util.MessageKey.TOKEN_NOT_EXIST;
+import static by.tarasiuk.ct.util.MessageKey.TRADING_SUCCESSFULLY_CREATED;
 
 public class InformationMessageTag extends TagSupport {
     private static final long serialVersionUID = -5150821270017826128L;
@@ -36,7 +43,7 @@ public class InformationMessageTag extends TagSupport {
         switch (keyMessage) {
             case CONFIRM_MESSAGE:
                 block.append("<span class=\"icon icon-info-circle x2 icon-green\"></span>");
-                valueMessage = String.format(valueMessage, request.getParameter(AttributeName.ACCOUNT_FIRST_NAME), request.getParameter(ACCOUNT_EMAIL));
+                valueMessage = String.format(valueMessage, request.getParameter(ACCOUNT_FIRST_NAME), request.getParameter(ACCOUNT_EMAIL));
                 break;
             case OFFER_SUCCESSFULLY_CREATED:
                 block.append("<span class=\"icon icon-check-circle x2 icon-green\"></span>");
@@ -54,6 +61,7 @@ public class InformationMessageTag extends TagSupport {
             case ACCOUNT_SUCCESSFULLY_ACTIVATED:
                 block.append("<span class=\"icon icon-check-circle x2 icon-green\"></span>");
                 valueMessage = String.format(valueMessage, request.getParameter(ACCOUNT_EMAIL));
+                break;
             case TRADING_SUCCESSFULLY_CREATED:
                 block.append("<span class=\"icon icon-check-circle x2 icon-green\"></span>");
             default:

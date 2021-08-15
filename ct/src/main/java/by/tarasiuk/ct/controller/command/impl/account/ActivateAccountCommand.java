@@ -2,8 +2,8 @@ package by.tarasiuk.ct.controller.command.impl.account;
 
 import by.tarasiuk.ct.controller.RequestContent;
 import by.tarasiuk.ct.controller.command.Command;
-import by.tarasiuk.ct.exception.ServiceException;
 import by.tarasiuk.ct.controller.command.PagePath;
+import by.tarasiuk.ct.exception.ServiceException;
 import by.tarasiuk.ct.model.entity.impl.Account;
 import by.tarasiuk.ct.model.entity.impl.Token;
 import by.tarasiuk.ct.model.service.ServiceProvider;
@@ -99,6 +99,6 @@ public class ActivateAccountCommand implements Command {
 
         content.putRequestAttribute(INFORMATION_MESSAGE, message);
 
-        return PagePath.INFO;
+        return PagePath.INFORMATION_MESSAGE;
     }
 }

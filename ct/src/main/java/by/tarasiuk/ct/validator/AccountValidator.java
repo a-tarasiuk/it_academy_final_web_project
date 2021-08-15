@@ -23,15 +23,42 @@ public class AccountValidator {
     private AccountValidator() {
     }
 
-    public static boolean isValidPersonalAccountData(Map<String, String> accountData) {
-        String accountFirstName = accountData.get(AttributeName.ACCOUNT_FIRST_NAME);
-        String accountLastName = accountData.get(AttributeName.ACCOUNT_LAST_NAME);
+    public static boolean isValidAccountData(Map<String, String> accountData) {
+        boolean result;
 
-        if(accountFirstName == null || accountLastName == null || accountFirstName.isEmpty() || accountLastName.isEmpty()) {
-            return false;
+        if(accountData == null || accountData.isEmpty()) {
+            LOGGER.info("Incorrect account data!");
+            result = false;
+        } else {
+            String firstName = accountData.get(AttributeName.ACCOUNT_FIRST_NAME);
+            String lastName = accountData.get(AttributeName.ACCOUNT_LAST_NAME);
+            String login = accountData.get(AttributeName.ACCOUNT_LOGIN);
+            String email = accountData.get(AttributeName.ACCOUNT_EMAIL);
+            String password = accountData.get(AttributeName.ACCOUNT_PASSWORD);
+            String confirmPassword = accountData.get(AttributeName.ACCOUNT_CONFIRM_PASSWORD);
+
+            result = isValidFirstName(firstName) && isValidLastName(lastName)
+                    && isValidLogin(login) && isValidEmail(email)
+                    && isValidPassword(password) && isValidPassword(confirmPassword) && password.equals(confirmPassword);
         }
 
-        return isValidFirstName(accountFirstName) && isValidLastName(accountLastName);
+        return result;
+    }
+
+    public static boolean isValidPersonalAccountData(Map<String, String> accountData) {
+        boolean result;
+
+        if(accountData == null || accountData.isEmpty()) {
+            LOGGER.info("Incorrect personal account data!");
+            result = false;
+        } else {
+            String accountFirstName = accountData.get(AttributeName.ACCOUNT_FIRST_NAME);
+            String accountLastName = accountData.get(AttributeName.ACCOUNT_LAST_NAME);
+
+            result = isValidFirstName(accountFirstName) && isValidLastName(accountLastName);
+        }
+
+        return result;
     }
 
     public static boolean isValidSignInData(String login, String password) {

@@ -24,12 +24,14 @@
 
             <div id="middle">
                 <form id="info" action="controller" method="post">
-                    <input type="hidden" name="command" value="show_account_offers">
 
                     <span class="icon icon-check-circle icon-green x4"></span>
-                    <span id="info-header"><fmt:message key="offer.message.deactivate"/></span>
+                    <span id="info-header"><fmt:message key="forwarder.created.header"/></span>
+                    <span id="info-message"><fmt:message key="forwarder.created.title"/></span>
 
-                    <button type="submit" class="btn-confirm"><fmt:message key="button.label.backOffersPage"/></button>
+                    <button type="submit" class="btn-confirm" name="command" value="show_forwarder_settings_page">
+                        <fmt:message key="button.label.backOfferViewerPage"/>
+                    </button>
                 </form>
             </div>
 
