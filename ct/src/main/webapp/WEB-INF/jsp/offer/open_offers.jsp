@@ -5,6 +5,7 @@
 
 <fmt:setLocale value="${sessionScope.locale}" scope="session"/>
 <fmt:setBundle basename="locale"/>
+<jsp:useBean id="account" scope="session" class="by.tarasiuk.ct.model.entity.impl.Account"/>
 
 <html>
     <head>
@@ -33,10 +34,12 @@
                             <fmt:message key="offer.all"/>
                         </div>
 
-                        <a class="btn-simple btn-green" href="${pageContext.request.contextPath}/controller?command=go_to_create_offer_page">
-                            <span class="icon icon-plus">&nbsp;</span>
-                            <fmt:message key="cargo.button.createOffer"/>
-                        </a>
+                        <c:if test="${account.role != 'ADMINISTRATOR'}">
+                            <a class="btn-simple btn-green" href="${pageContext.request.contextPath}/controller?command=go_to_create_offer_page">
+                                <span class="icon icon-plus">&nbsp;</span>
+                                <fmt:message key="cargo.button.createOffer"/>
+                            </a>
+                        </c:if>
                     </div>
 
                     <div id="mr-down">

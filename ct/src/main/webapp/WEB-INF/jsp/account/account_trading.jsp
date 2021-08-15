@@ -50,7 +50,7 @@
 
                         <div class="error-message row">
                             <c:if test="${incorrect_trading_freight == true}">
-                                <fmt:message key="message.incorrect.tradingFreight"/>
+                                <fmt:message key="message.invalid.tradingFreight"/>
                             </c:if>
 
                             <c:if test="${message_query_error == true}">

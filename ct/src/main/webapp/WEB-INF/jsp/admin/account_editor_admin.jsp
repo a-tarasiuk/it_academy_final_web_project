@@ -35,22 +35,24 @@
                         </div>
 
                         <form action="controller" method="post">
-                            <c:if test="${account_for_change.status == 'ACTIVATED'}">
-                                <input type="hidden" name="command" value="ban_account">
+                            <c:if test="${account_for_change.role != 'ADMINISTRATOR'}">
+                                <c:if test="${account_for_change.status == 'ACTIVATED'}">
+                                    <input type="hidden" name="command" value="ban_account">
 
-                                <button type="submit" class="btn-simple btn-red" name="account_id" value="${account_for_change.id}">
-                                    <span class="icon icon-ban">&nbsp;</span>
-                                    <fmt:message key="button.account.ban"/>
-                                </button>
-                            </c:if>
+                                    <button type="submit" class="btn-simple btn-red" name="account_id" value="${account_for_change.id}">
+                                        <span class="icon icon-ban">&nbsp;</span>
+                                        <fmt:message key="button.account.ban"/>
+                                    </button>
+                                </c:if>
 
-                            <c:if test="${account_for_change.status == 'BANNED'}">
-                                <input type="hidden" name="command" value="unban_account">
+                                <c:if test="${account_for_change.status == 'BANNED'}">
+                                    <input type="hidden" name="command" value="unban_account">
 
-                                <button type="submit" class="btn-simple btn-green" name="account_id" value="${account_for_change.id}">
-                                    <span class="icon icon-unlock">&nbsp;</span>
-                                    <fmt:message key="button.account.unban"/>
-                                </button>
+                                    <button type="submit" class="btn-simple btn-green" name="account_id" value="${account_for_change.id}">
+                                        <span class="icon icon-unlock">&nbsp;</span>
+                                        <fmt:message key="button.account.unban"/>
+                                    </button>
+                                </c:if>
                             </c:if>
                         </form>
                     </div>

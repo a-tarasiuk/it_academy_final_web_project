@@ -1,11 +1,10 @@
-<%@ page import="jakarta.servlet.jsp.JspFactory" %>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <%--@elvariable id="locale" type="java.lang.String"--%>
+<fmt:setLocale value="${sessionScope.locale}" scope="session"/>
 <fmt:setBundle basename="locale"/>
-<fmt:setLocale value="${locale}" scope="session"/>
 <jsp:useBean id="account" scope="session" class="by.tarasiuk.ct.model.entity.impl.Account"/>
 
 <html>
@@ -29,7 +28,7 @@
                     </c:when>
 
                     <c:otherwise>
-                        <span>Hello, user</span>
+                        <span><fmt:message key="hello.user"/></span>
                     </c:otherwise>
                 </c:choose>
             </div>

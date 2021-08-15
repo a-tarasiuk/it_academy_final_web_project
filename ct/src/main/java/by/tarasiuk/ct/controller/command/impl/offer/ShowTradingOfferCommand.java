@@ -15,7 +15,7 @@ import by.tarasiuk.ct.model.service.impl.OfferServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import static by.tarasiuk.ct.controller.command.AttributeName.EMPLOYEE_ID;
@@ -31,7 +31,7 @@ public class ShowTradingOfferCommand implements Command {
     @Override
     public String execute(RequestContent content) {
         String page;
-        HashMap<String, String> offerData = content.getRequestParameters();
+        Map<String, String> offerData = content.getRequestParameters();
         long offerId = Long.parseLong(offerData.get(OFFER_ID));
 
         try {
@@ -39,7 +39,7 @@ public class ShowTradingOfferCommand implements Command {
             if(findOffer.isPresent()) {
                 Offer offer = findOffer.get();
 
-                HashMap<String, Object> sessionAttributes = content.getSessionAttributes();
+                Map<String, Object> sessionAttributes = content.getSessionAttributes();
                 Account currentAccount = (Account) sessionAttributes.get(AttributeName.ACCOUNT);
                 long currentAccountId = currentAccount.getId();
                 Optional<Employee> findEmployee = employeeService.findEmployeeByAccountId(currentAccountId);
@@ -47,6 +47,7 @@ public class ShowTradingOfferCommand implements Command {
                 if(findEmployee.isPresent()) {
                     Employee employee = findEmployee.get();
                     long currentEmployeeId = employee.getId();
+
                     content.putRequestAttribute(OFFER, offer);
                     content.putRequestAttribute(EMPLOYEE_ID, currentEmployeeId);
                 }

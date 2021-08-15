@@ -27,3 +27,5 @@ Users (company managers and their employees) create an application for the trans
 - not accepted.
 
 ### ERR diagram
+
+![cargo_trading_db](https://user-images.githubusercontent.com/46199655/129490826-d1ddb9b2-d6b1-4ffc-aefc-f0f864f7991f.png)
