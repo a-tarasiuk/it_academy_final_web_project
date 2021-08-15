@@ -1,11 +1,11 @@
 package by.tarasiuk.ct.model.dao.impl;
 
-import by.tarasiuk.ct.exception.DaoException;
 import by.tarasiuk.ct.controller.command.AttributeName;
+import by.tarasiuk.ct.exception.DaoException;
 import by.tarasiuk.ct.model.dao.AccountDao;
 import by.tarasiuk.ct.model.dao.BaseDao;
-import by.tarasiuk.ct.model.entity.impl.Account;
 import by.tarasiuk.ct.model.dao.builder.AccountDaoBuilder;
+import by.tarasiuk.ct.model.entity.impl.Account;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -14,6 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,6 +30,8 @@ public class AccountDaoImpl extends BaseDao<Account> implements AccountDao {
     private static final String SQL_PROCEDURE_SET_PASSWORD_BY_ACCOUNT_ID = "{CALL set_password_by_account_id (?, ?)}";
     private static final String SQL_PROCEDURE_FIND_ACCOUNT_BY_EMAIL = "{CALL find_account_by_email (?)}";
     private static final String SQL_PROCEDURE_UPDATE_ACCOUNT = "{CALL update_account (?, ?, ?, ?, ?, ?, ?, ?)}";
+    private static final String SQL_PROCEDURE_FIND_ALL_ACCOUNTS = "{CALL find_all_accounts ()}";
+    private static final String SQL_PROCEDURE_UPDATE_ACCOUNT_STATUS_BY_ID = "{CALL update_account_status_by_id (?, ?)}";
 
     private AccountDaoImpl() {
     }
@@ -66,6 +69,11 @@ public class AccountDaoImpl extends BaseDao<Account> implements AccountDao {
         private static final int STATUS = 8;
     }
 
+    private static final class UpdateStatusIndex {
+        private static final int ACCOUNT_ID = 1;
+        private static final int STATUS = 2;
+    }
+
     @Override
     public Optional<Account> findEntityById(long id) throws DaoException {
         Optional<Account> findAccount;
@@ -97,7 +105,22 @@ public class AccountDaoImpl extends BaseDao<Account> implements AccountDao {
 
     @Override
     public List<Account> findAll() throws DaoException {
-        return null;
+        List<Account> accountList = new ArrayList<>();
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_ALL_ACCOUNTS);
+             ResultSet result = statement.executeQuery()) {
+
+            while (result.next()) {
+                Account account = AccountDaoBuilder.buildAccount(result);
+                accountList.add(account);
+            }
+        } catch (SQLException e) {
+            LOGGER.error("Error when find all accounts.", e);
+            throw new DaoException("Error when find all accounts.", e);
+        }
+
+        return accountList;
     }
 
     @Override
@@ -268,6 +291,7 @@ public class AccountDaoImpl extends BaseDao<Account> implements AccountDao {
         }
     }
 
+    @Override
     public boolean updatePasswordByAccountId(long accountId, String encodingPassword) throws DaoException {
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_SET_PASSWORD_BY_ACCOUNT_ID)) {
@@ -281,6 +305,23 @@ public class AccountDaoImpl extends BaseDao<Account> implements AccountDao {
         } catch (SQLException e) {
             LOGGER.error("Failed to update password for account with ID '{}' in the database.", accountId, e);
             throw new DaoException("Failed to update password for account with ID '" + accountId + "' in the database.", e);
+        }
+    }
+
+    @Override
+    public boolean updateStatusByAccountId(long id, Account.Status status) throws DaoException {
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_UPDATE_ACCOUNT_STATUS_BY_ID)) {
+            statement.setLong(UpdateStatusIndex.ACCOUNT_ID, id);
+            statement.setString(UpdateStatusIndex.STATUS, status.name());
+
+            statement.executeUpdate();
+
+            LOGGER.info("For account with ID '{}' updated status to '{}' in the database.", id, status);
+            return true;
+        } catch (SQLException e) {
+            LOGGER.error("Failed to update status '{}' for account wih ID '{}' in the database.", status, id, e);
+            throw new DaoException("Failed to update status '" + status + "' for account wih ID '" + id+ "' in the database.", e);
         }
     }
 }

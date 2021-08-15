@@ -14,6 +14,7 @@ import by.tarasiuk.ct.validator.AccountValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -32,11 +33,6 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public boolean validatePersonalAccountData(Map<String, String> accountData) throws ServiceException {
-        return AccountValidator.isValidPersonalAccountData(accountData);
-    }
-
-    @Override
     public boolean validateSignInData(String login, String password) throws ServiceException {
         return AccountValidator.isValidSignInData(login, password);
     }
@@ -46,8 +42,14 @@ public class AccountServiceImpl implements AccountService {
         return AccountValidator.isValidSignUpData(signUpData);
     }
 
+    @Override
     public boolean validateAccountData(Map<String, String> accountData) throws ServiceException {
         return AccountValidator.isValidAccountData(accountData);
+    }
+
+    @Override
+    public boolean validatePersonalAccountData(Map<String, String> accountData) throws ServiceException {
+        return AccountValidator.isValidPersonalAccountData(accountData);
     }
 
     @Override
@@ -203,6 +205,7 @@ public class AccountServiceImpl implements AccountService {
         return findAccount;
     }
 
+    @Override
     public void updatePersonalDataByAccountId(long id, Map<String, String> personalData) throws ServiceException {
         try {
             Optional<Account> findAccount = accountDao.findEntityById(id);
@@ -231,6 +234,44 @@ public class AccountServiceImpl implements AccountService {
     public void changeAccountStatus(Account account, Account.Status status) throws ServiceException {
         account.setStatus(status);
         updateAccount(account);
+    }
+
+    @Override
+    public boolean banAccountById(long id) throws ServiceException {
+        Account.Status status = Account.Status.BANNED;
+
+        try {
+            return accountDao.updateStatusByAccountId(id, status);
+        } catch (DaoException e) {
+            LOGGER.error("Error while ban account with ID '{}'.", id, e);
+            throw new ServiceException("Error while ban account with ID '" + id + "'.", e);
+        }
+    }
+
+    @Override
+    public boolean unbanAccountById(long id) throws ServiceException {
+        Account.Status status = Account.Status.ACTIVATED;
+
+        try {
+            return accountDao.updateStatusByAccountId(id, status);
+        } catch (DaoException e) {
+            LOGGER.error("Error while unban account with ID '{}'.", id, e);
+            throw new ServiceException("Error while unban account with ID '" + id + "'.", e);
+        }
+    }
+
+    @Override
+    public List<Account> findAccountList() throws ServiceException {
+        List<Account> accountList;
+
+        try {
+            accountList = accountDao.findAll();
+        } catch (DaoException e) {
+            LOGGER.error("Error while find all accounts.", e);
+            throw new ServiceException("Error while find all accounts.", e);
+        }
+
+        return accountList;
     }
 
     private boolean updateAccount(Account account) throws ServiceException {

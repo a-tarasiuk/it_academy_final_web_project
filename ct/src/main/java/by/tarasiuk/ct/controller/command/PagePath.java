@@ -67,6 +67,12 @@ public final class PagePath {
      */
     public static final String TRADING_VIEWER = "/WEB-INF/jsp/trading/trading_viewer.jsp";
 
+    /**
+     * Admin pages
+     */
+    public static final String ADMIN_ACCOUNT_LIST = "/WEB-INF/jsp/admin/account_list_admin.jsp";
+    public static final String ADMIN_ACCOUNT_EDITOR = "/WEB-INF/jsp/admin/account_editor_admin.jsp";
+
     private PagePath() {
     }
 }

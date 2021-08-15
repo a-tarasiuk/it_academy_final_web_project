@@ -45,12 +45,6 @@
     </tag>
 
     <tag>
-        <name>employee_info</name>
-        <tag-class>by.tarasiuk.ct.tag.EmployeeInfoTag</tag-class>
-        <body-content>empty</body-content>
-    </tag>
-
-    <tag>
         <name>account_employee_list</name>
         <tag-class>by.tarasiuk.ct.tag.AccountEmployeeListTag</tag-class>
         <body-content>empty</body-content>
@@ -59,12 +53,6 @@
     <tag>
         <name>offer_viewer</name>
         <tag-class>by.tarasiuk.ct.tag.OfferViewerTag</tag-class>
-        <body-content>empty</body-content>
-    </tag>
-
-    <tag>
-        <name>account_menu</name>
-        <tag-class>by.tarasiuk.ct.tag.AccountMenuTag</tag-class>
         <body-content>empty</body-content>
     </tag>
 

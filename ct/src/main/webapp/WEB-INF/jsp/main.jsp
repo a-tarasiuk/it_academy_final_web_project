@@ -25,7 +25,7 @@
             <div id="middle">
                 <c:choose>
                     <c:when test="${not empty account && not empty account.role}">
-                        <jsp:forward page="${pageContext.request.contextPath}/controller?command=show_open_offers"/>
+                        <jsp:forward page="${pageContext.request.contextPath}/controller?command=show_open_offer_list"/>
                     </c:when>
 
                     <c:otherwise>

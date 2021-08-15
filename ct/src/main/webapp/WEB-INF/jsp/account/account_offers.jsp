@@ -26,8 +26,7 @@
 
             <div id="middle">
                 <div id="m-left">
-                    <ct:employee_info/>
-                    <ct:account_menu/>
+                    <jsp:include page="/WEB-INF/jsp/navigation/left_navigation.jsp"/>
                 </div>
 
                 <div id="m-right">

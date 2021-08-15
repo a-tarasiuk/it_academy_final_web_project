@@ -7,9 +7,11 @@ import by.tarasiuk.ct.controller.command.CommandType;
 import by.tarasiuk.ct.controller.command.PagePath;
 import by.tarasiuk.ct.exception.ServiceException;
 import by.tarasiuk.ct.model.entity.impl.Account;
+import by.tarasiuk.ct.model.entity.impl.Company;
 import by.tarasiuk.ct.model.entity.impl.Employee;
 import by.tarasiuk.ct.model.service.ServiceProvider;
 import by.tarasiuk.ct.model.service.impl.AccountServiceImpl;
+import by.tarasiuk.ct.model.service.impl.CompanyServiceImpl;
 import by.tarasiuk.ct.model.service.impl.EmployeeServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -28,6 +30,7 @@ public class SignInCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     private final AccountServiceImpl accountService = ServiceProvider.getAccountService();
     private final EmployeeServiceImpl employeeService = ServiceProvider.getEmployeeService();
+    private final CompanyServiceImpl companyService = ServiceProvider.getCompanyService();
 
     @Override
     public String execute(RequestContent content) {
@@ -54,11 +57,21 @@ public class SignInCommand implements Command {
                         case ACTIVATED:
                             long accountId = account.getId();
                             Optional<Employee> findEmployee = employeeService.findEmployeeByAccountId(accountId);
+
                             if(findEmployee.isPresent()) {
                                 Employee employee = findEmployee.get();
-                                content.putSessionAttribute(AttributeName.EMPLOYEE, employee);
-                                content.putSessionAttribute(ACCOUNT, account);
+                                long companyId = employee.getCompanyId();
+                                Optional<Company> findCompany = companyService.findCompanyById(companyId);
+
+                                if(findCompany.isPresent()) {
+                                    Company company = findCompany.get();
+                                    content.putSessionAttribute(AttributeName.COMPANY, company);
+                                    content.putSessionAttribute(AttributeName.EMPLOYEE, employee);
+                                }
                             }
+
+                            content.putSessionAttribute(ACCOUNT, account);
+
                             page = PagePath.MAIN;
                             LOGGER.info("Sign in successfully for account with login '{}' (status '{}', role '{}').", login, status, account.getRole());
                             break;

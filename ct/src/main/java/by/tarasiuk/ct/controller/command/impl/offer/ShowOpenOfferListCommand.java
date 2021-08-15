@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 import static by.tarasiuk.ct.controller.command.AttributeName.OFFER_LIST;
 
 
-public class ShowOpenOffersCommand implements Command {
+public class ShowOpenOfferListCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     private final OfferServiceImpl offerService = ServiceProvider.getOfferService();
 

@@ -21,6 +21,7 @@ public final class AttributeName {
      * Account attributes from JSP page.
      */
     public static final String ACCOUNT = "account";
+    public static final String ACCOUNT_FOR_CHANGE = "account_for_change";
     public static final String ACCOUNT_LIST = "account_list";
     public static final String ACCOUNT_ID = "account_id";
     public static final String ACCOUNT_FIRST_NAME = "account_first_name";

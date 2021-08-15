@@ -3,21 +3,25 @@ package by.tarasiuk.ct.controller.command;
 import by.tarasiuk.ct.controller.command.impl.account.ActivateAccountCommand;
 import by.tarasiuk.ct.controller.command.impl.account.ShowAccountSettingsPageCommand;
 import by.tarasiuk.ct.controller.command.impl.account.UpdateAccountCommand;
+import by.tarasiuk.ct.controller.command.impl.admin.BanAccountCommand;
+import by.tarasiuk.ct.controller.command.impl.admin.ShowAccountEditorFromAdminCommand;
+import by.tarasiuk.ct.controller.command.impl.admin.ShowAccountListFromAdminCommand;
+import by.tarasiuk.ct.controller.command.impl.admin.UnbanAccountCommand;
 import by.tarasiuk.ct.controller.command.impl.common.ChangeLocalePageCommand;
 import by.tarasiuk.ct.controller.command.impl.common.LogoutCommand;
 import by.tarasiuk.ct.controller.command.impl.common.SignInCommand;
 import by.tarasiuk.ct.controller.command.impl.common.SignUpCommand;
 import by.tarasiuk.ct.controller.command.impl.company.ShowCompanySettingsPageCommand;
 import by.tarasiuk.ct.controller.command.impl.company.UpdateCompanyCommand;
-import by.tarasiuk.ct.controller.command.impl.manager.CreateForwarderCommand;
-import by.tarasiuk.ct.controller.command.impl.manager.ShowForwarderCreatorPageCommand;
-import by.tarasiuk.ct.controller.command.impl.manager.ShowForwarderSettingsPageCommand;
 import by.tarasiuk.ct.controller.command.impl.go.GoToAccountEmployeesPageCommand;
 import by.tarasiuk.ct.controller.command.impl.go.GoToAccountPasswordPageCommand;
 import by.tarasiuk.ct.controller.command.impl.go.GoToCreateOfferPageCommand;
 import by.tarasiuk.ct.controller.command.impl.go.GoToMainPageCommand;
 import by.tarasiuk.ct.controller.command.impl.go.GoToSignInPageCommand;
 import by.tarasiuk.ct.controller.command.impl.go.GoToSignUpPageCommand;
+import by.tarasiuk.ct.controller.command.impl.manager.CreateForwarderCommand;
+import by.tarasiuk.ct.controller.command.impl.manager.ShowForwarderCreatorPageCommand;
+import by.tarasiuk.ct.controller.command.impl.manager.ShowForwarderSettingsPageCommand;
 import by.tarasiuk.ct.controller.command.impl.offer.ApplyFreightCommand;
 import by.tarasiuk.ct.controller.command.impl.offer.CreateOfferCommand;
 import by.tarasiuk.ct.controller.command.impl.offer.CreateTradingCommand;
@@ -26,7 +30,7 @@ import by.tarasiuk.ct.controller.command.impl.offer.ShowAccountListOfferCommand;
 import by.tarasiuk.ct.controller.command.impl.offer.ShowAccountOfferCommand;
 import by.tarasiuk.ct.controller.command.impl.offer.ShowAccountTradingsCommand;
 import by.tarasiuk.ct.controller.command.impl.offer.ShowOfferEditorCommand;
-import by.tarasiuk.ct.controller.command.impl.offer.ShowOpenOffersCommand;
+import by.tarasiuk.ct.controller.command.impl.offer.ShowOpenOfferListCommand;
 import by.tarasiuk.ct.controller.command.impl.offer.ShowTradingOfferCommand;
 import by.tarasiuk.ct.controller.command.impl.offer.ShowTradingViewerCommand;
 import by.tarasiuk.ct.controller.command.impl.offer.UpdateOfferCommand;
@@ -52,7 +56,7 @@ public enum CommandType {
     GO_TO_ACCOUNT_PASSWORD_PAGE(new GoToAccountPasswordPageCommand()),
     SHOW_FORWARDER_CREATOR_PAGE(new ShowForwarderCreatorPageCommand()),
     SHOW_ACCOUNT_SETTINGS_PAGE(new ShowAccountSettingsPageCommand()),
-    SHOW_OPEN_OFFERS(new ShowOpenOffersCommand()),
+    SHOW_OPEN_OFFER_LIST(new ShowOpenOfferListCommand()),
     SHOW_OFFER_EDITOR(new ShowOfferEditorCommand()),
     SHOW_TRADING_OFFER(new ShowTradingOfferCommand()),
     SHOW_TRADING_VIEWER(new ShowTradingViewerCommand()),
@@ -68,7 +72,11 @@ public enum CommandType {
     UPDATE_ACCOUNT(new UpdateAccountCommand()),
     UPDATE_PASSWORD(new UpdatePasswordCommand()),
     UPDATE_COMPANY(new UpdateCompanyCommand()),
-    UPDATE_OFFER(new UpdateOfferCommand());
+    UPDATE_OFFER(new UpdateOfferCommand()),
+    BAN_ACCOUNT(new BanAccountCommand()),
+    UNBAN_ACCOUNT(new UnbanAccountCommand()),
+    SHOW_ACCOUNT_LIST_FROM_ADMIN(new ShowAccountListFromAdminCommand()),
+    SHOW_ACCOUNT_EDITOR_FROM_ADMIN(new ShowAccountEditorFromAdminCommand());
 
     /**
      * Command.

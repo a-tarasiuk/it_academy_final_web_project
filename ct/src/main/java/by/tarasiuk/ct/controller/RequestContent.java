@@ -47,6 +47,10 @@ public class RequestContent {
         return new HashMap<>(sessionAttributes);
     }
 
+    public Optional<String> findRequestParameter(String key) {
+        return Optional.ofNullable(requestParameters.get(key));
+    }
+
     public Optional<Object> findSessionAttribute(String key) {
         return Optional.ofNullable(sessionAttributes.get(key));
     }

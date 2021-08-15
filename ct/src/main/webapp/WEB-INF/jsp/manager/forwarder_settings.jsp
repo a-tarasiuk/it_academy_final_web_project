@@ -5,7 +5,6 @@
 
 <fmt:setLocale value="${sessionScope.locale}" scope="session"/>
 <fmt:setBundle basename="locale"/>
-<jsp:useBean id="account" scope="request" class="by.tarasiuk.ct.model.entity.impl.Account"/>
 
 <html>
     <head>
@@ -26,8 +25,7 @@
 
             <div id="middle">
                 <div id="m-left">
-                    <ct:employee_info/>
-                    <ct:account_menu/>
+                    <jsp:include page="/WEB-INF/jsp/navigation/left_navigation.jsp"/>
                 </div>
 
                 <div id="m-right">

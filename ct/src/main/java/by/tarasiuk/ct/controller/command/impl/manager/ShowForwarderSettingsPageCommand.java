@@ -53,7 +53,7 @@ public class ShowForwarderSettingsPageCommand implements Command {
                         }
                     }
 
-                    content.putSessionAttribute(AttributeName.ACCOUNT_LIST, accountList);
+                    content.putRequestAttribute(AttributeName.ACCOUNT_LIST, accountList);
                     LOGGER.info("By company with ID '{}' was find '{}' accounts.", companyId, accountList.size());
                 } else {
                     LOGGER.debug("By company with ID '{}' accounts not found.", companyId);

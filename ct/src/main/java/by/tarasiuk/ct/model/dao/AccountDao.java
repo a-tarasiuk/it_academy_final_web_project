@@ -13,4 +13,8 @@ public interface AccountDao {
 
     Optional<Account> findAccountByEmail(String email) throws DaoException;
     Optional<String> findPasswordByLogin(String login) throws DaoException;
+
+    boolean updatePasswordByAccountId(long accountId, String encodingPassword) throws DaoException;
+
+    boolean updateStatusByAccountId(long id, Account.Status status) throws DaoException;
 }

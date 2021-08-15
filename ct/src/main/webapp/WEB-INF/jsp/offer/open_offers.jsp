@@ -12,7 +12,6 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/font.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css">
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/cargo.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/icon.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/table.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/font-awesome.min.css">
@@ -25,8 +24,7 @@
 
             <div id="middle">
                 <div id="m-left">
-                    <ct:employee_info/>
-                    <ct:account_menu/>
+                    <jsp:include page="/WEB-INF/jsp/navigation/left_navigation.jsp"/>
                 </div>
 
                 <div id="m-right">

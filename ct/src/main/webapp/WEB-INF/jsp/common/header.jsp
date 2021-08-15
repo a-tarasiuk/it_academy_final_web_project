@@ -96,21 +96,16 @@
                         <!-- Company manager button -->
                         <div class="dropdown-wrapper">
                             <button class="dropdown-button button-colour-standard">
-                                <span class="icon icon-building">&nbsp;</span>
-                                <fmt:message key="header.button.label.company"/>&nbsp;&nbsp;
+                                <span class="icon icon-shield">&nbsp;</span>
+                                <fmt:message key="header.button.label.administration"/>&nbsp;&nbsp;
                                 <span class="icon icon-caret-down"></span>
                             </button>
 
                             <div class="content-wrapper">
                                 <form class="dropdown-content" action="controller" method="get">
-                                    <button type="submit" name="command" value="show_company_settings_page">
-                                        <span class="icon icon-cog">&nbsp;</span>
-                                        <fmt:message key="header.button.label.companySettings"/>
-                                    </button>
-
-                                    <button type="submit" name="command" value="show_forwarder_settings_page">
+                                    <button type="submit" name="command" value="show_account_list_from_admin">
                                         <span class="icon icon-users">&nbsp;</span>
-                                        <fmt:message key="header.button.label.forwarder.settings"/>
+                                        <fmt:message key="header.button.label.admin.accounts.editor"/>
                                     </button>
                                 </form>
                             </div>
