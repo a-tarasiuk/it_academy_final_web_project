@@ -77,8 +77,8 @@
                     </div>
 
                     <div class="row">
-                        <button type="submit" class="button-back" name="command" value="go_to_main_page"><fmt:message key="button.label.mainPage"/></button>
-                        <button type="submit" id="confirm" class="button-confirm" name="command" value="sign_in"><fmt:message key="button.label.confirm"/></button>
+                        <button type="submit" class="btn-confirm" name="command" value="go_to_main_page"><span class="icon icon-chevron-left">&nbsp;</span><fmt:message key="button.label.mainPage"/></button>
+                        <button type="submit" class="btn-confirm" name="command" value="sign_in"><span class="icon icon-check">&nbsp;</span><fmt:message key="button.label.confirm"/></button>
                     </div>
                 </form>
             </div>

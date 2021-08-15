@@ -132,12 +132,14 @@ public class OfferServiceImpl implements OfferService {
     @Override
     public List<Offer> findOfferListByEmployeeId(long employeeId) throws ServiceException {
         List<Offer> offers;
+
         try {
             offers = offerDao.findOfferListByEmployeeId(employeeId);
         } catch (DaoException e) {
             LOGGER.error("Error while find all offers by employee id '{}'.", employeeId, e);
             throw new ServiceException("Error while find all offers by employee id '" + employeeId + "'.", e);
         }
+
         return offers;
     }
 

@@ -22,11 +22,14 @@ public class AdministratorFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-        HttpSession session = request.getSession();
+        HttpSession session = request.getSession(false);
 
-        Account account = (Account) session.getAttribute(ACCOUNT);
-        if(account != null && account.getRole().equals(Role.ADMINISTRATOR)) {
-            session.setAttribute(SHOW_ADMIN_PANEL, true);
+        if(session != null) {
+            Account account = (Account) session.getAttribute(ACCOUNT);
+
+            if(account != null && account.getRole() != null && account.getRole().equals(Role.ADMINISTRATOR)) {
+                session.setAttribute(SHOW_ADMIN_PANEL, true);
+            }
         }
 
         filterChain.doFilter(request, response);

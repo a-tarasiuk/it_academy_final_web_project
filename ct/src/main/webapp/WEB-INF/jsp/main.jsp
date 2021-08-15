@@ -6,6 +6,7 @@
 <%--@elvariable id="locale" type="java.lang.String"--%>
 <fmt:setBundle basename="locale"/>
 <fmt:setLocale value="${locale}" scope="session"/>
+<jsp:useBean id="account" scope="session" class="by.tarasiuk.ct.model.entity.impl.Account"/>
 
 <html>
     <head>
@@ -23,7 +24,7 @@
 
             <div id="middle">
                 <c:choose>
-                    <c:when test="${not empty sessionScope.account}">
+                    <c:when test="${not empty account && not empty account.role}">
                         <jsp:forward page="${pageContext.request.contextPath}/controller?command=show_open_offers"/>
                     </c:when>
 

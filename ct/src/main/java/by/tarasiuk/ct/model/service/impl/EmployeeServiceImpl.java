@@ -9,6 +9,7 @@ import by.tarasiuk.ct.model.service.EmployeeService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.List;
 import java.util.Optional;
 
 public class EmployeeServiceImpl implements EmployeeService {
@@ -69,5 +70,18 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
 
         return findEmployee;
+    }
+
+    public List<Employee> findEmployeeListByCompanyId(long id) throws ServiceException {
+        List<Employee> employeeList;
+
+        try {
+            employeeList = employeeDao.findEmployeeListByCompanyId(id);
+        } catch (DaoException e) {
+            LOGGER.error("Error while find employee list by company ID '{}'.", id, e);
+            throw new ServiceException("Error while find employee list by company ID '" + id + "'.", e);
+        }
+
+        return employeeList;
     }
 }

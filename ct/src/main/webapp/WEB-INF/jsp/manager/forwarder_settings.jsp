@@ -5,7 +5,7 @@
 
 <fmt:setLocale value="${sessionScope.locale}" scope="session"/>
 <fmt:setBundle basename="locale"/>
-<jsp:useBean id="employee" scope="request" class="by.tarasiuk.ct.model.entity.impl.Employee"/>
+<jsp:useBean id="account" scope="request" class="by.tarasiuk.ct.model.entity.impl.Account"/>
 
 <html>
     <head>
@@ -60,8 +60,33 @@
                                 <th><fmt:message key="employee.table.login"/></th>
                                 <th><fmt:message key="employee.table.email"/></th>
                                 <th><fmt:message key="employee.table.registrationDate"/></th>
+                                <th><fmt:message key="employee.table.role"/></th>
                                 <th><fmt:message key="employee.table.status"/></th>
                             </tr>
+
+                            <c:choose>
+                                <c:when test="${empty account_list}">
+                                    <tr>
+                                        <td rowspan="7">Sss</td>
+                                    </tr>
+                                </c:when>
+
+                                <c:otherwise>
+                                    <c:forEach items="${account_list}" var="account" varStatus="loop">
+                                        <tr>
+                                            <td>${loop.count}</td>
+                                            <td>${account.firstName}</td>
+                                            <td>${account.lastName}</td>
+                                            <td>${account.login}</td>
+                                            <td>${account.email}</td>
+                                            <td>${account.registrationDate}</td>
+                                            <td>${account.role}</td>
+                                            <td>${account.status}</td>
+                                        </tr>
+                                    </c:forEach>
+                                </c:otherwise>
+                            </c:choose>
+
                         </table>
 
                         <ct:account_employee_list/>

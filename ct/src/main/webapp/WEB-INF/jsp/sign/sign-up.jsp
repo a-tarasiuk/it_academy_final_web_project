@@ -196,8 +196,8 @@
                 </div>
 
                 <div class="row">
-                    <button type="submit" class="button-back" name="command" value="go_to_main_page"><fmt:message key="button.label.mainPage"/></button>
-                    <button id="confirm" type="submit" class="button-confirm" name="command" value="sign_up"><fmt:message key="button.label.confirm"/></button>
+                    <button type="submit" class="btn-confirm" name="command" value="go_to_main_page"><span class="icon icon-chevron-left">&nbsp;</span><fmt:message key="button.label.mainPage"/></button>
+                    <button id="confirm" class="btn-confirm" type="submit" name="command" value="sign_up"><span class="icon icon-check">&nbsp;</span><fmt:message key="button.label.confirm"/></button>
                 </div>
             </form>
         </div>
