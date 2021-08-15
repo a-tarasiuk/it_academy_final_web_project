@@ -17,6 +17,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Show the page where can be changed information about forwarder
+ */
 public class ShowForwarderSettingsPageCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     private final EmployeeServiceImpl employeeService = ServiceProvider.getEmployeeService();
