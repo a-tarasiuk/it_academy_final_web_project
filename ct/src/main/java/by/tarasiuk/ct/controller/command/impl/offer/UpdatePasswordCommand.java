@@ -11,10 +11,12 @@ import by.tarasiuk.ct.model.service.ServiceProvider;
 import by.tarasiuk.ct.model.service.impl.AccountServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * Update account password command
+ */
 public class UpdatePasswordCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     private final AccountServiceImpl accountService = ServiceProvider.getAccountService();

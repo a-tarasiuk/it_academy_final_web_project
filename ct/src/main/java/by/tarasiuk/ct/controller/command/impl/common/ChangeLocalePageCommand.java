@@ -17,11 +17,11 @@ public class ChangeLocalePageCommand implements Command {
 
     @Override
     public String execute(RequestContent content) {
-        Map<String, String> requestParameters = content.getRequestParameters();
         Map<String, Object> sessionAttributes = content.getSessionAttributes();
+        Map<String, String> requestParameters = content.getRequestParameters();
 
-        String newLocale = requestParameters.get(LOCALE);
         String oldLocale = (String) sessionAttributes.get(LOCALE);
+        String newLocale = requestParameters.get(LOCALE);
 
         content.putSessionAttribute(LOCALE, newLocale);
 

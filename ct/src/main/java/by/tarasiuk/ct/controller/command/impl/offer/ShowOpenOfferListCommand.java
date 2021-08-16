@@ -10,13 +10,14 @@ import by.tarasiuk.ct.model.service.ServiceProvider;
 import by.tarasiuk.ct.model.service.impl.OfferServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static by.tarasiuk.ct.controller.command.AttributeName.OFFER_LIST;
 
-
+/**
+ * Show open offer list page command
+ */
 public class ShowOpenOfferListCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     private final OfferServiceImpl offerService = ServiceProvider.getOfferService();

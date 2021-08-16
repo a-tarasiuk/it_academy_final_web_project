@@ -21,7 +21,9 @@ import org.apache.logging.log4j.Logger;
 import java.util.Map;
 import java.util.Optional;
 
-
+/**
+ * Show trading viewer page command
+ */
 public class ShowTradingViewerCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     private final AccountServiceImpl accountService = ServiceProvider.getAccountService();

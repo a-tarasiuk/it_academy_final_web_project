@@ -13,7 +13,6 @@ import by.tarasiuk.ct.model.service.impl.EmployeeServiceImpl;
 import by.tarasiuk.ct.model.service.impl.TradingServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.util.HashMap;
 import java.util.Optional;
 
@@ -23,6 +22,9 @@ import static by.tarasiuk.ct.controller.command.AttributeName.MESSAGE_QUERY_ERRO
 import static by.tarasiuk.ct.controller.command.AttributeName.OFFER_ID;
 import static by.tarasiuk.ct.controller.command.AttributeName.TRADING_FREIGHT;
 
+/**
+ * Create a new trading command
+ */
 public class CreateTradingCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     private final TradingServiceImpl tradingService = ServiceProvider.getTradingService();

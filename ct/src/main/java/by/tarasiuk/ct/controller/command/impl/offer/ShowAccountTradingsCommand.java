@@ -15,7 +15,6 @@ import by.tarasiuk.ct.model.service.impl.OfferServiceImpl;
 import by.tarasiuk.ct.model.service.impl.TradingServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +24,9 @@ import static by.tarasiuk.ct.controller.command.AttributeName.ACCOUNT;
 import static by.tarasiuk.ct.controller.command.AttributeName.TRADING_MAP;
 import static by.tarasiuk.ct.controller.command.AttributeName.TRADING_STATUS;
 
-
+/**
+ * Show account list trading command
+ */
 public class ShowAccountTradingsCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     private final OfferServiceImpl offerService = ServiceProvider.getOfferService();

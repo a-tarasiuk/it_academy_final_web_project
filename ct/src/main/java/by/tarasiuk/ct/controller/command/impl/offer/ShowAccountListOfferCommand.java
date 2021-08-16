@@ -13,7 +13,6 @@ import by.tarasiuk.ct.model.service.impl.EmployeeServiceImpl;
 import by.tarasiuk.ct.model.service.impl.OfferServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -24,7 +23,9 @@ import static by.tarasiuk.ct.controller.command.AttributeName.OFFER_LIST;
 import static by.tarasiuk.ct.controller.command.AttributeName.OFFER_STATUS;
 import static by.tarasiuk.ct.util.MessageKey.MESSAGE_WARN;
 
-
+/**
+ * Show account list offer command
+ */
 public class ShowAccountListOfferCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     private final OfferServiceImpl offerService = ServiceProvider.getOfferService();

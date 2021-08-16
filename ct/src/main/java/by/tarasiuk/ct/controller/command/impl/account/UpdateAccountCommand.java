@@ -25,6 +25,12 @@ public class UpdateAccountCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     private final AccountServiceImpl accountService = ServiceProvider.getAccountService();
 
+    /**
+     * Validating the account information obtained from the page.
+     * In case of successful validation, the information is updated with the issuance of a successful message.
+     * @param content
+     * @return
+     */
     @Override
     public String execute(RequestContent content) {
         String page = PagePath.ACCOUNT_SETTINGS;
@@ -42,6 +48,7 @@ public class UpdateAccountCommand implements Command {
                     long accountId = account.getId();
                     accountService.updatePersonalDataByAccountId(accountId, personalData);
                     Optional<Account> changedAccount = accountService.findAccountById(accountId);
+
                     if(changedAccount.isPresent()) {
                         account = changedAccount.get();
                         content.putSessionAttribute(ACCOUNT, account);

@@ -35,7 +35,13 @@ public class ActivateAccountCommand implements Command {
     private final AccountServiceImpl accountService = ServiceProvider.getAccountService();
     private final TokenServiceImpl tokenService = ServiceProvider.getTokenService();
 
-
+    /**
+     * Before activating the account, the token specified in the link is checked against the token in the database.
+     * If the token exists, the account status is checked.
+     * At the end there is a redirect to the information page.
+     * @param content
+     * @return
+     */
     @Override
     public String execute(RequestContent content) {
         Map<String, String> requestParameters = content.getRequestParameters();
@@ -79,17 +85,15 @@ public class ActivateAccountCommand implements Command {
                             case UNCONFIRMED:
                                 Token.Status status = Token.Status.CONFIRMED;
                                 tokenService.changeTokenStatus(token, status);
-
                                 Account.Status accountStatus = Account.Status.ACTIVATED;
                                 accountService.changeAccountStatus(account, accountStatus);
-
                                 content.putSessionAttribute(ACCOUNT, account);
                                 message = ACCOUNT_SUCCESSFULLY_ACTIVATED;
                                 LOGGER.warn("Account with email '{}' successfully activated.", email);
                                 break;
                             default:
                                 LOGGER.warn("Nonexistent constant '{}' in '{}'.", tokenStatus, tokenStatus.getDeclaringClass());
-                                throw new EnumConstantNotPresentException(tokenStatus.getClass(), tokenStatus.toString()); //fixme Need an exception?
+                                throw new EnumConstantNotPresentException(tokenStatus.getClass(), tokenStatus.toString());
                         }
                     }
                 }

@@ -4,9 +4,8 @@
 <%@ taglib prefix="ct" uri="/WEB-INF/tld/custom.tld" %>
 
 <%--@elvariable id="locale" type="java.lang.String"--%>
+<fmt:setLocale value="${sessionScope.locale}" scope="session"/>
 <fmt:setBundle basename="locale"/>
-<fmt:setLocale value="${locale}" scope="session"/>
-<jsp:useBean id="account" scope="session" class="by.tarasiuk.ct.model.entity.impl.Account"/>
 
 <div id="header">
     <div id="inside-header">

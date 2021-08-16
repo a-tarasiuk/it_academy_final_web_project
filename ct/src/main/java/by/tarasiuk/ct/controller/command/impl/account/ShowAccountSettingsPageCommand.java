@@ -22,6 +22,11 @@ public class ShowAccountSettingsPageCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     private final AccountServiceImpl accountService = ServiceProvider.getAccountService();
 
+    /**
+     * Search for an account in the database by account ID and transfer the found account object to the page.
+     * @param requestContent
+     * @return
+     */
     @Override
     public String execute(RequestContent requestContent) {
         String page = PagePath.ACCOUNT_SETTINGS;

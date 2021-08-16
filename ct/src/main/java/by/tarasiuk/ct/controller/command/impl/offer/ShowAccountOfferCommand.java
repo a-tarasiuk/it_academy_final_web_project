@@ -18,13 +18,14 @@ import by.tarasiuk.ct.model.service.impl.OfferServiceImpl;
 import by.tarasiuk.ct.model.service.impl.TradingServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-
+/**
+ * Show account offer command
+ */
 public class ShowAccountOfferCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     private final OfferServiceImpl offerService = ServiceProvider.getOfferService();

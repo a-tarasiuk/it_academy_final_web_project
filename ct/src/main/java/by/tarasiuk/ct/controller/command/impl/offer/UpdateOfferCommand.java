@@ -10,10 +10,11 @@ import by.tarasiuk.ct.model.service.ServiceProvider;
 import by.tarasiuk.ct.model.service.impl.OfferServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.util.Map;
 
-
+/**
+ * SUpdate offer information command
+ */
 public class UpdateOfferCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     private final OfferServiceImpl offerService = ServiceProvider.getOfferService();

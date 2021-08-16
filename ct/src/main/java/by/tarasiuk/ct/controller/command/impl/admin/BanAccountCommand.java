@@ -20,6 +20,13 @@ public class BanAccountCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     private final AccountServiceImpl accountService = ServiceProvider.getAccountService();
 
+
+    /**
+     * The account is banned by the ID received from the page.
+     * In case of a successful ban, we receive a successful message.
+     * @param content - RequestContent
+     * @return
+     */
     @Override
     public String execute(RequestContent content) {
         String page = PagePath.ADMIN_ACCOUNT_EDITOR;

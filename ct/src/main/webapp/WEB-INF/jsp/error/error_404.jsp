@@ -4,8 +4,8 @@
 <%@ taglib prefix="ct" uri="/WEB-INF/tld/custom.tld" %>
 
 <%--@elvariable id="locale" type="java.lang.String"--%>
+<fmt:setLocale value="${sessionScope.locale}" scope="session"/>
 <fmt:setBundle basename="locale"/>
-<fmt:setLocale value="${locale}" scope="session"/>
 
 <html>
 <head>
@@ -19,18 +19,18 @@
 </head>
 
 <body>
-<div id="container">
-    <jsp:include page="/WEB-INF/jsp/common/header.jsp"/>
+    <div id="container">
+        <jsp:include page="/WEB-INF/jsp/common/header.jsp"/>
 
-    <div id="middle">
-        <div id="info">
-            <span class="icon icon-exclamation-circle icon-red x4"></span>
-            <span id="info-header"><fmt:message key="error.404.header"/></span>
-            <span id="info-message"><fmt:message key="error.404.message"/>&nbsp<a class="btn-confirm" href="/"><fmt:message key="button.label.homepage"/></a></span>
+        <div id="middle">
+            <div id="info">
+                <span class="icon icon-exclamation-circle icon-red x4"></span>
+                <span id="info-header"><fmt:message key="error.404.header"/></span>
+                <span id="info-message"><fmt:message key="error.404.message"/>&nbsp<a class="btn-confirm" href="/"><fmt:message key="button.label.homepage"/></a></span>
+            </div>
         </div>
-    </div>
 
-    <jsp:include page="/WEB-INF/jsp/common/footer.jsp"/>
-</div>
-</body>
+        <jsp:include page="/WEB-INF/jsp/common/footer.jsp"/>
+    </div>
+    </body>
 </html>

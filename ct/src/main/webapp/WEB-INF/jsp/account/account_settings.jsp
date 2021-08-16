@@ -16,7 +16,7 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/icon.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/font-awesome.min.css">
         <script src="${pageContext.request.contextPath}/js/personal_information_validation.js"></script>
-        <title><fmt:message key="account.setting"/></title>
+        <title><fmt:message key="account.page.setting"/></title>
     </head>
 
     <body>
@@ -31,7 +31,7 @@
                 <div id="m-right">
                     <div id="mr-up">
                         <div id="window-title">
-                            <fmt:message key="account.setting"/>
+                            <fmt:message key="account.page.setting"/>
                         </div>
 
                         <a class="btn-confirm" href="${pageContext.request.contextPath}/controller?command=go_to_account_password_page">

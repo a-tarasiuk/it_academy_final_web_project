@@ -13,10 +13,12 @@ import by.tarasiuk.ct.model.service.impl.OfferServiceImpl;
 import by.tarasiuk.ct.model.service.impl.TradingServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * Apply offer freight command
+ */
 public class ApplyFreightCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     private final OfferServiceImpl offerService = ServiceProvider.getOfferService();
