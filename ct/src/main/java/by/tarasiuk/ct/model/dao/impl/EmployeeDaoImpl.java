@@ -44,7 +44,7 @@ public class EmployeeDaoImpl extends BaseDao<Employee> implements EmployeeDao {
     }
 
     @Override
-    public Optional<Employee> findEntityByAccountId(long accountId) throws DaoException {
+    public Optional<Employee> findEmployeeByAccountId(long accountId) throws DaoException {
         Optional<Employee> findEmployee;
 
         try (Connection connection = connectionPool.getConnection();
@@ -122,6 +122,7 @@ public class EmployeeDaoImpl extends BaseDao<Employee> implements EmployeeDao {
         }
     }
 
+    @Override
     public List<Employee> findEmployeeListByCompanyId(long id) throws DaoException {
         List<Employee> employeeList = new ArrayList<>();
 

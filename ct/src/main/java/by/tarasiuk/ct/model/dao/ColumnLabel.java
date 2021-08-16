@@ -1,5 +1,8 @@
 package by.tarasiuk.ct.model.dao;
 
+/**
+ * Database table column names.
+ */
 public final class ColumnLabel {
     /**
      * Columns of the Accounts database table.

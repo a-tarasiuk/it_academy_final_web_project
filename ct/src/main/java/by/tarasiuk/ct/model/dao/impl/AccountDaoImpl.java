@@ -219,15 +219,6 @@ public class AccountDaoImpl extends BaseDao<Account> implements AccountDao {
         }
     }
 
-    /**
-     * It is generally good practice to release resources as soon as you are finished with them to avoid tying up
-     * database resources.
-     * @param account
-     * @return
-     * @throws DaoException
-     * @throws SQLException Database access error occurs when trying to close <code>Statement</code> object.
-     * @see <a href="https://docs.oracle.com/javase/8/docs/api/java/sql/Statement.html#close--">About release statement.</a>
-     */
     @Override
     public boolean createAccount(Account account, String encodingPassword) throws DaoException {
         String firstName = account.getFirstName();

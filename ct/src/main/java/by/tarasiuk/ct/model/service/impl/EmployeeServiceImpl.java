@@ -43,7 +43,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         Optional<Employee> findEmployee;
 
         try {
-            findEmployee = employeeDao.findEntityByAccountId(accountId);
+            findEmployee = employeeDao.findEmployeeByAccountId(accountId);
             LOGGER.info(findEmployee.isPresent()
                     ? "Successfully was find employee by account id '{}'."
                     : "Employee with account id '{}' not found in the database.", accountId);

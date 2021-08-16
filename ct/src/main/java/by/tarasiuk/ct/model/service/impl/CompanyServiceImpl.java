@@ -52,7 +52,7 @@ public class CompanyServiceImpl implements CompanyService {
         Optional<Company> findCompany;
 
         try {
-            findCompany = companyDao.findEntityByName(name);
+            findCompany = companyDao.findCompanyByName(name);
 
             LOGGER.info(findCompany.isPresent()
                     ? "Successfully was find company by name '{}'."

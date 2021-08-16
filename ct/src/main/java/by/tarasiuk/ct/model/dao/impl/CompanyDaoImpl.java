@@ -50,7 +50,7 @@ public class CompanyDaoImpl extends BaseDao<Company> implements CompanyDao {
     }
 
     @Override
-    public Optional<Company> findEntityByName(String name) throws DaoException {
+    public Optional<Company> findCompanyByName(String name) throws DaoException {
         Optional<Company> findCompany;
 
         try (Connection connection = connectionPool.getConnection();
