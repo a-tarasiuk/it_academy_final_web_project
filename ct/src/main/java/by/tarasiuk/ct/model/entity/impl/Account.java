@@ -1,9 +1,11 @@
 package by.tarasiuk.ct.model.entity.impl;
 
 import by.tarasiuk.ct.model.entity.Entity;
-
 import java.time.LocalDate;
 
+/**
+ * Class of account type.
+ */
 public class Account implements Entity {
     private static final long serialVersionUID = 44109233988771624L;
 
@@ -16,78 +18,164 @@ public class Account implements Entity {
     private Role role;
     private Status status;
 
+    /**
+     * Account roles.
+     */
     public enum Role {
         ADMINISTRATOR,
         MANAGER,
         FORWARDER;
     }
 
+    /**
+     * Account statuses.
+     */
     public enum Status {
         ACTIVATED,
         NOT_ACTIVATED,
         BANNED;
     }
 
+    /**
+     * The method for obtaining the account ID.
+     *
+     * @return          Account ID.
+     */
     public long getId() {
         return id;
     }
 
+    /**
+     * Method for setting the account ID.
+     *
+     * @param id        Account ID.
+     */
     public void setId(long id) {
         this.id = id;
     }
 
+    /**
+     * The method for obtaining the first name.
+     *
+     * @return          First name.
+     */
     public String getFirstName() {
         return firstName;
     }
 
+    /**
+     * Method for setting the first name.
+     *
+     * @param firstName First name.
+     */
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
+    /**
+     * The method for obtaining the last name.
+     *
+     * @return          Last name.
+     */
     public String getLastName() {
         return lastName;
     }
 
+    /**
+     * Method for setting the first name.
+     *
+     * @param lastName Last name.
+     */
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
+    /**
+     * The method for obtaining the login.
+     *
+     * @return          Login.
+     */
     public String getLogin() {
         return login;
     }
 
+    /**
+     * Method for setting the login.
+     *
+     * @param login     Login.
+     */
     public void setLogin(String login) {
         this.login = login;
     }
 
+    /**
+     * The method for obtaining the email.
+     *
+     * @return          Email.
+     */
     public String getEmail() {
         return email;
     }
 
+    /**
+     * Method for setting the email.
+     *
+     * @param email     Email.
+     */
     public void setEmail(String email) {
         this.email = email;
     }
 
+    /**
+     * The method for obtaining the account registration date.
+     *
+     * @return          Registration date.
+     */
     public LocalDate getRegistrationDate() {
         return registrationDate;
     }
 
+    /**
+     * Method for setting the account registration date.
+     *
+     * @param registrationDate Registration date.
+     */
     public void setRegistrationDate(LocalDate registrationDate) {
         this.registrationDate = registrationDate;
     }
 
+    /**
+     * The method for obtaining the account role.
+     *
+     * @return      Account role {@link Account.Role}
+     */
     public Role getRole() {
         return role;
     }
 
+    /**
+     * Method for setting the account role.
+     *
+     * @param role Account role {@link Account.Role}
+     */
     public void setRole(Role role) {
         this.role = role;
     }
 
+    /**
+     * The method for obtaining the account status.
+     *
+     * @return      Account status {@link Account.Status}
+     */
     public Status getStatus() {
         return status;
     }
 
+    /**
+     * Method for setting the account status.
+     *
+     * @param status Account status {@link Account.Status}
+     */
     public void setStatus(Status status) {
         this.status = status;
     }

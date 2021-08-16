@@ -2,6 +2,9 @@ package by.tarasiuk.ct.model.entity.impl;
 
 import by.tarasiuk.ct.model.entity.Entity;
 
+/**
+ * Class of token type.
+ */
 public class Token implements Entity {
     private static final long serialVersionUID = -3694202731606343552L;
 
@@ -10,39 +13,82 @@ public class Token implements Entity {
     private String number;
     private Status status;
 
+    /**
+     * Token statuses.
+     */
     public enum Status {
         CONFIRMED,
         UNCONFIRMED;
     }
 
+    /**
+     * The method for obtaining the token ID.
+     *
+     * @return          token ID.
+     */
     public long getId() {
         return id;
     }
 
+    /**
+     * Method for setting the token ID.
+     *
+     * @param id        Token ID.
+     */
     public void setId(long id) {
         this.id = id;
     }
 
+    /**
+     * The method for obtaining the account ID.
+     *
+     * @return          Account ID.
+     */
     public long getAccountId() {
         return accountId;
     }
 
-    public void setAccountId(long accountId) {
-        this.accountId = accountId;
+    /**
+     * Method for setting the account ID.
+     *
+     * @param id        Account ID.
+     */
+    public void setAccountId(long id) {
+        this.accountId = id;
     }
 
+    /**
+     * The method for obtaining the token number.
+     *
+     * @return          Token number.
+     */
     public String getNumber() {
         return number;
     }
 
+    /**
+     * Method for setting the Token number.
+     *
+     * @param number    Token number.
+     */
     public void setNumber(String number) {
         this.number = number;
     }
 
+    /**
+     * The method for obtaining the token status.
+     *
+     * @return          Status {@link Token.Status}
+     */
     public Status getStatus() {
         return status;
     }
 
+    /**
+     * Method for setting the token status.
+     *
+     * @param status    Status {@link Token.Status}
+     */
     public void setStatus(Status status) {
         this.status = status;
     }

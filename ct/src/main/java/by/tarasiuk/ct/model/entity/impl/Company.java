@@ -2,6 +2,9 @@ package by.tarasiuk.ct.model.entity.impl;
 
 import by.tarasiuk.ct.model.entity.Entity;
 
+/**
+ * Class of company type.
+ */
 public class Company implements Entity {
     private static final long serialVersionUID = -8258103486004279207L;
 
@@ -10,34 +13,74 @@ public class Company implements Entity {
     private String address;
     private String phoneNumber;
 
+    /**
+     * The method for obtaining the company ID.
+     *
+     * @return              company ID.
+     */
     public long getId() {
         return id;
     }
 
+    /**
+     * Method for setting the company ID.
+     *
+     * @param id            Company ID.
+     */
     public void setId(long id) {
         this.id = id;
     }
 
+    /**
+     * The method for obtaining the company name.
+     *
+     * @return              Name.
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Method for setting the company name.
+     *
+     * @param name          Company name.
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * The method for obtaining the company address.
+     *
+     * @return              Address.
+     */
     public String getAddress() {
         return address;
     }
 
+    /**
+     * Method for setting the company address.
+     *
+     * @param address       Company address.
+     */
     public void setAddress(String address) {
         this.address = address;
     }
 
+    /**
+     * The method for obtaining the company phone number.
+     *
+     * @return              Phone number.
+     */
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
+    /**
+     * Method for setting the company phone number.
+     *
+     * @param phoneNumber   Phone number.
+     */
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }

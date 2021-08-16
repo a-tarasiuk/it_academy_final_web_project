@@ -1,10 +1,11 @@
 package by.tarasiuk.ct.model.entity.impl;
 
-
 import by.tarasiuk.ct.model.entity.Entity;
-
 import java.time.LocalDate;
 
+/**
+ * Class of offer type.
+ */
 public class Offer implements Entity {
     private static final long serialVersionUID = 44109233988771624L;
 
@@ -19,87 +20,190 @@ public class Offer implements Entity {
     private LocalDate creationDate;
     private Status status;
 
+    /**
+     * Offer statuses.
+     */
     public enum Status {
         OPEN,
         CLOSED
     }
 
+    /**
+     * The method for obtaining the offer ID.
+     *
+     * @return          Offer ID.
+     */
     public long getId() {
         return id;
     }
 
+    /**
+     * Method for setting the offer ID.
+     *
+     * @param id        Offer ID.
+     */
     public void setId(long id) {
         this.id = id;
     }
 
+    /**
+     * The method for obtaining the Employee ID.
+     *
+     * @return          Employee ID.
+     */
     public long getEmployeeId() {
         return employeeId;
     }
 
+    /**
+     * Method for setting the Employee ID.
+     *
+     * @param employeeId Employee ID.
+     */
     public void setEmployeeId(long employeeId) {
         this.employeeId = employeeId;
     }
 
+    /**
+     * The method for obtaining the product name.
+     *
+     * @return          Product name.
+     */
     public String getProductName() {
         return productName;
     }
 
+    /**
+     * Method for setting the product name.
+     *
+     * @param productName Product name.
+     */
     public void setProductName(String productName) {
         this.productName = productName;
     }
 
+    /**
+     * The method for obtaining the product weight (ton).
+     *
+     * @return          Product weight.
+     */
     public float getProductWeight() {
         return productWeight;
     }
 
+    /**
+     * Method for setting the product weight (ton).
+     *
+     * @param productWeight Product weight.
+     */
     public void setProductWeight(float productWeight) {
         this.productWeight = productWeight;
     }
 
+    /**
+     * The method for obtaining the product volume (cubic meter).
+     *
+     * @return          Product volume.
+     */
     public float getProductVolume() {
         return productVolume;
     }
 
+    /**
+     * Method for setting the product volume (cubic meter).
+     *
+     * @param productVolume Product volume.
+     */
     public void setProductVolume(float productVolume) {
         this.productVolume = productVolume;
     }
 
+    /**
+     * The method for obtaining the address where need to pick up the goods.
+     *
+     * @return          Address from.
+     */
     public String getAddressFrom() {
         return addressFrom;
     }
 
+    /**
+     * Method for setting the address where need to pick up the goods.
+     *
+     * @param addressFrom Address from.
+     */
     public void setAddressFrom(String addressFrom) {
         this.addressFrom = addressFrom;
     }
 
+    /**
+     * The method for obtaining the address where to deliver the goods.
+     *
+     * @return          Address to.
+     */
     public String getAddressTo() {
         return addressTo;
     }
 
+    /**
+     * Method for setting the address where need to deliver the goods.
+     *
+     * @param addressTo Address to.
+     */
     public void setAddressTo(String addressTo) {
         this.addressTo = addressTo;
     }
 
+    /**
+     * The method for obtaining the product freight (USD).
+     *
+     * @return          Product freight.
+     */
     public float getFreight() {
         return freight;
     }
 
+    /**
+     * Method for setting the product freight (USD).
+     *
+     * @param freight   Product freight.
+     */
     public void setFreight(float freight) {
         this.freight = freight;
     }
 
+    /**
+     * The method for obtaining the offer creation date.
+     *
+     * @return          Creation date {@link java.time.LocalDate}
+     */
     public LocalDate getCreationDate() {
         return creationDate;
     }
 
+    /**
+     * Method for setting the product creation date.
+     *
+     * @param creationDate Creation date.
+     */
     public void setCreationDate(LocalDate creationDate) {
         this.creationDate = creationDate;
     }
 
+    /**
+     * The method for obtaining the offer status.
+     *
+     * @return          Status {@link Offer.Status}
+     */
     public Status getStatus() {
         return status;
     }
 
+    /**
+     * Method for setting the product status.
+     *
+     * @param status     Status {@link Offer.Status}
+     */
     public void setStatus(Status status) {
         this.status = status;
     }

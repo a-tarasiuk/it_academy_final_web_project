@@ -2,6 +2,9 @@ package by.tarasiuk.ct.model.entity.impl;
 
 import by.tarasiuk.ct.model.entity.Entity;
 
+/**
+ * Class of employee type.
+ */
 public class Employee implements Entity {
     private static final long serialVersionUID = 44109233988771624L;
 
@@ -9,28 +12,58 @@ public class Employee implements Entity {
     private long accountId;
     private long companyId;
 
+    /**
+     * The method for obtaining the employee ID.
+     *
+     * @return          Employee ID.
+     */
     public long getId() {
         return id;
     }
 
+    /**
+     * Method for setting the employee ID.
+     *
+     * @param id        Employee ID.
+     */
     public void setId(long id) {
         this.id = id;
     }
 
+    /**
+     * The method for obtaining the account ID.
+     *
+     * @return          Account ID.
+     */
     public long getAccountId() {
         return accountId;
     }
 
-    public void setAccountId(long accountId) {
-        this.accountId = accountId;
+    /**
+     * Method for setting the account ID.
+     *
+     * @param id        Account ID.
+     */
+    public void setAccountId(long id) {
+        this.accountId = id;
     }
 
+    /**
+     * The method for obtaining the company ID.
+     *
+     * @return          Company ID.
+     */
     public long getCompanyId() {
         return companyId;
     }
 
-    public void setCompanyId(long companyId) {
-        this.companyId = companyId;
+    /**
+     * Method for setting the company ID.
+     *
+     * @param id        Company ID.
+     */
+    public void setCompanyId(long id) {
+        this.companyId = id;
     }
 
     @Override
