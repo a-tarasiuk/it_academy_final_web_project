@@ -67,10 +67,4 @@
         <tag-class>by.tarasiuk.ct.tag.TradingActionTag</tag-class>
         <body-content>empty</body-content>
     </tag>
-
-    <tag>
-        <name>trading_freight</name>
-        <tag-class>by.tarasiuk.ct.tag.TradingFreightTag</tag-class>
-        <body-content>empty</body-content>
-    </tag>
 </taglib>

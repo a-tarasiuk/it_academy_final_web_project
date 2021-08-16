@@ -25,7 +25,7 @@ import static by.tarasiuk.ct.controller.command.AttributeName.TRADING_MAP;
 import static by.tarasiuk.ct.controller.command.AttributeName.TRADING_STATUS;
 
 /**
- * Show account list trading command
+ * Show account list trading command.
  */
 public class ShowAccountTradingsCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -33,6 +33,11 @@ public class ShowAccountTradingsCommand implements Command {
     private final TradingServiceImpl tradingService = ServiceProvider.getTradingService();
     private final EmployeeServiceImpl employeeService = ServiceProvider.getEmployeeService();
 
+    /**
+     * There is a search in the database for the list of offers and the corresponding tradings.
+     * @param content - RequestContent
+     * @return account tradings page
+     */
     @Override
     public String execute(RequestContent content) {
         String page;
@@ -81,7 +86,6 @@ public class ShowAccountTradingsCommand implements Command {
                             }
                         }
                     }
-
                     content.putRequestAttribute(TRADING_MAP, tradingMap);
                 }
             }

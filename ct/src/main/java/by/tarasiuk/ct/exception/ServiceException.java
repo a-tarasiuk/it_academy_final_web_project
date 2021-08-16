@@ -1,6 +1,12 @@
 package by.tarasiuk.ct.exception;
 
+/**
+ * Exception, that throws by Service layer.
+ */
 public class ServiceException extends Exception {
+    /**
+     * Default constructors.
+     */
     public ServiceException() {
         super();
     }

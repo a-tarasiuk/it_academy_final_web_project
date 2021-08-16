@@ -25,6 +25,15 @@ public class UpdateCompanyCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     private final CompanyServiceImpl companyService = ServiceProvider.getCompanyService();
 
+    /**
+     * Get the company ID from the request.
+     * First, the address and phone number of the company are validated.
+     * If successful, the information about the company is updated in the database
+     * and returned to the page with a successful message.
+     * Otherwise, redirection to the information page.
+     * @param content - RequestContent
+     * @return
+     */
     @Override
     public String execute(RequestContent content) {
         String page = PagePath.COMPANY_SETTINGS;

@@ -3,21 +3,26 @@ package by.tarasiuk.ct.model.connection;
 import by.tarasiuk.ct.util.PropertiesLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+/**
+ * Connections creator.
+ */
 class ConnectionFactory {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final Properties connectionProperties;
-
     private static final String PROPERTIES_FILE = "database.properties";
     private static final String DB_URL = "database.url";
     private static final String DB_USER = "database.user";
     private static final String DB_PASSWORD = "database.password";
 
+    /**
+     * Static initialization.
+     *
+     */
     static {
         connectionProperties = PropertiesLoader.getProperties(PROPERTIES_FILE);
 
@@ -29,9 +34,6 @@ class ConnectionFactory {
         }
     }
 
-    /**
-     * Prevent the {@code ConnectionFactory} class from being instantiated.
-     */
     private ConnectionFactory() {
     }
 

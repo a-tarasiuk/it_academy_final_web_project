@@ -14,8 +14,12 @@ import java.io.IOException;
 
 import static by.tarasiuk.ct.model.entity.impl.Account.Role;
 import static by.tarasiuk.ct.controller.command.AttributeName.ACCOUNT;
-import static by.tarasiuk.ct.controller.command.AttributeName.SHOW_ADMIN_PANEL;
+import static by.tarasiuk.ct.controller.command.AttributeName.SHOW_ADMIN_FUNCTIONS;
 
+/**
+ * Fil checks the role of the account.
+ * If the role is ADMINISTRATOR, then the flag is set to display the code block on the jsp page.
+ */
 @WebFilter
 public class AdministratorFilter implements Filter {
     @Override
@@ -28,7 +32,7 @@ public class AdministratorFilter implements Filter {
             Account account = (Account) session.getAttribute(ACCOUNT);
 
             if(account != null && account.getRole() != null && account.getRole().equals(Role.ADMINISTRATOR)) {
-                session.setAttribute(SHOW_ADMIN_PANEL, true);
+                session.setAttribute(SHOW_ADMIN_FUNCTIONS, true);
             }
         }
 

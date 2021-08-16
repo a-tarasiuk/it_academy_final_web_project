@@ -11,8 +11,12 @@ import static by.tarasiuk.ct.model.dao.ColumnLabel.OFFER_ID;
 import static by.tarasiuk.ct.model.dao.ColumnLabel.TRADING_FREIGHT;
 import static by.tarasiuk.ct.model.dao.ColumnLabel.TRADING_ID;
 
-public class TradingDaoBuilder {
+/**
+ * Build trading object from <code>ResultSet</code>.
+ * @see java.sql.ResultSet
+ */
 
+public class TradingDaoBuilder {
     private TradingDaoBuilder() {
     }
 

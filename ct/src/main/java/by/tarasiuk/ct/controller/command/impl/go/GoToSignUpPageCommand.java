@@ -13,8 +13,13 @@ import org.apache.logging.log4j.Logger;
 public class GoToSignUpPageCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
 
+    /**
+     * Direction to the sign up page.
+     * @param content - RequestContent
+     * @return account forwarders page
+     */
     @Override
-    public String execute(RequestContent requestContent) {
+    public String execute(RequestContent content) {
         LOGGER.info("Command '{}' return path '{}'", CommandType.GO_TO_SIGN_UP_PAGE, PagePath.SIGN_UP);
         return PagePath.SIGN_UP;
     }

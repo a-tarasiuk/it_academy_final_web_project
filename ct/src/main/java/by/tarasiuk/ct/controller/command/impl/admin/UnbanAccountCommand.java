@@ -14,12 +14,19 @@ import org.apache.logging.log4j.Logger;
 import java.util.Optional;
 
 /**
- * Ban account command for administrator
+ * For a user with the ADMINISTRATOR role only.
+ * Ban account command for administrator.
  */
 public class UnbanAccountCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     private final AccountServiceImpl accountService = ServiceProvider.getAccountService();
 
+    /**
+     * The database searches for an account by the ID that came from the page.
+     * If such an account exists, unban the account.
+     * @param content - RequestContent
+     * @return page address admin account editor
+     */
     @Override
     public String execute(RequestContent content) {
         String page = PagePath.ADMIN_ACCOUNT_EDITOR;

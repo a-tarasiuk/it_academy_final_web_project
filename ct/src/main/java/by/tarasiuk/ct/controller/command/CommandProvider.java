@@ -7,12 +7,20 @@ import org.apache.logging.log4j.Logger;
 import java.util.Arrays;
 import java.util.Optional;
 
+/**
+ * Allows you to determine the type of command.
+ */
 public class CommandProvider {
     private static final Logger LOGGER = LogManager.getLogger();
 
     private CommandProvider() {
     }
 
+    /**
+     * Searches for a command in the command list.
+     * @param request - HttpServletRequest
+     * @return type command if exist, otherwise - empty command
+     */
     public static Optional<Command> defineCommand(HttpServletRequest request) {
         String command = request.getParameter(AttributeName.COMMAND);
 

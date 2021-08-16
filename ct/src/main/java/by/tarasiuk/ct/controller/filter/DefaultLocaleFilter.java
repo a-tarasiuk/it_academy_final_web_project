@@ -16,6 +16,9 @@ import java.io.IOException;
 import static by.tarasiuk.ct.controller.command.AttributeName.LOCALE;
 import static by.tarasiuk.ct.controller.command.AttributeName.EN_US;
 
+/**
+ * Set the base locale en_US for a new user.
+ */
 @WebFilter
 public class DefaultLocaleFilter implements Filter {
     private static final Logger LOGGER = LogManager.getLogger();

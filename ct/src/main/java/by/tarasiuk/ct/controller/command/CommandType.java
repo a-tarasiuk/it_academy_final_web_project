@@ -37,8 +37,8 @@ import by.tarasiuk.ct.controller.command.impl.offer.UpdateOfferCommand;
 import by.tarasiuk.ct.controller.command.impl.offer.UpdatePasswordCommand;
 
 /**
- * All available commands of the application
- * @see Filter // todo
+ * All available commands of the application.
+ * @see SecurityFilter
  *
  */
 public enum CommandType {
@@ -80,13 +80,11 @@ public enum CommandType {
 
     /**
      * Command.
-     *
      */
     private final Command command;
 
     /**
      * Package access constructor.
-     *
      * @param command {@link Command}
      */
     CommandType(Command command) {
@@ -95,8 +93,7 @@ public enum CommandType {
 
     /**
      * Gets command.
-     *
-     * @return command.
+     * @return command
      */
     public Command getCommand() {
         return this.command;

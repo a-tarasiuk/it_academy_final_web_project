@@ -17,13 +17,19 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * Apply offer freight command
+ * Apply offer freight command.
  */
 public class ApplyFreightCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     private final OfferServiceImpl offerService = ServiceProvider.getOfferService();
     private final TradingServiceImpl tradingService = ServiceProvider.getTradingService();
 
+    /**
+     * Acceptance of freight by the company.
+     * After acceptance, the quotation is closed and the freight is assigned the status ACCEPTED.
+     * @param content - RequestContent
+     * @return account offer page
+     */
     @Override
     public String execute(RequestContent content) {
         String page = PagePath.FREIGHT_APPLY_INFO;

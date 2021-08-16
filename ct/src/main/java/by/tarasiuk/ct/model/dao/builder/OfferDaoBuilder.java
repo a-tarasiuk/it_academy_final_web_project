@@ -17,8 +17,11 @@ import static by.tarasiuk.ct.model.dao.ColumnLabel.OFFER_PRODUCT_VOLUME;
 import static by.tarasiuk.ct.model.dao.ColumnLabel.OFFER_PRODUCT_WEIGHT;
 import static by.tarasiuk.ct.model.dao.ColumnLabel.OFFER_STATUS;
 
+/**
+ * Build offer object from <code>ResultSet</code>.
+ * @see java.sql.ResultSet
+ */
 public class OfferDaoBuilder {
-
     private OfferDaoBuilder() {
     }
 

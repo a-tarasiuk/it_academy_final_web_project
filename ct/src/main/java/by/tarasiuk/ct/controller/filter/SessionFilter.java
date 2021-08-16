@@ -1,5 +1,6 @@
 package by.tarasiuk.ct.controller.filter;
 
+import by.tarasiuk.ct.controller.command.AttributeName;
 import by.tarasiuk.ct.controller.command.PagePath;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
@@ -13,6 +14,10 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
+/**
+ * The filter checks the session object.
+ * If the session is new - redirect to the index page.
+ */
 @WebFilter
 public class SessionFilter implements Filter {
     @Override
@@ -21,8 +26,8 @@ public class SessionFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession(false);
 
-        if(session == null) {
-            response.sendRedirect(request.getContextPath() + PagePath.INFO);    //fixme
+        if(session.isNew()) {
+            response.sendRedirect(request.getContextPath() + PagePath.INDEX);
         } else {
             filterChain.doFilter(request, response);
         }

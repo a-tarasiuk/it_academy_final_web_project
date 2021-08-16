@@ -10,6 +10,10 @@ import java.util.Map;
 
 import static by.tarasiuk.ct.controller.command.AttributeName.*;
 
+/**
+ * Build company object from <code>ResultSet</code>.
+ * @see java.sql.ResultSet
+ */
 public class CompanyDaoBuilder {
     private static final Logger LOGGER = LogManager.getLogger();
 

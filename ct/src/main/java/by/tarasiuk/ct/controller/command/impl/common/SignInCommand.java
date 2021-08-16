@@ -34,6 +34,15 @@ public class SignInCommand implements Command {
     private final EmployeeServiceImpl employeeService = ServiceProvider.getEmployeeService();
     private final CompanyServiceImpl companyService = ServiceProvider.getCompanyService();
 
+    /**
+     * The login and password from the page are validated.
+     * If successful, the account is searched for by login in the database.
+     * Next, the account status is checked.
+     * If the account status is ACTIVATED, the account and employee object is placed in the session.
+     * Otherwise, the corresponding message is displayed.
+     * @param content - RequestContent
+     * @return sign in, main or info page
+     */
     @Override
     public String execute(RequestContent content) {
         String page;

@@ -5,6 +5,7 @@
 
 <fmt:setLocale value="${sessionScope.locale}" scope="session"/>
 <fmt:setBundle basename="locale"/>
+<jsp:useBean id="offer" scope="request" class="by.tarasiuk.ct.model.entity.impl.Offer"/>
 
 <html>
     <head>
@@ -45,9 +46,35 @@
                             <fmt:message key="tradings.limitation"/>
                         </div>
 
+                        <!-- Offer information -->
                         <ct:offer_viewer/>
-                        <ct:trading_freight/>
 
+                        <!-- Window for trading -->
+                        <div class="title"><fmt:message key="freight.offer"/></div>
+
+                        <form action="controller" method="post">
+                            <input type="hidden" name="offer_id" value="${offer.id}">
+
+                            <div class="trading">
+                                <div class="trading-section">&#x24;</div>
+
+                                <div class="trading-section">
+                                    <input type="text" id="freight" name="trading_freight" placeholder="<fmt:message key="offer.freight"/>" oninput="validateFreight()" required>
+                                </div>
+
+                                <div class="trading-section">
+                                    <button class="btn-simple btn-green" type="submit" id="confirm" name="command" value="create_trading">
+                                        <fmt:message key="button.label.submit"/>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+
+                        <label id="description_freight" class="description">
+                            <fmt:message key="description.tradingFreight"/>
+                        </label>
+
+                        <!-- Operation messages -->
                         <div class="error-message row">
                             <c:if test="${incorrect_trading_freight == true}">
                                 <fmt:message key="message.invalid.tradingFreight"/>
@@ -58,6 +85,7 @@
                             </c:if>
                         </div>
 
+                        <!-- List tradings if exist -->
                         <ct:trading_history/>
                     </div>
                 </div>

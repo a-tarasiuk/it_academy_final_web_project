@@ -15,12 +15,18 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * Show offer editor page command
+ * Show offer editor page command.
  */
 public class ShowOfferEditorCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     private final OfferServiceImpl offerService = ServiceProvider.getOfferService();
 
+    /**
+     * Search for an offer object by ID in the database.
+     * If successful, transfer of the offer object to the page.
+     * @param content - RequestContent
+     * @return offer editor page
+     */
     @Override
     public String execute(RequestContent content) {
         String page = PagePath.OFFER_EDITOR;

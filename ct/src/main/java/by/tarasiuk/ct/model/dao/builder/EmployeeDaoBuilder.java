@@ -9,8 +9,11 @@ import static by.tarasiuk.ct.model.dao.ColumnLabel.ACCOUNT_ID;
 import static by.tarasiuk.ct.model.dao.ColumnLabel.COMPANY_ID;
 import static by.tarasiuk.ct.model.dao.ColumnLabel.EMPLOYEE_ID;
 
+/**
+ * Build employee object from <code>ResultSet</code>.
+ * @see java.sql.ResultSet
+ */
 public class EmployeeDaoBuilder {
-
     private EmployeeDaoBuilder() {
     }
 

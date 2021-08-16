@@ -31,6 +31,12 @@ public class ShowTradingViewerCommand implements Command {
     private final EmployeeServiceImpl employeeService = ServiceProvider.getEmployeeService();
     private final CompanyServiceImpl companyService = ServiceProvider.getCompanyService();
 
+    /**
+     * Search for trading by ID in the database.
+     * If successful, search for a company by company ID and trading data.
+     * @param content - RequestContent
+     * @return trading viewer page
+     */
     @Override
     public String execute(RequestContent content) {
         String page = PagePath.TRADING_VIEWER;

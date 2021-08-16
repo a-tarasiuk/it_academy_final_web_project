@@ -43,6 +43,16 @@ public class SignUpCommand implements Command {
     private final EmployeeServiceImpl employeeService = ServiceProvider.getEmployeeService();
     private final TokenServiceImpl tokenService = ServiceProvider.getTokenService();
 
+    /**
+     * The data is being validated to create an account and a company.
+     * If successful, check in the database for an account with login, email and company name.
+     * If successful, a token is generated to activate the account
+     * and an email is sent to the mail with a link to confirm the account.
+     * If there is already a login, mail and (or) company in the database,
+     * then return to the registration page and display the information message.
+     * @param content - RequestContent
+     * @return sign up or main page
+     */
     @Override
     public String execute(RequestContent content) {
         String path;

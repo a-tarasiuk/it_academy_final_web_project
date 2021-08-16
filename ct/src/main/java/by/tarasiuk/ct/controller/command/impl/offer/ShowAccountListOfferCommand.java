@@ -31,6 +31,11 @@ public class ShowAccountListOfferCommand implements Command {
     private final OfferServiceImpl offerService = ServiceProvider.getOfferService();
     private final EmployeeServiceImpl employeeService = ServiceProvider.getEmployeeService();
 
+    /**
+     * Search for a list of offers by employee ID.
+     * @param content - RequestContent
+     * @return account offers page
+     */
     @Override
     public String execute(RequestContent content) {
         String page;

@@ -15,12 +15,18 @@ import org.apache.logging.log4j.Logger;
 import java.util.Optional;
 
 /**
- * Show the page for creating a new account with the FORWARDER role
+ * Only for an account with the MANAGER role.
+ * Show the page for creating a new account with the FORWARDER role.
  */
 public class ShowForwarderCreatorPageCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     private final CompanyServiceImpl companyService = ServiceProvider.getCompanyService();
 
+    /**
+     * Search by company ID and transfer the company name to the page.
+     * @param content - RequestContent
+     * @return forwarder creator page
+     */
     @Override
     public String execute(RequestContent content) {
         String page = PagePath.FORWARDER_CREATOR;
@@ -41,7 +47,6 @@ public class ShowForwarderCreatorPageCommand implements Command {
                 LOGGER.error("Failed to process the command '{}'.", CommandType.SHOW_FORWARDER_CREATOR_PAGE, e);
                 page = PagePath.OFFER_EDITOR;
             }
-
         }
 
         LOGGER.info("Command '{}' return path '{}'", CommandType.SHOW_FORWARDER_CREATOR_PAGE, PagePath.FORWARDER_CREATOR);

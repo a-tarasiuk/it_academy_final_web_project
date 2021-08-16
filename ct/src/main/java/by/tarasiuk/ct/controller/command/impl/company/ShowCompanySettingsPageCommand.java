@@ -21,12 +21,18 @@ public class ShowCompanySettingsPageCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     private final CompanyServiceImpl companyService = ServiceProvider.getCompanyService();
 
+    /**
+     * Search for a company by employee ID in the database.
+     * If successful, getting the company object and transferring it to the page.
+     * @param content - RequestContent
+     * @return company settings or account offers page
+     */
     @Override
-    public String execute(RequestContent requestContent) {
+    public String execute(RequestContent content) {
         String page = PagePath.COMPANY_SETTINGS;
 
         try {
-            Optional<Object> findEmployee = requestContent.findSessionAttribute(AttributeName.EMPLOYEE);
+            Optional<Object> findEmployee = content.findSessionAttribute(AttributeName.EMPLOYEE);
             if(findEmployee.isPresent()) {
                 Employee employee = (Employee) findEmployee.get();
                 long companyId = employee.getCompanyId();
@@ -34,7 +40,7 @@ public class ShowCompanySettingsPageCommand implements Command {
                 Optional<Company> findCompany = companyService.findCompanyById(companyId);
                 if(findCompany.isPresent()) {
                     Company company = findCompany.get();
-                    requestContent.putRequestAttribute(AttributeName.COMPANY, company);
+                    content.putRequestAttribute(AttributeName.COMPANY, company);
                     LOGGER.debug("Company with ID '{}' find and send to the '{}'.", companyId, PagePath.COMPANY_SETTINGS);
                 }
             }

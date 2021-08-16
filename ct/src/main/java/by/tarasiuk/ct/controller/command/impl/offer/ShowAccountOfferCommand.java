@@ -33,6 +33,11 @@ public class ShowAccountOfferCommand implements Command {
     private final TradingServiceImpl tradingService = ServiceProvider.getTradingService();
     private final CompanyServiceImpl companyService = ServiceProvider.getCompanyService();
 
+    /**
+     * There is a search for a company and its freight for the offer.
+     * @param content - RequestContent
+     * @return account offer page
+     */
     @Override
     public String execute(RequestContent content) {
         String page = PagePath.ACCOUNT_OFFERS;

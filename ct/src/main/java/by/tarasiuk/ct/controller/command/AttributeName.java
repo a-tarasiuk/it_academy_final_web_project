@@ -1,5 +1,8 @@
 package by.tarasiuk.ct.controller.command;
 
+/**
+ * Names of application attributes.
+ */
 public final class AttributeName {
     /**
      * Command attribute from JSP page.
@@ -14,9 +17,10 @@ public final class AttributeName {
     public static final String RU_RU = "ru_RU";
 
     /**
-     * Administrator attributes
+     * Administrator attributes.
      */
-    public static final String SHOW_ADMIN_PANEL = "show_administrator_panel";
+    public static final String SHOW_ADMIN_FUNCTIONS = "show_administrator_functions";
+
     /**
      * Account attributes from JSP page.
      */

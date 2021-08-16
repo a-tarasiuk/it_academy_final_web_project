@@ -14,7 +14,8 @@ import org.apache.logging.log4j.Logger;
 import java.util.Optional;
 
 /**
- * Ban account command for administrator
+ * For a user with the ADMINISTRATOR role only.
+ * Ban account command for administrator.
  */
 public class BanAccountCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();

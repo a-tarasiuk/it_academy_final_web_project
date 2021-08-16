@@ -15,12 +15,20 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * Update account password command
+ * Update account password command.
  */
 public class UpdatePasswordCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     private final AccountServiceImpl accountService = ServiceProvider.getAccountService();
 
+    /**
+     * Checking for the validity of passwords.
+     * If successful - checking if the old password matches the password of the account in the database.
+     * If successful, the password is updated.
+     * Otherwise, return to the page and display the message.
+     * @param content - RequestContent
+     * @return account password page
+     */
     @Override
     public String execute(RequestContent content) {
         String page = PagePath.ACCOUNT_PASSWORD;

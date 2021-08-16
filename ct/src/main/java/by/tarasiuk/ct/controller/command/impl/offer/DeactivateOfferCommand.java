@@ -15,12 +15,17 @@ import java.util.HashMap;
 import java.util.Optional;
 
 /**
- * Deactivate offer command
+ * Deactivate offer command.
  */
 public class DeactivateOfferCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     private final OfferServiceImpl offerService = ServiceProvider.getOfferService();
 
+    /**
+     * Deactivating an offer by offer ID.
+     * @param content - RequestContent
+     * @return offer deactivate information page.
+     */
     @Override
     public String execute(RequestContent content) {
         HashMap<String, String> parameters = content.getRequestParameters();

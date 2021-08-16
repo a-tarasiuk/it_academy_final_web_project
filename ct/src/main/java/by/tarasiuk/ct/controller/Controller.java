@@ -37,7 +37,7 @@ public class Controller extends HttpServlet {
     }
 
     /**
-     * Default GET method
+     * Default POST method.
      *
      * @param request HttpServletRequest
      * @param response HttpServletResponse
@@ -49,6 +49,16 @@ public class Controller extends HttpServlet {
         processRequest(request, response);
     }
 
+    /**
+     * Process receiving request.
+     * If {@link by.tarasiuk.ct.controller.command.CommandType} contains command -> forward User to result page
+     * otherwise redirect User to the 404 page.
+     *
+     * @param request - HttpServletRequest
+     * @param response - HttpServletResponse
+     * @throws ServletException - general exception of a servlet can throw when it encounters difficulty.
+     * @throws IOException - Signals that an I/O exception of some sort has occurred
+     */
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Optional<Command> optionalCommand = CommandProvider.defineCommand(request);
         String pagePath;

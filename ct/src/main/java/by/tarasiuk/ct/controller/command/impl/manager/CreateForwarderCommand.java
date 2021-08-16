@@ -20,7 +20,8 @@ import java.util.Optional;
 import static by.tarasiuk.ct.controller.command.AttributeName.INFORMATION_MESSAGE;
 
 /**
- * Create new account with the FORWARDER role
+ * Only for an account with the MANAGER role.
+ * Create new account with the FORWARDER role.
  */
 public class CreateForwarderCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -28,6 +29,15 @@ public class CreateForwarderCommand implements Command {
     private final EmployeeServiceImpl employeeService = ServiceProvider.getEmployeeService();
     private final TokenServiceImpl tokenService = ServiceProvider.getTokenService();
 
+    /**
+     * The manager can create forwarders for his company.
+     * First, the data received from the page is validated.
+     * Next, search for the presence in the database of an account with a login and an email address.
+     * If not found, generate a token and send a link to the email address to verify the account.
+     * Otherwise, return to the page with the issuance of the corresponding message.
+     * @param content - RequestContent
+     * @return account forwarders page
+     */
     @Override
     public String execute(RequestContent content) {
         String page = PagePath.FORWARDER_CREATOR;

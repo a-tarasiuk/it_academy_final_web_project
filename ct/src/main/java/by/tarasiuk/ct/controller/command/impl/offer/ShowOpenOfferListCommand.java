@@ -16,12 +16,18 @@ import java.util.stream.Collectors;
 import static by.tarasiuk.ct.controller.command.AttributeName.OFFER_LIST;
 
 /**
- * Show open offer list page command
+ * Show open offer list page command.
  */
 public class ShowOpenOfferListCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     private final OfferServiceImpl offerService = ServiceProvider.getOfferService();
 
+
+    /**
+     * Search in the database list offers with the status OPEN.
+     * @param content
+     * @return
+     */
     @Override
     public String execute(RequestContent content) {
         String page = PagePath.ACCOUNT_TRADING;

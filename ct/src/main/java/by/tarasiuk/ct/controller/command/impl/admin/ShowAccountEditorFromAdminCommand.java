@@ -14,12 +14,20 @@ import org.apache.logging.log4j.Logger;
 import java.util.Optional;
 
 /**
- * Show account editor page command for administrator
+ * For a user with the ADMINISTRATOR role only.
+ * Show account editor page command for administrator.
  */
 public class ShowAccountEditorFromAdminCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     private final AccountServiceImpl accountService = ServiceProvider.getAccountService();
 
+    /**
+     * The account ID comes from the request.
+     * The account ID is used to search the database for the account object.
+     * If successful, the account object is sent to the page for editing.
+     * @param content - RequestContent
+     * @return admin account editor page
+     */
     @Override
     public String execute(RequestContent content) {
         String page = PagePath.ADMIN_ACCOUNT_EDITOR;

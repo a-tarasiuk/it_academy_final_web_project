@@ -1,6 +1,12 @@
 package by.tarasiuk.ct.exception;
 
+/**
+ * Exception, that throws by Dao layer.
+ */
 public class DaoException extends Exception {
+    /**
+     * Default constructors.
+     */
     public DaoException() {
         super();
     }

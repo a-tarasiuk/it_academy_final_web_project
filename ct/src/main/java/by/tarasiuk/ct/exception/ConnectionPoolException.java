@@ -1,6 +1,12 @@
 package by.tarasiuk.ct.exception;
 
+/**
+ * Exception, that throws by Pool layer.
+ */
 public class ConnectionPoolException extends Exception {
+    /**
+     * Default constructors.
+     */
     public ConnectionPoolException() {
         super();
     }

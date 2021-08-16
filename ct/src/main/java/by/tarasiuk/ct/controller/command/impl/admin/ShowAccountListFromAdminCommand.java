@@ -14,12 +14,18 @@ import org.apache.logging.log4j.Logger;
 import java.util.List;
 
 /**
- * Show all accounts command for administrator
+ * For a user with the ADMINISTRATOR role only.
+ * Show all accounts command for administrator.
  */
 public class ShowAccountListFromAdminCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     private final AccountServiceImpl accountService = ServiceProvider.getAccountService();
 
+    /**
+     * From the database we find a list of all users and transfer them to the page.
+     * @param content
+     * @return
+     */
     @Override
     public String execute(RequestContent content) {
         String page = PagePath.ADMIN_ACCOUNT_LIST;

@@ -13,8 +13,13 @@ import org.apache.logging.log4j.Logger;
 public class GoToAccountPasswordPageCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
 
+    /**
+     * Direction to a page with a account password page.
+     * @param content - RequestContent
+     * @return account forwarders page
+     */
     @Override
-    public String execute(RequestContent requestContent) {
+    public String execute(RequestContent content) {
         LOGGER.info("Command '{}' return path '{}'", CommandType.GO_TO_ACCOUNT_PASSWORD_PAGE, PagePath.ACCOUNT_PASSWORD);
         return PagePath.ACCOUNT_PASSWORD;
     }

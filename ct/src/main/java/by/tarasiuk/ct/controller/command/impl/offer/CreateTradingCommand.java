@@ -1,22 +1,23 @@
 package by.tarasiuk.ct.controller.command.impl.offer;
 
 import by.tarasiuk.ct.controller.RequestContent;
+import by.tarasiuk.ct.controller.command.AttributeName;
 import by.tarasiuk.ct.controller.command.Command;
 import by.tarasiuk.ct.controller.command.CommandType;
-import by.tarasiuk.ct.exception.ServiceException;
-import by.tarasiuk.ct.controller.command.AttributeName;
 import by.tarasiuk.ct.controller.command.PagePath;
-import by.tarasiuk.ct.model.entity.impl.Account;
+import by.tarasiuk.ct.exception.ServiceException;
 import by.tarasiuk.ct.model.entity.impl.Employee;
+import by.tarasiuk.ct.model.entity.impl.Trading;
 import by.tarasiuk.ct.model.service.ServiceProvider;
 import by.tarasiuk.ct.model.service.impl.EmployeeServiceImpl;
 import by.tarasiuk.ct.model.service.impl.TradingServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
 
-import static by.tarasiuk.ct.controller.command.AttributeName.ACCOUNT;
 import static by.tarasiuk.ct.controller.command.AttributeName.MESSAGE_INCORRECT_TRADING_FREIGHT;
 import static by.tarasiuk.ct.controller.command.AttributeName.MESSAGE_QUERY_ERROR;
 import static by.tarasiuk.ct.controller.command.AttributeName.OFFER_ID;
@@ -30,11 +31,17 @@ public class CreateTradingCommand implements Command {
     private final TradingServiceImpl tradingService = ServiceProvider.getTradingService();
     private final EmployeeServiceImpl employeeService = ServiceProvider.getEmployeeService();
 
+    /**
+     * The validity of the trading data is checked.
+     * If successful, create an trading in the database.
+     * Otherwise, it displays the corresponding message and returns to the interrupting page.
+     * @param content - RequestContent
+     * @return create offer page
+     */
     @Override
     public String execute(RequestContent content) {
-        String page;
+        String page = PagePath.TRADING_CREATE_INFO;
         HashMap<String, String> requestParameters = content.getRequestParameters();
-        HashMap<String, Object> sessionAttributes = content.getSessionAttributes();
 
         String tradingFreight = requestParameters.get(TRADING_FREIGHT);
 
@@ -44,26 +51,22 @@ public class CreateTradingCommand implements Command {
                 content.putRequestAttribute(MESSAGE_INCORRECT_TRADING_FREIGHT, true);
                 page = PagePath.ACCOUNT_TRADING;
             } else {
-                try {
-                    Account account = (Account) sessionAttributes.get(ACCOUNT);
-                    long offerId = Long.parseLong(requestParameters.get(OFFER_ID));
-                    long accountId = account.getId();
-                    Optional<Employee> findEmployee = employeeService.findEmployeeByAccountId(accountId);
+                long offerId = Long.parseLong(requestParameters.get(OFFER_ID));
 
-                    if(findEmployee.isPresent()) {
-                        Employee employee = findEmployee.get();
-                        long employeeId = employee.getId();
+                Optional<Object> findCurrentEmployee = content.findSessionAttribute(AttributeName.EMPLOYEE);
+                if (findCurrentEmployee.isPresent()) {
+                    Employee currentEmployee = (Employee) findCurrentEmployee.get();
+                    long employeeId = currentEmployee.getId();
+
+                    List<Trading> tradingList = tradingService.findListTradingsByOfferId(offerId);
+                    for (Trading trading : tradingList) {
+                        long tradingEmployeeID = trading.getEmployeeId();
                         long freight = Long.parseLong(tradingFreight);
                         tradingService.createTrading(offerId, employeeId, freight);
                         content.putRequestAttribute(AttributeName.OFFER_ID, offerId);
                     }
-
-                    page = PagePath.TRADING_CREATE_INFO;
-                } catch (ServiceException e) {
-                    LOGGER.warn("Can't create trading: '{}'.", requestParameters);
-                    content.putRequestAttributes(requestParameters);
+                } else {
                     content.putRequestAttribute(MESSAGE_QUERY_ERROR, true);
-                    page = PagePath.ACCOUNT_TRADING;
                 }
             }
         } catch (ServiceException e) {

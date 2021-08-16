@@ -3,14 +3,9 @@ package by.tarasiuk.ct.controller.command;
 import by.tarasiuk.ct.controller.RequestContent;
 
 /**
- * String - address page for which you need to go
+ * Interface for commands executing.
  */
-
+@FunctionalInterface
 public interface Command {
     String execute(RequestContent content);
-
-    default void refresh() {    //todo
-        // метод для возвращения на ту же самую страницу, это защита от F5
-        /* code */
-    }
 }

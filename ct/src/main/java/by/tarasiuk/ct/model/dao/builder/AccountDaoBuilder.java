@@ -17,12 +17,15 @@ import static by.tarasiuk.ct.controller.command.AttributeName.ACCOUNT_REGISTRATI
 import static by.tarasiuk.ct.controller.command.AttributeName.ACCOUNT_ROLE;
 import static by.tarasiuk.ct.controller.command.AttributeName.ACCOUNT_STATUS;
 
+/**
+ * Build account object from <code>ResultSet</code>.
+ * @see java.sql.ResultSet
+ */
 public class AccountDaoBuilder {
     private static final Logger LOGGER = LogManager.getLogger();
 
     private AccountDaoBuilder() {
     }
-
 
     public static Account buildAccount(ResultSet resultSet) throws SQLException {
         long id = resultSet.getLong(ACCOUNT_ID);

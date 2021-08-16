@@ -2,7 +2,6 @@ package by.tarasiuk.ct.model.connection;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
@@ -13,9 +12,11 @@ import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * Connection pool for database.
+ */
 public class ConnectionPool {
     private static final Logger LOGGER = LogManager.getLogger();
-
     private static final int DEFAULT_POOL_MAX_ACTIVE_CONNECTIONS = 10;
     private static final int INITIAL_COUNTER_ATTEMPTS_CREATE_CONNECTION = 0;
     private static final int COUNT_ATTEMPTS_CREATE_CONNECTIONS = 3;
@@ -52,6 +53,10 @@ public class ConnectionPool {
         }
     }
 
+    /**
+     * Get connection pool instance.
+     * @return instance connection pool
+     */
     public static ConnectionPool getInstance() {
         if (!statusPoolCreated.get()) {
             currentProxyConnectionLock.lock();
@@ -67,6 +72,10 @@ public class ConnectionPool {
         return instance;
     }
 
+    /**
+     * Take free proxy connection.
+     * @return proxy connection
+     */
     public Connection getConnection() {
         ProxyConnection currentProxyConnection = null;
 
@@ -81,10 +90,16 @@ public class ConnectionPool {
         return currentProxyConnection;
     }
 
-    public boolean putConnection(Connection connection) {
+
+    /**
+     * Checking if a connection object is an object proxy connection.
+     * If successful, try remove this proxy connection from active connections and put into free connections.
+     * @param connection - Connection
+     */
+    public void putConnection(Connection connection) {
         if (!(connection instanceof ProxyConnection)) {
             LOGGER.error("Found incorrect type of connection: {}.", connection);
-            return false;
+            return;
         }
 
         ProxyConnection currentConnection;
@@ -103,10 +118,11 @@ public class ConnectionPool {
             LOGGER.warn("{} interrupted.", Thread.currentThread().getName(), e);
             Thread.currentThread().interrupt();
         }
-
-        return true;
     }
 
+    /**
+     * Shutdown pool when application stops and then trying deregister drivers.
+     */
     public void destroyPool() {
         for (int i = 0; i < DEFAULT_POOL_MAX_ACTIVE_CONNECTIONS; i++) {
             try {
@@ -119,7 +135,7 @@ public class ConnectionPool {
         deregisterDrivers();
     }
 
-    private void deregisterDrivers() {  // todo
+    private void deregisterDrivers() {
         Enumeration<Driver> drivers = DriverManager.getDrivers();
 
         while (drivers.hasMoreElements()) {

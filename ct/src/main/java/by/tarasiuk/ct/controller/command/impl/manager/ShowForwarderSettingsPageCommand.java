@@ -18,13 +18,20 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Show the page where can be changed information about forwarder
+ * Only for an account with the MANAGER role.
+ * Show the page where can be changed information about forwarder.
  */
 public class ShowForwarderSettingsPageCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     private final EmployeeServiceImpl employeeService = ServiceProvider.getEmployeeService();
     private final AccountServiceImpl accountService = ServiceProvider.getAccountService();
 
+
+    /**
+     * Search in the database for a list of all employees of a given company.
+     * @param content - RequestContent
+     * @return forwarder settings page
+     */
     @Override
     public String execute(RequestContent content) {
         String page = PagePath.FORWARDER_SETTINGS;

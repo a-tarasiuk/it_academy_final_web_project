@@ -15,6 +15,11 @@ import static by.tarasiuk.ct.controller.command.AttributeName.LOCALE;
 public class ChangeLocalePageCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
 
+    /**
+     * The locale is changed to the one selected on the page by the user.
+     * @param content - RequestContent
+     * @return main page
+     */
     @Override
     public String execute(RequestContent content) {
         Map<String, Object> sessionAttributes = content.getSessionAttributes();

@@ -22,13 +22,20 @@ import static by.tarasiuk.ct.controller.command.AttributeName.MESSAGE_QUERY_ERRO
 import static by.tarasiuk.ct.util.MessageKey.OFFER_SUCCESSFULLY_CREATED;
 
 /**
- * Create a new offer command
+ * Create a new offer command.
  */
 public class CreateOfferCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     private final OfferServiceImpl offerService = ServiceProvider.getOfferService();
     private final EmployeeServiceImpl employeeService = ServiceProvider.getEmployeeService();
 
+    /**
+     * The validity of the offer data is checked.
+     * If successful, create an offer in the database.
+     * Otherwise, it displays the corresponding message and returns to the interrupting page.
+     * @param content - RequestContent
+     * @return create offer page
+     */
     @Override
     public String execute(RequestContent content) {
         String page;

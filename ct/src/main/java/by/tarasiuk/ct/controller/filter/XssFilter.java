@@ -6,10 +6,12 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.annotation.WebFilter;
-
 import java.io.IOException;
 import java.util.Enumeration;
 
+/**
+ * Search for prohibited tags in the query string and replace them.
+ */
 @WebFilter
 public class XssFilter implements Filter {
     @Override
@@ -19,6 +21,7 @@ public class XssFilter implements Filter {
         while (parameterNames.hasMoreElements()) {
             String paramName = parameterNames.nextElement();
             String[] paramValues = servletRequest.getParameterValues(paramName);
+
             for (int i = 0; i < paramValues.length; i++) {
                 if (paramValues[i] != null) {
                     paramValues[i] = paramValues[i].replaceAll("<", "&lt;")

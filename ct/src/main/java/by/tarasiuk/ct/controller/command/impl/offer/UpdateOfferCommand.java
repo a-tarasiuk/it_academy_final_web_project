@@ -13,12 +13,18 @@ import org.apache.logging.log4j.Logger;
 import java.util.Map;
 
 /**
- * SUpdate offer information command
+ * SUpdate offer information command.
  */
 public class UpdateOfferCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     private final OfferServiceImpl offerService = ServiceProvider.getOfferService();
 
+    /**
+     * Checking the validity of the offer data.
+     * If successful, update the offer in the database.
+     * @param content - RequestContent
+     * @return offer editor page
+     */
     @Override
     public String execute(RequestContent content) {
         String page = PagePath.OFFER_EDIT_INFO;
