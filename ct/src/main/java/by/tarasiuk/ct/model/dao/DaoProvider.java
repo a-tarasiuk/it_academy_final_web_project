@@ -22,54 +22,72 @@ public class DaoProvider {
     }
 
     /**
-     * Get a class object {@link by.tarasiuk.ct.model.dao.impl.AccountDaoImpl}
+     * Getting an instance of a singleton class which performs actions on Account entity.
      *
-     * @return      Class instance of {@link by.tarasiuk.ct.model.dao.AccountDao}
+     * @return      Singleton class.
+     * @see         by.tarasiuk.ct.model.entity.impl.Account
+     * @see         by.tarasiuk.ct.model.dao.AccountDao
+     * @see         by.tarasiuk.ct.model.dao.impl.AccountDaoImpl
      */
     public static AccountDaoImpl getAccountDao() {
         return accountDao;
     }
 
     /**
-     * Get a class object {@link by.tarasiuk.ct.model.dao.impl.CompanyDaoImpl}
+     * Getting an instance of a singleton class which performs actions on Company entity.
      *
-     * @return      Class instance of {@link by.tarasiuk.ct.model.dao.CompanyDao}
+     * @return      Singleton class.
+     * @see         by.tarasiuk.ct.model.entity.impl.Company
+     * @see         by.tarasiuk.ct.model.dao.CompanyDao
+     * @see         by.tarasiuk.ct.model.dao.impl.CompanyDaoImpl
      */
     public static CompanyDaoImpl getCompanyDao() {
         return companyDao;
     }
 
     /**
-     * Get a class object {@link by.tarasiuk.ct.model.dao.impl.TokenDaoImpl}
+     * Getting an instance of a singleton class which performs actions on Token entity.
      *
-     * @return      Class instance of {@link by.tarasiuk.ct.model.dao.TokenDao}
+     * @return      Singleton class.
+     * @see         by.tarasiuk.ct.model.entity.impl.Token
+     * @see         by.tarasiuk.ct.model.dao.TokenDao
+     * @see         by.tarasiuk.ct.model.dao.impl.TokenDaoImpl
      */
     public static TokenDaoImpl getTokenDao() {
         return tokenDao;
     }
 
     /**
-     * Get a class object {@link by.tarasiuk.ct.model.dao.impl.OfferDaoImpl}
+     * Getting an instance of a singleton class which performs actions on Offer entity.
      *
-     * @return      Class instance of {@link by.tarasiuk.ct.model.dao.OfferDao}
+     * @return      Singleton class.
+     * @see         by.tarasiuk.ct.model.entity.impl.Offer
+     * @see         by.tarasiuk.ct.model.dao.OfferDao
+     * @see         by.tarasiuk.ct.model.dao.impl.OfferDaoImpl
      */
     public static OfferDaoImpl getOfferDao() {
         return offerDao;
     }
 
     /**
-     * Get a class object {@link by.tarasiuk.ct.model.dao.impl.EmployeeDaoImpl}
+     * Getting an instance of a singleton class which performs actions on Employee entity.
      *
-     * @return      Class instance of {@link by.tarasiuk.ct.model.dao.EmployeeDao}
+     * @return      Singleton class.
+     * @see         by.tarasiuk.ct.model.entity.impl.Employee
+     * @see         by.tarasiuk.ct.model.dao.EmployeeDao
+     * @see         by.tarasiuk.ct.model.dao.impl.EmployeeDaoImpl
      */
     public static EmployeeDaoImpl getEmployeeDao() {
         return employeeDao;
     }
 
     /**
-     * Get a class object {@link by.tarasiuk.ct.model.dao.impl.TradingDaoImpl}
+     * Getting an instance of a singleton class which performs actions on Trading entity.
      *
-     * @return      Class instance of {@link by.tarasiuk.ct.model.dao.TradingDao}
+     * @return      Singleton class.
+     * @see         by.tarasiuk.ct.model.entity.impl.Trading
+     * @see         by.tarasiuk.ct.model.dao.TradingDao
+     * @see         by.tarasiuk.ct.model.dao.impl.TradingDaoImpl
      */
     public static TradingDaoImpl getTradingDao() {
         return tradingDao;
