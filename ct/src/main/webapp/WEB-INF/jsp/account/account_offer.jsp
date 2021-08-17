@@ -76,10 +76,7 @@
                             <fmt:message key="tradings.info"/>
                         </div>
 
-                        <form style="display: flex; width: inherit" action="controller" method="post">
-                            <input type="hidden" name="command" value="show_trading_viewer">
-                            <ct:trading_action/>
-                        </form>
+                        <ct:trading_action/>
                     </div>
                 </div>
             </div>

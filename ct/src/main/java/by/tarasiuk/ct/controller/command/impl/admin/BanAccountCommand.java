@@ -14,7 +14,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.Optional;
 
 /**
- * For a user with the ADMINISTRATOR role only.
+ * For a user with the <code>ADMINISTRATOR</code> role only.
  * Ban account command for administrator.
  */
 public class BanAccountCommand implements Command {
@@ -25,8 +25,10 @@ public class BanAccountCommand implements Command {
     /**
      * The account is banned by the ID received from the page.
      * In case of a successful ban, we receive a successful message.
-     * @param content - RequestContent
-     * @return
+     *
+     * @param content   Request data content.
+     * @return          Page path.
+     * @see             by.tarasiuk.ct.controller.RequestContent
      */
     @Override
     public String execute(RequestContent content) {

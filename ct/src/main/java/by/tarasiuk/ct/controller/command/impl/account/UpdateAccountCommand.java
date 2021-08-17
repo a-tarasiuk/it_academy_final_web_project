@@ -19,7 +19,7 @@ import static by.tarasiuk.ct.controller.command.AttributeName.INVALID_DATA;
 import static by.tarasiuk.ct.controller.command.AttributeName.SUCCESSFUL_OPERATION;
 
 /**
- * Update account command
+ * Update account command.
  */
 public class UpdateAccountCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -28,7 +28,7 @@ public class UpdateAccountCommand implements Command {
     /**
      * Validating the account information obtained from the page.
      * In case of successful validation, the information is updated with the issuance of a successful message.
-     * @param content
+     * @param content   Request data from page.
      * @return
      */
     @Override

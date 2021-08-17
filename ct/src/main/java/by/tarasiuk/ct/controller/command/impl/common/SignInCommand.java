@@ -26,7 +26,7 @@ import static by.tarasiuk.ct.controller.command.AttributeName.MESSAGE_INCORRECT_
 import static by.tarasiuk.ct.controller.command.AttributeName.MESSAGE_NOT_ACTIVATED_ACCOUNT;
 
 /**
- * Sign in command
+ * Sign in command.
  */
 public class SignInCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -38,10 +38,12 @@ public class SignInCommand implements Command {
      * The login and password from the page are validated.
      * If successful, the account is searched for by login in the database.
      * Next, the account status is checked.
-     * If the account status is ACTIVATED, the account and employee object is placed in the session.
+     * If the account status is <code>ACTIVATED</code>, the account and employee object is placed in the session.
      * Otherwise, the corresponding message is displayed.
-     * @param content - RequestContent
-     * @return sign in, main or info page
+     *
+     * @param content   Request data content.
+     * @return          Page path.
+     * @see             by.tarasiuk.ct.controller.RequestContent
      */
     @Override
     public String execute(RequestContent content) {

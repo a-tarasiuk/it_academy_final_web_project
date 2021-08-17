@@ -14,7 +14,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.Optional;
 
 /**
- * For a user with the ADMINISTRATOR role only.
+ * For a user with the <code>ADMINISTRATOR</code> role only.
  * Ban account command for administrator.
  */
 public class UnbanAccountCommand implements Command {
@@ -24,8 +24,10 @@ public class UnbanAccountCommand implements Command {
     /**
      * The database searches for an account by the ID that came from the page.
      * If such an account exists, unban the account.
-     * @param content - RequestContent
-     * @return page address admin account editor
+     *
+     * @param content   Request data content.
+     * @return          Page path.
+     * @see             by.tarasiuk.ct.controller.RequestContent
      */
     @Override
     public String execute(RequestContent content) {

@@ -33,8 +33,10 @@ public class CreateOfferCommand implements Command {
      * The validity of the offer data is checked.
      * If successful, create an offer in the database.
      * Otherwise, it displays the corresponding message and returns to the interrupting page.
-     * @param content - RequestContent
-     * @return create offer page
+     *
+     * @param content   Request data content.
+     * @return          Page path.
+     * @see             by.tarasiuk.ct.controller.RequestContent
      */
     @Override
     public String execute(RequestContent content) {

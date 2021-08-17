@@ -16,14 +16,19 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.jsp.JspException;
 import jakarta.servlet.jsp.JspWriter;
 import jakarta.servlet.jsp.tagext.TagSupport;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
 import static by.tarasiuk.ct.controller.command.AttributeName.LOCALE;
-import static by.tarasiuk.ct.util.MessageKey.*;
+import static by.tarasiuk.ct.util.MessageKey.OFFER_COMPANY_NAME;
+import static by.tarasiuk.ct.util.MessageKey.OFFER_FREIGHT;
+import static by.tarasiuk.ct.util.MessageKey.TRADINGS_EMPTY;
+import static by.tarasiuk.ct.util.MessageKey.TRADING_HISTORY;
 
+/**
+ * Tag for displaying information about account tradings.
+ */
 public class TradingHistoryTag extends TagSupport {
     private static final long serialVersionUID = -5150821270017826128L;
     private static final String UNICODE_INDEX_NUMBER = "&#x2116;";

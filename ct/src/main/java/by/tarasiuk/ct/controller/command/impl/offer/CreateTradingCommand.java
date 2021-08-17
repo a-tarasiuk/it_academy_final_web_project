@@ -24,7 +24,7 @@ import static by.tarasiuk.ct.controller.command.AttributeName.OFFER_ID;
 import static by.tarasiuk.ct.controller.command.AttributeName.TRADING_FREIGHT;
 
 /**
- * Create a new trading command
+ * Create a new trading command.
  */
 public class CreateTradingCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -35,8 +35,10 @@ public class CreateTradingCommand implements Command {
      * The validity of the trading data is checked.
      * If successful, create an trading in the database.
      * Otherwise, it displays the corresponding message and returns to the interrupting page.
-     * @param content - RequestContent
-     * @return create offer page
+     *
+     * @param content   Request data content.
+     * @return          Page path.
+     * @see             by.tarasiuk.ct.controller.RequestContent
      */
     @Override
     public String execute(RequestContent content) {

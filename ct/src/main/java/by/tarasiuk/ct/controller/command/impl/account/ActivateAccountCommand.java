@@ -28,7 +28,7 @@ import static by.tarasiuk.ct.util.MessageKey.TOKEN_INCORRECT;
 import static by.tarasiuk.ct.util.MessageKey.TOKEN_NOT_EXIST;
 
 /**
- * Activate account command
+ * Activate account command.
  */
 public class ActivateAccountCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -39,8 +39,10 @@ public class ActivateAccountCommand implements Command {
      * Before activating the account, the token specified in the link is checked against the token in the database.
      * If the token exists, the account status is checked.
      * At the end there is a redirect to the information page.
-     * @param content
-     * @return
+     *
+     * @param content   Request data content.
+     * @return          Page path.
+     * @see             by.tarasiuk.ct.controller.RequestContent
      */
     @Override
     public String execute(RequestContent content) {

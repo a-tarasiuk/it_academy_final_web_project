@@ -74,7 +74,6 @@ public final class AttributeName {
      * Employees attributes.
      */
     public static final String EMPLOYEE = "employee";
-    public static final String EMPLOYEE_ID = "employee_id";
 
     /**
      * Offer attributes.
@@ -92,7 +91,6 @@ public final class AttributeName {
     public static final String INVALID_DATA = "invalid_data";
     public static final String WRONG_PASSWORD = "wrong_password";
     public static final String INFORMATION_MESSAGE = "information_message";
-    public static final String TYPE_INFORMATION_MESSAGE = "type_information_message";
     public static final String MESSAGE_QUERY_ERROR = "message_query_error";
     public static final String MESSAGE_ERROR_LOGIN_ALREADY_EXIST = "error_login_already_exist";
     public static final String MESSAGE_ERROR_EMAIL_ALREADY_EXIST = "error_email_already_exist";

@@ -24,8 +24,10 @@ public class ShowOfferEditorCommand implements Command {
     /**
      * Search for an offer object by ID in the database.
      * If successful, transfer of the offer object to the page.
-     * @param content - RequestContent
-     * @return offer editor page
+     *
+     * @param content   Request data content.
+     * @return          Page path.
+     * @see             by.tarasiuk.ct.controller.RequestContent
      */
     @Override
     public String execute(RequestContent content) {

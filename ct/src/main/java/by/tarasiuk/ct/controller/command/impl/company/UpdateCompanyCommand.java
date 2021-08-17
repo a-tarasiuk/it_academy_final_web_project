@@ -19,7 +19,7 @@ import static by.tarasiuk.ct.controller.command.AttributeName.MESSAGE_QUERY_ERRO
 import static by.tarasiuk.ct.controller.command.AttributeName.SUCCESSFUL_OPERATION;
 
 /**
- * Update company information command
+ * Update company information command.
  */
 public class UpdateCompanyCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -31,8 +31,10 @@ public class UpdateCompanyCommand implements Command {
      * If successful, the information about the company is updated in the database
      * and returned to the page with a successful message.
      * Otherwise, redirection to the information page.
-     * @param content - RequestContent
-     * @return
+     *
+     * @param content   Request data content.
+     * @return          Page path.
+     * @see             by.tarasiuk.ct.controller.RequestContent
      */
     @Override
     public String execute(RequestContent content) {

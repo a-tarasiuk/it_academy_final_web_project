@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -15,7 +16,6 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/font.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css">
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/cargo.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/offer.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/icon.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/table.css">
@@ -60,7 +60,7 @@
                         <div class="freight-row">
                             <div class="fr-inside">
                                 <div class="fr-left">
-                                    ${offer_freight}&nbsp;&#36;
+                                    ${requestScope.offer_freight}&nbsp;&#36;
                                     <span class="fr-description"><fmt:message key="freight.your"/></span>
                                 </div>
                                 <div class="fr-right">

@@ -3,11 +3,14 @@ package by.tarasiuk.ct.validator;
 import by.tarasiuk.ct.controller.command.AttributeName;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Class for validating the offer data.
+ * Validation is done using regular expressions.
+ */
 public class AccountValidator {
     private static final Logger LOGGER = LogManager.getLogger();
 
@@ -23,6 +26,13 @@ public class AccountValidator {
     private AccountValidator() {
     }
 
+    /**
+     * Checking for validity account data.
+     *
+     * @param accountData       Account data.
+     * @return                  <code>true</code> if the account data is valid.
+     *                          Otherwise return <code>false</code>.
+     */
     public static boolean isValidAccountData(Map<String, String> accountData) {
         boolean result;
 
@@ -45,6 +55,13 @@ public class AccountValidator {
         return result;
     }
 
+    /**
+     * Checking for validity personal account data.
+     *
+     * @param accountData       Personal account data.
+     * @return                  <code>true</code> if the personal account data is valid.
+     *                          Otherwise return <code>false</code>.
+     */
     public static boolean isValidPersonalAccountData(Map<String, String> accountData) {
         boolean result;
 
@@ -61,6 +78,15 @@ public class AccountValidator {
         return result;
     }
 
+
+    /**
+     * Checking for validity sign in data.
+     *
+     * @param login             Account login.
+     * @param password          Account password.
+     * @return                  <code>true</code> if the login and password data is valid.
+     *                          Otherwise return <code>false</code>.
+     */
     public static boolean isValidSignInData(String login, String password) {
         if(login == null || password == null || login.isEmpty() || password.isEmpty()) {
             return false;
@@ -69,6 +95,13 @@ public class AccountValidator {
         return isValidLogin(login) && isValidPassword(password);
     }
 
+    /**
+     * Checking for validity sign up data.
+     *
+     * @param signUp            Sign up data.
+     * @return                  <code>true</code> if the sign up data is valid.
+     *                          Otherwise return <code>false</code>.
+     */
     public static boolean isValidSignUpData(Map<String, String> signUp) {
         boolean result;
 

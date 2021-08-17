@@ -34,7 +34,7 @@ import static by.tarasiuk.ct.controller.command.AttributeName.MESSAGE_INCORRECT_
 import static by.tarasiuk.ct.controller.command.AttributeName.MESSAGE_QUERY_ERROR;
 
 /**
- * Sign up command
+ * Sign up command.
  */
 public class SignUpCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -50,8 +50,10 @@ public class SignUpCommand implements Command {
      * and an email is sent to the mail with a link to confirm the account.
      * If there is already a login, mail and (or) company in the database,
      * then return to the registration page and display the information message.
-     * @param content - RequestContent
-     * @return sign up or main page
+     *
+     * @param content   Request data content.
+     * @return          Page path.
+     * @see             by.tarasiuk.ct.controller.RequestContent
      */
     @Override
     public String execute(RequestContent content) {

@@ -7,5 +7,10 @@ import by.tarasiuk.ct.controller.RequestContent;
  */
 @FunctionalInterface
 public interface Command {
+    /**
+     * @param content   Request data content.
+     * @return          Page path.
+     * @see             by.tarasiuk.ct.controller.RequestContent
+     */
     String execute(RequestContent content);
 }

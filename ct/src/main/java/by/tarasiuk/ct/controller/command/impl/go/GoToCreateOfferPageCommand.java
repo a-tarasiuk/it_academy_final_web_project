@@ -8,15 +8,17 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * Go to the create offer page command
+ * Go to the create offer page command.
  */
 public class GoToCreateOfferPageCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
 
     /**
      * Direction to the offer creation page.
-     * @param content - RequestContent
-     * @return account forwarders page
+     *
+     * @param content   Request data content.
+     * @return          Page path.
+     * @see             by.tarasiuk.ct.controller.RequestContent
      */
     @Override
     public String execute(RequestContent content) {

@@ -11,7 +11,6 @@ import jakarta.servlet.jsp.JspWriter;
 import jakarta.servlet.jsp.tagext.TagSupport;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.io.IOException;
 import java.util.Map;
 import java.util.Set;
@@ -28,6 +27,9 @@ import static by.tarasiuk.ct.util.MessageKey.OFFER_PRODUCT_WEIGHT;
 import static by.tarasiuk.ct.util.MessageKey.TRADINGS_DO_NOT_EXIST;
 import static by.tarasiuk.ct.util.MessageKey.TRADINGS_STATUS;
 
+/**
+ * Tag for displaying a list of tradings.
+ */
 public class AccountTradingListTag extends TagSupport {
     private static final long serialVersionUID = -5150821270017826128L;
     private static final Logger LOGGER = LogManager.getLogger();

@@ -18,7 +18,7 @@ import static by.tarasiuk.ct.controller.command.AttributeName.SHOW_ADMIN_FUNCTIO
 
 /**
  * Fil checks the role of the account.
- * If the role is ADMINISTRATOR, then the flag is set to display the code block on the jsp page.
+ * If the role is <code>ADMINISTRATOR</code>, then the flag is set to display the code block on the jsp page.
  */
 @WebFilter
 public class AdministratorFilter implements Filter {

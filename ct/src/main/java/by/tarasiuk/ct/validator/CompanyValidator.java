@@ -3,14 +3,16 @@ package by.tarasiuk.ct.validator;
 import by.tarasiuk.ct.controller.command.AttributeName;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Class for validating the company data.
+ * Validation is done using regular expressions.
+ */
 public class CompanyValidator {
     private static final Logger LOGGER = LogManager.getLogger();
-
     private static final String REGEX_VALID_COMPANY_NAME = "^[\\p{L}\\p{Nd}\\p{P}\\p{Zs}]{3,150}$";
     private static final String REGEX_VALID_COMPANY_ADDRESS = "^[\\p{L}\\p{Nd}\\p{P}\\p{Zs}]{3,200}$";
     private static final String REGEX_VALID_COMPANY_PHONE_NUMBER = "^\\p{Nd}{11,16}$";
@@ -18,6 +20,13 @@ public class CompanyValidator {
     private CompanyValidator() {
     }
 
+    /**
+     * Checking for validity company data.
+     *
+     * @param companyData       Company data.
+     * @return                  <code>true</code> if the company data is valid.
+     *                          Otherwise return <code>false</code>.
+     */
     public static boolean isValidCompany(Map<String, String> companyData) {
         boolean result;
 
@@ -35,6 +44,14 @@ public class CompanyValidator {
         return result;
     }
 
+    /**
+     * Checking for validity company address and company phone number.
+     *
+     * @param address           Company address.
+     * @param phoneNumber       Company phone number.
+     * @return                  <code>true</code> if the company address and company phone number is valid.
+     *                          Otherwise return <code>false</code>.
+     */
     public static boolean isValidCompanyData(String address, String phoneNumber) {
         boolean result;
 

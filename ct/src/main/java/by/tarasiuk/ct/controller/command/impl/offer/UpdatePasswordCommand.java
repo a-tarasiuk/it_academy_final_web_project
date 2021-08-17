@@ -26,8 +26,10 @@ public class UpdatePasswordCommand implements Command {
      * If successful - checking if the old password matches the password of the account in the database.
      * If successful, the password is updated.
      * Otherwise, return to the page and display the message.
-     * @param content - RequestContent
-     * @return account password page
+     *
+     * @param content   Request data content.
+     * @return          Page path.
+     * @see             by.tarasiuk.ct.controller.RequestContent
      */
     @Override
     public String execute(RequestContent content) {

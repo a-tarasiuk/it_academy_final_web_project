@@ -26,9 +26,11 @@ public class ApplyFreightCommand implements Command {
 
     /**
      * Acceptance of freight by the company.
-     * After acceptance, the quotation is closed and the freight is assigned the status ACCEPTED.
-     * @param content - RequestContent
-     * @return account offer page
+     * After acceptance, the quotation is closed and the freight is assigned the status <code>ACCEPTED</code>.
+     *
+     * @param content   Request data content.
+     * @return          Page path.
+     * @see             by.tarasiuk.ct.controller.RequestContent
      */
     @Override
     public String execute(RequestContent content) {

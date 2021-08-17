@@ -24,7 +24,7 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * Show account offer command
+ * Show account offer command.
  */
 public class ShowAccountOfferCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -35,8 +35,10 @@ public class ShowAccountOfferCommand implements Command {
 
     /**
      * There is a search for a company and its freight for the offer.
-     * @param content - RequestContent
-     * @return account offer page
+     *
+     * @param content   Request data content.
+     * @return          Page path.
+     * @see             by.tarasiuk.ct.controller.RequestContent
      */
     @Override
     public String execute(RequestContent content) {

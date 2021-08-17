@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * Show account settings page command
+ * Show account settings page command.
  */
 public class ShowAccountSettingsPageCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -24,8 +24,10 @@ public class ShowAccountSettingsPageCommand implements Command {
 
     /**
      * Search for an account in the database by account ID and transfer the found account object to the page.
-     * @param requestContent
-     * @return
+     *
+     * @param requestContent    Request data from page.
+     * @return                  Page path.
+     * @see                     by.tarasiuk.ct.controller.RequestContent
      */
     @Override
     public String execute(RequestContent requestContent) {

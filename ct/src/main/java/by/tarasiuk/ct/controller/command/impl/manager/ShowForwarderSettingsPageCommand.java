@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Only for an account with the MANAGER role.
+ * Only for an account with the <code>MANAGER</code> role.
  * Show the page where can be changed information about forwarder.
  */
 public class ShowForwarderSettingsPageCommand implements Command {
@@ -26,11 +26,12 @@ public class ShowForwarderSettingsPageCommand implements Command {
     private final EmployeeServiceImpl employeeService = ServiceProvider.getEmployeeService();
     private final AccountServiceImpl accountService = ServiceProvider.getAccountService();
 
-
     /**
      * Search in the database for a list of all employees of a given company.
-     * @param content - RequestContent
-     * @return forwarder settings page
+     *
+     * @param content   Request data content.
+     * @return          Page path.
+     * @see             by.tarasiuk.ct.controller.RequestContent
      */
     @Override
     public String execute(RequestContent content) {

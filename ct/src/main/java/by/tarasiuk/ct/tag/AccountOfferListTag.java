@@ -10,7 +10,6 @@ import jakarta.servlet.jsp.JspWriter;
 import jakarta.servlet.jsp.tagext.TagSupport;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.io.IOException;
 import java.util.List;
 
@@ -24,6 +23,11 @@ import static by.tarasiuk.ct.util.MessageKey.OFFER_PRODUCT_VOLUME;
 import static by.tarasiuk.ct.util.MessageKey.OFFER_PRODUCT_WEIGHT;
 import static by.tarasiuk.ct.util.MessageKey.OFFER_STATUS;
 
+/**
+ * Tag displaying the list of offers for the account.
+ * The string is an active link. On pressing - opens the page of the selected offer.
+ * If the list is empty - an empty line with the message in the table.
+ */
 public class AccountOfferListTag extends TagSupport {
     private static final long serialVersionUID = -5150821270017826128L;
     private static final Logger LOGGER = LogManager.getLogger();
@@ -46,7 +50,7 @@ public class AccountOfferListTag extends TagSupport {
         String titleStatus = MessageManager.findMassage(OFFER_STATUS, locale);
 
         try {
-            StringBuilder table = new StringBuilder("<form class=\"table\" action=\"controller\" method=\"get\">")
+            StringBuilder table = new StringBuilder("<form class=\"table\" action=\"controller\" method=\"post\">")
                     .append("<input type=\"hidden\" name=\"command\" value=\"show_account_offer\">")
                     .append("<div class=\"table-row\">")
                     .append("<div class=\"table-header\">").append(UNICODE_INDEX_NUMBER).append("</div>")

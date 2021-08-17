@@ -10,15 +10,17 @@ import org.apache.logging.log4j.Logger;
 import java.util.Map;
 
 /**
- * Logout command for account
+ * Logout command for account.
  */
 public class LogoutCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
 
     /**
      * The account object is retrieved from the session and logged out.
-     * @param content - RequestContent
-     * @return index page
+     *
+     * @param content   Request data content.
+     * @return          Page path.
+     * @see             by.tarasiuk.ct.controller.RequestContent
      */
     @Override
     public String execute(RequestContent content) {

@@ -20,8 +20,8 @@ import java.util.Optional;
 import static by.tarasiuk.ct.controller.command.AttributeName.INFORMATION_MESSAGE;
 
 /**
- * Only for an account with the MANAGER role.
- * Create new account with the FORWARDER role.
+ * Only for an account with the <code>MANAGER</code> role.
+ * Create new account with the <code>FORWARDER</code> role.
  */
 public class CreateForwarderCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -35,8 +35,10 @@ public class CreateForwarderCommand implements Command {
      * Next, search for the presence in the database of an account with a login and an email address.
      * If not found, generate a token and send a link to the email address to verify the account.
      * Otherwise, return to the page with the issuance of the corresponding message.
-     * @param content - RequestContent
-     * @return account forwarders page
+     *
+     * @param content   Request data content.
+     * @return          Page path.
+     * @see             by.tarasiuk.ct.controller.RequestContent
      */
     @Override
     public String execute(RequestContent content) {

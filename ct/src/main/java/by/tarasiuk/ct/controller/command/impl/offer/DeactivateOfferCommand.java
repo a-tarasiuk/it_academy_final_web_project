@@ -23,8 +23,10 @@ public class DeactivateOfferCommand implements Command {
 
     /**
      * Deactivating an offer by offer ID.
-     * @param content - RequestContent
-     * @return offer deactivate information page.
+     *
+     * @param content   Request data content.
+     * @return          Page path.
+     * @see             by.tarasiuk.ct.controller.RequestContent
      */
     @Override
     public String execute(RequestContent content) {

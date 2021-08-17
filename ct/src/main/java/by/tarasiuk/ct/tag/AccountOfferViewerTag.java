@@ -10,7 +10,6 @@ import jakarta.servlet.jsp.JspWriter;
 import jakarta.servlet.jsp.tagext.TagSupport;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.io.IOException;
 
 import static by.tarasiuk.ct.controller.command.AttributeName.LOCALE;
@@ -23,6 +22,9 @@ import static by.tarasiuk.ct.util.MessageKey.OFFER_PRODUCT_VOLUME;
 import static by.tarasiuk.ct.util.MessageKey.OFFER_PRODUCT_WEIGHT;
 import static by.tarasiuk.ct.util.MessageKey.OFFER_STATUS;
 
+/**
+ * Tag for displaying full information about the offer.
+ */
 public class AccountOfferViewerTag extends TagSupport {
     private static final long serialVersionUID = -5150821270017826128L;
     private static final Logger LOGGER = LogManager.getLogger();
@@ -33,7 +35,6 @@ public class AccountOfferViewerTag extends TagSupport {
         HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
 
         String locale = (String) session.getAttribute(LOCALE);
-
         String titleProductName = MessageManager.findMassage(OFFER_PRODUCT_NAME, locale);
         String titleProductWeight = MessageManager.findMassage(OFFER_PRODUCT_WEIGHT, locale);
         String titleProductVolume = MessageManager.findMassage(OFFER_PRODUCT_VOLUME, locale);

@@ -18,7 +18,7 @@ import static by.tarasiuk.ct.controller.command.AttributeName.OFFER;
 import static by.tarasiuk.ct.controller.command.AttributeName.OFFER_ID;
 
 /**
- * Show trading offer page command
+ * Show trading offer page command.
  */
 public class ShowTradingOfferCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -27,8 +27,10 @@ public class ShowTradingOfferCommand implements Command {
     /**
      * Search in the database for an offer by ID.
      * If successful - transfer of the offer object to the page.
-     * @param content - RequestContent
-     * @return account trading page
+     *
+     * @param content   Request data content.
+     * @return          Page path.
+     * @see             by.tarasiuk.ct.controller.RequestContent
      */
     @Override
     public String execute(RequestContent content) {

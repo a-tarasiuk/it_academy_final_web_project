@@ -24,9 +24,11 @@ public class ShowOpenOfferListCommand implements Command {
 
 
     /**
-     * Search in the database list offers with the status OPEN.
-     * @param content
-     * @return
+     * Search in the database list offers with the status <code>OPEN</code>.
+     *
+     * @param content   Request data content.
+     * @return          Page path.
+     * @see             by.tarasiuk.ct.controller.RequestContent
      */
     @Override
     public String execute(RequestContent content) {

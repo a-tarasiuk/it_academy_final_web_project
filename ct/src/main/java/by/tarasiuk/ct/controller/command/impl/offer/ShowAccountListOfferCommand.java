@@ -24,7 +24,7 @@ import static by.tarasiuk.ct.controller.command.AttributeName.OFFER_STATUS;
 import static by.tarasiuk.ct.util.MessageKey.MESSAGE_WARN;
 
 /**
- * Show account list offer command
+ * Show account list offer command.
  */
 public class ShowAccountListOfferCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -33,8 +33,10 @@ public class ShowAccountListOfferCommand implements Command {
 
     /**
      * Search for a list of offers by employee ID.
-     * @param content - RequestContent
-     * @return account offers page
+     *
+     * @param content   Request data content.
+     * @return          Page path.
+     * @see             by.tarasiuk.ct.controller.RequestContent
      */
     @Override
     public String execute(RequestContent content) {

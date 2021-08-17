@@ -12,7 +12,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.jsp.JspException;
 import jakarta.servlet.jsp.JspWriter;
 import jakarta.servlet.jsp.tagext.TagSupport;
-
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Optional;
@@ -28,6 +27,9 @@ import static by.tarasiuk.ct.util.MessageKey.OFFER_PRODUCT_NAME;
 import static by.tarasiuk.ct.util.MessageKey.OFFER_PRODUCT_VOLUME;
 import static by.tarasiuk.ct.util.MessageKey.OFFER_PRODUCT_WEIGHT;
 
+/**
+ * Tag for displaying information about the offer.
+ */
 public class OfferViewerTag extends TagSupport {
     private static final long serialVersionUID = -5150821270017826128L;
     private static final EmployeeServiceImpl employeeService = ServiceProvider.getEmployeeService();

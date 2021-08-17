@@ -15,8 +15,10 @@ public class GoToSignUpPageCommand implements Command {
 
     /**
      * Direction to the sign up page.
-     * @param content - RequestContent
-     * @return account forwarders page
+     *
+     * @param content   Request data content.
+     * @return          Page path.
+     * @see             by.tarasiuk.ct.controller.RequestContent
      */
     @Override
     public String execute(RequestContent content) {

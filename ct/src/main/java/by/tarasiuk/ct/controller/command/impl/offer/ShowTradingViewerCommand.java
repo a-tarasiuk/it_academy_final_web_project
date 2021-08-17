@@ -1,7 +1,6 @@
 package by.tarasiuk.ct.controller.command.impl.offer;
 
 import by.tarasiuk.ct.controller.RequestContent;
-import by.tarasiuk.ct.controller.command.AttributeName;
 import by.tarasiuk.ct.controller.command.Command;
 import by.tarasiuk.ct.controller.command.CommandType;
 import by.tarasiuk.ct.controller.command.PagePath;
@@ -21,8 +20,14 @@ import org.apache.logging.log4j.Logger;
 import java.util.Map;
 import java.util.Optional;
 
+import static by.tarasiuk.ct.controller.command.AttributeName.ACCOUNT;
+import static by.tarasiuk.ct.controller.command.AttributeName.COMPANY;
+import static by.tarasiuk.ct.controller.command.AttributeName.OFFER_FREIGHT;
+import static by.tarasiuk.ct.controller.command.AttributeName.TRADING;
+import static by.tarasiuk.ct.controller.command.AttributeName.TRADING_ID;
+
 /**
- * Show trading viewer page command
+ * Show trading viewer page command.
  */
 public class ShowTradingViewerCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -34,15 +39,17 @@ public class ShowTradingViewerCommand implements Command {
     /**
      * Search for trading by ID in the database.
      * If successful, search for a company by company ID and trading data.
-     * @param content - RequestContent
-     * @return trading viewer page
+     *
+     * @param content   Request data content.
+     * @return          Page path.
+     * @see             by.tarasiuk.ct.controller.RequestContent
      */
     @Override
     public String execute(RequestContent content) {
         String page = PagePath.TRADING_VIEWER;
         Map<String, String> parameters = content.getRequestParameters();
-        long tradingId = Long.parseLong(parameters.get(AttributeName.TRADING_ID));
-        float offerFreight = Float.parseFloat(parameters.get(AttributeName.OFFER_FREIGHT));
+        long tradingId = Long.parseLong(parameters.get(TRADING_ID));
+        float offerFreight = Float.parseFloat(parameters.get(OFFER_FREIGHT));
 
         LOGGER.debug("Get trading ID '{}' for trading viewer page.", tradingId);
 
@@ -68,10 +75,11 @@ public class ShowTradingViewerCommand implements Command {
                         Company company = findCompany.get();
                         Account account = findAccount.get();
 
-                        content.putRequestAttribute(AttributeName.COMPANY, company);
-                        content.putRequestAttribute(AttributeName.ACCOUNT, account);
-                        content.putRequestAttribute(AttributeName.TRADING, trading);
-                        content.putRequestAttribute(AttributeName.OFFER_FREIGHT, offerFreight);
+                        content.putRequestAttribute(COMPANY, company);
+                        content.putRequestAttribute(ACCOUNT, account);
+                        content.putRequestAttribute(TRADING, trading);
+                        content.putRequestAttribute(OFFER_FREIGHT, offerFreight);
+
                         LOGGER.info("Trading data successfully send on trading viewer page.");
                     }
                 }

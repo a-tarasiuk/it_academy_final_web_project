@@ -8,7 +8,6 @@ import jakarta.servlet.jsp.JspWriter;
 import jakarta.servlet.jsp.tagext.TagSupport;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.io.IOException;
 
 import static by.tarasiuk.ct.controller.command.AttributeName.ACCOUNT_EMAIL;
@@ -25,6 +24,9 @@ import static by.tarasiuk.ct.util.MessageKey.TOKEN_INCORRECT;
 import static by.tarasiuk.ct.util.MessageKey.TOKEN_NOT_EXIST;
 import static by.tarasiuk.ct.util.MessageKey.TRADING_SUCCESSFULLY_CREATED;
 
+/**
+ * Tag for displaying the message passed to the styled page.
+ */
 public class InformationMessageTag extends TagSupport {
     private static final long serialVersionUID = -5150821270017826128L;
     private static final Logger LOGGER = LogManager.getLogger();

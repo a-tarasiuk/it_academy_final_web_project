@@ -8,15 +8,17 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * Go to the account password page command to change password
+ * Go to the account password page command to change password.
  */
 public class GoToAccountPasswordPageCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
 
     /**
      * Direction to a page with a account password page.
-     * @param content - RequestContent
-     * @return account forwarders page
+     *
+     * @param content   Request data content.
+     * @return          Page path.
+     * @see             by.tarasiuk.ct.controller.RequestContent
      */
     @Override
     public String execute(RequestContent content) {

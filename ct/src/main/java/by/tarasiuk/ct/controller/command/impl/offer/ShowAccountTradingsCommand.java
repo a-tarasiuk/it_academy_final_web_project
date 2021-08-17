@@ -35,8 +35,10 @@ public class ShowAccountTradingsCommand implements Command {
 
     /**
      * There is a search in the database for the list of offers and the corresponding tradings.
-     * @param content - RequestContent
-     * @return account tradings page
+     *
+     * @param content   Request data content.
+     * @return          Page path.
+     * @see             by.tarasiuk.ct.controller.RequestContent
      */
     @Override
     public String execute(RequestContent content) {

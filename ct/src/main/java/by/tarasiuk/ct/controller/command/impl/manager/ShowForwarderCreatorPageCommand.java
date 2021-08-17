@@ -15,8 +15,8 @@ import org.apache.logging.log4j.Logger;
 import java.util.Optional;
 
 /**
- * Only for an account with the MANAGER role.
- * Show the page for creating a new account with the FORWARDER role.
+ * Only for an account with the <code>MANAGER</code> role.
+ * Show the page for creating a new account with the <code>FORWARDER</code> role.
  */
 public class ShowForwarderCreatorPageCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -24,8 +24,10 @@ public class ShowForwarderCreatorPageCommand implements Command {
 
     /**
      * Search by company ID and transfer the company name to the page.
-     * @param content - RequestContent
-     * @return forwarder creator page
+     *
+     * @param content   Request data content.
+     * @return          Page path.
+     * @see             by.tarasiuk.ct.controller.RequestContent
      */
     @Override
     public String execute(RequestContent content) {

@@ -3,14 +3,16 @@ package by.tarasiuk.ct.validator;
 import by.tarasiuk.ct.controller.command.AttributeName;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Class for validating the offer data.
+ * Validation is done using regular expressions.
+ */
 public class OfferValidator {
     private static final Logger LOGGER = LogManager.getLogger();
-
     private static final String REGEX_VALID_OFFER_PRODUCT_NAME = "^\\p{Lu}[\\p{L}\\p{P}\\p{Zs}\\p{Mc}]{3,197}$";
     private static final String REGEX_VALID_OFFER_PRODUCT_WEIGHT = "^\\p{Nd}{1,10}(?:\\.\\p{Nd}{0,2})?$";
     private static final String REGEX_VALID_OFFER_PRODUCT_VOLUME = "^\\p{Nd}{1,10}(?:\\.\\p{Nd}{0,2})?$";
@@ -20,6 +22,13 @@ public class OfferValidator {
     private OfferValidator() {
     }
 
+    /**
+     * Checking for validity offer data.
+     *
+     * @param offerData         Offer data.
+     * @return                  <code>true</code> if the offer data is valid.
+     *                          Otherwise return <code>false</code>.
+     */
     public static boolean isValidOfferData(Map<String, String> offerData) {
         boolean result;
 

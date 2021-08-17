@@ -15,7 +15,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.Optional;
 
 /**
- * Show company settings page command
+ * Show company settings page command.
  */
 public class ShowCompanySettingsPageCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -24,8 +24,10 @@ public class ShowCompanySettingsPageCommand implements Command {
     /**
      * Search for a company by employee ID in the database.
      * If successful, getting the company object and transferring it to the page.
-     * @param content - RequestContent
-     * @return company settings or account offers page
+     *
+     * @param content   Request data content.
+     * @return          Page path.
+     * @see             by.tarasiuk.ct.controller.RequestContent
      */
     @Override
     public String execute(RequestContent content) {

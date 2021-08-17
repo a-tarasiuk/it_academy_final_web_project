@@ -14,7 +14,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.List;
 
 /**
- * For a user with the ADMINISTRATOR role only.
+ * For a user with the <code>ADMINISTRATOR</code> role only.
  * Show all accounts command for administrator.
  */
 public class ShowAccountListFromAdminCommand implements Command {
@@ -23,8 +23,10 @@ public class ShowAccountListFromAdminCommand implements Command {
 
     /**
      * From the database we find a list of all users and transfer them to the page.
-     * @param content
-     * @return
+     *
+     * @param content   Request data content.
+     * @return          Page path.
+     * @see             by.tarasiuk.ct.controller.RequestContent
      */
     @Override
     public String execute(RequestContent content) {

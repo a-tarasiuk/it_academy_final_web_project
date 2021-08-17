@@ -22,8 +22,10 @@ public class UpdateOfferCommand implements Command {
     /**
      * Checking the validity of the offer data.
      * If successful, update the offer in the database.
-     * @param content - RequestContent
-     * @return offer editor page
+     *
+     * @param content   Request data content.
+     * @return          Page path.
+     * @see             by.tarasiuk.ct.controller.RequestContent
      */
     @Override
     public String execute(RequestContent content) {

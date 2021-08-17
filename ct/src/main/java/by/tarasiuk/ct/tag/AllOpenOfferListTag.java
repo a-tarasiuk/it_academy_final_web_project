@@ -13,7 +13,6 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.jsp.JspException;
 import jakarta.servlet.jsp.JspWriter;
 import jakarta.servlet.jsp.tagext.TagSupport;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -28,6 +27,9 @@ import static by.tarasiuk.ct.util.MessageKey.OFFER_PRODUCT_NAME;
 import static by.tarasiuk.ct.util.MessageKey.OFFER_PRODUCT_VOLUME;
 import static by.tarasiuk.ct.util.MessageKey.OFFER_PRODUCT_WEIGHT;
 
+/**
+ * Tag for displaying a list of all site offers with the status <code>OPEN</code>.
+ */
 public class AllOpenOfferListTag extends TagSupport {
     private static final long serialVersionUID = -5150821270017826128L;
     private static final String UNICODE_INDEX_NUMBER = "&#x2116;";

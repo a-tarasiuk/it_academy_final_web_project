@@ -10,15 +10,17 @@ import java.util.Map;
 import static by.tarasiuk.ct.controller.command.AttributeName.LOCALE;
 
 /**
- * Change locale command for pages
+ * Change locale command for pages.
  */
 public class ChangeLocalePageCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
 
     /**
      * The locale is changed to the one selected on the page by the user.
-     * @param content - RequestContent
-     * @return main page
+     *
+     * @param content   Request data content.
+     * @return          Page path.
+     * @see             by.tarasiuk.ct.controller.RequestContent
      */
     @Override
     public String execute(RequestContent content) {
