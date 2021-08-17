@@ -70,7 +70,7 @@ public class TradingActionTag extends TagSupport {
             JspWriter out = pageContext.getOut();
             out.write(table.toString());
         } catch (IOException e) {
-            throw new JspException(e.getMessage()); /// FIXME: 08.08.2021
+            throw new JspException(e);
         }
 
         return SKIP_BODY;

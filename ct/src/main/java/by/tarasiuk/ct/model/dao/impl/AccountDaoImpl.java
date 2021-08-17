@@ -76,18 +76,17 @@ public class AccountDaoImpl extends BaseDao<Account> implements AccountDao {
 
     @Override
     public Optional<Account> findEntityById(long id) throws DaoException {
-        Optional<Account> findAccount;
+        Optional<Account> findAccount = Optional.empty();
 
-        try (Connection connection = connectionPool.getConnection();
-                PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_ACCOUNT_BY_ID)) {
-            statement.setLong(IndexFind.ACCOUNT_ID, id);
+        try (Connection connection = connectionPool.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_ACCOUNT_BY_ID)) {
+                statement.setLong(IndexFind.ACCOUNT_ID, id);
 
-            try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
-                    Account account = AccountDaoBuilder.buildAccount(resultSet);
-                    findAccount = Optional.of(account);
-                } else {
-                    findAccount = Optional.empty();
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    if (resultSet.next()) {
+                        Account account = AccountDaoBuilder.buildAccount(resultSet);
+                        findAccount = Optional.of(account);
+                    }
                 }
             }
 
@@ -107,13 +106,14 @@ public class AccountDaoImpl extends BaseDao<Account> implements AccountDao {
     public List<Account> findAll() throws DaoException {
         List<Account> accountList = new ArrayList<>();
 
-        try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_ALL_ACCOUNTS);
-             ResultSet result = statement.executeQuery()) {
-
-            while (result.next()) {
-                Account account = AccountDaoBuilder.buildAccount(result);
-                accountList.add(account);
+        try (Connection connection = connectionPool.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_ALL_ACCOUNTS)) {
+                try (ResultSet result = statement.executeQuery()) {
+                    while (result.next()) {
+                        Account account = AccountDaoBuilder.buildAccount(result);
+                        accountList.add(account);
+                    }
+                }
             }
         } catch (SQLException e) {
             LOGGER.error("Error when find all accounts.", e);
@@ -125,18 +125,17 @@ public class AccountDaoImpl extends BaseDao<Account> implements AccountDao {
 
     @Override
     public Optional<Account> findAccountByLogin(String login) throws DaoException {
-        Optional<Account> findAccount;
+        Optional<Account> findAccount = Optional.empty();
 
-        try (Connection connection = connectionPool.getConnection();
-                PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_ACCOUNT_BY_LOGIN)) {
-            statement.setString(IndexFind.LOGIN, login);
+        try (Connection connection = connectionPool.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_ACCOUNT_BY_LOGIN)) {
+                statement.setString(IndexFind.LOGIN, login);
 
-            try (ResultSet result = statement.executeQuery()) {
-                if (result.next()) {
-                    Account account = AccountDaoBuilder.buildAccount(result);
-                    findAccount = Optional.of(account);
-                } else {
-                    findAccount = Optional.empty();
+                try (ResultSet result = statement.executeQuery()) {
+                    if (result.next()) {
+                        Account account = AccountDaoBuilder.buildAccount(result);
+                        findAccount = Optional.of(account);
+                    }
                 }
             }
         } catch (SQLException e) {
@@ -149,18 +148,17 @@ public class AccountDaoImpl extends BaseDao<Account> implements AccountDao {
 
     @Override
     public Optional<String> findPasswordByLogin(String login) throws DaoException {
-        Optional<String> optionalPassword;
+        Optional<String> optionalPassword = Optional.empty();
 
-        try (Connection connection = connectionPool.getConnection();
-                PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_PASSWORD_BY_LOGIN)) {
-            statement.setString(IndexFind.LOGIN, login);
+        try (Connection connection = connectionPool.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_PASSWORD_BY_LOGIN)) {
+                statement.setString(IndexFind.LOGIN, login);
 
-            try (ResultSet result = statement.executeQuery()) {
-                if (result.next()) {
-                    String password = result.getString(AttributeName.ACCOUNT_PASSWORD_ENCODED);
-                    optionalPassword = Optional.of(password);
-                } else {
-                    optionalPassword = Optional.empty();
+                try (ResultSet result = statement.executeQuery()) {
+                    if (result.next()) {
+                        String password = result.getString(AttributeName.ACCOUNT_PASSWORD_ENCODED);
+                        optionalPassword = Optional.of(password);
+                    }
                 }
             }
 
@@ -173,18 +171,17 @@ public class AccountDaoImpl extends BaseDao<Account> implements AccountDao {
 
     @Override
     public Optional<String> findPasswordByAccountId(long accountId) throws DaoException {
-        Optional<String> optionalPassword;
+        Optional<String> optionalPassword = Optional.empty();
 
-        try (Connection connection = connectionPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_PASSWORD_BY_ACCOUNT_ID)) {
-            statement.setLong(IndexFind.ACCOUNT_ID, accountId);
+        try (Connection connection = connectionPool.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_PASSWORD_BY_ACCOUNT_ID)) {
+                statement.setLong(IndexFind.ACCOUNT_ID, accountId);
 
-            try (ResultSet result = statement.executeQuery()) {
-                if (result.next()) {
-                    String password = result.getString(AttributeName.ACCOUNT_PASSWORD_ENCODED);
-                    optionalPassword = Optional.of(password);
-                } else {
-                    optionalPassword = Optional.empty();
+                try (ResultSet result = statement.executeQuery()) {
+                    if (result.next()) {
+                        String password = result.getString(AttributeName.ACCOUNT_PASSWORD_ENCODED);
+                        optionalPassword = Optional.of(password);
+                    }
                 }
             }
 
@@ -197,18 +194,17 @@ public class AccountDaoImpl extends BaseDao<Account> implements AccountDao {
 
     @Override
     public Optional<Account> findAccountByEmail(String email) throws DaoException {
-        Optional<Account> findAccount;
+        Optional<Account> findAccount = Optional.empty();
 
-        try (Connection connection = connectionPool.getConnection();
-                PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_ACCOUNT_BY_EMAIL)) {
-            statement.setString(IndexFind.EMAIL, email);
+        try (Connection connection = connectionPool.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_ACCOUNT_BY_EMAIL)) {
+                statement.setString(IndexFind.EMAIL, email);
 
-            try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
-                    Account account = AccountDaoBuilder.buildAccount(resultSet);
-                    findAccount = Optional.of(account);
-                } else {
-                    findAccount = Optional.empty();
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    if (resultSet.next()) {
+                        Account account = AccountDaoBuilder.buildAccount(resultSet);
+                        findAccount = Optional.of(account);
+                    }
                 }
             }
 

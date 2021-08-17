@@ -7,7 +7,6 @@ import by.tarasiuk.ct.model.dao.builder.TradingDaoBuilder;
 import by.tarasiuk.ct.model.entity.impl.Trading;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -96,14 +95,15 @@ public class TradingDaoImpl extends BaseDao<Trading> implements TradingDao {
     public List<Trading> findListTradingsByOfferId(long offerId) throws DaoException {
         List<Trading> tradings = new ArrayList<>();
 
-        try (Connection connection = connectionPool.getConnection();
-                PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_TRADINGS_BY_OFFER_ID)) {
-            statement.setLong(IndexFind.OFFER_ID, offerId);
+        try (Connection connection = connectionPool.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_TRADINGS_BY_OFFER_ID)) {
+                statement.setLong(IndexFind.OFFER_ID, offerId);
 
-            try (ResultSet result = statement.executeQuery()) {
-                while (result.next()) {
-                    Trading trading = TradingDaoBuilder.build(result);
-                    tradings.add(trading);
+                try (ResultSet result = statement.executeQuery()) {
+                    while (result.next()) {
+                        Trading trading = TradingDaoBuilder.build(result);
+                        tradings.add(trading);
+                    }
                 }
             }
         } catch (SQLException e) {
@@ -118,14 +118,15 @@ public class TradingDaoImpl extends BaseDao<Trading> implements TradingDao {
     public List<Trading> findListTradingsByEmployeeId(long employeeId) throws DaoException {
         List<Trading> tradings = new ArrayList<>();
 
-        try (Connection connection = connectionPool.getConnection();
-                PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_TRADINGS_BY_EMPLOYEE_ID)) {
-            statement.setLong(IndexFind.EMPLOYEE_ID, employeeId);
+        try (Connection connection = connectionPool.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_TRADINGS_BY_EMPLOYEE_ID)) {
+                statement.setLong(IndexFind.EMPLOYEE_ID, employeeId);
 
-            try (ResultSet result = statement.executeQuery()) {
-                while (result.next()) {
-                    Trading trading = TradingDaoBuilder.build(result);
-                    tradings.add(trading);
+                try (ResultSet result = statement.executeQuery()) {
+                    while (result.next()) {
+                        Trading trading = TradingDaoBuilder.build(result);
+                        tradings.add(trading);
+                    }
                 }
             }
         } catch (SQLException e) {
@@ -148,21 +149,19 @@ public class TradingDaoImpl extends BaseDao<Trading> implements TradingDao {
 
     @Override
     public Optional<Trading> findEntityById(long id) throws DaoException {
-        Optional<Trading> findTrading;
+        Optional<Trading> findTrading = Optional.empty();
 
-        try (Connection connection = connectionPool.getConnection();
-                PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_TRADING_BY_ID)) {
-            statement.setLong(IndexFind.TRADING_ID, id);
+        try (Connection connection = connectionPool.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_TRADING_BY_ID)) {
+                statement.setLong(IndexFind.TRADING_ID, id);
 
-            try (ResultSet result = statement.executeQuery()) {
-                if (result.next()) {
-                    Trading trading = TradingDaoBuilder.build(result);
-                    findTrading = Optional.of(trading);
-                    LOGGER.debug("Trading with ID '{}' was fount successfully in the database.", id);
-                } else {
-                    findTrading = Optional.empty();
+                try (ResultSet result = statement.executeQuery()) {
+                    if (result.next()) {
+                        Trading trading = TradingDaoBuilder.build(result);
+                        findTrading = Optional.of(trading);
+                        LOGGER.debug("Trading with ID '{}' was fount successfully in the database.", id);
+                    }
                 }
-
             }
         } catch (SQLException e) {
             LOGGER.error("Error when performing tradings search by id '{}'.", id, e);

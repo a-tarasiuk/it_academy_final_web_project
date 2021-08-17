@@ -107,7 +107,7 @@ public class AccountOfferListTag extends TagSupport {
             JspWriter out = pageContext.getOut();
             out.write(table.toString());
         } catch (IOException e) {
-            throw new JspException(e.getMessage());
+            throw new JspException(e);
         }
 
         return SKIP_BODY;

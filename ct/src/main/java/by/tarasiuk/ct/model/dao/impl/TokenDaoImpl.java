@@ -6,7 +6,6 @@ import by.tarasiuk.ct.model.dao.TokenDao;
 import by.tarasiuk.ct.model.entity.impl.Token;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,7 +23,7 @@ public class TokenDaoImpl extends BaseDao<Token> implements TokenDao {
 
     private static final String SQL_PROCEDURE_CREATE_TOKEN = "{CALL create_token (?, ?, ?)}";
     private static final String SQL_PROCEDURE_UPDATE_TOKEN = "{CALL update_token (?, ?, ?, ?)}";
-    private static final String SQL_PROCEDURE_FIND_TOKEN_BY_ACCOUNT_ID = "{CALL find_token_by_account_id (?)}";    //fixme (может сделать метод, который принимает аккаунт, извлекает ИД аккаунта и передает в другой метод
+    private static final String SQL_PROCEDURE_FIND_TOKEN_BY_ACCOUNT_ID = "{CALL find_token_by_account_id (?)}";
 
     private TokenDaoImpl() {
     }
@@ -70,27 +69,26 @@ public class TokenDaoImpl extends BaseDao<Token> implements TokenDao {
 
     @Override
     public Optional<Token> findTokenByAccountId(long accountId) throws DaoException {
-        Optional<Token> optionalToken;
+        Optional<Token> optionalToken = Optional.empty();
 
-        try (Connection connection = connectionPool.getConnection();
-                PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_TOKEN_BY_ACCOUNT_ID)) {
-            statement.setLong(IndexCreate.ACCOUNT_ID, accountId);
+        try (Connection connection = connectionPool.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_TOKEN_BY_ACCOUNT_ID)) {
+                statement.setLong(IndexCreate.ACCOUNT_ID, accountId);
 
-            try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
-                    long tokenId = resultSet.getLong(TOKEN_ID);
-                    String number = resultSet.getString(TOKEN_NUMBER);
-                    String status = resultSet.getString(TOKEN_STATUS);
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    if (resultSet.next()) {
+                        long tokenId = resultSet.getLong(TOKEN_ID);
+                        String number = resultSet.getString(TOKEN_NUMBER);
+                        String status = resultSet.getString(TOKEN_STATUS);
 
-                    Token token = new Token();
-                    token.setId(tokenId);
-                    token.setAccountId(accountId);
-                    token.setNumber(number);
-                    token.setStatus(Token.Status.valueOf(status));
+                        Token token = new Token();
+                        token.setId(tokenId);
+                        token.setAccountId(accountId);
+                        token.setNumber(number);
+                        token.setStatus(Token.Status.valueOf(status));
 
-                    optionalToken = Optional.of(token);
-                } else {
-                    optionalToken = Optional.empty();
+                        optionalToken = Optional.of(token);
+                    }
                 }
             }
         } catch (SQLException e) {

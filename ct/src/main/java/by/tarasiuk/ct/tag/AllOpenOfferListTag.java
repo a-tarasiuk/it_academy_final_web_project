@@ -105,7 +105,7 @@ public class AllOpenOfferListTag extends TagSupport {
         } catch (ServiceException e) {
             e.printStackTrace();    //fixme
         } catch (IOException e) {
-            throw new JspException(e.getMessage());
+            throw new JspException(e);
         }
 
         return SKIP_BODY;

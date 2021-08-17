@@ -7,7 +7,6 @@ import by.tarasiuk.ct.model.entity.impl.Company;
 import by.tarasiuk.ct.model.dao.builder.CompanyDaoBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -51,18 +50,17 @@ public class CompanyDaoImpl extends BaseDao<Company> implements CompanyDao {
 
     @Override
     public Optional<Company> findCompanyByName(String name) throws DaoException {
-        Optional<Company> findCompany;
+        Optional<Company> findCompany = Optional.empty();
 
-        try (Connection connection = connectionPool.getConnection();
-                PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_COMPANY_BY_NAME)) {
-            statement.setString(IndexFind.NAME, name);
+        try (Connection connection = connectionPool.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_COMPANY_BY_NAME)) {
+                statement.setString(IndexFind.NAME, name);
 
-            try (ResultSet result = statement.executeQuery()) {
-                if (result.next()) {
-                    Company company = CompanyDaoBuilder.buildCompany(result);
-                    findCompany = Optional.of(company);
-                } else {
-                    findCompany = Optional.empty();
+                try (ResultSet result = statement.executeQuery()) {
+                    if (result.next()) {
+                        Company company = CompanyDaoBuilder.buildCompany(result);
+                        findCompany = Optional.of(company);
+                    }
                 }
             }
 
@@ -126,18 +124,17 @@ public class CompanyDaoImpl extends BaseDao<Company> implements CompanyDao {
 
     @Override
     public Optional<Company> findEntityById(long id) throws DaoException {
-        Optional<Company> findCompany;
+        Optional<Company> findCompany = Optional.empty();
 
-        try (Connection connection = connectionPool.getConnection();
-                PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_COMPANY_BY_ID)) {
-            statement.setLong(IndexFind.ID, id);
+        try (Connection connection = connectionPool.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_COMPANY_BY_ID)) {
+                statement.setLong(IndexFind.ID, id);
 
-            try (ResultSet result = statement.executeQuery()) {
-                if (result.next()) {
-                    Company company = CompanyDaoBuilder.buildCompany(result);
-                    findCompany = Optional.of(company);
-                } else {
-                    findCompany = Optional.empty();
+                try (ResultSet result = statement.executeQuery()) {
+                    if (result.next()) {
+                        Company company = CompanyDaoBuilder.buildCompany(result);
+                        findCompany = Optional.of(company);
+                    }
                 }
             }
 

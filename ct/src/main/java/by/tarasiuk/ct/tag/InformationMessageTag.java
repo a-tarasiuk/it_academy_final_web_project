@@ -81,7 +81,7 @@ public class InformationMessageTag extends TagSupport {
         try {
             out.write(block.toString());
         } catch (IOException e) {
-            throw new JspException(e.getMessage());
+            throw new JspException(e);
         }
 
         return SKIP_BODY;

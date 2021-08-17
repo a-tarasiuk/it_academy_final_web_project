@@ -8,7 +8,6 @@ import by.tarasiuk.ct.model.entity.impl.Offer;
 import by.tarasiuk.ct.model.entity.impl.Offer.Status;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -155,13 +154,14 @@ public class OfferDaoImpl extends BaseDao<Offer> implements OfferDao {
     public List<Offer> findAll() throws DaoException {
         List<Offer> offers = new ArrayList<>();
 
-        try (Connection connection = connectionPool.getConnection();
-                PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_ALL_OFFERS);
-             ResultSet result = statement.executeQuery()) {
-
-            while (result.next()) {
-                Offer offer = OfferDaoBuilder.build(result);
-                offers.add(offer);
+        try (Connection connection = connectionPool.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_ALL_OFFERS)) {
+                try (ResultSet result = statement.executeQuery()) {
+                    while (result.next()) {
+                        Offer offer = OfferDaoBuilder.build(result);
+                        offers.add(offer);
+                    }
+                }
             }
         } catch (SQLException e) {
             LOGGER.error("Error when find all offers.", e);
@@ -175,13 +175,14 @@ public class OfferDaoImpl extends BaseDao<Offer> implements OfferDao {
     public List<Offer> findOpenOffers() throws DaoException {
         List<Offer> offers = new ArrayList<>();
 
-        try (Connection connection = connectionPool.getConnection();
-                PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_OPEN_OFFERS);
-             ResultSet result = statement.executeQuery()) {
-
-            while (result.next()) {
-                Offer offer = OfferDaoBuilder.build(result);
-                offers.add(offer);
+        try (Connection connection = connectionPool.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_OPEN_OFFERS)) {
+                try (ResultSet result = statement.executeQuery()) {
+                    while (result.next()) {
+                        Offer offer = OfferDaoBuilder.build(result);
+                        offers.add(offer);
+                    }
+                }
             }
         } catch (SQLException e) {
             LOGGER.error("Error when find all offers.", e);
@@ -195,14 +196,15 @@ public class OfferDaoImpl extends BaseDao<Offer> implements OfferDao {
     public List<Offer> findOfferListByEmployeeId(long employeeId) throws DaoException {
         List<Offer> offers = new ArrayList<>();
 
-        try (Connection connection = connectionPool.getConnection();
-                PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_ALL_OFFERS_BY_EMPLOYEE_ID)) {
-            statement.setLong(IndexFind.EMPLOYEE_ID, employeeId);
+        try (Connection connection = connectionPool.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_ALL_OFFERS_BY_EMPLOYEE_ID)) {
+                statement.setLong(IndexFind.EMPLOYEE_ID, employeeId);
 
-            try (ResultSet result = statement.executeQuery()) {
-                while (result.next()) {
-                    Offer offer = OfferDaoBuilder.build(result);
-                    offers.add(offer);
+                try (ResultSet result = statement.executeQuery()) {
+                    while (result.next()) {
+                        Offer offer = OfferDaoBuilder.build(result);
+                        offers.add(offer);
+                    }
                 }
             }
         } catch (SQLException e) {
@@ -215,15 +217,17 @@ public class OfferDaoImpl extends BaseDao<Offer> implements OfferDao {
 
     @Override
     public Optional<Offer> findEntityById(long id) throws DaoException {
-        Offer offer = null;
+        Optional<Offer> findOffer = Optional.empty();
 
-        try (Connection connection = connectionPool.getConnection();
-                PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_OFFER_BY_ID)) {
-            statement.setLong(IndexFind.OFFER_ID, id);
+        try (Connection connection = connectionPool.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_OFFER_BY_ID)) {
+                statement.setLong(IndexFind.OFFER_ID, id);
 
-            try (ResultSet result = statement.executeQuery()) {
-                if (result.next()) {
-                    offer = OfferDaoBuilder.build(result);
+                try (ResultSet result = statement.executeQuery()) {
+                    if (result.next()) {
+                        Offer offer = OfferDaoBuilder.build(result);
+                        findOffer = Optional.of(offer);
+                    }
                 }
             }
         } catch (SQLException e) {
@@ -231,6 +235,6 @@ public class OfferDaoImpl extends BaseDao<Offer> implements OfferDao {
             throw new DaoException("Error when performing offer search by id '" + id + "'.", e);
         }
 
-        return Optional.ofNullable(offer);
+        return findOffer;
     }
 }
