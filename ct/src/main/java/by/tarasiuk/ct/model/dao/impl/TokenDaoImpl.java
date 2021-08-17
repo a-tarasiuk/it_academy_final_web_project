@@ -47,6 +47,8 @@ public class TokenDaoImpl extends BaseDao<Token> implements TokenDao {
 
     @Override
     public boolean createToken(Token token) throws DaoException {
+        boolean result;
+
         long accountId = token.getAccountId();
         String number = token.getNumber();
         String status = token.getStatus().toString();
@@ -57,14 +59,17 @@ public class TokenDaoImpl extends BaseDao<Token> implements TokenDao {
             statement.setString(IndexCreate.TOKEN_NUMBER, number);
             statement.setString(IndexCreate.TOKEN_STATUS, status);
 
-            statement.executeUpdate();
+            int rowCount = statement.executeUpdate();
+            result = rowCount == 1;
 
-            LOGGER.info("Token was successfully created in the database: {}.", token);
-            return true;    //fixme -> statement.executeUpdate(); (см. выше).
+            LOGGER.info(result ? "Token was successfully created in the database: {}."
+                    : "Failed to create token '{}'.", token);
         } catch (SQLException e) {
             LOGGER.error("Failed to create token in the database: {}.", token, e);
             throw new DaoException("Failed to create token in the database: " + token + ".", e);
         }
+
+        return result;
     }
 
     @Override
@@ -101,6 +106,8 @@ public class TokenDaoImpl extends BaseDao<Token> implements TokenDao {
 
     @Override
     public boolean updateToken(Token token) throws DaoException {
+        boolean result;
+
         long tokenId = token.getId();
         long accountId = token.getAccountId();
         String tokenNumber = token.getNumber();
@@ -113,30 +120,36 @@ public class TokenDaoImpl extends BaseDao<Token> implements TokenDao {
             statement.setString(IndexUpdate.TOKEN_NUMBER, tokenNumber);
             statement.setString(IndexUpdate.TOKEN_STATUS, tokenStatus);
 
-            return statement.execute();
+            int rowCount = statement.executeUpdate();
+            result = rowCount == 1;
+
+            LOGGER.info(result ? "Token was successfully updated in the database: {}."
+                    : "Failed to update token '{}'.", token);
         } catch (SQLException e) {
             LOGGER.error("Failed to updateEntity token '{}' in the database.", token, e);
             throw new DaoException("Failed to updateEntity token '" + token + "' in the database.", e);
         }
+
+        return result;
     }
 
     @Override
     public boolean createEntity(Token entity) throws DaoException {
-        return false;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public List<Token> findAll() throws DaoException {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public boolean updateEntity(Token entity) throws DaoException {
-        return true;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Optional<Token> findEntityById(long id) throws DaoException {
-        return Optional.empty();
+        throw new UnsupportedOperationException();
     }
 }

@@ -10,6 +10,12 @@ import java.util.Optional;
 /**
  * The parameters and attributes of the request are retrieved from the object.
  * The object contains methods for getting the attributes and parameters of the request.
+ * An instance of `Request` should not be freely passed into the business logic of the application
+ * in order to avoid incorrect modification, therefore, you should first extract the necessary information
+ * from the instance-request and store it in a class object specially designed for this.
+ *
+ * @see jakarta.servlet.http.HttpServletRequest
+ * @see jakarta.servlet.ServletRequest
  */
 public class RequestContent {
     private boolean isValidSession = true;

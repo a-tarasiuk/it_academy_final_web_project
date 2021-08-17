@@ -67,33 +67,37 @@ public class EmployeeDaoImpl extends BaseDao<Employee> implements EmployeeDao {
 
     @Override
     public List<Employee> findAll() throws DaoException {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public boolean createEntity(Employee entity) throws DaoException {
+        boolean result;
+
         long accountId = entity.getAccountId();
         long companyId = entity.getCompanyId();
-
 
         try (Connection connection = connectionPool.getConnection();
             PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_CREATE_EMPLOYEE)) {
             statement.setLong(IndexCreate.ACCOUNT_ID, accountId);
             statement.setLong(IndexCreate.COMPANY_ID, companyId);
 
-            statement.executeUpdate();
+            int rowCount = statement.executeUpdate();
+            result = rowCount == 1;
 
-            LOGGER.info("Employee was successfully created in the database: {}.", entity);
-            return true;    //fixme -> statement.executeUpdate(); (см. выше).
+            LOGGER.info(result ? "Employee was successfully created in the database: {}."
+                    : "Failed to create employee '{}'.", entity);
         } catch (SQLException e) {
             LOGGER.error("Failed to create employee in the database: {}.", entity, e);
             throw new DaoException("Failed to create employee in the database: " + entity + ".", e);
         }
+
+        return result;
     }
 
     @Override
     public boolean updateEntity(Employee entity) throws DaoException {
-        return true;
+        throw new UnsupportedOperationException();
     }
 
     @Override

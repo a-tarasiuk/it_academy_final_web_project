@@ -73,6 +73,8 @@ public class CompanyDaoImpl extends BaseDao<Company> implements CompanyDao {
 
     @Override
     public boolean createEntity(Company entity) throws DaoException {
+        boolean result;
+
         String name = entity.getName();
         String address = entity.getAddress();
         String phoneNumber = entity.getPhoneNumber();
@@ -83,23 +85,28 @@ public class CompanyDaoImpl extends BaseDao<Company> implements CompanyDao {
             statement.setString(IndexCreate.ADDRESS, address);
             statement.setString(IndexCreate.PHONE_NUMBER, phoneNumber);
 
-            statement.executeUpdate();
+            int rowCount = statement.executeUpdate();
+            result = rowCount == 1;
 
-            LOGGER.info("Company was successfully created in the database: {}.", entity);
-            return true;
+            LOGGER.info(result ? "Company was successfully created in the database: {}."
+                    : "Failed to create company '{}'.", entity);
         } catch (SQLException e) {
             LOGGER.error("Failed to create company in the database: {}.", entity, e);
             throw new DaoException("Failed to create company in the database: " + entity + ".", e);
         }
+
+        return result;
     }
 
     @Override
     public List<Company> findAll() throws DaoException {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public boolean updateEntity(Company entity) throws DaoException {
+        boolean result;
+
         long companyId = entity.getId();
         String companyName = entity.getName();
         String companyAddress = entity.getAddress();
@@ -112,14 +119,17 @@ public class CompanyDaoImpl extends BaseDao<Company> implements CompanyDao {
             statement.setString(IndexUpdate.COMPANY_ADDRESS, companyAddress);
             statement.setString(IndexUpdate.COMPANY_PHONE_NUMBER, companyPhoneNumber);
 
-            statement.executeUpdate();
+            int rowCount = statement.executeUpdate();
+            result = rowCount == 1;
 
-            LOGGER.info("Offer '{}' has been successfully updated in the database.", entity);
-            return true;    //fixme -> statement.executeUpdate(); (см. выше).
+            LOGGER.info(result ? "Offer '{}' has been successfully updated in the database."
+                    : "Failed to update company '{}'.", entity);
         } catch (SQLException e) {
             LOGGER.error("Failed updating company '{}' in the database.", entity, e);
             throw new DaoException("Failed updating company '" + entity + "' in the database.", e);
         }
+
+        return result;
     }
 
     @Override

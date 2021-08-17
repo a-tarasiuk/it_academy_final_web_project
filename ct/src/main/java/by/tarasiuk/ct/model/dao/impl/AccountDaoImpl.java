@@ -99,7 +99,7 @@ public class AccountDaoImpl extends BaseDao<Account> implements AccountDao {
 
     @Override
     public boolean createEntity(Account entity) throws DaoException {
-        return false;
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -217,6 +217,8 @@ public class AccountDaoImpl extends BaseDao<Account> implements AccountDao {
 
     @Override
     public boolean createAccount(Account account, String encodingPassword) throws DaoException {
+        boolean result;
+
         String firstName = account.getFirstName();
         String lastName = account.getLastName();
         String login = account.getLogin();
@@ -236,18 +238,23 @@ public class AccountDaoImpl extends BaseDao<Account> implements AccountDao {
             statement.setString(CreateIndex.ROLE, role);
             statement.setString(CreateIndex.STATUS, status);
 
-            statement.executeUpdate();
+            int rowCount = statement.executeUpdate();
+            result = rowCount == 1;
 
-            LOGGER.info("Account was successfully created in the database: {}.", account);
-            return true;
+            LOGGER.info(result ? "Account was successfully created in the database: {}."
+                    : "\"Filed to create account in the database: {}.\"", account);
         } catch (SQLException e) {
             LOGGER.error("Failed to create account '{}' in the database.", account, e);
             throw new DaoException("Failed to create account '" + account + "' in the database.", e);
         }
+
+        return result;
     }
 
     @Override
     public boolean updateEntity(Account entity) throws DaoException {
+        boolean result;
+
         long accountId = entity.getId();
         String firstName = entity.getFirstName();
         String lastName = entity.getLastName();
@@ -268,47 +275,60 @@ public class AccountDaoImpl extends BaseDao<Account> implements AccountDao {
             statement.setString(UpdateIndex.ROLE, role);
             statement.setString(UpdateIndex.STATUS, status);
 
-            statement.executeUpdate();
+            int rowCount = statement.executeUpdate();
+            result = rowCount == 1;
 
-            LOGGER.info("Account was successfully updated in the database: {}.", entity);
-            return true;
+            LOGGER.info(result ? "Account was successfully updated in the database: {}."
+                    : "Failed to update account in the database: '{}'.", entity);
         } catch (SQLException e) {
             LOGGER.error("Failed to update account '{}' in the database.", entity, e);
             throw new DaoException("Failed to update account '" + entity + "' in the database.", e);
         }
+
+        return result;
     }
 
     @Override
     public boolean updatePasswordByAccountId(long accountId, String encodingPassword) throws DaoException {
+        boolean result;
+
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_SET_PASSWORD_BY_ACCOUNT_ID)) {
             statement.setLong(UpdateIndex.ACCOUNT_ID, accountId);
             statement.setString(UpdateIndex.ENCODING_PASSWORD, encodingPassword);
 
-            statement.executeUpdate();
+            int rowCount = statement.executeUpdate();
+            result = rowCount == 1;
 
-            LOGGER.info("Password was successfully updated for account with ID '{}' in the database.", accountId);
-            return true;
+            LOGGER.info(result ? "Password was successfully updated for account with ID '{}' in the database."
+                    : "Failed update password by account ID '{}'.", accountId);
         } catch (SQLException e) {
             LOGGER.error("Failed to update password for account with ID '{}' in the database.", accountId, e);
             throw new DaoException("Failed to update password for account with ID '" + accountId + "' in the database.", e);
         }
+
+        return result;
     }
 
     @Override
     public boolean updateStatusByAccountId(long id, Account.Status status) throws DaoException {
+        boolean result;
+
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_UPDATE_ACCOUNT_STATUS_BY_ID)) {
             statement.setLong(UpdateStatusIndex.ACCOUNT_ID, id);
             statement.setString(UpdateStatusIndex.STATUS, status.name());
 
-            statement.executeUpdate();
+            int rowCount = statement.executeUpdate();
+            result = rowCount == 1;
 
-            LOGGER.info("For account with ID '{}' updated status to '{}' in the database.", id, status);
-            return true;
+            LOGGER.info(result ? "For account with ID '{}' updated status to '{}' in the database."
+                    : "Failed update status for account wih ID '{}'.", id, status);
         } catch (SQLException e) {
             LOGGER.error("Failed to update status '{}' for account wih ID '{}' in the database.", status, id, e);
             throw new DaoException("Failed to update status '" + status + "' for account wih ID '" + id+ "' in the database.", e);
         }
+
+        return result;
     }
 }

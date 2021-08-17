@@ -52,6 +52,8 @@ public class TradingDaoImpl extends BaseDao<Trading> implements TradingDao {
 
     @Override
     public boolean createEntity(Trading trading) throws DaoException {
+        boolean result;
+
         long offerId = trading.getOfferId();
         long employeeId = trading.getEmployeeId();
         float freight = trading.getFreight();
@@ -64,31 +66,39 @@ public class TradingDaoImpl extends BaseDao<Trading> implements TradingDao {
             statement.setFloat(IndexCreate.TRADING_FREIGHT, freight);
             statement.setString(IndexCreate.TRADING_STATUS, status.name());
 
-            statement.executeUpdate();
+            int rowCount = statement.executeUpdate();
+            result = rowCount == 1;
 
-            LOGGER.info("Trading was successfully created in the database: {}.", trading);
-            return true;    //fixme -> statement.executeUpdate(); (см. выше).
+            LOGGER.info(result ? "Trading was successfully created in the database: {}."
+                    : "Failed to create trading '{}'.", trading);
         } catch (SQLException e) {
             LOGGER.error("Failed to create trading in the database: {}.", trading, e);
             throw new DaoException("Failed to create trading in the database: " + trading + ".", e);
         }
+
+        return result;
     }
 
     @Override
     public boolean updateTradingStatusById(long tradingId, Trading.Status status) throws DaoException {
+        boolean result;
+
         try (Connection connection = connectionPool.getConnection();
                 PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_UPDATE_TRADING_STATUS_BY_ID)) {
             statement.setLong(IndexUpdate.TRADING_ID, tradingId);
             statement.setString(IndexUpdate.TRADING_STATUS, status.name());
 
-            statement.executeUpdate();
+            int rowCount = statement.executeUpdate();
+            result = rowCount == 1;
 
-            LOGGER.info("Trading with ID '{}' has been successfully status to '{}' in the database.", tradingId, status);
-            return true;    //fixme -> statement.executeUpdate(); (см. выше).
+            LOGGER.info(result ? "Trading with ID '{}' has been successfully status to '{}' in the database."
+                    : "Failed to update trading status '{}' for trading with ID '{}'.", tradingId, status);
         } catch (SQLException e) {
             LOGGER.error("Failed updating trading with ID '{}' to status '{}' in the database.", tradingId, status, e);
             throw new DaoException("Failed updating trading with ID '" + tradingId + "' to status '" + status + "' in the database.", e);
         }
+
+        return result;
     }
 
     @Override
@@ -139,12 +149,12 @@ public class TradingDaoImpl extends BaseDao<Trading> implements TradingDao {
 
     @Override
     public List<Trading> findAll() throws DaoException {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public boolean updateEntity(Trading entity) throws DaoException {
-        return true;
+        throw new UnsupportedOperationException();
     }
 
     @Override

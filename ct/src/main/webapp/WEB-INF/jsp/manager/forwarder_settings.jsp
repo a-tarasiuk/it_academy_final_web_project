@@ -84,10 +84,8 @@
                                     </c:forEach>
                                 </c:otherwise>
                             </c:choose>
-
                         </table>
 
-                        <ct:account_employee_list/>
                     </div>
                 </div>
             </div>
