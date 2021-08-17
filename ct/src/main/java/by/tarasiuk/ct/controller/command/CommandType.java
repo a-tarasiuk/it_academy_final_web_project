@@ -38,45 +38,64 @@ import by.tarasiuk.ct.controller.command.impl.offer.UpdatePasswordCommand;
 
 /**
  * All available commands of the application.
- * @see SecurityFilter
  *
+ * @see by.tarasiuk.ct.controller.filter.CommandFilter
  */
 public enum CommandType {
+    /**
+     * Command list for GUEST.
+     */
     CHANGE_LOCALE_PAGE(new ChangeLocalePageCommand()),
-    ACTIVATE_ACCOUNT(new ActivateAccountCommand()),
-    SIGN_IN(new SignInCommand()),
-    SIGN_UP(new SignUpCommand()),
-    LOGOUT(new LogoutCommand()),
-    CREATE_OFFER(new CreateOfferCommand()),
     GO_TO_MAIN_PAGE(new GoToMainPageCommand()),
     GO_TO_SIGN_IN_PAGE(new GoToSignInPageCommand()),
     GO_TO_SIGN_UP_PAGE(new GoToSignUpPageCommand()),
-    GO_TO_CREATE_OFFER_PAGE(new GoToCreateOfferPageCommand()),
-    GO_TO_ACCOUNT_EMPLOYEES_PAGE(new GoToAccountEmployeesPageCommand()),
-    GO_TO_ACCOUNT_PASSWORD_PAGE(new GoToAccountPasswordPageCommand()),
-    SHOW_FORWARDER_CREATOR_PAGE(new ShowForwarderCreatorPageCommand()),
-    SHOW_ACCOUNT_SETTINGS_PAGE(new ShowAccountSettingsPageCommand()),
-    SHOW_OPEN_OFFER_LIST(new ShowOpenOfferListCommand()),
-    SHOW_OFFER_EDITOR(new ShowOfferEditorCommand()),
-    SHOW_TRADING_OFFER(new ShowTradingOfferCommand()),
-    SHOW_TRADING_VIEWER(new ShowTradingViewerCommand()),
-    SHOW_ACCOUNT_OFFERS(new ShowAccountListOfferCommand()),
-    SHOW_ACCOUNT_OFFER(new ShowAccountOfferCommand()),
-    SHOW_ACCOUNT_TRADINGS(new ShowAccountTradingsCommand()),
-    SHOW_COMPANY_SETTINGS_PAGE(new ShowCompanySettingsPageCommand()),
-    SHOW_FORWARDER_SETTINGS_PAGE(new ShowForwarderSettingsPageCommand()),
-    DEACTIVATE_OFFER(new DeactivateOfferCommand()),
-    CREATE_TRADING(new CreateTradingCommand()),
-    CREATE_FORWARDER(new CreateForwarderCommand()),
-    APPLY_FREIGHT(new ApplyFreightCommand()),
-    UPDATE_ACCOUNT(new UpdateAccountCommand()),
-    UPDATE_PASSWORD(new UpdatePasswordCommand()),
-    UPDATE_COMPANY(new UpdateCompanyCommand()),
-    UPDATE_OFFER(new UpdateOfferCommand()),
+    SIGN_IN(new SignInCommand()),
+    SIGN_UP(new SignUpCommand()),
+    ACTIVATE_ACCOUNT(new ActivateAccountCommand()),
+
+    /**
+     * Command list for account with role ADMINISTRATOR only.
+     */
     BAN_ACCOUNT(new BanAccountCommand()),
     UNBAN_ACCOUNT(new UnbanAccountCommand()),
     SHOW_ACCOUNT_LIST_FROM_ADMIN(new ShowAccountListFromAdminCommand()),
-    SHOW_ACCOUNT_EDITOR_FROM_ADMIN(new ShowAccountEditorFromAdminCommand());
+    SHOW_ACCOUNT_EDITOR_FROM_ADMIN(new ShowAccountEditorFromAdminCommand()),
+
+    /**
+     * Command list for account with role MANAGER only.
+     */
+    GO_TO_ACCOUNT_EMPLOYEES_PAGE(new GoToAccountEmployeesPageCommand()),
+    SHOW_FORWARDER_CREATOR_PAGE(new ShowForwarderCreatorPageCommand()),
+    CREATE_FORWARDER(new CreateForwarderCommand()),
+    UPDATE_COMPANY(new UpdateCompanyCommand()),
+    SHOW_COMPANY_SETTINGS_PAGE(new ShowCompanySettingsPageCommand()),
+    SHOW_FORWARDER_SETTINGS_PAGE(new ShowForwarderSettingsPageCommand()),
+
+    /**
+     * Command list for account with role MANAGER and FORWARDER.
+     */
+    GO_TO_CREATE_OFFER_PAGE(new GoToCreateOfferPageCommand()),
+    CREATE_OFFER(new CreateOfferCommand()),
+    SHOW_OPEN_OFFER_LIST(new ShowOpenOfferListCommand()),
+    DEACTIVATE_OFFER(new DeactivateOfferCommand()),
+    CREATE_TRADING(new CreateTradingCommand()),
+    APPLY_FREIGHT(new ApplyFreightCommand()),
+    SHOW_ACCOUNT_OFFERS(new ShowAccountListOfferCommand()),
+    SHOW_ACCOUNT_OFFER(new ShowAccountOfferCommand()),
+    SHOW_ACCOUNT_TRADINGS(new ShowAccountTradingsCommand()),
+    SHOW_OFFER_EDITOR(new ShowOfferEditorCommand()),
+    UPDATE_OFFER(new UpdateOfferCommand()),
+
+    /**
+     * Command list for account with role ADMINISTRATOR, MANAGER and FORWARDER.
+     */
+    LOGOUT(new LogoutCommand()),
+    GO_TO_ACCOUNT_PASSWORD_PAGE(new GoToAccountPasswordPageCommand()),
+    SHOW_ACCOUNT_SETTINGS_PAGE(new ShowAccountSettingsPageCommand()),
+    UPDATE_ACCOUNT(new UpdateAccountCommand()),
+    UPDATE_PASSWORD(new UpdatePasswordCommand()),
+    SHOW_TRADING_OFFER(new ShowTradingOfferCommand()),
+    SHOW_TRADING_VIEWER(new ShowTradingViewerCommand());
 
     /**
      * Command.

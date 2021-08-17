@@ -72,6 +72,7 @@ public class AccountServiceImpl implements AccountService {
         return result;
     }
 
+    @Override
     public boolean isAccountPasswordByAccountId(long accountId, String password) throws ServiceException {
         boolean result = false;
 
@@ -92,6 +93,7 @@ public class AccountServiceImpl implements AccountService {
         return result;
     }
 
+    @Override
     public boolean validatePasswordsForChange(String oldPassword, String newPassword, String confirmNewPassword) {
         if(oldPassword == null || newPassword == null || confirmNewPassword == null
                 || oldPassword.isEmpty() || newPassword.isEmpty() || confirmNewPassword.isEmpty()) {
@@ -108,6 +110,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Optional<Account> signIn(String login, String password) throws ServiceException {
         Optional<Account> findAccount;
+
         try {
             findAccount = accountDao.findAccountByLogin(login);
 
@@ -120,8 +123,8 @@ public class AccountServiceImpl implements AccountService {
                     String findPassword = optionalPassword.get();
 
                     if(!encodedPassword.equals(findPassword)) {
-                        LOGGER.info("Incorrect password for login '{}'.", login);
                         findAccount = Optional.empty();
+                        LOGGER.info("Incorrect password for login '{}'.", login);
                     }
                 }
             } else {
@@ -136,17 +139,21 @@ public class AccountServiceImpl implements AccountService {
         return findAccount;
     }
 
+    @Override
     public boolean createForwarder(Map<String, String> forwarderData) throws ServiceException {
         Account.Role role = Account.Role.FORWARDER;
         Account account = AccountServiceBuilder.buildAccount(forwarderData, role);
         String password = forwarderData.get(ACCOUNT_PASSWORD);
+
         return createAccount(account, password);
     }
 
+    @Override
     public boolean createManager(Map<String, String> managerData) throws ServiceException {
         Account.Role role = Account.Role.MANAGER;
         Account account = AccountServiceBuilder.buildAccount(managerData, role);
         String password = managerData.get(ACCOUNT_PASSWORD);
+
         return createAccount(account, password);
     }
 
@@ -155,6 +162,7 @@ public class AccountServiceImpl implements AccountService {
         EmailSender.sendActivationEmail(locale, firstName, emailTo, token);
     }
 
+    @Override
     public Optional<Account> findAccountById(long accountId) throws ServiceException {
         Optional<Account> findAccount;
 

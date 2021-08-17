@@ -40,6 +40,48 @@ public interface AccountService {
     void sendActivationEmail(String locale, String firstName, String emailTo, String token);
 
     /**
+     * Create account with role <code>FORWARDER</code>.
+     *
+     * @param forwarderData      Forwarder data.
+     * @return                      <code>true</code> if the sign up data is valid.
+     *                              Otherwise return <code>false</code>.
+     * @throws ServiceException     Default exception of service layer.
+     */
+    boolean createForwarder(Map<String, String> forwarderData) throws ServiceException;
+
+    /**
+     * Create account with role <code>MANAGER</code>.
+     *
+     * @param managerData           Manager data.
+     * @return                      <code>true</code> if the sign up data is valid.
+     *                              Otherwise return <code>false</code>.
+     * @throws ServiceException     Default exception of service layer.
+     */
+    boolean createManager(Map<String, String> managerData) throws ServiceException;
+
+    /**
+     * Account password verification by account ID.
+     *
+     * @param accountId             Account ID.
+     * @param password              Account password.
+     * @return                      <code>true</code> if the sign up data is valid.
+     *                              Otherwise return <code>false</code>.
+     * @throws ServiceException     Default exception of service layer.
+     */
+    boolean isAccountPasswordByAccountId(long accountId, String password) throws ServiceException;
+
+    /**
+     * Validate current account password, new account password and confirmed new password.
+     *
+     * @param oldPassword           Current account password.
+     * @param newPassword           New account password.
+     * @param confirmNewPassword    Confirmed new account password.
+     * @return                      <code>true</code> if the sign up data is valid.
+     *                              Otherwise return <code>false</code>.
+     */
+    boolean validatePasswordsForChange(String oldPassword, String newPassword, String confirmNewPassword);
+
+    /**
      * Validate sign in account data.
      *
      * @param login                 Account login.
@@ -120,6 +162,15 @@ public interface AccountService {
      * @throws ServiceException     Default exception of service layer.
      */
     Optional<Account> signIn(String login, String password) throws ServiceException;
+
+    /**
+     * Find account entity by account ID.
+     *
+     * @param accountId             Account ID.
+     * @return                      Optional of account.
+     * @throws ServiceException     Default exception of service layer.
+     */
+    Optional<Account> findAccountById(long accountId) throws ServiceException;
 
     /**
      * Find account by email.

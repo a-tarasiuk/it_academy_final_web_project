@@ -11,26 +11,6 @@ import java.util.Optional;
 public interface TokenDao {
 
     /**
-     * Create token entity in the database.
-     *
-     * @param token             Token entity.
-     * @return                  <code>true</code> if the token is successfully created in the database.
-     *                          Otherwise return <code>false</code>.
-     * @throws DaoException     If a database access error occurs; this method is called on a closed PreparedStatement.
-     */
-    boolean createToken(Token token) throws DaoException;
-
-    /**
-     * Update token entity in the database.
-     *
-     * @param token             Token entity.
-     * @return                  <code>true</code> if the token is successfully created in the database.
-     *                          Otherwise return <code>false</code>.
-     * @throws DaoException     If a database access error occurs; this method is called on a closed PreparedStatement.
-     */
-    boolean updateToken(Token token) throws DaoException;
-
-    /**
      * Find token entity by account ID.
      *
      * @param accountId         Account ID.

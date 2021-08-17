@@ -76,6 +76,11 @@ public final class PagePath {
     public static final String ADMIN_ACCOUNT_LIST = "/WEB-INF/jsp/admin/account_list_admin.jsp";
     public static final String ADMIN_ACCOUNT_EDITOR = "/WEB-INF/jsp/admin/account_editor_admin.jsp";
 
+    /**
+     * Error pages.
+     */
+    public static final String ERROR_ACCESS_DENIED = "/WEB-INF/jsp/error/access_denied.jsp";
+
     private PagePath() {
     }
 }

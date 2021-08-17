@@ -71,6 +71,11 @@ public class EmployeeDaoImpl extends BaseDao<Employee> implements EmployeeDao {
     }
 
     @Override
+    public boolean updateEntity(Employee entity) throws DaoException {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public boolean createEntity(Employee entity) throws DaoException {
         boolean result;
 
@@ -93,11 +98,6 @@ public class EmployeeDaoImpl extends BaseDao<Employee> implements EmployeeDao {
         }
 
         return result;
-    }
-
-    @Override
-    public boolean updateEntity(Employee entity) throws DaoException {
-        throw new UnsupportedOperationException();
     }
 
     @Override

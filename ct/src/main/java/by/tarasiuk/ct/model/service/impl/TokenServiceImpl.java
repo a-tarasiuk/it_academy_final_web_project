@@ -35,7 +35,7 @@ public class TokenServiceImpl implements TokenService {
         token.setStatus(Token.Status.UNCONFIRMED);
 
         try {
-            return tokenDao.createToken(token);
+            return tokenDao.createEntity(token);
         } catch (DaoException e) {
             LOGGER.error("Error while generating token for account with id '{}'.", accountId, e);
             throw new ServiceException("Error while generating token for account with id '" + accountId +"'.", e);
@@ -71,7 +71,7 @@ public class TokenServiceImpl implements TokenService {
         boolean result;
 
         try {
-            result = tokenDao.updateToken(token);
+            result = tokenDao.updateEntity(token);
             LOGGER.info(result
                     ? "Successfully updateEntity token '{}'."
                     : "Token '{}' not found in the database.", token);
