@@ -6,6 +6,7 @@
 <%--@elvariable id="locale" type="java.lang.String"--%>
 <fmt:setLocale value="${sessionScope.locale}" scope="session"/>
 <fmt:setBundle basename="locale"/>
+<jsp:useBean id="account" scope="session" class="by.tarasiuk.ct.model.entity.impl.Account"/>
 
 <div id="header">
     <div id="inside-header">
@@ -42,7 +43,7 @@
             </div>
 
             <c:choose>
-                <c:when test="${not empty account && not empty account.role}">
+                <c:when test="${not empty account && account.role != 'GUEST'}">
                     <!-- Account profile button -->
                     <div class="dropdown-wrapper">
                         <button class="dropdown-button button-colour-standard">
@@ -52,7 +53,7 @@
                         </button>
 
                         <div class="content-wrapper">
-                            <form class="dropdown-content" action="controller" method="get">
+                            <form class="dropdown-content" action="controller" method="post">
                                 <button type="submit" name="command" value="show_account_settings_page">
                                     <span class="icon icon-cog">&nbsp;</span>
                                     <fmt:message key="button.account.label.settings"/>

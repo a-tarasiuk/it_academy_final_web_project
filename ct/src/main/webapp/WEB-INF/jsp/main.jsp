@@ -3,8 +3,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <%--@elvariable id="locale" type="java.lang.String"--%>
-<fmt:setLocale value="${sessionScope.locale}" scope="session"/>
 <fmt:setBundle basename="locale"/>
+<fmt:setLocale value="${sessionScope.locale}" scope="session"/>
 <jsp:useBean id="account" scope="session" class="by.tarasiuk.ct.model.entity.impl.Account"/>
 
 <html>
@@ -23,7 +23,7 @@
 
             <div id="middle">
                 <c:choose>
-                    <c:when test="${not empty account && not empty account.role}">
+                    <c:when test="${not empty account && account.role != 'GUEST'}">
                         <jsp:forward page="${pageContext.request.contextPath}/controller?command=show_open_offer_list"/>
                     </c:when>
 

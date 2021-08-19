@@ -88,8 +88,6 @@
                                 </c:otherwise>
                             </c:choose>
                         </div>
-
-                        <ct:account_employee_list/>
                     </div>
                 </div>
             </div>

@@ -45,7 +45,6 @@ public enum CommandType {
     /**
      * Command list for GUEST.
      */
-    CHANGE_LOCALE_PAGE(new ChangeLocalePageCommand()),
     GO_TO_MAIN_PAGE(new GoToMainPageCommand()),
     GO_TO_SIGN_IN_PAGE(new GoToSignInPageCommand()),
     GO_TO_SIGN_UP_PAGE(new GoToSignUpPageCommand()),
@@ -76,7 +75,6 @@ public enum CommandType {
      */
     GO_TO_CREATE_OFFER_PAGE(new GoToCreateOfferPageCommand()),
     CREATE_OFFER(new CreateOfferCommand()),
-    SHOW_OPEN_OFFER_LIST(new ShowOpenOfferListCommand()),
     DEACTIVATE_OFFER(new DeactivateOfferCommand()),
     CREATE_TRADING(new CreateTradingCommand()),
     APPLY_FREIGHT(new ApplyFreightCommand()),
@@ -89,12 +87,14 @@ public enum CommandType {
     /**
      * Command list for account with role ADMINISTRATOR, MANAGER and FORWARDER.
      */
+    CHANGE_LOCALE_PAGE(new ChangeLocalePageCommand()),
     LOGOUT(new LogoutCommand()),
     GO_TO_ACCOUNT_PASSWORD_PAGE(new GoToAccountPasswordPageCommand()),
     SHOW_ACCOUNT_SETTINGS_PAGE(new ShowAccountSettingsPageCommand()),
     UPDATE_ACCOUNT(new UpdateAccountCommand()),
     UPDATE_PASSWORD(new UpdatePasswordCommand()),
     SHOW_TRADING_OFFER(new ShowTradingOfferCommand()),
+    SHOW_OPEN_OFFER_LIST(new ShowOpenOfferListCommand()),
     SHOW_TRADING_VIEWER(new ShowTradingViewerCommand());
 
     /**

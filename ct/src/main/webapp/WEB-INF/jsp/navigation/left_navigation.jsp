@@ -4,7 +4,8 @@
 
 <%--@elvariable id="locale" type="java.lang.String"--%>
 <fmt:setBundle basename="locale"/>
-<fmt:setLocale value="${locale}" scope="session"/>
+<fmt:setLocale value="${sessionScope.locale}" scope="session"/>
+
 <jsp:useBean id="account" scope="session" class="by.tarasiuk.ct.model.entity.impl.Account"/>
 <jsp:useBean id="company" scope="session" class="by.tarasiuk.ct.model.entity.impl.Company"/>
 

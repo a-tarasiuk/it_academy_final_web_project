@@ -22,9 +22,10 @@ public class Account implements Entity {
      * Account roles.
      */
     public enum Role {
-        ADMINISTRATOR,
+        GUEST,
         MANAGER,
-        FORWARDER;
+        FORWARDER,
+        ADMINISTRATOR;
     }
 
     /**

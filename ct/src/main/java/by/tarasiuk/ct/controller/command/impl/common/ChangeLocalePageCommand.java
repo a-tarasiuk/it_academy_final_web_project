@@ -33,6 +33,6 @@ public class ChangeLocalePageCommand implements Command {
         content.putSessionAttribute(LOCALE, newLocale);
 
         LOGGER.info("Locale page change from '{}' to '{}'.", oldLocale, newLocale);
-        return PagePath.MAIN;   //todo как получить адрес страницы, из которой пришёл юзер? Чтобы перенаправить его пять туда же.
+        return PagePath.MAIN;
     }
 }

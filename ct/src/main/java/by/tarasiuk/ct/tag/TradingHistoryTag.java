@@ -42,6 +42,7 @@ public class TradingHistoryTag extends TagSupport {
         HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
 
         String locale = (String) session.getAttribute(LOCALE);
+
         String titleHeader = MessageManager.findMassage(TRADING_HISTORY, locale);
         String titleCompany = MessageManager.findMassage(OFFER_COMPANY_NAME, locale);
         String titleFreight = MessageManager.findMassage(OFFER_FREIGHT, locale);
