@@ -19,44 +19,38 @@
 </head>
 
 <body>
-<div id="container">
-    <jsp:include page="/WEB-INF/jsp/common/header.jsp"/>
+    <div id="container">
+        <jsp:include page="/WEB-INF/jsp/common/header.jsp"/>
 
-    <div id="middle">
-        <div id="info">
-            <span class="icon icon-exclamation-circle x4 icon-red"></span>
+        <div id="middle">
+            <div id="info">
+                <span class="icon icon-exclamation-circle x4 icon-red"></span>
 
-            <div id="error-wrapper">
-                <div class="ew-column">
-                    <div class="ew-row">
-                        <span><fmt:message key="error.statusCode"/></span>
+                <span id="info-header"><fmt:message key="error.header"/></span>
+
+                <div id="error-wrapper">
+                    <div class="ew-column">
+                        <div class="ew-row">
+                            <span><fmt:message key="error.statusCode"/></span>
+                        </div>
+
+                        <div class="ew-row">
+                            <span><fmt:message key="error.exception.type"/></span>
+                        </div>
                     </div>
 
-                    <div class="ew-row">
-                        <span><fmt:message key="error.exception.type"/></span>
-                    </div>
+                    <div class="ew-column">
+                        <div class="ew-row">
+                            <span>${pageContext.errorData.statusCode}</span>
+                        </div>
 
-                    <div class="ew-row">
-                        <span><fmt:message key="error.exception.message"/></span>
-                    </div>
-                </div>
-
-                <div class="ew-column">
-                    <div class="ew-row">
-                        <span>${pageContext.errorData.statusCode}</span>
-                    </div>
-
-                    <div class="ew-row">
-                        <span>${pageContext.errorData.throwable}</span>
-                    </div>
-
-                    <div class="ew-row">
-                        <span>${exception.printStackTrace(pageContext.response.writer)}</span>
+                        <div class="ew-row">
+                            <span>${pageContext.errorData.throwable}</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 </body>
 </html>

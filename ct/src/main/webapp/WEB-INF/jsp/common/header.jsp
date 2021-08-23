@@ -13,9 +13,9 @@
         <span id="logo" class="icon-logo"></span>
 
         <div id="left-menu">
-            <a class="menu-item" href="/"><fmt:message key="header.button.label.main"/></a>
-            <a class="menu-item" href="#"><fmt:message key="header.button.label.about"/></a>
-            <a class="menu-item" href="#"><fmt:message key="header.button.label.contact"/></a>
+            <a class="menu-item" href="${pageContext.request.contextPath}/"><fmt:message key="header.button.label.main"/></a>
+            <a class="menu-item" href="${pageContext.request.contextPath}/controller?command=go_to_about_page"><fmt:message key="header.button.label.about"/></a>
+            <a class="menu-item" href="${pageContext.request.contextPath}/controller?command=go_to_contact_page"><fmt:message key="header.button.label.contact"/></a>
         </div>
 
         <div id="right-menu">

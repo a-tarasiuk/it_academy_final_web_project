@@ -14,8 +14,10 @@ import by.tarasiuk.ct.controller.command.impl.common.SignInCommand;
 import by.tarasiuk.ct.controller.command.impl.common.SignUpCommand;
 import by.tarasiuk.ct.controller.command.impl.company.ShowCompanySettingsPageCommand;
 import by.tarasiuk.ct.controller.command.impl.company.UpdateCompanyCommand;
+import by.tarasiuk.ct.controller.command.impl.go.GoToAboutPageCommand;
 import by.tarasiuk.ct.controller.command.impl.go.GoToAccountEmployeesPageCommand;
 import by.tarasiuk.ct.controller.command.impl.go.GoToAccountPasswordPageCommand;
+import by.tarasiuk.ct.controller.command.impl.go.GoToContactPageCommand;
 import by.tarasiuk.ct.controller.command.impl.go.GoToCreateOfferPageCommand;
 import by.tarasiuk.ct.controller.command.impl.go.GoToMainPageCommand;
 import by.tarasiuk.ct.controller.command.impl.go.GoToSignInPageCommand;
@@ -44,9 +46,16 @@ import by.tarasiuk.ct.controller.command.impl.offer.UpdatePasswordCommand;
  */
 public enum CommandType {
     /**
-     * Command list for GUEST.
+     * Command list for all roles.
      */
     GO_TO_MAIN_PAGE(new GoToMainPageCommand()),
+    CHANGE_LOCALE_PAGE(new ChangeLocalePageCommand()),
+    GO_TO_ABOUT_PAGE(new GoToAboutPageCommand()),
+    GO_TO_CONTACT_PAGE(new GoToContactPageCommand()),
+
+    /**
+     * Command list for GUEST.
+     */
     GO_TO_SIGN_IN_PAGE(new GoToSignInPageCommand()),
     GO_TO_SIGN_UP_PAGE(new GoToSignUpPageCommand()),
     SIGN_IN(new SignInCommand()),
@@ -89,7 +98,6 @@ public enum CommandType {
     /**
      * Command list for account with role ADMINISTRATOR, MANAGER and FORWARDER.
      */
-    CHANGE_LOCALE_PAGE(new ChangeLocalePageCommand()),
     LOGOUT(new LogoutCommand()),
     GO_TO_ACCOUNT_PASSWORD_PAGE(new GoToAccountPasswordPageCommand()),
     SHOW_ACCOUNT_SETTINGS_PAGE(new ShowAccountSettingsPageCommand()),

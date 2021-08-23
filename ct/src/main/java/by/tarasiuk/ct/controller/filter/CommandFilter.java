@@ -32,8 +32,10 @@ import static by.tarasiuk.ct.controller.command.CommandType.CREATE_FORWARDER;
 import static by.tarasiuk.ct.controller.command.CommandType.CREATE_OFFER;
 import static by.tarasiuk.ct.controller.command.CommandType.CREATE_TRADING;
 import static by.tarasiuk.ct.controller.command.CommandType.DEACTIVATE_OFFER;
+import static by.tarasiuk.ct.controller.command.CommandType.GO_TO_ABOUT_PAGE;
 import static by.tarasiuk.ct.controller.command.CommandType.GO_TO_ACCOUNT_EMPLOYEES_PAGE;
 import static by.tarasiuk.ct.controller.command.CommandType.GO_TO_ACCOUNT_PASSWORD_PAGE;
+import static by.tarasiuk.ct.controller.command.CommandType.GO_TO_CONTACT_PAGE;
 import static by.tarasiuk.ct.controller.command.CommandType.GO_TO_CREATE_OFFER_PAGE;
 import static by.tarasiuk.ct.controller.command.CommandType.GO_TO_MAIN_PAGE;
 import static by.tarasiuk.ct.controller.command.CommandType.GO_TO_SIGN_IN_PAGE;
@@ -88,6 +90,8 @@ public class CommandFilter implements Filter {
          * For all roles.
          */
         allowedCommands.put(GO_TO_MAIN_PAGE, existRoles);
+        allowedCommands.put(GO_TO_ABOUT_PAGE, existRoles);
+        allowedCommands.put(GO_TO_CONTACT_PAGE, existRoles);
         allowedCommands.put(CHANGE_LOCALE_PAGE, existRoles);
 
         /**

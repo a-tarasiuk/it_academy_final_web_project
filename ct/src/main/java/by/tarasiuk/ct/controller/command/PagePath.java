@@ -5,6 +5,12 @@ package by.tarasiuk.ct.controller.command;
  */
 public final class PagePath {
     /**
+     * Static pages.
+     */
+    public static final String ABOUT = "/WEB-INF/jsp/common/about.jsp";
+    public static final String CONTACT = "/WEB-INF/jsp/common/contact.jsp";
+
+    /**
      * Main pages.
      */
     public static final String INDEX = "index.jsp";
@@ -26,6 +32,7 @@ public final class PagePath {
      * Error pages.
      */
     public static final String ERROR = "/WEB-INF/jsp/error/error.jsp";
+    public static final String ERROR_ACCESS_DENIED = "/WEB-INF/jsp/error/access_denied.jsp";
 
     /**
      * Offer pages.
@@ -77,11 +84,6 @@ public final class PagePath {
      */
     public static final String ADMIN_ACCOUNT_LIST = "/WEB-INF/jsp/admin/account_list_admin.jsp";
     public static final String ADMIN_ACCOUNT_EDITOR = "/WEB-INF/jsp/admin/account_editor_admin.jsp";
-
-    /**
-     * Error pages.
-     */
-    public static final String ERROR_ACCESS_DENIED = "/WEB-INF/jsp/error/access_denied.jsp";
 
     private PagePath() {
     }
