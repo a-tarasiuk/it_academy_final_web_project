@@ -42,6 +42,7 @@ public class GuestFilter implements Filter {
                 account.setRole(GUEST);
             }
         }
+
         session.setAttribute(AttributeName.ACCOUNT, account);
 
         filterChain.doFilter(request, response);

@@ -11,13 +11,13 @@ import jakarta.servlet.jsp.JspWriter;
 import jakarta.servlet.jsp.tagext.TagSupport;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import java.io.IOException;
 import java.util.Map;
 import java.util.Set;
 
 import static by.tarasiuk.ct.controller.command.AttributeName.LOCALE;
 import static by.tarasiuk.ct.util.MessageKey.OFFER_ADDRESS;
-import static by.tarasiuk.ct.util.MessageKey.OFFER_COMPANY_NAME;
 import static by.tarasiuk.ct.util.MessageKey.OFFER_CREATION_DATE;
 import static by.tarasiuk.ct.util.MessageKey.OFFER_FREIGHT;
 import static by.tarasiuk.ct.util.MessageKey.OFFER_MY_FREIGHT;
@@ -44,7 +44,6 @@ public class AccountTradingListTag extends TagSupport {
         Map<Offer, Trading> tradingList = (Map<Offer, Trading>) request.getAttribute(AttributeName.TRADING_MAP);
 
         String titleProductName = MessageManager.findMassage(OFFER_PRODUCT_NAME, locale);
-        String titleCompanyName = MessageManager.findMassage(OFFER_COMPANY_NAME, locale);
         String titleProductWeight = MessageManager.findMassage(OFFER_PRODUCT_WEIGHT, locale);
         String titleProductVolume = MessageManager.findMassage(OFFER_PRODUCT_VOLUME, locale);
         String titleAddress = MessageManager.findMassage(OFFER_ADDRESS, locale);
@@ -57,7 +56,6 @@ public class AccountTradingListTag extends TagSupport {
             StringBuilder table = new StringBuilder("<table>")
                     .append("<tr>")
                     .append("<th>").append(UNICODE_INDEX_NUMBER).append("</th>")
-                    .append("<th>").append(titleCompanyName).append("</th>")
                     .append("<th>").append(titleAddress).append("</th>")
                     .append("<th>").append(titleProductWeight).append("</th>")
                     .append("<th>").append(titleProductVolume).append("</th>")
@@ -86,7 +84,6 @@ public class AccountTradingListTag extends TagSupport {
 
                     table.append("<tr>")
                             .append("<td>").append(++counter).append("</td>")
-                            .append("<td>").append("вставить сюда компанию").append("</td>")
                             .append("<td>").append(offer.getAddressFrom()).append(" - ").append(offer.getAddressTo()) .append("</td>")
                             .append("<td>").append(offer.getProductWeight()).append("</td>")
                             .append("<td>").append(offer.getProductVolume()).append("</td>")

@@ -9,7 +9,6 @@ import by.tarasiuk.ct.model.service.TradingService;
 import by.tarasiuk.ct.validator.TradingValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -84,6 +83,19 @@ public class TradingServiceImpl implements TradingService {
             LOGGER.error("Error while find trading by id '{}'.", tradingId, e);
             throw new ServiceException("Error while find trading by id '" + tradingId + "'.", e);
         }
+    }
+
+    @Override
+    public boolean isFoundTradingByOfferIdAndEmployeeId(long offerId, long employeeId) throws ServiceException {
+        Optional<Trading> findTrading;
+        try {
+            findTrading = tradingDao.findTradingByOfferIdAndEmployeeIf (offerId, employeeId);
+        } catch (DaoException e) {
+            LOGGER.error("Error while find trading by offer ID '{}' and employee ID '{}'.", offerId, employeeId, e);
+            throw new ServiceException("Error while find trading by offer ID '" + offerId + "' and employee ID '" + employeeId + "'.", e);
+        }
+
+        return findTrading.isPresent();
     }
 
     @Override

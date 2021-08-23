@@ -28,7 +28,7 @@
                 </button>
 
                 <div class="content-wrapper">
-                    <form class="dropdown-content" action="controller" method="post">
+                    <form class="dropdown-content" action="controller" method="get">
                         <input type="hidden" name="command" value="change_locale_page">
 
                         <button type="submit" name="locale" value="ru_RU">
@@ -53,7 +53,7 @@
                         </button>
 
                         <div class="content-wrapper">
-                            <form class="dropdown-content" action="controller" method="post">
+                            <form class="dropdown-content" action="controller" method="get">
                                 <button type="submit" name="command" value="show_account_settings_page">
                                     <span class="icon icon-cog">&nbsp;</span>
                                     <fmt:message key="button.account.label.settings"/>

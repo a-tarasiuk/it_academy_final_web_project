@@ -39,9 +39,9 @@
                             <fmt:message key="tradings.viewer"/>
                         </div>
 
-                        <a class="btn-simple btn-blue" href="${pageContext.request.contextPath}/controller?command=show_account_offer&offer_id=${offer.id}">
+                        <a class="btn-simple btn-blue" href="${pageContext.request.contextPath}/controller?command=show_account_tradings">
                             <span class="icon icon-chevron-left">&nbsp;</span>
-                            <fmt:message key="offer.viewer.back"/>
+                            <fmt:message key="tradings.my"/>
                         </a>
                     </div>
 
@@ -89,19 +89,6 @@
                                     <span class="fr-description"><fmt:message key="freight.status"/></span>
                                 </div>
                             </div>
-
-                            <c:if test="${offer.status == 'OPEN'}">
-                                <div id="ow-buttons">
-                                    <form action="controller" method="post">
-                                        <input type="hidden" name="command" value="apply_freight">
-
-                                        <button type="submit" style="border-radius: 10px" class="btn-simple btn-green" name="trading_id" value="${trading.id}">
-                                            <span class="icon icon-check">&nbsp;</span>
-                                            <fmt:message key="tradings.applyFreight"/>
-                                        </button>
-                                    </form>
-                                </div>
-                            </c:if>
                         </div>
                     </div>
                 </div>

@@ -3,6 +3,7 @@ package by.tarasiuk.ct.model.dao;
 import by.tarasiuk.ct.exception.DaoException;
 import by.tarasiuk.ct.model.entity.impl.Trading;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Interface for operations with the data of the trading,
@@ -40,4 +41,15 @@ public interface TradingDao {
      *                          or an argument is supplied to this method.
      */
     List<Trading> findListTradingsByEmployeeId(long employeeId) throws DaoException;
+
+    /**
+     * Find trading entity by offer ID and employee ID.
+     *
+     * @param offerId           Offer ID.
+     * @param employeeId        Employee ID/
+     * @return                  Optional of trading.
+     * @throws DaoException     If a database access error occurs; this method is called on a closed PreparedStatement
+     *                          or an argument is supplied to this method.
+     */
+    Optional<Trading> findTradingByOfferIdAndEmployeeIf(long offerId, long employeeId) throws DaoException;
 }

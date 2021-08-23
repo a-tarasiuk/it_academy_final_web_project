@@ -2,6 +2,7 @@ package by.tarasiuk.ct.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,9 +20,9 @@ import java.util.Optional;
  */
 public class RequestContent {
     private boolean isValidSession = true;
-    private HashMap<String, String> requestParameters;
-    private HashMap<String, Object> requestAttributes;
-    private HashMap<String, Object> sessionAttributes;
+    private Map<String, String> requestParameters;
+    private Map<String, Object> requestAttributes;
+    private Map<String, Object> sessionAttributes;
 
     protected void buildContent(HttpServletRequest request) {
         requestParameters = buildRequestParameters(request);
@@ -110,7 +111,7 @@ public class RequestContent {
         requestAttributes.putAll(attributes);
     }
 
-    private HashMap<String, String> buildRequestParameters(HttpServletRequest request) {
+    private Map<String, String> buildRequestParameters(HttpServletRequest request) {
         requestParameters = new HashMap<>();
         Enumeration<String> parameterNames = request.getParameterNames();
 
@@ -124,7 +125,7 @@ public class RequestContent {
         return requestParameters;
     }
 
-    private HashMap<String, Object> buildRequestAttributes(HttpServletRequest request) {
+    private Map<String, Object> buildRequestAttributes(HttpServletRequest request) {
         requestAttributes = new HashMap<>();
         Enumeration<String> attributeNames = request.getAttributeNames();
 
@@ -138,7 +139,7 @@ public class RequestContent {
         return requestAttributes;
     }
 
-    private HashMap<String, Object> buildSessionAttributes(HttpServletRequest request) {
+    private Map<String, Object> buildSessionAttributes(HttpServletRequest request) {
         sessionAttributes = new HashMap<>();
         HttpSession session = request.getSession();
         Enumeration<String> attributeNames = session.getAttributeNames();

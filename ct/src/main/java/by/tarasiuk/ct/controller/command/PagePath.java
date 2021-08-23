@@ -53,6 +53,7 @@ public final class PagePath {
     public static final String OFFER_DEACTIVATE_INFO = "/WEB-INF/jsp/info/offer_deactivate_info.jsp";
     public static final String FREIGHT_APPLY_INFO = "/WEB-INF/jsp/info/freight_apply_info.jsp";
     public static final String FORWARDER_CREATED_INFO = "/WEB-INF/jsp/info/forwarder_created_info.jsp";
+    public static final String OFFER_CREATED_INFO = "/WEB-INF/jsp/info/offer_created_info.jsp";
 
     /**
      * Company pages.
@@ -69,6 +70,7 @@ public final class PagePath {
      * Trading pages.
      */
     public static final String TRADING_VIEWER = "/WEB-INF/jsp/trading/trading_viewer.jsp";
+    public static final String ACCOUNT_TRADING_VIEWER = "/WEB-INF/jsp/trading/account_trading_viewer.jsp";
 
     /**
      * Admin pages.

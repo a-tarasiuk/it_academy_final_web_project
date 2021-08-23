@@ -1,11 +1,11 @@
 package by.tarasiuk.ct.controller.command.impl.offer;
 
 import by.tarasiuk.ct.controller.RequestContent;
+import by.tarasiuk.ct.controller.command.AttributeName;
 import by.tarasiuk.ct.controller.command.Command;
 import by.tarasiuk.ct.controller.command.CommandType;
-import by.tarasiuk.ct.exception.ServiceException;
-import by.tarasiuk.ct.controller.command.AttributeName;
 import by.tarasiuk.ct.controller.command.PagePath;
+import by.tarasiuk.ct.exception.ServiceException;
 import by.tarasiuk.ct.model.entity.impl.Account;
 import by.tarasiuk.ct.model.entity.impl.Company;
 import by.tarasiuk.ct.model.entity.impl.Employee;
@@ -18,6 +18,7 @@ import by.tarasiuk.ct.model.service.impl.OfferServiceImpl;
 import by.tarasiuk.ct.model.service.impl.TradingServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,35 +63,32 @@ public class ShowAccountOfferCommand implements Command {
                     long creatorEmployeeId = offer.getEmployeeId();
 
                     if(viewerEmployeeId == creatorEmployeeId) {
-                        Map<String, Trading> tradingInfo = new HashMap<>();
+                        Map<Trading, String> tradingMap = new HashMap<>();
                         List<Trading> tradings = tradingService.findListTradingsByOfferId(offerId);
 
                         if(tradings != null && !tradings.isEmpty()) {
-                            for (int i = 0; i < tradings.size(); i++) {
-                                Trading trading = tradings.get(i);
+                            for (Trading trading : tradings) {
                                 long employeeId = trading.getEmployeeId();
+                                Optional<Company> findTradingCreatorCompany = employeeService.findCompanyByEmployeeId(employeeId);
 
-                                Optional<Employee> findEmployeeCreator = employeeService.findEmployeeById(employeeId);
-                                if (findEmployeeCreator.isPresent()) {
-                                    Employee employeeCreator = findEmployeeCreator.get();
-                                    long companyId = employeeCreator.getCompanyId();
-
-                                    Optional<Company> findCompany = companyService.findCompanyById(companyId);
-                                    if (findCompany.isPresent()) {
-                                        Company company = findCompany.get();
-                                        String companyName = company.getName();
-
-                                        tradingInfo.put(companyName, trading);
-                                    }
+                                if(findTradingCreatorCompany.isPresent()) {
+                                    Company company = findTradingCreatorCompany.get();
+                                    String companyName = company.getName();
+                                    tradingMap.put(trading, companyName);
                                 }
                             }
                         }
+
                         content.putRequestAttribute(AttributeName.OFFER, offer);
-                        content.putRequestAttribute(AttributeName.TRADING_MAP, tradingInfo);
+                        content.putRequestAttribute(AttributeName.TRADING_MAP, tradingMap);
 
                         page = PagePath.ACCOUNT_OFFER;
                     }
+                } else {
+                    page = PagePath.INDEX;
                 }
+            } else {
+                page = PagePath.INDEX;
             }
         } catch (ServiceException e) {
             LOGGER.error("Failed to process the command '{}'.", CommandType.SHOW_ACCOUNT_OFFERS, e);

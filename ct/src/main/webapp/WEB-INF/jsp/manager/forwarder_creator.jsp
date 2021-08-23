@@ -35,7 +35,7 @@
                             <fmt:message key="forwarder.title.creator"/>
                         </div>
 
-                        <a class="btn-confirm" href="${pageContext.request.contextPath}/controller?command=show_forwarder_settings_page">
+                        <a class="btn-simple btn-blue" href="${pageContext.request.contextPath}/controller?command=show_forwarder_settings_page">
                             <span class="icon icon-chevron-left">&nbsp;</span>
                             <fmt:message key="forwarders.button.back"/>
                         </a>

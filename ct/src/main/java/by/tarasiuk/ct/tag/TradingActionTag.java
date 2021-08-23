@@ -27,7 +27,8 @@ public class TradingActionTag extends TagSupport {
         HttpSession session = pageContext.getSession();
         HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
 
-        Map<String, Trading> tradings = (Map<String, Trading>) request.getAttribute(AttributeName.TRADING_MAP);
+        Map<Trading, String> tradings = (Map<Trading, String>) request.getAttribute(AttributeName.TRADING_MAP);
+
         Offer offer = (Offer) request.getAttribute(AttributeName.OFFER);
 
         String locale = (String) session.getAttribute(LOCALE);
@@ -45,13 +46,13 @@ public class TradingActionTag extends TagSupport {
                 if(tradings != null && !tradings.isEmpty()) {
                     int counter = 0;
 
-                    for(Map.Entry<String, Trading> entry: tradings.entrySet()) {
-                        String companyName = entry.getKey();
-                        Trading trading = entry.getValue();
+                    for(Map.Entry<Trading, String> entry: tradings.entrySet()) {
+                        Trading trading = entry.getKey();
+                        String companyName = entry.getValue();
+
                         float freight = trading.getFreight();
 
-                        table.append("<a class=\"table-row\" href=\"/controller?command=show_trading_viewer&trading_id=").append(trading.getId())
-                                .append("&offer_freight=").append(offer.getFreight()).append("\">")
+                        table.append("<a class=\"table-row\" href=\"/controller?command=show_trading_viewer&trading_id=").append(trading.getId()).append("\">")
                                 .append("<div class=\"table-data\">").append(++counter).append("</div>")
                                 .append("<div class=\"table-data\">").append(companyName).append("</div>")
                                 .append("<div class=\"table-data\">").append(freight).append("</div>")

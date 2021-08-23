@@ -9,12 +9,6 @@
     <short-name>ct</short-name>
 
     <tag>
-        <name>error_page</name>
-        <tag-class>by.tarasiuk.ct.tag.ErrorPageTag</tag-class>
-        <body-content>empty</body-content>
-    </tag>
-
-    <tag>
         <name>information_message</name>
         <tag-class>by.tarasiuk.ct.tag.InformationMessageTag</tag-class>
         <body-content>empty</body-content>

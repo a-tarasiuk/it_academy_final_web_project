@@ -3,7 +3,9 @@ package by.tarasiuk.ct.model.dao.impl;
 import by.tarasiuk.ct.exception.DaoException;
 import by.tarasiuk.ct.model.dao.BaseDao;
 import by.tarasiuk.ct.model.dao.EmployeeDao;
+import by.tarasiuk.ct.model.dao.builder.CompanyDaoBuilder;
 import by.tarasiuk.ct.model.dao.builder.EmployeeDaoBuilder;
+import by.tarasiuk.ct.model.entity.impl.Company;
 import by.tarasiuk.ct.model.entity.impl.Employee;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,6 +25,7 @@ public class EmployeeDaoImpl extends BaseDao<Employee> implements EmployeeDao {
     private static final String SQL_PROCEDURE_FIND_EMPLOYEE_BY_ACCOUNT_ID = "{CALL find_employee_by_account_id (?)}";
     private static final String SQL_PROCEDURE_FIND_EMPLOYEE_BY_ID = "{CALL find_employee_by_id (?)}";
     private static final String SQL_PROCEDURE_EMPLOYEE_LIST_BY_COMPANY_ID = "{CALL find_employee_list_by_company_id (?)}";
+    private static final String SQL_PROCEDURE_FIND_COMPANY_BY_EMPLOYEE_ID = "{CALL find_company_by_employee_id (?)}";
 
     private static final class IndexCreate {
         private static final int ACCOUNT_ID = 1;
@@ -131,7 +134,7 @@ public class EmployeeDaoImpl extends BaseDao<Employee> implements EmployeeDao {
             try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_EMPLOYEE_LIST_BY_COMPANY_ID)) {
                 statement.setLong(IndexFind.COMPANY_ID, id);
 
-                try (ResultSet result = statement.executeQuery();) {
+                try (ResultSet result = statement.executeQuery()) {
                     while (result.next()) {
                         Employee employee = EmployeeDaoBuilder.build(result);
                         employeeList.add(employee);
@@ -145,5 +148,28 @@ public class EmployeeDaoImpl extends BaseDao<Employee> implements EmployeeDao {
         }
 
         return employeeList;
+    }
+
+    @Override
+    public Optional<Company> findCompanyByEmployeeId(long id) throws DaoException {
+        Optional<Company> findCompany = Optional.empty();
+
+        try (Connection connection = connectionPool.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_FIND_COMPANY_BY_EMPLOYEE_ID)) {
+                statement.setLong(IndexFind.EMPLOYEE_D, id);
+
+                try (ResultSet result = statement.executeQuery()) {
+                    if (result.next()) {
+                        Company company = CompanyDaoBuilder.buildCompany(result);
+                        findCompany = Optional.of(company);
+                    }
+                }
+            }
+
+            return findCompany;
+        } catch (SQLException e) {
+            LOGGER.error("Error when performing employee search by id '{}'.", id, e);
+            throw new DaoException("Error when performing employee search by id '" + id + "'.", e);
+        }
     }
 }

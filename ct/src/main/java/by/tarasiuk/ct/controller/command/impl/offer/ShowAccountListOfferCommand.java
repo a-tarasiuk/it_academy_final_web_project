@@ -3,8 +3,8 @@ package by.tarasiuk.ct.controller.command.impl.offer;
 import by.tarasiuk.ct.controller.RequestContent;
 import by.tarasiuk.ct.controller.command.Command;
 import by.tarasiuk.ct.controller.command.CommandType;
-import by.tarasiuk.ct.exception.ServiceException;
 import by.tarasiuk.ct.controller.command.PagePath;
+import by.tarasiuk.ct.exception.ServiceException;
 import by.tarasiuk.ct.model.entity.impl.Account;
 import by.tarasiuk.ct.model.entity.impl.Employee;
 import by.tarasiuk.ct.model.entity.impl.Offer;
@@ -13,6 +13,7 @@ import by.tarasiuk.ct.model.service.impl.EmployeeServiceImpl;
 import by.tarasiuk.ct.model.service.impl.OfferServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -21,7 +22,6 @@ import java.util.stream.Collectors;
 import static by.tarasiuk.ct.controller.command.AttributeName.ACCOUNT;
 import static by.tarasiuk.ct.controller.command.AttributeName.OFFER_LIST;
 import static by.tarasiuk.ct.controller.command.AttributeName.OFFER_STATUS;
-import static by.tarasiuk.ct.util.MessageKey.MESSAGE_WARN;
 
 /**
  * Show account list offer command.
@@ -73,8 +73,7 @@ public class ShowAccountListOfferCommand implements Command {
                             content.putRequestAttribute(OFFER_LIST, offersByStatus);
                             break;
                         default:
-                            content.putRequestAttribute(MESSAGE_WARN, true);
-                            throw new EnumConstantNotPresentException(status.getClass(), status.toString()); //fixme Need an exception?
+                            throw new EnumConstantNotPresentException(status.getClass(), status.toString());
                     }
                 }
             }

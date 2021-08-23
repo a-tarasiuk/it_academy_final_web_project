@@ -6,9 +6,6 @@
 <fmt:setBundle basename="locale"/>
 <fmt:setLocale value="${sessionScope.locale}" scope="session"/>
 
-<jsp:useBean id="account" scope="session" class="by.tarasiuk.ct.model.entity.impl.Account"/>
-<jsp:useBean id="company" scope="session" class="by.tarasiuk.ct.model.entity.impl.Company"/>
-
 <!-- Left navigation block -->
 <div id="m-left">
 
@@ -18,31 +15,39 @@
     </div>
 
     <div class="ml-ci-row">
-        <span class="icon icon-user">&nbsp;</span>
-        <span><b>${account.firstName}&nbsp;${account.lastName}</b></span>
+        <div class="icon-block">
+            <span class="icon icon-user">&nbsp;</span>
+        </div>
+
+        <span><b>${sessionScope.account.firstName}&nbsp;${sessionScope.account.lastName}</b></span>
     </div>
 
-    <c:if test="${account.role != 'ADMINISTRATOR'}">
+    <c:if test="${sessionScope.account.role != 'ADMINISTRATOR'}">
         <div class="ml-ci-row">
-            <span class="icon icon-building">&nbsp;</span>
-            <span><b>${company.name}</b></span>
+            <div class="icon-block">
+                <span class="icon icon-building">&nbsp;</span>
+            </div>
+
+            <span><b>${sessionScope.company.name}</b></span>
         </div>
     </c:if>
 
     <div class="ml-ci-row">
-        <span class="icon icon-id-card-o">&nbsp;</span>
+        <div class="icon-block">
+            <span class="icon icon-id-card-o">&nbsp;</span>
+        </div>
 
         <c:choose>
-            <c:when test="${account.role == 'ADMINISTRATOR'}">
-                <span style="color: red"><b>${account.role}</b></span>
+            <c:when test="${sessionScope.account.role == 'ADMINISTRATOR'}">
+                <span class="colour-administrator"><b>${sessionScope.account.role}</b></span>
             </c:when>
 
-            <c:when test="${account.role == 'MANAGER'}">
-                <span style="color: #8B00FF"><b>${account.role}</b></span>
+            <c:when test="${sessionScope.account.role == 'MANAGER'}">
+                <span class="colour-manager"><b>${sessionScope.account.role}</b></span>
             </c:when>
 
             <c:otherwise>
-                <span style="color: #FFA500"><b>${account.role}</b></span>
+                <span class="colour-forwarder"><b>${sessionScope.account.role}</b></span>
             </c:otherwise>
         </c:choose>
     </div>

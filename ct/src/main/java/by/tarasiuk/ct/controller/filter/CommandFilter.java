@@ -45,6 +45,7 @@ import static by.tarasiuk.ct.controller.command.CommandType.SHOW_ACCOUNT_OFFER;
 import static by.tarasiuk.ct.controller.command.CommandType.SHOW_ACCOUNT_OFFERS;
 import static by.tarasiuk.ct.controller.command.CommandType.SHOW_ACCOUNT_SETTINGS_PAGE;
 import static by.tarasiuk.ct.controller.command.CommandType.SHOW_ACCOUNT_TRADINGS;
+import static by.tarasiuk.ct.controller.command.CommandType.SHOW_ACCOUNT_TRADING_VIEWER;
 import static by.tarasiuk.ct.controller.command.CommandType.SHOW_COMPANY_SETTINGS_PAGE;
 import static by.tarasiuk.ct.controller.command.CommandType.SHOW_FORWARDER_CREATOR_PAGE;
 import static by.tarasiuk.ct.controller.command.CommandType.SHOW_FORWARDER_SETTINGS_PAGE;
@@ -76,6 +77,7 @@ public class CommandFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) {
         List<Role> guest = Collections.singletonList(GUEST);
+
         List<Role> administrator = Collections.singletonList(ADMINISTRATOR);
         List<Role> manager = Collections.singletonList(MANAGER);
         List<Role> forwarderManager = Arrays.asList(MANAGER, FORWARDER);
@@ -86,6 +88,7 @@ public class CommandFilter implements Filter {
          * For all roles.
          */
         allowedCommands.put(GO_TO_MAIN_PAGE, existRoles);
+        allowedCommands.put(CHANGE_LOCALE_PAGE, existRoles);
 
         /**
          * For account with role GUEST.
@@ -115,9 +118,10 @@ public class CommandFilter implements Filter {
         allowedCommands.put(SHOW_FORWARDER_SETTINGS_PAGE, manager);
 
         /**
-         * For account with role FORWARDER.
+         * For account with role MANAGER and FORWARDER.
          */
         allowedCommands.put(GO_TO_CREATE_OFFER_PAGE, forwarderManager);
+        allowedCommands.put(SHOW_ACCOUNT_TRADING_VIEWER, forwarderManager);
         allowedCommands.put(CREATE_OFFER, forwarderManager);
         allowedCommands.put(DEACTIVATE_OFFER, forwarderManager);
         allowedCommands.put(CREATE_TRADING, forwarderManager);
@@ -132,7 +136,6 @@ public class CommandFilter implements Filter {
          * For account with roles FORWARDER, MANAGER, ADMINISTRATOR.
          */
         allowedCommands.put(LOGOUT, administratorManagerForwarder);
-        allowedCommands.put(CHANGE_LOCALE_PAGE, administratorManagerForwarder);
         allowedCommands.put(GO_TO_ACCOUNT_PASSWORD_PAGE, administratorManagerForwarder);
         allowedCommands.put(SHOW_ACCOUNT_SETTINGS_PAGE, administratorManagerForwarder);
         allowedCommands.put(UPDATE_ACCOUNT, administratorManagerForwarder);
@@ -149,7 +152,6 @@ public class CommandFilter implements Filter {
         HttpSession session = request.getSession();
 
         Account account = (Account) session.getAttribute(AttributeName.ACCOUNT);
-        LOGGER.debug("Current account entity is '{}'.", account);
 
         String command = request.getParameter(AttributeName.COMMAND);
         Account.Role role;

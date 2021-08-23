@@ -4,11 +4,11 @@ import by.tarasiuk.ct.exception.DaoException;
 import by.tarasiuk.ct.exception.ServiceException;
 import by.tarasiuk.ct.model.dao.DaoProvider;
 import by.tarasiuk.ct.model.dao.impl.EmployeeDaoImpl;
+import by.tarasiuk.ct.model.entity.impl.Company;
 import by.tarasiuk.ct.model.entity.impl.Employee;
 import by.tarasiuk.ct.model.service.EmployeeService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -72,6 +72,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         return findEmployee;
     }
 
+    @Override
     public List<Employee> findEmployeeListByCompanyId(long id) throws ServiceException {
         List<Employee> employeeList;
 
@@ -83,5 +84,22 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
 
         return employeeList;
+    }
+
+    @Override
+    public Optional<Company> findCompanyByEmployeeId(long id) throws ServiceException {
+        Optional<Company> findCompany;
+
+        try {
+            findCompany = employeeDao.findCompanyByEmployeeId(id);
+            LOGGER.info(findCompany.isPresent()
+                    ? "Successfully was find company by employee id '{}'."
+                    : "Company for employee with id '{}' not found in the database.", id);
+        } catch (DaoException e) {
+            LOGGER.error("Error when searching company for employee with id '{}'.", id, e);
+            throw new ServiceException("Error when searching company for employee with id '" + id + "'.", e);
+        }
+
+        return findCompany;
     }
 }

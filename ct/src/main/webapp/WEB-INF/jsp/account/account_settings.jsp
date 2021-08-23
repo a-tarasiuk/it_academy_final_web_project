@@ -15,7 +15,7 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/icon.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/font-awesome.min.css">
-        <script src="${pageContext.request.contextPath}/js/personal_information_validation.js"></script>
+        <script src="${pageContext.request.contextPath}/js/account_validation.js"></script>
         <title><fmt:message key="account.page.setting"/></title>
     </head>
 
@@ -34,7 +34,7 @@
                             <fmt:message key="account.page.setting"/>
                         </div>
 
-                        <a class="btn-confirm" href="${pageContext.request.contextPath}/controller?command=go_to_account_password_page">
+                        <a class="btn-simple btn-blue" href="${pageContext.request.contextPath}/controller?command=go_to_account_password_page">
                             <span class="icon icon-lock">&nbsp;</span>
                             <fmt:message key="button.label.password.change"/>
                         </a>

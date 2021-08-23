@@ -37,6 +37,17 @@ public interface TradingService {
     boolean acceptTradingById(long tradingId) throws ServiceException;
 
     /**
+     * Is found trading entity by offer ID and employee ID.
+     *
+     * @param offerId               Offer ID.
+     * @param employeeId            Employee ID.
+     * @return                      <code>true</code> if the trading entity has been found.
+     *                              Otherwise return <code>false</code>.
+     * @throws ServiceException     Default exception of service layer.
+     */
+    boolean isFoundTradingByOfferIdAndEmployeeId(long offerId, long employeeId) throws ServiceException;
+
+    /**
      * Validate offer freight value.
      *
      * @param freight               Offer freight.

@@ -1,4 +1,4 @@
-package by.tarasiuk.ct.controller.command.impl.offer;
+package by.tarasiuk.ct.controller.command.impl.account;
 
 import by.tarasiuk.ct.controller.RequestContent;
 import by.tarasiuk.ct.controller.command.Command;
@@ -18,7 +18,6 @@ import by.tarasiuk.ct.model.service.impl.OfferServiceImpl;
 import by.tarasiuk.ct.model.service.impl.TradingServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.util.Map;
 import java.util.Optional;
 
@@ -31,7 +30,7 @@ import static by.tarasiuk.ct.controller.command.AttributeName.TRADING_ID;
 /**
  * Show trading viewer page command.
  */
-public class ShowTradingViewerCommand implements Command {
+public class ShowAccountTradingViewerCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     private final AccountServiceImpl accountService = ServiceProvider.getAccountService();
     private final TradingServiceImpl tradingService = ServiceProvider.getTradingService();
@@ -49,11 +48,9 @@ public class ShowTradingViewerCommand implements Command {
      */
     @Override
     public String execute(RequestContent content) {
-        String page = PagePath.TRADING_VIEWER;
+        String page = PagePath.ACCOUNT_TRADING_VIEWER;
         Map<String, String> parameters = content.getRequestParameters();
         long tradingId = Long.parseLong(parameters.get(TRADING_ID));
-
-        LOGGER.debug("Get trading ID '{}' for trading viewer page.", tradingId);
 
         try {
             Optional<Trading> findTrading = tradingService.findTradingById(tradingId);
@@ -61,11 +58,11 @@ public class ShowTradingViewerCommand implements Command {
             if(findTrading.isPresent()) {
                 Trading trading = findTrading.get();
                 long offerId = trading.getOfferId();
-                long employeeId = trading.getEmployeeId();
 
                 Optional<Offer> findOffer = offerService.findOfferById(offerId);
                 if(findOffer.isPresent()) {
                     Offer offer = findOffer.get();
+                    long employeeId = offer.getEmployeeId();
 
                     Optional<Employee> findEmployee = employeeService.findEmployeeById(employeeId);
 
@@ -91,7 +88,7 @@ public class ShowTradingViewerCommand implements Command {
                     }
                 }
             } else {
-                page = PagePath.ERROR_ACCESS_DENIED;
+                page = PagePath.INDEX;
             }
         } catch (ServiceException e) {
             LOGGER.error("Failed to process the command '{}'.", CommandType.SHOW_TRADING_VIEWER, e);

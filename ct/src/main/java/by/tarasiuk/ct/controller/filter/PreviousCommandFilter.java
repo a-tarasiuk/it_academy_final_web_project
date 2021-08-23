@@ -1,6 +1,5 @@
 package by.tarasiuk.ct.controller.filter;
 
-import by.tarasiuk.ct.model.entity.impl.Account;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -9,38 +8,34 @@ import jakarta.servlet.ServletResponse;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import java.io.IOException;
 
-import static by.tarasiuk.ct.model.entity.impl.Account.Role;
-import static by.tarasiuk.ct.controller.command.AttributeName.ACCOUNT;
-import static by.tarasiuk.ct.controller.command.AttributeName.SHOW_ADMIN_FUNCTIONS;
+import static by.tarasiuk.ct.controller.command.AttributeName.PREVIOUS_COMMAND;
 
 /**
  * Fil checks the role of the account.
  * If the role is <code>ADMINISTRATOR</code>, then the flag is set to display the code block on the jsp page.
  */
 @WebFilter
-public class AdministratorFilter implements Filter {
+public class PreviousCommandFilter implements Filter {
     private static final Logger LOGGER = LogManager.getLogger();
+    private static final String REQUEST_COMPONENT = "?";
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-        HttpSession session = request.getSession(false);
 
-        if(session != null) {
-            Account account = (Account) session.getAttribute(ACCOUNT);
-            LOGGER.debug("Current account entity '{}'.", account);
+        StringBuilder currentCommand = new StringBuilder(request.getRequestURI())
+                .append(REQUEST_COMPONENT)
+                .append(request.getQueryString());
 
-            if(account != null && account.getRole() != null && account.getRole().equals(Role.ADMINISTRATOR)) {
-                session.setAttribute(SHOW_ADMIN_FUNCTIONS, true);
-            }
-        }
-
+        String previousCommand = (String) request.getSession().getAttribute(PREVIOUS_COMMAND);
         filterChain.doFilter(request, response);
+
+        request.getSession().setAttribute(PREVIOUS_COMMAND, currentCommand.toString());
     }
 }

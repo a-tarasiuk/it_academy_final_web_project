@@ -37,8 +37,8 @@
                         <form action="controller" method="post">
                             <input type="hidden" name="command" value="show_account_settings_page">
 
-                            <button class="btn-confirm" href="${pageContext.request.contextPath}/controller?command=go_to_create_offer_page">
-                                <span class="icon icon-cog">&nbsp;</span>
+                            <button class="btn-simple btn-blue">
+                                <span class="icon icon-chevron-left">&nbsp;</span>
                                 <fmt:message key="account.page.setting"/>
                             </button>
                         </form>

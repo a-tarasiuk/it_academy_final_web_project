@@ -12,7 +12,6 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/font.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css">
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/cargo.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/offer.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/icon.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/table.css">
@@ -35,6 +34,11 @@
                         <div id="window-title">
                             <fmt:message key="offer.editor"/>
                         </div>
+
+                        <a class="btn-simple btn-blue" href="${pageContext.request.contextPath}/controller?command=show_open_offer_list">
+                            <span class="icon icon-chevron-left">&nbsp;</span>
+                            <fmt:message key="offer.all"/>
+                        </a>
                     </div>
 
                     <div id="mr-down">
@@ -43,7 +47,7 @@
                             <fmt:message key="offer.change"/>
                         </div>
 
-                        <form action="controller" method="get">
+                        <form action="controller" method="post">
                             <div id="ow-title">
                                 <fmt:message key="offer.create"/>
                             </div>
@@ -142,7 +146,7 @@
                                 </c:if>
                             </div>
 
-                            <button type="submit" id="confirm" name="command" value="create_offer" class="btn-confirm" href="${pageContext.request.contextPath}/controller?command=go_to_create_offer_page">
+                            <button type="submit" id="confirm" name="command" value="create_offer" class="btn-confirm">
                                 <fmt:message key="cargo.button.createOffer"/>
                             </button>
                         </form>

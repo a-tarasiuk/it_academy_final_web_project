@@ -5,6 +5,12 @@ package by.tarasiuk.ct.controller.command;
  */
 public final class AttributeName {
     /**
+     * Request parameters
+     */
+    public static final String REFERER = "referer";
+    public static final String PREVIOUS_COMMAND = "previous_command";
+
+    /**
      * Command attribute from JSP page.
      */
     public static final String COMMAND = "command";
@@ -99,6 +105,8 @@ public final class AttributeName {
     public static final String MESSAGE_INCORRECT_SIGN_UP_DATA = "incorrect_sign_up_data";
     public static final String MESSAGE_INCORRECT_OFFER_DATA = "incorrect_offer_data";
     public static final String MESSAGE_INCORRECT_TRADING_FREIGHT = "incorrect_trading_freight";
+    public static final String MESSAGE_CAN_NOT_TRADING_ON_OFFER_YOUR_COMPANY = "can_not_trading_on_offer_your_company";
+    public static final String MESSAGE_EMPLOYEE_ALREADY_CREATED_TRADING = "message_employee_already_created_trading";
     public static final String MESSAGE_BANNED_ACCOUNT = "account_banned";
     public static final String MESSAGE_NOT_ACTIVATED_ACCOUNT = "account_not_activated";
 

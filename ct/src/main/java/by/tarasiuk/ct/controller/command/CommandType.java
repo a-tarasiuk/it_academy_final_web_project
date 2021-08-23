@@ -2,6 +2,7 @@ package by.tarasiuk.ct.controller.command;
 
 import by.tarasiuk.ct.controller.command.impl.account.ActivateAccountCommand;
 import by.tarasiuk.ct.controller.command.impl.account.ShowAccountSettingsPageCommand;
+import by.tarasiuk.ct.controller.command.impl.account.ShowAccountTradingViewerCommand;
 import by.tarasiuk.ct.controller.command.impl.account.UpdateAccountCommand;
 import by.tarasiuk.ct.controller.command.impl.admin.BanAccountCommand;
 import by.tarasiuk.ct.controller.command.impl.admin.ShowAccountEditorFromAdminCommand;
@@ -28,7 +29,7 @@ import by.tarasiuk.ct.controller.command.impl.offer.CreateTradingCommand;
 import by.tarasiuk.ct.controller.command.impl.offer.DeactivateOfferCommand;
 import by.tarasiuk.ct.controller.command.impl.offer.ShowAccountListOfferCommand;
 import by.tarasiuk.ct.controller.command.impl.offer.ShowAccountOfferCommand;
-import by.tarasiuk.ct.controller.command.impl.offer.ShowAccountTradingsCommand;
+import by.tarasiuk.ct.controller.command.impl.offer.ShowAccountTradingListCommand;
 import by.tarasiuk.ct.controller.command.impl.offer.ShowOfferEditorCommand;
 import by.tarasiuk.ct.controller.command.impl.offer.ShowOpenOfferListCommand;
 import by.tarasiuk.ct.controller.command.impl.offer.ShowTradingOfferCommand;
@@ -80,9 +81,10 @@ public enum CommandType {
     APPLY_FREIGHT(new ApplyFreightCommand()),
     SHOW_ACCOUNT_OFFERS(new ShowAccountListOfferCommand()),
     SHOW_ACCOUNT_OFFER(new ShowAccountOfferCommand()),
-    SHOW_ACCOUNT_TRADINGS(new ShowAccountTradingsCommand()),
+    SHOW_ACCOUNT_TRADINGS(new ShowAccountTradingListCommand()),
     SHOW_OFFER_EDITOR(new ShowOfferEditorCommand()),
     UPDATE_OFFER(new UpdateOfferCommand()),
+    SHOW_ACCOUNT_TRADING_VIEWER(new ShowAccountTradingViewerCommand()),
 
     /**
      * Command list for account with role ADMINISTRATOR, MANAGER and FORWARDER.

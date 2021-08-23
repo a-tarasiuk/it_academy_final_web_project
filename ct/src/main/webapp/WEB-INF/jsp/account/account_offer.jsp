@@ -13,7 +13,6 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/font.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css">
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/cargo.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/offer.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/icon.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/table.css">
@@ -57,6 +56,11 @@
                                 </form>
                             </div>
                         </c:if>
+
+                        <a class="btn-simple btn-blue" href="${pageContext.request.contextPath}/controller?command=show_account_offers">
+                            <span class="icon icon-chevron-left">&nbsp;</span>
+                            <fmt:message key="offers.my"/>
+                        </a>
                     </div>
 
                     <div id="mr-down">
@@ -76,6 +80,7 @@
                             <fmt:message key="tradings.info"/>
                         </div>
 
+                        <!-- Trading list for select -->
                         <ct:trading_action/>
                     </div>
                 </div>

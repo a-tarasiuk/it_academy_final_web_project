@@ -23,6 +23,7 @@ public class TradingDaoImpl extends BaseDao<Trading> implements TradingDao {
     private static final String SQL_PROCEDURE_FIND_TRADING_BY_ID = "{CALL find_trading_by_id (?)}";
     private static final String SQL_PROCEDURE_FIND_TRADINGS_BY_OFFER_ID = "{CALL find_tradings_by_offer_id (?)}";
     private static final String SQL_PROCEDURE_FIND_TRADINGS_BY_EMPLOYEE_ID = "{CALL find_tradings_by_employee_id (?)}";
+    private static final String SQL_PROCEDURE_UPDATE_TRADING_BY_OFFER_ID_AND_EMPLOYEE_ID = "{CALL find_trading_by_offer_id_and_employee_id (?, ?)}";
     private static final String SQL_PROCEDURE_UPDATE_TRADING_STATUS_BY_ID = "{CALL update_trading_status_by_id (?, ?)}";
 
     private static final class IndexCreate {
@@ -155,6 +156,31 @@ public class TradingDaoImpl extends BaseDao<Trading> implements TradingDao {
     @Override
     public boolean updateEntity(Trading entity) throws DaoException {
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Optional<Trading> findTradingByOfferIdAndEmployeeIf(long offerId, long employeeId) throws DaoException {
+        Optional<Trading> findTrading = Optional.empty();
+
+        try (Connection connection = connectionPool.getConnection()) {
+            try (PreparedStatement statement = connection.prepareStatement(SQL_PROCEDURE_UPDATE_TRADING_BY_OFFER_ID_AND_EMPLOYEE_ID)) {
+                statement.setLong(IndexFind.OFFER_ID, offerId);
+                statement.setLong(2, employeeId);
+
+                try (ResultSet result = statement.executeQuery()) {
+                    if (result.next()) {
+                        Trading trading = TradingDaoBuilder.build(result);
+                        findTrading = Optional.of(trading);
+                        LOGGER.debug("Trading for offer ID '{}' and employee ID '{}' was fount successfully in the database.", offerId, employeeId);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.error("Error when performing tradings search by offer ID '{}' and employee ID '{}'.", offerId, employeeId, e);
+            throw new DaoException("Error when performing tradings search by offer ID '" + offerId + "' and employee ID '" + employeeId + "'.", e);
+        }
+
+        return findTrading;
     }
 
     @Override

@@ -27,7 +27,7 @@ import static by.tarasiuk.ct.controller.command.AttributeName.TRADING_STATUS;
 /**
  * Show account list trading command.
  */
-public class ShowAccountTradingsCommand implements Command {
+public class ShowAccountTradingListCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     private final OfferServiceImpl offerService = ServiceProvider.getOfferService();
     private final TradingServiceImpl tradingService = ServiceProvider.getTradingService();
@@ -73,6 +73,7 @@ public class ShowAccountTradingsCommand implements Command {
                         }
                     } else {
                         String requestStatus = optionalStatus.get();
+                        Trading.Status findStatus = Trading.Status.valueOf(requestStatus.toUpperCase());
 
                         for (Trading trading : tradingList) {
                             long offerId = trading.getOfferId();
@@ -82,7 +83,7 @@ public class ShowAccountTradingsCommand implements Command {
                                 Offer offer = findOffer.get();
                                 Trading.Status status = trading.getStatus();
 
-                                if(status.name().equalsIgnoreCase(requestStatus)) {
+                                if(findStatus.equals(status)) {
                                     tradingMap.put(offer, trading);
                                 }
                             }
@@ -95,7 +96,7 @@ public class ShowAccountTradingsCommand implements Command {
             page = PagePath.ACCOUNT_TRADINGS;
         } catch (ServiceException e) {
             LOGGER.error("Failed to process the command '{}'.", CommandType.SHOW_ACCOUNT_OFFERS, e);
-            page = PagePath.ACCOUNT_TRADING;
+            page = PagePath.ACCOUNT_TRADING_VIEWER;
         }
 
         return page;

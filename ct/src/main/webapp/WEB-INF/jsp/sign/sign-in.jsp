@@ -22,7 +22,7 @@
                     <fmt:message key="form.signIn.message"/>
                 </div>
 
-                <form action="controller" method="post" novalidate>
+                <form action="controller" method="post">
                     <div class="row">
                         <label class="description">
                             <fmt:message key="form.signIn.warning"/>
@@ -37,7 +37,7 @@
                                 </div>
 
                                 <div class="input-block">
-                                    <input type="text" id="account_login" name="account_login" value="${account_login}" placeholder="<fmt:message key="placeholder.userLogin"/>">
+                                    <input type="text" id="account_login" name="account_login" value="${param.account_login}" placeholder="<fmt:message key="placeholder.userLogin"/>" required>
                                 </div>
                             </div>
                         </div>

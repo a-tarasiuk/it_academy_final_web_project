@@ -78,7 +78,7 @@ public class AccountOfferViewerTag extends TagSupport {
                 break;
             default:
                 LOGGER.warn("Nonexistent constant '{}' in '{}'.", offerStatus, offerStatus.getDeclaringClass());
-                throw new EnumConstantNotPresentException(offerStatus.getClass(), offerStatus.toString()); //fixme Need an exception?
+                throw new EnumConstantNotPresentException(offerStatus.getClass(), offerStatus.toString());
         }
 
         table.append(offer.getStatus())

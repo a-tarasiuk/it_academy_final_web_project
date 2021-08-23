@@ -23,14 +23,14 @@
             <jsp:include page="/WEB-INF/jsp/common/header.jsp"/>
 
             <div id="middle">
-                <form id="info" action="controller" method="get">
-                    <input type="hidden" name="command" value="show_trading_offer">
+                <div id="info">
+                    <input type="hidden" name="command" value="command=show_account_offers">
 
                     <span class="icon icon-check-circle icon-green x4"></span>
-                    <span id="info-header"><fmt:message key="freight.message.created.header"/></span>
-                    <span id="info-message"><fmt:message key="freight.message.created.title"/></span>
-                    <button type="submit" class="btn-confirm" name="offer_id" value="${param.offer_id}"><fmt:message key="button.label.backOfferViewerPage"/></button>
-                </form>
+                    <span id="info-header"><fmt:message key="message.offer.create.successfully"/></span>
+                    <span id="info-message"><fmt:message key="message.offer.create.successfully.title"/></span>
+                    <a type="submit" class="btn-confirm" href="${pageContext.request.contextPath}/controller?command=show_account_offers"><fmt:message key="button.label.backOffersPage"/></a>
+                </div>
             </div>
 
             <jsp:include page="/WEB-INF/jsp/common/footer.jsp"/>

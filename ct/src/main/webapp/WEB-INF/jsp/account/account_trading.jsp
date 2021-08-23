@@ -49,10 +49,12 @@
                         <ct:offer_viewer/>
 
                         <!-- Window for trading -->
-                        <div class="title"><fmt:message key="freight.offer"/></div>
+                        <div class="title">
+                            <fmt:message key="freight.offer"/>
+                        </div>
 
                         <form action="controller" method="post">
-                            <input type="hidden" name="offer_id" value="${offer.id}">
+                            <input type="hidden" name="command" value="create_trading">
 
                             <div class="trading">
                                 <div class="trading-section">&#x24;</div>
@@ -62,7 +64,7 @@
                                 </div>
 
                                 <div class="trading-section">
-                                    <button class="btn-simple btn-green" type="submit" id="confirm" name="command" value="create_trading">
+                                    <button class="btn-simple btn-green" type="submit" id="confirm" name="offer_id" value="${offer.id}">
                                         <fmt:message key="button.label.submit"/>
                                     </button>
                                 </div>
@@ -77,6 +79,14 @@
                         <div class="error-message row">
                             <c:if test="${incorrect_trading_freight == true}">
                                 <fmt:message key="message.invalid.tradingFreight"/>
+                            </c:if>
+
+                            <c:if test="${can_not_trading_on_offer_your_company == true}">
+                                <fmt:message key="message.equals.companies"/>
+                            </c:if>
+
+                            <c:if test="${message_employee_already_created_trading == true}">
+                                <fmt:message key="message.trading.alreadyCreated"/>
                             </c:if>
 
                             <c:if test="${message_query_error == true}">

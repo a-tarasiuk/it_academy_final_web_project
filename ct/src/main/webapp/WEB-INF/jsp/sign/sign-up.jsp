@@ -14,7 +14,9 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/icon.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/font-awesome.min.css">
 
-    <script src="${pageContext.request.contextPath}/js/sign-up-validation.js"></script>
+    <script src="${pageContext.request.contextPath}/js/account_validation.js"></script>
+    <script src="${pageContext.request.contextPath}/js/company_validation.js"></script>
+
     <title><fmt:message key="form.signUp.title"/></title>
 </head>
 <body>
@@ -24,7 +26,9 @@
                 <fmt:message key="form.signUp.message"/>
             </div>
 
-            <form action="controller" method="post" novalidate>
+            <form action="controller" method="post">
+                <input type="hidden" name="command" value="sign_up">
+
                 <div class="row">
                     <label class="description">
                         <fmt:message key="form.warning"/>
@@ -38,7 +42,7 @@
                                 <span class="icon icon-user"></span>
                             </div>
                             <div class="input-block">
-                                <input type="text" id="account_first_name" name="account_first_name" value="${account_first_name}" placeholder="<fmt:message key="placeholder.userFirstName"/>" onblur="validationFirstName()" onchange="validationFirstName()">
+                                <input type="text" id="account_first_name" name="account_first_name" value="${param.account_first_name}" placeholder="<fmt:message key="placeholder.userFirstName"/>" oninput="validateAccountFirstName()" required>
                             </div>
                         </div>
 
@@ -52,7 +56,7 @@
                             </div>
 
                             <div class="input-block">
-                                <input type="text" id="account_last_name" name="account_last_name" value="${account_last_name}" placeholder="<fmt:message key="placeholder.userLastName"/>">
+                                <input type="text" id="account_last_name" name="account_last_name" value="${param.account_last_name}" placeholder="<fmt:message key="placeholder.userLastName"/>" oninput="validateAccountLastName()" required>
                             </div>
                         </div>
 
@@ -68,7 +72,7 @@
                             </div>
 
                             <div class="input-block">
-                                <input type="text" id="account_login" name="account_login" value="${account_login}" placeholder="<fmt:message key="placeholder.userLogin"/>">
+                                <input type="text" id="account_login" name="account_login" value="${param.account_login}" placeholder="<fmt:message key="placeholder.userLogin"/>" oninput="validateAccountLogin()" required>
                             </div>
                         </div>
 
@@ -88,7 +92,7 @@
                             </div>
 
                             <div class="input-block">
-                                <input type="email" id="account_email" name="account_email" value="${account_email}" placeholder="<fmt:message key="placeholder.userEmail"/>">
+                                <input type="email" id="account_email" name="account_email" value="${param.account_email}" placeholder="<fmt:message key="placeholder.userEmail"/>" oninput="validateAccountEmail()" required>
                             </div>
                         </div>
 
@@ -110,7 +114,7 @@
                             </div>
 
                             <div class="input-block">
-                                <input type="text" id="company_name" name="company_name" value="${company_name}" placeholder="<fmt:message key="placeholder.companyName"/>">
+                                <input type="text" id="company_name" name="company_name" value="${param.company_name}" placeholder="<fmt:message key="placeholder.companyName"/>" oninput="validateCompanyName()" required>
                             </div>
                         </div>
 
@@ -130,7 +134,7 @@
                             </div>
 
                             <div class="input-block">
-                                <input type="text" id="company_address" name="company_address" value="${company_address}" placeholder="<fmt:message key="placeholder.companyAddress"/>">
+                                <input type="text" id="company_address" name="company_address" value="${param.company_address}" placeholder="<fmt:message key="placeholder.companyAddress"/>" oninput="validateCompanyAddress()" required>
                             </div>
                         </div>
 
@@ -146,7 +150,7 @@
                             </div>
 
                             <div class="input-block">
-                                <input type="text" id="company_phone_number" name="company_phone_number" value="${company_phone_number}" placeholder="<fmt:message key="placeholder.companyPhoneNumber"/>">
+                                <input type="text" id="company_phone_number" name="company_phone_number" value="${param.company_phone_number}" placeholder="<fmt:message key="placeholder.companyPhoneNumber"/>" oninput="validateCompanyPhoneNumber()" required>
                             </div>
                         </div>
 
@@ -162,7 +166,7 @@
                             </div>
 
                             <div class="input-block">
-                                <input type="password" id="account_password" name="account_password" placeholder="<fmt:message key="placeholder.userPassword"/>">
+                                <input type="password" id="account_password" name="account_password" placeholder="<fmt:message key="placeholder.userPassword"/>" oninput="validatePassword()" required>
                             </div>
                         </div>
 
@@ -176,7 +180,7 @@
                             </div>
 
                             <div class="input-block">
-                                <input type="password" id="account_confirm_password" name="account_confirm_password" placeholder="<fmt:message key="placeholder.userConfirmPassword"/>">
+                                <input type="password" id="account_confirm_password" name="account_confirm_password" placeholder="<fmt:message key="placeholder.userConfirmPassword"/>" oninput="validateConfirmPassword()" required>
                             </div>
                         </div>
 
@@ -195,8 +199,8 @@
                 </div>
 
                 <div class="row">
-                    <button type="submit" class="btn-confirm" name="command" value="go_to_main_page"><span class="icon icon-chevron-left">&nbsp;</span><fmt:message key="button.label.mainPage"/></button>
-                    <button id="confirm" class="btn-confirm" type="submit" name="command" value="sign_up"><span class="icon icon-check">&nbsp;</span><fmt:message key="button.label.confirm"/></button>
+                    <a type="submit" class="btn-confirm" href="${pageContext.request.contextPath}/controller?command=go_to_main_page"><span class="icon icon-chevron-left">&nbsp;</span><fmt:message key="button.label.mainPage"/></a>
+                    <button type="submit" id="confirm" class="btn-confirm" type="submit"><span class="icon icon-check">&nbsp;</span><fmt:message key="button.label.confirm"/></button>
                 </div>
             </form>
         </div>
