@@ -6,6 +6,7 @@ import by.tarasiuk.ct.model.dao.TokenDao;
 import by.tarasiuk.ct.model.entity.impl.Token;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

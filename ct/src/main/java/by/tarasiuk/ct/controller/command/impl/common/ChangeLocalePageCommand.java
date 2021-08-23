@@ -1,7 +1,6 @@
 package by.tarasiuk.ct.controller.command.impl.common;
 
 import by.tarasiuk.ct.controller.RequestContent;
-import by.tarasiuk.ct.controller.command.AttributeName;
 import by.tarasiuk.ct.controller.command.Command;
 import by.tarasiuk.ct.controller.command.PagePath;
 import by.tarasiuk.ct.util.MessageManager;
@@ -30,18 +29,14 @@ public class ChangeLocalePageCommand implements Command {
         Map<String, Object> sessionAttributes = content.getSessionAttributes();
         Map<String, String> requestParameters = content.getRequestParameters();
 
-        String previousCommand = (String) sessionAttributes.get(AttributeName.PREVIOUS_COMMAND);
         String oldLocale = (String) sessionAttributes.get(LOCALE);
         String newLocale = requestParameters.get(LOCALE);
 
         MessageManager.Locale findLocale = MessageManager.Locale.valueOf(newLocale.toUpperCase());
         content.putSessionAttribute(LOCALE, findLocale.toString());
 
-        System.out.println("Get: " + previousCommand);
-        System.out.println(requestParameters);
-
         LOGGER.info("Locale page change from '{}' to '{}'.", oldLocale, newLocale);
 
-        return previousCommand != null && !previousCommand.isEmpty() ? previousCommand: PagePath.MAIN;
+        return PagePath.MAIN;
     }
 }
